@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>大家好我是大帅比</title>
+<title>Demo</title>
 </head>
 <body>
-	<div>
-		hhahahahahaha
-	</div>
+    <div>首页</div>
 </body>
 </html>

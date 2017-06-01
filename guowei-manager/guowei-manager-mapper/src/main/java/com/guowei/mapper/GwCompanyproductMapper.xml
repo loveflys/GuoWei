@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guowei.mapper.GwCompanyproductMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwCompanyproduct" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="sellcount" property="sellcount" jdbcType="INTEGER" />
+    <result column="sellprice" property="sellprice" jdbcType="BIGINT" />
+    <result column="storageracks" property="storageracks" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, company_id, pid, stock, sellcount, sellprice, storageracks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCompanyproductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gw_companyproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gw_companyproduct
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gw_companyproduct
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwCompanyproductExample" >
+    delete from gw_companyproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guowei.pojo.GwCompanyproduct" >
+    insert into gw_companyproduct (id, company_id, pid, 
+      stock, sellcount, sellprice, 
+      storageracks)
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, 
+      #{stock,jdbcType=INTEGER}, #{sellcount,jdbcType=INTEGER}, #{sellprice,jdbcType=BIGINT}, 
+      #{storageracks,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompanyproduct" >
+    insert into gw_companyproduct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="sellcount != null" >
+        sellcount,
+      </if>
+      <if test="sellprice != null" >
+        sellprice,
+      </if>
+      <if test="storageracks != null" >
+        storageracks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="sellcount != null" >
+        #{sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="sellprice != null" >
+        #{sellprice,jdbcType=BIGINT},
+      </if>
+      <if test="storageracks != null" >
+        #{storageracks,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guowei.pojo.GwCompanyproductExample" resultType="java.lang.Integer" >
+    select count(*) from gw_companyproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gw_companyproduct
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=BIGINT},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellcount != null" >
+        sellcount = #{record.sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellprice != null" >
+        sellprice = #{record.sellprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.storageracks != null" >
+        storageracks = #{record.storageracks,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gw_companyproduct
+    set id = #{record.id,jdbcType=BIGINT},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      pid = #{record.pid,jdbcType=BIGINT},
+      stock = #{record.stock,jdbcType=INTEGER},
+      sellcount = #{record.sellcount,jdbcType=INTEGER},
+      sellprice = #{record.sellprice,jdbcType=BIGINT},
+      storageracks = #{record.storageracks,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwCompanyproduct" >
+    update gw_companyproduct
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="sellcount != null" >
+        sellcount = #{sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="sellprice != null" >
+        sellprice = #{sellprice,jdbcType=BIGINT},
+      </if>
+      <if test="storageracks != null" >
+        storageracks = #{storageracks,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwCompanyproduct" >
+    update gw_companyproduct
+    set company_id = #{companyId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT},
+      stock = #{stock,jdbcType=INTEGER},
+      sellcount = #{sellcount,jdbcType=INTEGER},
+      sellprice = #{sellprice,jdbcType=BIGINT},
+      storageracks = #{storageracks,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
