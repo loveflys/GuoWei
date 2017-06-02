@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.mapper.GwProductMapper;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwProductExample;
@@ -33,5 +37,19 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return null;
 	}
-
+	/**
+	 * 分页获取产品列表
+	 */
+	@Override
+	public SimpleListResult getProductList(int pageNum, int pageSize) {
+		SimpleListResult result = new SimpleListResult();
+		GwProductExample example = new GwProductExample();
+		PageHelper.startPage(pageNum, pageSize);
+		List<GwProduct> list = productMapper.selectByExample(example);
+		PageInfo<GwProduct> page = new PageInfo<>(list);
+		//总商品数
+		result.setTotalCount(page.getTotal());
+		result.setList(list);
+		return result;
+	}
 }
