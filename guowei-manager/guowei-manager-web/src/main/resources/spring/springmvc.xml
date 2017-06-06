@@ -9,12 +9,23 @@
 
     <context:component-scan base-package="com.guowei.controller" />
     <mvc:annotation-driven />
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
-    <!-- 资源映射 -->
-    <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
-    <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+    
+    <!-- 国际化资源配置 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
+        <!-- 国际化信息所在的文件名 -->  
+        <property name="basename" value="messages/message"/>  
+        <!-- 如果在国际化资源文件中找不到对应代码的信息，就用这个代码作为名称  -->                 
+        <property name="useCodeAsDefaultMessage" value="true" />  
+    </bean> 
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">      
+        <property name="prefix" value="/WEB-INF/pages/" />      
+        <property name="suffix" value=".jsp" />      
+    </bean>        
+
+    <!-- 静态资源过滤 -->
+    <mvc:resources location="/res/" mapping="/res/**"/> 
+    <mvc:resources location="/WEB-INF/pages/error/" mapping="/WEB-INF/pages/error/**"/> 
+    <mvc:resources location="/upload/" mapping="/upload/**"/> 
+    
 </beans>

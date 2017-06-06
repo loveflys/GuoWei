@@ -402,8 +402,6 @@
 	                ],
 	              	//每加载完一行的回调函数
 	                createdRow: function( row, data, index ) {
-	                	//修改单元格样式
-	    　　　　　　　　	//$('td', row).eq(5).css('font-weight',"bold").css("color","red");//获取到具体行具体格的元素
 	                },
 			        initComplete: function (setting, json) {
 	                	//初始化完成之后替换原先的搜索框。
