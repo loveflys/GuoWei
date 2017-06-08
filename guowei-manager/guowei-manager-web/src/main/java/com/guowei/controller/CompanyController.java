@@ -19,91 +19,90 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
-import com.guowei.pojo.GwProduct;
-import com.guowei.service.ProductService;
+import com.guowei.pojo.GwCompany;
+import com.guowei.service.CompanyService;
 
 /**
- * @描述：商品Controller
+ * @描述：公司Controller
  * @作者：陈安一
  * @版本：V1.0
  * @创建时间：：2016-11-21 下午11:08:43
  */
 @Controller
-public class ProductController {
+public class CompanyController {
 	
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private ProductService productService;
+	private CompanyService companyService;
 	
 	/**
-	 * 查询商品记录
+	 * 查询公司记录
 	 * @param request
 	 * @param query
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/company/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String getData(HttpServletRequest request, GwProduct product) {
-		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+	public String getData(HttpServletRequest request, GwCompany company) {
+		DatatablesView dataTable = companyService.getGwCompanysByPagedParam(company,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
 	
-	@RequestMapping("/products")
+	@RequestMapping("/companys")
 	public String toList(HttpServletRequest request){   
-		return "product";
+		return "company";
 	}
 	
 	/**
-	 * 商品注册
-	 * @param product
+	 * 公司添加
+	 * @param company
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/product/add")
-	public String add(GwProduct product, ModelMap model) {
-		int result = productService.addGwProduct(product);
+	@RequestMapping("/company/add")
+	public String add(GwCompany company, ModelMap model) {
+		int result = companyService.addGwCompany(company);
 		if (result == 1) {		
 			model.addAttribute("result", result);
-			model.addAttribute("msg", product.getTitle() + " 添加成功!");
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 添加成功!");
+			log.info(Constants.SYS_NAME + "公司： 添加成功!");
 		}
 		return "register";
 	}
 	
 	/**
-	 * 商品修改
-	 * @param product
+	 * 公司修改
+	 * @param company
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/company/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
 		System.out.println(request.getParameter("id"));
-		GwProduct product = productService.getGwProductById(Long.parseLong(request.getParameter("id")));
-//		product.setPhone(request.getParameter("phone"));
-		int status = productService.editGwProduct(product);
+		GwCompany company = companyService.getGwCompanyById(Long.parseLong(request.getParameter("id")));
+//		company.setPhone(request.getParameter("phone"));
+		int status = companyService.editGwCompany(company);
 		if (status == 1) {
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 修改成功!");
+			log.info(Constants.SYS_NAME + "公司：修改成功!");
 		}
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
 	
 	/**
-	 * 商品删除
+	 * 公司删除
 	 * @param id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/company/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
-		int status = productService.removeGwProduct(id);
+		int status = companyService.removeGwCompany(id);
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}

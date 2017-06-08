@@ -19,91 +19,90 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
-import com.guowei.pojo.GwProduct;
-import com.guowei.service.ProductService;
+import com.guowei.pojo.GwCategory;
+import com.guowei.service.CategoryService;
 
 /**
- * @描述：商品Controller
+ * @描述：分类Controller
  * @作者：陈安一
  * @版本：V1.0
  * @创建时间：：2016-11-21 下午11:08:43
  */
 @Controller
-public class ProductController {
+public class CategoryController {
 	
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private ProductService productService;
+	private CategoryService categoryService;
 	
 	/**
-	 * 查询商品记录
+	 * 查询分类记录
 	 * @param request
 	 * @param query
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/category/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String getData(HttpServletRequest request, GwProduct product) {
-		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+	public String getData(HttpServletRequest request, GwCategory category) {
+		DatatablesView dataTable = categoryService.getGwCategorysByPagedParam(category,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
 	
-	@RequestMapping("/products")
+	@RequestMapping("/categorys")
 	public String toList(HttpServletRequest request){   
-		return "product";
+		return "category";
 	}
 	
 	/**
-	 * 商品注册
-	 * @param product
+	 * 分类添加
+	 * @param category
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/product/add")
-	public String add(GwProduct product, ModelMap model) {
-		int result = productService.addGwProduct(product);
+	@RequestMapping("/category/add")
+	public String add(GwCategory category, ModelMap model) {
+		int result = categoryService.addGwCategory(category);
 		if (result == 1) {		
 			model.addAttribute("result", result);
-			model.addAttribute("msg", product.getTitle() + " 添加成功!");
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 添加成功!");
+			log.info(Constants.SYS_NAME + "分类： 添加成功!");
 		}
 		return "register";
 	}
 	
 	/**
-	 * 商品修改
-	 * @param product
+	 * 分类修改
+	 * @param category
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/category/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
 		System.out.println(request.getParameter("id"));
-		GwProduct product = productService.getGwProductById(Long.parseLong(request.getParameter("id")));
-//		product.setPhone(request.getParameter("phone"));
-		int status = productService.editGwProduct(product);
+		GwCategory category = categoryService.getGwCategoryById(Long.parseLong(request.getParameter("id")));
+//		category.setPhone(request.getParameter("phone"));
+		int status = categoryService.editGwCategory(category);
 		if (status == 1) {
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 修改成功!");
+			log.info(Constants.SYS_NAME + "分类：修改成功!");
 		}
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
 	
 	/**
-	 * 商品删除
+	 * 分类删除
 	 * @param id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/category/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
-		int status = productService.removeGwProduct(id);
+		int status = categoryService.removeGwCategory(id);
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}

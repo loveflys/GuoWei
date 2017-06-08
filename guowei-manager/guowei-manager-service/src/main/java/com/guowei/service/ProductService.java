@@ -1,9 +1,20 @@
 package com.guowei.service;
-import com.guowei.common.pojo.SimpleListResult;
+import com.guowei.common.pojo.DatatablesView;
 import com.guowei.pojo.GwProduct;
 
 public interface ProductService {
-	GwProduct getProductById(long id);
+
+	GwProduct getGwProductById(long parseLong);
+
+	GwProduct getGwProductByTitle(String title);
 	
-	SimpleListResult getProductList(int pageNum, int pageSize);
+	DatatablesView<?> getGwProductsByParam(GwProduct product);
+	
+	DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize);
+
+	int addGwProduct(GwProduct product);
+
+	int editGwProduct(GwProduct product);
+
+	int removeGwProduct(long id);
 }

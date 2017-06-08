@@ -51,6 +51,7 @@
 		<table schema="" tableName="gw_companyproduct"></table>
 		<table schema="" tableName="gw_companyprochange"></table>
 		<table schema="" tableName="gw_order"></table>
+		<table schema="" tableName="gw_division"></table>
 		<table schema="" tableName="gw_orderdetail"></table>
 	</context>
 </generatorConfiguration>

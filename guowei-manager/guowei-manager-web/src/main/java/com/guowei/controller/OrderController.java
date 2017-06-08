@@ -19,91 +19,90 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
-import com.guowei.pojo.GwProduct;
-import com.guowei.service.ProductService;
+import com.guowei.pojo.GwOrder;
+import com.guowei.service.OrderService;
 
 /**
- * @描述：商品Controller
+ * @描述：订单Controller
  * @作者：陈安一
  * @版本：V1.0
  * @创建时间：：2016-11-21 下午11:08:43
  */
 @Controller
-public class ProductController {
+public class OrderController {
 	
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private ProductService productService;
+	private OrderService orderService;
 	
 	/**
-	 * 查询商品记录
+	 * 查询订单记录
 	 * @param request
 	 * @param query
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/order/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String getData(HttpServletRequest request, GwProduct product) {
-		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+	public String getData(HttpServletRequest request, GwOrder order) {
+		DatatablesView dataTable = orderService.getGwOrdersByPagedParam(order,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
 	
-	@RequestMapping("/products")
+	@RequestMapping("/orders")
 	public String toList(HttpServletRequest request){   
-		return "product";
+		return "order";
 	}
 	
 	/**
-	 * 商品注册
-	 * @param product
+	 * 订单添加
+	 * @param order
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/product/add")
-	public String add(GwProduct product, ModelMap model) {
-		int result = productService.addGwProduct(product);
+	@RequestMapping("/order/add")
+	public String add(GwOrder order, ModelMap model) {
+		int result = orderService.addGwOrder(order);
 		if (result == 1) {		
 			model.addAttribute("result", result);
-			model.addAttribute("msg", product.getTitle() + " 添加成功!");
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 添加成功!");
+			log.info(Constants.SYS_NAME + "订单： 添加成功!");
 		}
 		return "register";
 	}
 	
 	/**
-	 * 商品修改
-	 * @param product
+	 * 订单修改
+	 * @param order
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/order/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
 		System.out.println(request.getParameter("id"));
-		GwProduct product = productService.getGwProductById(Long.parseLong(request.getParameter("id")));
-//		product.setPhone(request.getParameter("phone"));
-		int status = productService.editGwProduct(product);
+		GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
+//		order.setPhone(request.getParameter("phone"));
+		int status = orderService.editGwOrder(order);
 		if (status == 1) {
-			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 修改成功!");
+			log.info(Constants.SYS_NAME + "订单：修改成功!");
 		}
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
 	
 	/**
-	 * 商品删除
+	 * 订单删除
 	 * @param id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/product/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/order/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
-		int status = productService.removeGwProduct(id);
+		int status = orderService.removeGwOrder(id);
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
