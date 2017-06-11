@@ -86,6 +86,9 @@
 					
 						<div class="pull-right">
 							<div class="btn-group">
+							     <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
+                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
+                                </button>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
 									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
 								</button>
