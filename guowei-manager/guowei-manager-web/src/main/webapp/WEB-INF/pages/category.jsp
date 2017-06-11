@@ -70,7 +70,7 @@
                 
                     <!-- 路径导航 -->
                     <a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-                    <a href="<%=path%>/categorys"><sp:message code="menu.category"/></a>&nbsp;&nbsp;<small><sp:message code="category.list"/></small>
+                    <a href="<%=path%>/categorys"><sp:message code="menu.categorys"/></a>&nbsp;&nbsp;<small><sp:message code="category.list"/></small>
                     <!-- 
                     <ol class="breadcrumb">
                         <%@ include file="include/home.jsp" %>

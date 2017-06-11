@@ -3,8 +3,11 @@
 <mapper namespace="com.guowei.mapper.GwDivisionMapper" >
   <resultMap id="BaseResultMap" type="com.guowei.pojo.GwDivision" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="allname" property="allname" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, created
+    id, pid, name, allname, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwDivisionExample" >
     select
@@ -98,9 +101,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwDivision" >
-    insert into gw_division (id, name, created
+    insert into gw_division (id, pid, name, 
+      allname, created, updated
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{allname,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwDivision" >
@@ -109,22 +114,40 @@
       <if test="id != null" >
         id,
       </if>
+      <if test="pid != null" >
+        pid,
+      </if>
       <if test="name != null" >
         name,
       </if>
+      <if test="allname != null" >
+        allname,
+      </if>
       <if test="created != null" >
         created,
+      </if>
+      <if test="updated != null" >
+        updated,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="allname != null" >
+        #{allname,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -140,11 +163,20 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=BIGINT},
+      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.allname != null" >
+        allname = #{record.allname,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -154,8 +186,11 @@
   <update id="updateByExample" parameterType="map" >
     update gw_division
     set id = #{record.id,jdbcType=BIGINT},
+      pid = #{record.pid,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=TIMESTAMP}
+      allname = #{record.allname,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +198,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwDivision" >
     update gw_division
     <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="allname != null" >
+        allname = #{allname,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwDivision" >
     update gw_division
-    set name = #{name,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP}
+    set pid = #{pid,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      allname = #{allname,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

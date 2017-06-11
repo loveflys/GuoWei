@@ -11,7 +11,6 @@
     <result column="stock" property="stock" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="allcount" property="allcount" jdbcType="INTEGER" />
     <result column="allsellcount" property="allsellcount" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="TINYINT" />
@@ -75,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, image, price, discountprice, buyingprice, stock, created, updated, allcount, 
-    allsellcount, cid, status
+    id, title, image, price, discountprice, buyingprice, stock, created, updated, allsellcount, 
+    cid, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwProductExample" >
     select
@@ -112,13 +111,13 @@
     insert into gw_product (id, title, image, 
       price, discountprice, buyingprice, 
       stock, created, updated, 
-      allcount, allsellcount, cid, 
-      status)
+      allsellcount, cid, status
+      )
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{price,jdbcType=BIGINT}, #{discountprice,jdbcType=BIGINT}, #{buyingprice,jdbcType=BIGINT}, 
       #{stock,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{allcount,jdbcType=INTEGER}, #{allsellcount,jdbcType=INTEGER}, #{cid,jdbcType=BIGINT}, 
-      #{status,jdbcType=TINYINT})
+      #{allsellcount,jdbcType=INTEGER}, #{cid,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwProduct" >
     insert into gw_product
@@ -149,9 +148,6 @@
       </if>
       <if test="updated != null" >
         updated,
-      </if>
-      <if test="allcount != null" >
-        allcount,
       </if>
       <if test="allsellcount != null" >
         allsellcount,
@@ -190,9 +186,6 @@
       </if>
       <if test="updated != null" >
         #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="allcount != null" >
-        #{allcount,jdbcType=INTEGER},
       </if>
       <if test="allsellcount != null" >
         #{allsellcount,jdbcType=INTEGER},
@@ -241,9 +234,6 @@
       <if test="record.updated != null" >
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.allcount != null" >
-        allcount = #{record.allcount,jdbcType=INTEGER},
-      </if>
       <if test="record.allsellcount != null" >
         allsellcount = #{record.allsellcount,jdbcType=INTEGER},
       </if>
@@ -269,7 +259,6 @@
       stock = #{record.stock,jdbcType=INTEGER},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
-      allcount = #{record.allcount,jdbcType=INTEGER},
       allsellcount = #{record.allsellcount,jdbcType=INTEGER},
       cid = #{record.cid,jdbcType=BIGINT},
       status = #{record.status,jdbcType=TINYINT}
@@ -304,9 +293,6 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="allcount != null" >
-        allcount = #{allcount,jdbcType=INTEGER},
-      </if>
       <if test="allsellcount != null" >
         allsellcount = #{allsellcount,jdbcType=INTEGER},
       </if>
@@ -329,7 +315,6 @@
       stock = #{stock,jdbcType=INTEGER},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
-      allcount = #{allcount,jdbcType=INTEGER},
       allsellcount = #{allsellcount,jdbcType=INTEGER},
       cid = #{cid,jdbcType=BIGINT},
       status = #{status,jdbcType=TINYINT}

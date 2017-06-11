@@ -70,7 +70,7 @@
 				
 					<!-- 路径导航 -->
 					<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-					<a href="<%=path%>/managers"><sp:message code="menu.manager"/></a>&nbsp;&nbsp;<small><sp:message code="manager.list"/></small>
+					<a href="<%=path%>/orders"><sp:message code="menu.orders"/></a>&nbsp;&nbsp;<small><sp:message code="order.list"/></small>
 					<!-- 
 					<ol class="breadcrumb">
        					<%@ include file="include/home.jsp" %>
@@ -93,7 +93,7 @@
 						</div>
 
 						<div class="row">
-							<form id="queryForm" action="<%=path%>/managers" method="post">
+							<form id="queryForm" action="<%=path%>/orders" method="post">
 								<div class="col-xs-2">
 									<input type="text" id="keyword" name="name" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
@@ -114,10 +114,10 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="manager.name"/></th>
+												<th><sp:message code="order.name"/></th>
 												<th><sp:message code="com.con.tel"/></th>
-												<th><sp:message code="manager.level"/></th>
-												<th><sp:message code="manager.password"/></th>												
+												<th><sp:message code="order.level"/></th>
+												<th><sp:message code="order.password"/></th>												
 												<th><sp:message code="sys.create.time"/></th>
 												<th><sp:message code="sys.wechatAccount"/></th>
                                                 <th><sp:message code="sys.wechatOpenId"/></th>
@@ -152,14 +152,14 @@
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
 						</button>
-						<h4 class="modal-title" id="myModalLabel"><sp:message code="manager.info"/>-<sp:message code="sys.edit"/></h4>
+						<h4 class="modal-title" id="myModalLabel"><sp:message code="order.info"/>-<sp:message code="sys.edit"/></h4>
 					</div>
 					
 					<div class="modal-body" >
 						<form class="form-horizontal"  id="editForm" action="<%=path%>/order/update" method="post">
 							<input type="hidden" class="form-control" name="id">
 							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
+								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.name"/></label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" name="name" readonly="readonly">
 								</div>
@@ -171,13 +171,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.level"/></label>
                                 <div class="col-sm-9">
                                     <input type="tel" class="form-control" name="level" readonly="readonly">
                                 </div>
                             </div>
 							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
+								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.password"/></label>
 								<div class="col-sm-9">
 									<input type="password" class="form-control" name="password" readonly="readonly">
 								</div>

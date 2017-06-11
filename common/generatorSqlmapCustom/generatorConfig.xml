@@ -45,6 +45,8 @@
 		<table schema="" tableName="gw_user"></table>
 		<table schema="" tableName="gw_manager"></table>
 		<table schema="" tableName="gw_company"></table>
+		<table schema="" tableName="gw_template"></table>
+		<table schema="" tableName="gw_templateproduct"></table>
 		<table schema="" tableName="gw_category"></table>
 		<table schema="" tableName="gw_product"></table>
 		<table schema="" tableName="gw_purchase"></table>

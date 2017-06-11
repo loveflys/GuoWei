@@ -4,9 +4,12 @@
   <resultMap id="BaseResultMap" type="com.guowei.pojo.GwOrder" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
     <result column="amount" property="amount" jdbcType="BIGINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, company_id, amount, created, uid
+    id, company_id, company_name, amount, created, uid, uname, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderExample" >
     select
@@ -100,10 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwOrder" >
-    insert into gw_order (id, company_id, amount, 
-      created, uid)
-    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{amount,jdbcType=BIGINT}, 
-      #{created,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT})
+    insert into gw_order (id, company_id, company_name, 
+      amount, created, uid, 
+      uname, status)
+    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{companyName,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT}, 
+      #{uname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwOrder" >
     insert into gw_order
@@ -114,6 +119,9 @@
       <if test="companyId != null" >
         company_id,
       </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
       <if test="amount != null" >
         amount,
       </if>
@@ -123,6 +131,12 @@
       <if test="uid != null" >
         uid,
       </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -130,6 +144,9 @@
       </if>
       <if test="companyId != null" >
         #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
       </if>
       <if test="amount != null" >
         #{amount,jdbcType=BIGINT},
@@ -139,6 +156,12 @@
       </if>
       <if test="uid != null" >
         #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -157,6 +180,9 @@
       <if test="record.companyId != null" >
         company_id = #{record.companyId,jdbcType=BIGINT},
       </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
       <if test="record.amount != null" >
         amount = #{record.amount,jdbcType=BIGINT},
       </if>
@@ -165,6 +191,12 @@
       </if>
       <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=BIGINT},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -175,9 +207,12 @@
     update gw_order
     set id = #{record.id,jdbcType=BIGINT},
       company_id = #{record.companyId,jdbcType=BIGINT},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
-      uid = #{record.uid,jdbcType=BIGINT}
+      uid = #{record.uid,jdbcType=BIGINT},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -188,6 +223,9 @@
       <if test="companyId != null" >
         company_id = #{companyId,jdbcType=BIGINT},
       </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
       <if test="amount != null" >
         amount = #{amount,jdbcType=BIGINT},
       </if>
@@ -197,15 +235,24 @@
       <if test="uid != null" >
         uid = #{uid,jdbcType=BIGINT},
       </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwOrder" >
     update gw_order
     set company_id = #{companyId,jdbcType=BIGINT},
+      company_name = #{companyName,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
-      uid = #{uid,jdbcType=BIGINT}
+      uid = #{uid,jdbcType=BIGINT},
+      uname = #{uname,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

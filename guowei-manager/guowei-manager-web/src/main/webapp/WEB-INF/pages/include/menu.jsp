@@ -12,13 +12,31 @@
 			<li class="header"><sp:message code="menu"/></li>
 			<li class="treeview">
 				<a href="<%=path%>/managers"> <i class="fa fa-user"></i><span><sp:message code="menu.manager"/></span></a>
-				<a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
-				<a href="<%=path%>/categorys"> <i class="fa fa-user"></i><span><sp:message code="menu.cates"/></span></a>
-				<a href="<%=path%>/products"> <i class="fa fa-user"></i><span><sp:message code="menu.products"/></span></a>
-				<a href="<%=path%>/companys"> <i class="fa fa-user"></i><span><sp:message code="menu.companys"/></span></a>
-				<a href="<%=path%>/orders"> <i class="fa fa-user"></i><span><sp:message code="menu.orders"/></span></a>
-				<a href="<%=path%>/divisions"> <i class="fa fa-user"></i><span><sp:message code="menu.divisions"/></span></a>
 			</li>
+			<li class="treeview">
+                <a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/categorys"> <i class="fa fa-user"></i><span><sp:message code="menu.cates"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/products"> <i class="fa fa-user"></i><span><sp:message code="menu.products"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/companys"> <i class="fa fa-user"></i><span><sp:message code="menu.companys"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/orders"> <i class="fa fa-user"></i><span><sp:message code="menu.orders"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/divisions"> <i class="fa fa-user"></i><span><sp:message code="menu.divisions"/></span></a>
+            </li>
+			
+                
+                
+                
+                
+               
 		</ul>
 	</section>
 </aside>
