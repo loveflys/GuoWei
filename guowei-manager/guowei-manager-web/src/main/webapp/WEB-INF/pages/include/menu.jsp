@@ -17,7 +17,10 @@
                 <a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
             </li>
             <li class="treeview">
-                <a href="<%=path%>/categorys"> <i class="fa fa-user"></i><span><sp:message code="menu.cates"/></span></a>
+                <a href="<%=path%>/categorys"> <i class="fa fa-user"></i><span><sp:message code="menu.categorys"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/templates"> <i class="fa fa-user"></i><span><sp:message code="menu.templates"/></span></a>
             </li>
             <li class="treeview">
                 <a href="<%=path%>/products"> <i class="fa fa-user"></i><span><sp:message code="menu.products"/></span></a>

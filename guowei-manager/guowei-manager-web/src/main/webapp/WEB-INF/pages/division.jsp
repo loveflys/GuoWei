@@ -86,7 +86,7 @@
 					
 						<div class="pull-right">
 							<div class="btn-group">
-							     <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
+							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
                                     <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
                                 </button>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
@@ -117,7 +117,9 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="division.name"/></th>											
+												<th><sp:message code="sys.pno"/></th>
+												<th><sp:message code="division.name"/></th>		
+												<th><sp:message code="division.allname"/></th> 									
 												<th><sp:message code="sys.create.time"/></th>
                                                 <th><sp:message code="sys.oper"/></th>
 											</tr>
@@ -155,21 +157,34 @@
 					<div class="modal-body" >
 						<form class="form-horizontal"  id="editForm" action="<%=path%>/division/update" method="post">
 							<input type="hidden" class="form-control" name="id">
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="division.name"/></label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="name" readonly="readonly">
-								</div>
-							</div>					
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.create.time"/></label>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.pid"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="pid">
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.name"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name">
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.allname"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="allname">
+                                </div>
+                            </div>                          
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.created"/></label>
 
-								<div class="col-sm-9">
-									<input type="tel" class="form-control" name="created" readonly="readonly">
-								</div>
-							</div>
+                                <div class="col-sm-9">
+                                    <input type="date" class="form-control" name="created" readonly="readonly">
+                                </div>
+                            </div>
 						</form>
-					</div>
+					</div>				
+				
 					<!-- modal-body END -->
 					
 					<div class="modal-footer">
@@ -178,7 +193,49 @@
 				</div>
 			</div>
 		</div>
-	
+	   <!-- AddUser -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="division.info"/>-<sp:message code="sys.add"/></h4>
+                    </div>
+                    
+                    <div class="modal-body" >
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/division/add" method="post">
+                            <input type="hidden" class="form-control" name="id">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.pid"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="pid">
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.name"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name">
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.allname"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="allname">
+                                </div>
+                            </div>                          
+                        </form>
+                    </div>
+                    <!-- modal-body END -->
+                    
+                    <div class="modal-footer">
+                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<!-- page script -->
 		<script>
 			$(function () {
@@ -220,7 +277,9 @@
 	                columns: [//对应上面thead里面的序列
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
-	               		{"data": 'name'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	  
+	                    {"data": 'pid'},
+	                    {"data": 'name'},
+	               		{"data": 'allname'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	  
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
@@ -295,8 +354,14 @@
 				
 				//添加
 	            $("#btn-add").on("click", function () {
-	            	//tables.fnDraw();
+	            	url = "<%=path%>/division/add";
+                    $("input[name=id]").val("");
+                    $("input[name=pid]").val("");
+                    $("#addForm input[name=name]").val("");
+                    $("input[name=allname]").val("");
+                    $("#addModal").modal("show");
 	            });
+				
 				
 	          	//批量删除
 	            $("#btn-delAll").on("click", function () {
@@ -328,11 +393,13 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=name]").val(data.name);
+					$("input[name=pid]").val(data.pid);
+					$("#editForm input[name=name]").val(data.name);
+					$("input[name=allname]").val(data.allname);
 					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
+						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
-						$("input[name=created]").val(data.created);
+						$("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
 					}
 					$("#editModal").modal("show");
 					
@@ -360,6 +427,29 @@
 		                }
 		            });
 	          	});
+				
+				$("#btn-addsubmit").on("click", function(){
+                    var url = "<%=path%>/division/add";
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: url,
+                        data:$("#addForm").serialize(),
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(data) {
+                            if(data.status == 1){
+                                $("#addModal").modal("hide");
+                                toastr.success("<sp:message code='sys.oper.success'/>");
+                                tables.fnDraw(false);
+                            }else{
+                                toastr.error("<sp:message code='sys.oper.fail'/>");
+                            }
+                        }
+                    });
+                });
 	          	
 				//删除
 				$('#dataTable tbody').on( 'click', '#delRow', function () {

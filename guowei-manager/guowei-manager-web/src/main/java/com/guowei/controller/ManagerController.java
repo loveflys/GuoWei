@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -132,19 +134,39 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/manager/add")
-	public String add(GwManager manager, ModelMap model) {
-		String password = manager.getPassword();
+	@RequestMapping(value = "/manager/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String add(HttpServletRequest request, ModelMap model) {
+		GwManager manager = new GwManager();
+		if (!"".equals(request.getParameter("area"))) {
+			manager.setArea(Long.parseLong(request.getParameter("area")));
+		}
+		if (!"".equals(request.getParameter("level"))) {
+			manager.setLevel(Byte.decode((request.getParameter("level"))));
+		}
+		if (!"".equals(request.getParameter("name"))) {
+			manager.setName(request.getParameter("name"));
+		}
+		if (!"".equals(request.getParameter("phone"))) {
+			manager.setPhone(request.getParameter("phone"));		
+		}
+		if (!"".equals(request.getParameter("password"))) {
+			manager.setPassword(request.getParameter("password"));
+		}
+		if (!"".equals(request.getParameter("wechatAccount"))) {
+			manager.setWechatAccount(request.getParameter("wechatAccount"));
+		}
+		manager.setCreated(Calendar.getInstance().getTime());
 		int result = managerService.addGwManager(manager);
 		if (result == 1) {
-			manager.setPassword(password);
 			manager = managerService.getGwManagerByNamePassword(manager);
 			
 			model.addAttribute("result", result);
 			model.addAttribute("msg", manager.getName() + " 注册成功!");
 			log.info(Constants.SYS_NAME + "用户：" + manager.getName() + " 注册成功!");
 		}
-		return "register";
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**
@@ -156,9 +178,25 @@ public class ManagerController {
 	@RequestMapping(value = "/manager/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwManager manager = managerService.getGwManagerById(Long.parseLong(request.getParameter("id")));
-		manager.setPhone(request.getParameter("phone"));
+		if (!"".equals(request.getParameter("area"))) {
+			manager.setArea(Long.parseLong(request.getParameter("area")));
+		}
+		if (!"".equals(request.getParameter("level"))) {
+			manager.setLevel(Byte.parseByte((request.getParameter("level"))));
+		}
+		if (!"".equals(request.getParameter("name"))) {
+			manager.setName(request.getParameter("name"));
+		}
+		if (!"".equals(request.getParameter("phone"))) {
+			manager.setPhone(request.getParameter("phone"));		
+		}
+		if (!"".equals(request.getParameter("password"))) {
+			manager.setPassword(request.getParameter("password"));
+		}
+		if (!"".equals(request.getParameter("wechatAccount"))) {
+			manager.setWechatAccount(request.getParameter("wechatAccount"));
+		}
 		int status = managerService.editGwManager(manager);
 		if (status == 1) {
 			log.info(Constants.SYS_NAME + "用户：" + manager.getName() + " 修改成功!");

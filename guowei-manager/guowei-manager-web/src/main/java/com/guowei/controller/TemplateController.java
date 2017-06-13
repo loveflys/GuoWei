@@ -21,95 +21,100 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
-import com.guowei.pojo.GwCategory;
-import com.guowei.service.CategoryService;
+import com.guowei.pojo.GwTemplate;
+import com.guowei.service.TemplateService;
 
 /**
- * @描述：分类Controller
+ * @描述：模板Controller
  * @作者：陈安一
  * @版本：V1.0
  * @创建时间：：2016-11-21 下午11:08:43
  */
 @Controller
-public class CategoryController {
+public class TemplateController {
 	
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
-	private CategoryService categoryService;
+	private TemplateService templateService;
 	
 	/**
-	 * 查询分类记录
+	 * 查询模板记录
 	 * @param request
 	 * @param query
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/category/getData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/template/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
-	public String getData(HttpServletRequest request, GwCategory category) {
-		DatatablesView dataTable = categoryService.getGwCategorysByPagedParam(category,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+	public String getData(HttpServletRequest request, GwTemplate template) {
+		DatatablesView dataTable = templateService.getGwTemplatesByPagedParam(template,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
 	
-	@RequestMapping("/categorys")
+	@RequestMapping("/templates")
 	public String toList(HttpServletRequest request){   
-		return "category";
+		return "template";
 	}
 	
 	/**
-	 * 分类添加
-	 * @param category
+	 * 模板添加
+	 * @param template
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/category/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/template/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
-		GwCategory category = new GwCategory();
-		category.setName(request.getParameter("name"));
-		category.setCreated(Calendar.getInstance().getTime());
-		int result = categoryService.addGwCategory(category);
+		GwTemplate template = new GwTemplate();
+		if (!"".equals(request.getParameter("name"))) {
+			template.setName(request.getParameter("name"));
+		}
+		template.setCreated(Calendar.getInstance().getTime());
+		template.setUpdated(Calendar.getInstance().getTime());
+		int result = templateService.addGwTemplate(template);
 		if (result == 1) {		
 			model.addAttribute("result", result);
-			log.info(Constants.SYS_NAME + "分类： 添加成功!");
+			log.info(Constants.SYS_NAME + "模板： 添加成功!");
 		}
 		MessageView msg = new MessageView(result);
 		return JSON.toJSONString(msg);
 	}
 	
 	/**
-	 * 分类修改
-	 * @param category
+	 * 模板修改
+	 * @param template
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/category/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/template/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
-		GwCategory category = categoryService.getGwCategoryById(Long.parseLong(request.getParameter("id")));
-		category.setName(request.getParameter("name"));
-		int status = categoryService.editGwCategory(category);
+		GwTemplate template = templateService.getGwTemplateById(Long.parseLong(request.getParameter("id")));
+		if (!"".equals(request.getParameter("name"))) {
+			template.setName(request.getParameter("name"));
+		}
+		template.setUpdated(Calendar.getInstance().getTime());
+		int status = templateService.editGwTemplate(template);
 		if (status == 1) {
-			log.info(Constants.SYS_NAME + "分类：修改成功!");
+			log.info(Constants.SYS_NAME + "模板：修改成功!");
 		}
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
 	
 	/**
-	 * 分类删除
+	 * 模板删除
 	 * @param id
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/category/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/template/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
-		int status = categoryService.removeGwCategory(id);
+		int status = templateService.removeGwTemplate(id);
 		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}

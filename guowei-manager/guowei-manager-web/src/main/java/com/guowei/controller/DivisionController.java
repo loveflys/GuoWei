@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.sql.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,14 +65,22 @@ public class DivisionController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/division/add")
-	public String add(GwDivision division, ModelMap model) {
+	@RequestMapping(value = "/division/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String add(HttpServletRequest request, ModelMap model) {
+		GwDivision division = new GwDivision();
+		division.setPid(Long.parseLong(request.getParameter("pid")));
+		division.setName(request.getParameter("name"));
+		division.setAllname(request.getParameter("allname"));
+		division.setCreated(java.util.Calendar.getInstance().getTime());
+		division.setUpdated(java.util.Calendar.getInstance().getTime());
 		int result = divisionService.addGwDivision(division);
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "地址： 添加成功!");
 		}
-		return "register";
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**
@@ -84,7 +94,16 @@ public class DivisionController {
 	public String update(HttpServletRequest request) {
 		System.out.println(request.getParameter("id"));
 		GwDivision division = divisionService.getGwDivisionById(Long.parseLong(request.getParameter("id")));
-//		division.setPhone(request.getParameter("phone"));
+		if (!"".equals(request.getParameter("pid"))) {
+			division.setPid(Long.parseLong(request.getParameter("pid")));
+		}
+		if (!"".equals(request.getParameter("name"))) {
+			division.setName(request.getParameter("name"));
+		}
+		if (!"".equals(request.getParameter("allname"))) {
+			division.setAllname(request.getParameter("allname"));
+		}
+		division.setUpdated(java.util.Calendar.getInstance().getTime());
 		int status = divisionService.editGwDivision(division);
 		if (status == 1) {
 			log.info(Constants.SYS_NAME + "地址：修改成功!");

@@ -86,6 +86,9 @@
 					
 						<div class="pull-right">
 							<div class="btn-group">
+							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
+                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
+                                </button>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
 									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
 								</button>
@@ -114,6 +117,8 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
+												<th><sp:message code="company.mid"/></th>
+												<th><sp:message code="company.templateId"/></th>
 												<th><sp:message code="company.companyName"/></th>
 												<th><sp:message code="company.companyAddr"/></th>
 												<th><sp:message code="company.companyContactname"/></th>
@@ -145,7 +150,7 @@
 			<div class="control-sidebar-bg"></div>
 		</div>
 		
-		<!-- EditUser -->
+		<!-- EditCompany -->
 		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" >
 				<div class="modal-content">
@@ -161,27 +166,39 @@
 						<form class="form-horizontal"  id="editForm" action="<%=path%>/company/update" method="post">
 							<input type="hidden" class="form-control" name="id">
 							<div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.mid"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="mid">
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.templateId"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="templateId">
+                                </div>
+                            </div> 
+							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyName"/></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" name="companyName" readonly="readonly">
+									<input type="text" class="form-control" name="companyName">
 								</div>
 							</div>
 							<div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyAddr"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyAddr" readonly="readonly">
+                                    <input type="text" class="form-control" name="companyAddr">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactname"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactname" readonly="readonly">
+                                    <input type="text" class="form-control" name="companyContactname">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactposition"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactposition" readonly="readonly">
+                                    <input type="text" class="form-control" name="companyContactposition">
                                 </div>
                             </div>
 							<div class="form-group">
@@ -193,34 +210,20 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechat"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactwechat" readonly="readonly">
+                                    <input type="text" class="form-control" name="companyContactwechat">
                                 </div>
                             </div>
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" name="companyContactwechatopenid" readonly="readonly">
+									<input type="text" class="form-control" name="companyContactwechatopenid">
 								</div>
 							</div>							
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.created"/></label>
-
-								<div class="col-sm-9">
-									<input type="tel" class="form-control" name="created" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.purchased"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="purchased" readonly="readonly">
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="did" readonly="readonly">
+                                    <input type="text" class="form-control" name="did">
                                 </div>
                             </div>
 						</form>
@@ -233,7 +236,93 @@
 				</div>
 			</div>
 		</div>
-	
+	    
+	    
+	    <!-- AddCompany -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="company.info"/>-<sp:message code="sys.add"/></h4>
+                    </div>
+                    
+                    <div class="modal-body" >
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/company/add" method="post">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.mid"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="mid">
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.templateId"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="templateId">
+                                </div>
+                            </div>    
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyName"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyAddr"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyAddr">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactname"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyContactname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactposition"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyContactposition">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" name="companyContactphone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechat"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyContactwechat">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="companyContactwechatopenid">
+                                </div>
+                            </div>                          
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="did">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- modal-body END -->
+                    
+                    <div class="modal-footer">
+                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 		<!-- page script -->
 		<script>
 			$(function () {
@@ -275,6 +364,8 @@
 	                columns: [//对应上面thead里面的序列
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
+	                    {"data": 'mid', defaultContent: ""},
+	                    {"data": 'templateId', defaultContent: ""},
 	               		{"data": 'companyName', defaultContent: ""}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
 	                    {"data": 'companyAddr', defaultContent: ""},
 	                    {"data": 'companyContactname', defaultContent: ""},
@@ -362,7 +453,18 @@
 				
 				//添加
 	            $("#btn-add").on("click", function () {
-	            	//tables.fnDraw();
+	            	var data = tables.api().row($(this).parents('tr')).data();
+	            	$("input[name=mid]").val("");
+	            	$("input[name=templateId]").val("");
+                    $("#addModal input[name=companyName]").val("");
+                    $("input[name=companyAddr]").val("");
+                    $("input[name=companyContactname]").val("");
+                    $("input[name=companyContactposition]").val("");
+                    $("input[name=companyContactphone]").val("");
+                    $("input[name=companyContactwechat]").val("");
+                    $("input[name=companyContactwechatopenid]").val("");
+                    $("input[name=did]").val("");
+                    $("#addModal").modal("show");      
 	            });
 				
 	          	//批量删除
@@ -395,26 +497,17 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=companyName]").val(data.companyName);
+					$("input[name=mid]").val(data.mid);
+					$("input[name=templateId]").val(data.templateId);
+					$("#editModal input[name=companyName]").val(data.companyName);
 					$("input[name=companyAddr]").val(data.companyAddr);
 					$("input[name=companyContactname]").val(data.companyContactname);
 					$("input[name=companyContactposition]").val(data.companyContactposition);
 					$("input[name=companyContactphone]").val(data.companyContactphone);
 					$("input[name=companyContactwechat]").val(data.companyContactwechat);
 					$("input[name=companyContactwechatopenid]").val(data.companyContactwechatopenid);
-					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
-					} else {
-						$("input[name=created]").val(data.created);
-					}
-					if (!data.purchased || data.purchased.length <= 0) {
-                        $("input[name=purchased]").val(new Date().getTime);
-                    } else {
-                        $("input[name=purchased]").val(data.purchased);
-                    }
                     $("input[name=did]").val(data.did);
-					$("#editModal").modal("show");
-					
+					$("#editModal").modal("show");					
 		        });
 	          	
 				$("#btn-submit").on("click", function(){
@@ -439,6 +532,29 @@
 		                }
 		            });
 	          	});
+				
+				$("#btn-addsubmit").on("click", function(){
+                    var url = "<%=path%>/company/add";
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: url,
+                        data:$("#addForm").serialize(),
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(data) {
+                            if(data.status == 1){
+                                $("#addModal").modal("hide");
+                                toastr.success("<sp:message code='sys.oper.success'/>");
+                                tables.fnDraw(false);
+                            }else{
+                                toastr.error("<sp:message code='sys.oper.fail'/>");
+                            }
+                        }
+                    });
+                });
 	          	
 				//删除
 				$('#dataTable tbody').on( 'click', '#delRow', function () {

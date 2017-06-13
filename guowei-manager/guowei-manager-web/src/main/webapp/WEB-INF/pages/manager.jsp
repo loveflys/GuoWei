@@ -70,7 +70,7 @@
 				
 					<!-- 路径导航 -->
 					<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-					<a href="<%=path%>/managers"><sp:message code="menu.managers"/></a>&nbsp;&nbsp;<small><sp:message code="manager.list"/></small>
+					<a href="<%=path%>/managers"><sp:message code="menu.manager"/></a>&nbsp;&nbsp;<small><sp:message code="manager.list"/></small>
 					<!-- 
 					<ol class="breadcrumb">
        					<%@ include file="include/home.jsp" %>
@@ -86,6 +86,9 @@
 					
 						<div class="pull-right">
 							<div class="btn-group">
+							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
+                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
+                                </button>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
 									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
 								</button>
@@ -143,7 +146,7 @@
 			<div class="control-sidebar-bg"></div>
 		</div>
 		
-		<!-- EditUser -->
+		<!-- EditManager -->
 		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" >
 				<div class="modal-content">
@@ -161,7 +164,7 @@
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" name="name" readonly="readonly">
+									<input type="text" class="form-control" name="name">
 								</div>
 							</div>
 							<div class="form-group">
@@ -173,41 +176,34 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="level" readonly="readonly">
+                                    <input type="tel" class="form-control" name="level">
                                 </div>
                             </div>
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" name="password" readonly="readonly">
+									<input type="password" class="form-control" name="password">
 								</div>
 							</div>							
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.create.time"/></label>
-
-								<div class="col-sm-9">
-									<input type="tel" class="form-control" name="created" readonly="readonly">
-								</div>
-							</div>
 							<div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="wechatAccount" readonly="readonly">
+                                    <input type="tel" class="form-control" name="wechatAccount">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="wechatOpenId" readonly="readonly">
+                                    <input type="text" class="form-control" name="wechatOpenId">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="area" readonly="readonly">
+                                    <input type="text" class="form-control" name="area">
                                 </div>
                             </div>
 						</form>
@@ -220,6 +216,76 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- AddManager -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="manager.info"/>-<sp:message code="sys.add"/></h4>
+                    </div>
+                    
+                    <div class="modal-body" >
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/manager/add" method="post">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" name="phone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="level">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" name="password">
+                                </div>
+                            </div>                          
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="tel" class="form-control" name="wechatAccount">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="wechatOpenId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="area">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- modal-body END -->
+                    
+                    <div class="modal-footer">
+                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	
 		<!-- page script -->
 		<script>
@@ -343,7 +409,14 @@
 				
 				//添加
 	            $("#btn-add").on("click", function () {
-	            	//tables.fnDraw();
+	            	$("#addForm input[name=name]").val("");
+                    $("input[name=level]").val("");
+                    $("input[name=password]").val("");
+                    $("input[name=phone]").val("");
+                    $("input[name=wechatAccount]").val("");
+                    $("input[name=wechatOpenid]").val("");
+                    $("input[name=area]").val("");
+                    $("#addModal").modal("show");
 	            });
 				
 	          	//批量删除
@@ -376,15 +449,10 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=name]").val(data.name);
+					$("#editForm input[name=name]").val(data.name);
 					$("input[name=level]").val(data.level);
 					$("input[name=password]").val(data.password);
 					$("input[name=phone]").val(data.phone);
-					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
-					} else {
-						$("input[name=created]").val(data.created);
-					}
 					$("input[name=wechatAccount]").val(data.wechatAccount);
                     $("input[name=wechatOpenid]").val(data.wechatOpenid);
                     $("input[name=area]").val(data.area);
@@ -414,6 +482,29 @@
 		                }
 		            });
 	          	});
+				
+				$("#btn-addsubmit").on("click", function(){
+                    var url = "<%=path%>/manager/add";
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: url,
+                        data:$("#addForm").serialize(),
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(data) {
+                            if(data.status == 1){
+                                $("#addModal").modal("hide");
+                                toastr.success("<sp:message code='sys.oper.success'/>");
+                                tables.fnDraw(false);
+                            }else{
+                                toastr.error("<sp:message code='sys.oper.fail'/>");
+                            }
+                        }
+                    });
+                });
 	          	
 				//删除
 				$('#dataTable tbody').on( 'click', '#delRow', function () {

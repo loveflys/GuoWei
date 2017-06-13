@@ -86,6 +86,9 @@
 					
 						<div class="pull-right">
 							<div class="btn-group">
+							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
+                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
+                                </button>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
 									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
 								</button>
@@ -147,7 +150,7 @@
 			<div class="control-sidebar-bg"></div>
 		</div>
 		
-		<!-- EditUser -->
+		<!-- EditProduct -->
 		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" >
 				<div class="modal-content">
@@ -249,7 +252,86 @@
 				</div>
 			</div>
 		</div>
-	
+	    <!-- AddProduct -->
+        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="product.info"/>-<sp:message code="sys.add"/></h4>
+                    </div>
+                    
+                    <div class="modal-body" >
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/product/add" method="post">
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.title"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.image"/></label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="image">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.price"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="price">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.discountprice"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="discountprice">
+                                </div>
+                            </div>  
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.buyingprice"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="buyingprice">
+                                </div>
+                            </div>          
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.stock"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="stock">
+                                </div>
+                            </div>         
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.allcount"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="allcount">
+                                </div>
+                            </div>          
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.cid"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="cid">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.status"/></label>
+
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="status">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- modal-body END -->
+                    
+                    <div class="modal-footer">
+                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+                    </div>
+                </div>
+            </div>
+        </div>   
 		<!-- page script -->
 		<script>
 			$(function () {
@@ -384,7 +466,16 @@
 				
 				//添加
 	            $("#btn-add").on("click", function () {
-	            	//tables.fnDraw();
+	            	var data = tables.api().row($(this).parents('tr')).data();
+                    $("#addModal input[name=title]").val("");
+                    $("input[name=price]").val("");
+                    $("input[name=discountprice]").val("");
+                    $("input[name=buyingprice]").val("");
+                    $("input[name=stock]").val("");
+                    $("input[name=allcount]").val("");
+                    $("input[name=cid]").val("");
+                    $("input[name=status]").val("");
+                    $("#addModal").modal("show");
 	            });
 				
 	          	//批量删除
@@ -417,23 +508,22 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=title]").val(data.title);
+					$("#editModal input[name=title]").val(data.title);
 					$("input[name=price]").val(data.price);
 					$("input[name=discountprice]").val(data.discountprice);
 					$("input[name=buyingprice]").val(data.buyingprice);
 					$("input[name=stock]").val(data.stock);
 					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
+						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
-						$("input[name=created]").val(data.created);
+						$("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
 					}
                     if (!data.updated || data.updated.length <= 0) {
-                        $("input[name=updated]").val(new Date().getTime);
+                        $("input[name=updated]").val(moment(new Date()).format('YYYY-MM-DD'));
                     } else {
-                        $("input[name=updated]").val(data.updated);
+                        $("input[name=updated]").val(moment(new Date(data.updated)).format('YYYY-MM-DD'));
                     }
 					$("input[name=allcount]").val(data.allcount);
-                    $("input[name=allsellcount]").val(data.allsellcount);
                     $("input[name=cid]").val(data.cid);
                     $("input[name=status]").val(data.status);
 					$("#editModal").modal("show");
@@ -462,6 +552,29 @@
 		                }
 		            });
 	          	});
+				
+				$("#btn-addsubmit").on("click", function(){
+                    var url = "<%=path%>/product/add";
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: url,
+                        data:$("#addForm").serialize(),
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(data) {
+                            if(data.status == 1){
+                                $("#addModal").modal("hide");
+                                toastr.success("<sp:message code='sys.oper.success'/>");
+                                tables.fnDraw(false);
+                            }else{
+                                toastr.error("<sp:message code='sys.oper.fail'/>");
+                            }
+                        }
+                    });
+                });
 	          	
 				//删除
 				$('#dataTable tbody').on( 'click', '#delRow', function () {

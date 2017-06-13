@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,14 +65,49 @@ public class CompanyController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/company/add")
-	public String add(GwCompany company, ModelMap model) {
+	@RequestMapping(value = "/company/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String add(HttpServletRequest request, ModelMap model) {
+		GwCompany company = new GwCompany();
+		if (!"".equals(request.getParameter("mid"))) {
+			company.setMid(Long.parseLong(request.getParameter("mid")));
+		}
+		if (!"".equals(request.getParameter("templateId"))) {
+			company.setTemplateId(Long.parseLong(request.getParameter("templateId")));
+		}
+		if (!"".equals(request.getParameter("companyName"))) {
+			company.setCompanyName(request.getParameter("companyName"));
+		}
+		if (!"".equals(request.getParameter("companyAddr"))) {
+			company.setCompanyAddr(request.getParameter("companyAddr"));		
+		}
+		if (!"".equals(request.getParameter("companyContactname"))) {
+			company.setCompanyContactname(request.getParameter("companyContactname"));
+		}
+		if (!"".equals(request.getParameter("companyContactposition"))) {
+			company.setCompanyContactposition(request.getParameter("companyContactposition"));
+		}
+		if (!"".equals(request.getParameter("companyContactphone"))) {
+			company.setCompanyContactphone(request.getParameter("companyContactphone"));
+		}
+		if (!"".equals(request.getParameter("companyContactwechat"))) {
+			company.setCompanyContactwechat(request.getParameter("companyContactwechat"));
+		}
+		if (!"".equals(request.getParameter("companyContactwechatopenid"))) {
+			company.setCompanyContactwechatopenid(request.getParameter("companyContactwechatopenid"));
+		}
+		if (!"".equals(request.getParameter("did"))) {
+			company.setDid(Long.parseLong(request.getParameter("did")));
+		}
+		company.setCreated(Calendar.getInstance().getTime());
+		company.setPurchased(Calendar.getInstance().getTime());
 		int result = companyService.addGwCompany(company);
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "公司： 添加成功!");
 		}
-		return "register";
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**
@@ -82,9 +119,34 @@ public class CompanyController {
 	@RequestMapping(value = "/company/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwCompany company = companyService.getGwCompanyById(Long.parseLong(request.getParameter("id")));
-//		company.setPhone(request.getParameter("phone"));
+		if (!"".equals(request.getParameter("mid"))) {
+			company.setMid(Long.parseLong(request.getParameter("mid")));
+		}
+		if (!"".equals(request.getParameter("templateId"))) {
+			company.setTemplateId(Long.parseLong(request.getParameter("templateId")));
+		}
+		if (!"".equals(request.getParameter("companyName"))) {
+			company.setCompanyName(request.getParameter("companyName"));
+		}
+		if (!"".equals(request.getParameter("companyAddr"))) {
+			company.setCompanyName(request.getParameter("companyAddr"));		
+		}
+		if (!"".equals(request.getParameter("companyContactname"))) {
+			company.setCompanyName(request.getParameter("companyContactname"));
+		}
+		if (!"".equals(request.getParameter("companyContactposition"))) {
+			company.setCompanyName(request.getParameter("companyContactposition"));
+		}
+		if (!"".equals(request.getParameter("companyContactphone"))) {
+			company.setCompanyName(request.getParameter("companyContactphone"));
+		}
+		if (!"".equals(request.getParameter("companyContactwechat"))) {
+			company.setCompanyName(request.getParameter("companyContactwechat"));
+		}
+		if (!"".equals(request.getParameter("did"))) {
+			company.setDid(Long.parseLong(request.getParameter("did")));
+		}
 		int status = companyService.editGwCompany(company);
 		if (status == 1) {
 			log.info(Constants.SYS_NAME + "公司：修改成功!");

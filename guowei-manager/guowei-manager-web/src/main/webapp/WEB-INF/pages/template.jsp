@@ -70,7 +70,7 @@
                 
                     <!-- 路径导航 -->
                     <a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-                    <a href="<%=path%>/categorys"><sp:message code="menu.categorys"/></a>&nbsp;&nbsp;<small><sp:message code="category.list"/></small>
+                    <a href="<%=path%>/templates"><sp:message code="menu.templates"/></a>&nbsp;&nbsp;<small><sp:message code="template.list"/></small>
                     <!-- 
                     <ol class="breadcrumb">
                         <%@ include file="include/home.jsp" %>
@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="row">
-                            <form id="queryForm" action="<%=path%>/categorys" method="post">
+                            <form id="queryForm" action="<%=path%>/templates" method="post">
                                 <div class="col-xs-2">
                                     <input type="text" id="keyword" name="name" class="form-control input-sm"
                                         placeholder="<sp:message code="sys.keyword"/>">
@@ -117,7 +117,7 @@
                                             <tr class="info">
                                                 <!-- <td><input type="checkbox" id="checkAll"></td> -->
                                                 <th><sp:message code="sys.no"/></th>
-                                                <th><sp:message code="category.name"/></th>                                         
+                                                <th><sp:message code="template.name"/></th>                                         
                                                 <th><sp:message code="sys.create.time"/></th>
                                                 <th><sp:message code="sys.oper"/></th>
                                             </tr>
@@ -149,14 +149,14 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="category.info"/>-<sp:message code="sys.edit"/></h4>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="template.info"/>-<sp:message code="sys.edit"/></h4>
                     </div>
                     
                     <div class="modal-body" >
-                        <form class="form-horizontal"  id="editForm" action="<%=path%>/category/update" method="post">
+                        <form class="form-horizontal"  id="editForm" action="<%=path%>/template/update" method="post">
                             <input type="hidden" class="form-control" name="id">
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="category.name"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="template.name"/></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="name">
                                 </div>
@@ -188,13 +188,13 @@
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="category.info"/>-<sp:message code="sys.add"/></h4>
+                        <h4 class="modal-title" id="myModalLabel"><sp:message code="template.info"/>-<sp:message code="sys.add"/></h4>
                     </div>
                     
                     <div class="modal-body" >
-                        <form class="form-horizontal"  id="addForm" action="<%=path%>/category/add" method="post">
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/template/add" method="post">
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="category.name"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="template.name"/></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="name">
                                 </div>
@@ -233,7 +233,7 @@
                     searching: false,
                     ajax: {   //类似jquery的ajax参数，基本都可以用。
                         type: "post",//后台指定了方式，默认get，外加datatable默认构造的参数很长，有可能超过get的最大长度。
-                        url: "<%=path%>/category/getData",
+                        url: "<%=path%>/template/getData",
                         dataSrc: "data",//默认data，也可以写其他的，格式化table的时候取里面的数据
                         data: function (d) {//d是原始的发送给服务器的数据，默认很长。
                             var param = {}; //因为服务端排序，可以新建一个参数对象
@@ -361,17 +361,12 @@
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("input[name=id]").val(data.id);
                     $("#editForm input[name=name]").val(data.name);
-                    if (!data.created || data.created.length <= 0) {
-                        $("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
-                    } else {
-                        $("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
-                    }
                     $("#editModal").modal("show");
                     
                 });
                 
                 $("#btn-submit").on("click", function(){
-                    var url = "<%=path%>/category/update";
+                    var url = "<%=path%>/template/update";
                     $.ajax({
                         cache: false,
                         type: "POST",
@@ -394,7 +389,7 @@
                 });
                 
                 $("#btn-addsubmit").on("click", function(){
-                    var url = "<%=path%>/category/add";
+                    var url = "<%=path%>/template/add";
                     $.ajax({
                         cache: false,
                         type: "POST",
@@ -421,7 +416,7 @@
                     var data = tables.api().row($(this).parents('tr')).data();
                     if(confirm("是否确认删除这条信息?")){
                         $.ajax({
-                            url:'<%=path%>/category/del/'+data.id,
+                            url:'<%=path%>/template/del/'+data.id,
                             type:'delete',
                             dataType: "json",
                             //timeout:"3000",

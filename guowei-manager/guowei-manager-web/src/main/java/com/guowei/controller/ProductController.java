@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,20 +60,52 @@ public class ProductController {
 	}
 	
 	/**
-	 * 商品注册
+	 * 商品添加
 	 * @param product
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/product/add")
-	public String add(GwProduct product, ModelMap model) {
+	@RequestMapping(value = "/product/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String add(HttpServletRequest request, ModelMap model) {
+		GwProduct product = new GwProduct();
+		if (!"".equals(request.getParameter("title"))) {
+			product.setTitle(request.getParameter("title"));
+		}
+		if (!"".equals(request.getParameter("image"))) {
+			product.setImage(request.getParameter("image"));
+		}
+		if (!"".equals(request.getParameter("price"))) {
+			product.setPrice(Long.parseLong(request.getParameter("price")));
+		}
+		if (!"".equals(request.getParameter("discountprice"))) {
+			product.setDiscountprice(Long.parseLong(request.getParameter("discountprice")));
+		}
+		if (!"".equals(request.getParameter("buyingprice"))) {
+			product.setBuyingprice(Long.parseLong(request.getParameter("buyingprice")));
+		}
+		if (!"".equals(request.getParameter("stock"))) {
+			product.setStock(Integer.parseInt(request.getParameter("stock")));
+		}
+		product.setCreated(Calendar.getInstance().getTime());
+		product.setUpdated(Calendar.getInstance().getTime());
+		if (!"".equals(request.getParameter("allsellcount"))) {
+			product.setAllsellcount(0);
+		}
+		if (!"".equals(request.getParameter("cid"))) {
+			product.setCid(Long.parseLong(request.getParameter("cid")));
+		}
+		if (!"".equals(request.getParameter("status"))) {
+			product.setStatus(Byte.parseByte(request.getParameter("status")));		
+		}
 		int result = productService.addGwProduct(product);
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			model.addAttribute("msg", product.getTitle() + " 添加成功!");
 			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 添加成功!");
 		}
-		return "register";
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**
@@ -85,7 +119,34 @@ public class ProductController {
 	public String update(HttpServletRequest request) {
 		System.out.println(request.getParameter("id"));
 		GwProduct product = productService.getGwProductById(Long.parseLong(request.getParameter("id")));
-//		product.setPhone(request.getParameter("phone"));
+		if (!"".equals(request.getParameter("title"))) {
+			product.setTitle(request.getParameter("title"));
+		}
+		if (!"".equals(request.getParameter("image"))) {
+			product.setImage(request.getParameter("image"));
+		}
+		if (!"".equals(request.getParameter("price"))) {
+			product.setPrice(Long.parseLong(request.getParameter("price")));
+		}
+		if (!"".equals(request.getParameter("discountprice"))) {
+			product.setDiscountprice(Long.parseLong(request.getParameter("discountprice")));
+		}
+		if (!"".equals(request.getParameter("buyingprice"))) {
+			product.setBuyingprice(Long.parseLong(request.getParameter("buyingprice")));
+		}
+		if (!"".equals(request.getParameter("stock"))) {
+			product.setStock(Integer.parseInt(request.getParameter("stock")));
+		}
+		product.setUpdated(Calendar.getInstance().getTime());
+		if (!"".equals(request.getParameter("allsellcount"))) {
+			product.setAllsellcount(Integer.parseInt(request.getParameter("allsellcount")));
+		}
+		if (!"".equals(request.getParameter("cid"))) {
+			product.setCid(Long.parseLong(request.getParameter("cid")));
+		}
+		if (!"".equals(request.getParameter("status"))) {
+			product.setStatus(Byte.parseByte(request.getParameter("status")));		
+		}
 		int status = productService.editGwProduct(product);
 		if (status == 1) {
 			log.info(Constants.SYS_NAME + "商品：" + product.getTitle() + " 修改成功!");
