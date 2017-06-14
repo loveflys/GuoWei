@@ -9,6 +9,7 @@
     <result column="sellcount" property="sellcount" jdbcType="INTEGER" />
     <result column="sellprice" property="sellprice" jdbcType="BIGINT" />
     <result column="storageracks" property="storageracks" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, company_id, pid, stock, sellcount, sellprice, storageracks
+    id, company_id, pid, stock, sellcount, sellprice, storageracks, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCompanyproductExample" >
     select
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="com.guowei.pojo.GwCompanyproduct" >
     insert into gw_companyproduct (id, company_id, pid, 
       stock, sellcount, sellprice, 
-      storageracks)
+      storageracks, status)
     values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, 
       #{stock,jdbcType=INTEGER}, #{sellcount,jdbcType=INTEGER}, #{sellprice,jdbcType=BIGINT}, 
-      #{storageracks,jdbcType=TINYINT})
+      #{storageracks,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompanyproduct" >
     insert into gw_companyproduct
@@ -133,6 +134,9 @@
       <if test="storageracks != null" >
         storageracks,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -155,6 +159,9 @@
       </if>
       <if test="storageracks != null" >
         #{storageracks,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.storageracks != null" >
         storageracks = #{record.storageracks,jdbcType=TINYINT},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       stock = #{record.stock,jdbcType=INTEGER},
       sellcount = #{record.sellcount,jdbcType=INTEGER},
       sellprice = #{record.sellprice,jdbcType=BIGINT},
-      storageracks = #{record.storageracks,jdbcType=TINYINT}
+      storageracks = #{record.storageracks,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="storageracks != null" >
         storageracks = #{storageracks,jdbcType=TINYINT},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -237,7 +251,8 @@
       stock = #{stock,jdbcType=INTEGER},
       sellcount = #{sellcount,jdbcType=INTEGER},
       sellprice = #{sellprice,jdbcType=BIGINT},
-      storageracks = #{storageracks,jdbcType=TINYINT}
+      storageracks = #{storageracks,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

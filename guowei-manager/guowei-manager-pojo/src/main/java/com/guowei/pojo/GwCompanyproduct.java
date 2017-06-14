@@ -15,6 +15,8 @@ public class GwCompanyproduct {
 
     private Byte storageracks;
 
+    private Byte status;
+
     public Long getId() {
         return id;
     }
@@ -69,5 +71,13 @@ public class GwCompanyproduct {
 
     public void setStorageracks(Byte storageracks) {
         this.storageracks = storageracks;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

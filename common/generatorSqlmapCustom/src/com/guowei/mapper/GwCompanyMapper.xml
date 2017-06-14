@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guowei.mapper.GwCompanyMapper">
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwCompany">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="mid" jdbcType="BIGINT" property="mid" />
-    <result column="template_id" jdbcType="BIGINT" property="templateId" />
-    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
-    <result column="company_addr" jdbcType="VARCHAR" property="companyAddr" />
-    <result column="company_contactname" jdbcType="VARCHAR" property="companyContactname" />
-    <result column="company_contactposition" jdbcType="VARCHAR" property="companyContactposition" />
-    <result column="company_contactphone" jdbcType="VARCHAR" property="companyContactphone" />
-    <result column="company_contactwechat" jdbcType="VARCHAR" property="companyContactwechat" />
-    <result column="company_contactwechatopenid" jdbcType="VARCHAR" property="companyContactwechatopenid" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="purchased" jdbcType="TIMESTAMP" property="purchased" />
-    <result column="did" jdbcType="BIGINT" property="did" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guowei.mapper.GwCompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwCompany" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="template_id" property="templateId" jdbcType="BIGINT" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_addr" property="companyAddr" jdbcType="VARCHAR" />
+    <result column="company_contactname" property="companyContactname" jdbcType="VARCHAR" />
+    <result column="company_contactposition" property="companyContactposition" jdbcType="VARCHAR" />
+    <result column="company_contactphone" property="companyContactphone" jdbcType="VARCHAR" />
+    <result column="company_contactwechat" property="companyContactwechat" jdbcType="VARCHAR" />
+    <result column="company_contactwechatopenid" property="companyContactwechatopenid" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
+    <result column="did" property="did" jdbcType="BIGINT" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -45,25 +45,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -74,42 +74,42 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, mid, template_id, company_name, company_addr, company_contactname, company_contactposition, 
     company_contactphone, company_contactwechat, company_contactwechatopenid, created, 
     purchased, did
   </sql>
-  <select id="selectByExample" parameterType="com.guowei.pojo.GwCompanyExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCompanyExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from gw_company
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from gw_company
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from gw_company
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwCompanyExample">
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwCompanyExample" >
     delete from gw_company
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwCompany">
+  <insert id="insert" parameterType="com.guowei.pojo.GwCompany" >
     insert into gw_company (id, mid, template_id, 
       company_name, company_addr, company_contactname, 
       company_contactposition, company_contactphone, 
@@ -123,145 +123,145 @@
       #{created,jdbcType=TIMESTAMP}, #{purchased,jdbcType=TIMESTAMP}, #{did,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompany">
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompany" >
     insert into gw_company
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="mid != null">
+      <if test="mid != null" >
         mid,
       </if>
-      <if test="templateId != null">
+      <if test="templateId != null" >
         template_id,
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         company_name,
       </if>
-      <if test="companyAddr != null">
+      <if test="companyAddr != null" >
         company_addr,
       </if>
-      <if test="companyContactname != null">
+      <if test="companyContactname != null" >
         company_contactname,
       </if>
-      <if test="companyContactposition != null">
+      <if test="companyContactposition != null" >
         company_contactposition,
       </if>
-      <if test="companyContactphone != null">
+      <if test="companyContactphone != null" >
         company_contactphone,
       </if>
-      <if test="companyContactwechat != null">
+      <if test="companyContactwechat != null" >
         company_contactwechat,
       </if>
-      <if test="companyContactwechatopenid != null">
+      <if test="companyContactwechatopenid != null" >
         company_contactwechatopenid,
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         created,
       </if>
-      <if test="purchased != null">
+      <if test="purchased != null" >
         purchased,
       </if>
-      <if test="did != null">
+      <if test="did != null" >
         did,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="mid != null">
+      <if test="mid != null" >
         #{mid,jdbcType=BIGINT},
       </if>
-      <if test="templateId != null">
+      <if test="templateId != null" >
         #{templateId,jdbcType=BIGINT},
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="companyAddr != null">
+      <if test="companyAddr != null" >
         #{companyAddr,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactname != null">
+      <if test="companyContactname != null" >
         #{companyContactname,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactposition != null">
+      <if test="companyContactposition != null" >
         #{companyContactposition,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactphone != null">
+      <if test="companyContactphone != null" >
         #{companyContactphone,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactwechat != null">
+      <if test="companyContactwechat != null" >
         #{companyContactwechat,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactwechatopenid != null">
+      <if test="companyContactwechatopenid != null" >
         #{companyContactwechatopenid,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="purchased != null">
+      <if test="purchased != null" >
         #{purchased,jdbcType=TIMESTAMP},
       </if>
-      <if test="did != null">
+      <if test="did != null" >
         #{did,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwCompanyExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.guowei.pojo.GwCompanyExample" resultType="java.lang.Integer" >
     select count(*) from gw_company
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update gw_company
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.mid != null">
+      <if test="record.mid != null" >
         mid = #{record.mid,jdbcType=BIGINT},
       </if>
-      <if test="record.templateId != null">
+      <if test="record.templateId != null" >
         template_id = #{record.templateId,jdbcType=BIGINT},
       </if>
-      <if test="record.companyName != null">
+      <if test="record.companyName != null" >
         company_name = #{record.companyName,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyAddr != null">
+      <if test="record.companyAddr != null" >
         company_addr = #{record.companyAddr,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactname != null">
+      <if test="record.companyContactname != null" >
         company_contactname = #{record.companyContactname,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactposition != null">
+      <if test="record.companyContactposition != null" >
         company_contactposition = #{record.companyContactposition,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactphone != null">
+      <if test="record.companyContactphone != null" >
         company_contactphone = #{record.companyContactphone,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactwechat != null">
+      <if test="record.companyContactwechat != null" >
         company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactwechatopenid != null">
+      <if test="record.companyContactwechatopenid != null" >
         company_contactwechatopenid = #{record.companyContactwechatopenid,jdbcType=VARCHAR},
       </if>
-      <if test="record.created != null">
+      <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.purchased != null">
+      <if test="record.purchased != null" >
         purchased = #{record.purchased,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.did != null">
+      <if test="record.did != null" >
         did = #{record.did,jdbcType=BIGINT},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update gw_company
     set id = #{record.id,jdbcType=BIGINT},
       mid = #{record.mid,jdbcType=BIGINT},
@@ -276,390 +276,53 @@
       created = #{record.created,jdbcType=TIMESTAMP},
       purchased = #{record.purchased,jdbcType=TIMESTAMP},
       did = #{record.did,jdbcType=BIGINT}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwCompany">
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwCompany" >
     update gw_company
-    <set>
-      <if test="mid != null">
+    <set >
+      <if test="mid != null" >
         mid = #{mid,jdbcType=BIGINT},
       </if>
-      <if test="templateId != null">
+      <if test="templateId != null" >
         template_id = #{templateId,jdbcType=BIGINT},
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="companyAddr != null">
+      <if test="companyAddr != null" >
         company_addr = #{companyAddr,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactname != null">
+      <if test="companyContactname != null" >
         company_contactname = #{companyContactname,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactposition != null">
+      <if test="companyContactposition != null" >
         company_contactposition = #{companyContactposition,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactphone != null">
+      <if test="companyContactphone != null" >
         company_contactphone = #{companyContactphone,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactwechat != null">
+      <if test="companyContactwechat != null" >
         company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactwechatopenid != null">
+      <if test="companyContactwechatopenid != null" >
         company_contactwechatopenid = #{companyContactwechatopenid,jdbcType=VARCHAR},
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="purchased != null">
+      <if test="purchased != null" >
         purchased = #{purchased,jdbcType=TIMESTAMP},
       </if>
-      <if test="did != null">
+      <if test="did != null" >
         did = #{did,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwCompany">
-    update gw_company
-    set mid = #{mid,jdbcType=BIGINT},
-      template_id = #{templateId,jdbcType=BIGINT},
-      company_name = #{companyName,jdbcType=VARCHAR},
-      company_addr = #{companyAddr,jdbcType=VARCHAR},
-      company_contactname = #{companyContactname,jdbcType=VARCHAR},
-      company_contactposition = #{companyContactposition,jdbcType=VARCHAR},
-      company_contactphone = #{companyContactphone,jdbcType=VARCHAR},
-      company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
-      company_contactwechatopenid = #{companyContactwechatopenid,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP},
-      purchased = #{purchased,jdbcType=TIMESTAMP},
-      did = #{did,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwCompany">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="mid" jdbcType="BIGINT" property="mid" />
-    <result column="template_id" jdbcType="BIGINT" property="templateId" />
-    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
-    <result column="company_addr" jdbcType="VARCHAR" property="companyAddr" />
-    <result column="company_contactname" jdbcType="VARCHAR" property="companyContactname" />
-    <result column="company_contactposition" jdbcType="VARCHAR" property="companyContactposition" />
-    <result column="company_contactphone" jdbcType="VARCHAR" property="companyContactphone" />
-    <result column="company_contactwechat" jdbcType="VARCHAR" property="companyContactwechat" />
-    <result column="company_contactwechatopenid" jdbcType="VARCHAR" property="companyContactwechatopenid" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="purchased" jdbcType="TIMESTAMP" property="purchased" />
-    <result column="did" jdbcType="BIGINT" property="did" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, mid, template_id, company_name, company_addr, company_contactname, company_contactposition, 
-    company_contactphone, company_contactwechat, company_contactwechatopenid, created, 
-    purchased, did
-  </sql>
-  <select id="selectByExample" parameterType="com.guowei.pojo.GwCompanyExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from gw_company
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from gw_company
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from gw_company
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwCompanyExample">
-    delete from gw_company
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwCompany">
-    insert into gw_company (id, mid, template_id, 
-      company_name, company_addr, company_contactname, 
-      company_contactposition, company_contactphone, 
-      company_contactwechat, company_contactwechatopenid, 
-      created, purchased, did
-      )
-    values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, 
-      #{companyName,jdbcType=VARCHAR}, #{companyAddr,jdbcType=VARCHAR}, #{companyContactname,jdbcType=VARCHAR}, 
-      #{companyContactposition,jdbcType=VARCHAR}, #{companyContactphone,jdbcType=VARCHAR}, 
-      #{companyContactwechat,jdbcType=VARCHAR}, #{companyContactwechatopenid,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{purchased,jdbcType=TIMESTAMP}, #{did,jdbcType=BIGINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompany">
-    insert into gw_company
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="mid != null">
-        mid,
-      </if>
-      <if test="templateId != null">
-        template_id,
-      </if>
-      <if test="companyName != null">
-        company_name,
-      </if>
-      <if test="companyAddr != null">
-        company_addr,
-      </if>
-      <if test="companyContactname != null">
-        company_contactname,
-      </if>
-      <if test="companyContactposition != null">
-        company_contactposition,
-      </if>
-      <if test="companyContactphone != null">
-        company_contactphone,
-      </if>
-      <if test="companyContactwechat != null">
-        company_contactwechat,
-      </if>
-      <if test="companyContactwechatopenid != null">
-        company_contactwechatopenid,
-      </if>
-      <if test="created != null">
-        created,
-      </if>
-      <if test="purchased != null">
-        purchased,
-      </if>
-      <if test="did != null">
-        did,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="mid != null">
-        #{mid,jdbcType=BIGINT},
-      </if>
-      <if test="templateId != null">
-        #{templateId,jdbcType=BIGINT},
-      </if>
-      <if test="companyName != null">
-        #{companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="companyAddr != null">
-        #{companyAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactname != null">
-        #{companyContactname,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactposition != null">
-        #{companyContactposition,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactphone != null">
-        #{companyContactphone,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactwechat != null">
-        #{companyContactwechat,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactwechatopenid != null">
-        #{companyContactwechatopenid,jdbcType=VARCHAR},
-      </if>
-      <if test="created != null">
-        #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="purchased != null">
-        #{purchased,jdbcType=TIMESTAMP},
-      </if>
-      <if test="did != null">
-        #{did,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwCompanyExample" resultType="java.lang.Integer">
-    select count(*) from gw_company
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update gw_company
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.mid != null">
-        mid = #{record.mid,jdbcType=BIGINT},
-      </if>
-      <if test="record.templateId != null">
-        template_id = #{record.templateId,jdbcType=BIGINT},
-      </if>
-      <if test="record.companyName != null">
-        company_name = #{record.companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyAddr != null">
-        company_addr = #{record.companyAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyContactname != null">
-        company_contactname = #{record.companyContactname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyContactposition != null">
-        company_contactposition = #{record.companyContactposition,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyContactphone != null">
-        company_contactphone = #{record.companyContactphone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyContactwechat != null">
-        company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
-      </if>
-      <if test="record.companyContactwechatopenid != null">
-        company_contactwechatopenid = #{record.companyContactwechatopenid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.created != null">
-        created = #{record.created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.purchased != null">
-        purchased = #{record.purchased,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.did != null">
-        did = #{record.did,jdbcType=BIGINT},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update gw_company
-    set id = #{record.id,jdbcType=BIGINT},
-      mid = #{record.mid,jdbcType=BIGINT},
-      template_id = #{record.templateId,jdbcType=BIGINT},
-      company_name = #{record.companyName,jdbcType=VARCHAR},
-      company_addr = #{record.companyAddr,jdbcType=VARCHAR},
-      company_contactname = #{record.companyContactname,jdbcType=VARCHAR},
-      company_contactposition = #{record.companyContactposition,jdbcType=VARCHAR},
-      company_contactphone = #{record.companyContactphone,jdbcType=VARCHAR},
-      company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
-      company_contactwechatopenid = #{record.companyContactwechatopenid,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=TIMESTAMP},
-      purchased = #{record.purchased,jdbcType=TIMESTAMP},
-      did = #{record.did,jdbcType=BIGINT}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwCompany">
-    update gw_company
-    <set>
-      <if test="mid != null">
-        mid = #{mid,jdbcType=BIGINT},
-      </if>
-      <if test="templateId != null">
-        template_id = #{templateId,jdbcType=BIGINT},
-      </if>
-      <if test="companyName != null">
-        company_name = #{companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="companyAddr != null">
-        company_addr = #{companyAddr,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactname != null">
-        company_contactname = #{companyContactname,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactposition != null">
-        company_contactposition = #{companyContactposition,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactphone != null">
-        company_contactphone = #{companyContactphone,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactwechat != null">
-        company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactwechatopenid != null">
-        company_contactwechatopenid = #{companyContactwechatopenid,jdbcType=VARCHAR},
-      </if>
-      <if test="created != null">
-        created = #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="purchased != null">
-        purchased = #{purchased,jdbcType=TIMESTAMP},
-      </if>
-      <if test="did != null">
-        did = #{did,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwCompany">
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwCompany" >
     update gw_company
     set mid = #{mid,jdbcType=BIGINT},
       template_id = #{templateId,jdbcType=BIGINT},

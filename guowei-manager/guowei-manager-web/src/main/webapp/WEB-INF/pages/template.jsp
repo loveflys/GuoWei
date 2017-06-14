@@ -3,214 +3,535 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <!--title-->
-        <%@ include file="include/title.jsp" %>
-        
-        <!-- iCheck -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/iCheck/flat/blue.css">
-        <!-- Morris chart -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/morris/morris.css">
-        <!-- jvectormap -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-        <!-- Date Picker -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/datepicker/datepicker3.css">
-        <!-- Daterange picker -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
-        <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-        
-        <style type="text/css">
-            .modal-dialog { 
-                position: absolute; 
-                top: 0; 
-                bottom: 0; 
-                left: 0; 
-                right: 0; 
-            } 
-            
-            .modal-content { 
-                /*overflow-y: scroll; */ 
-                position: absolute; 
-                top: 0; 
-                bottom: 0; 
-                width: 100%; 
-            } 
-            
-            .modal-body { 
-                overflow-y: scroll; 
-                position: absolute; 
-                top: 55px; 
-                bottom: 65px; 
-                width: 100%; 
-            } 
-            
-            .modal-footer {
-                position: absolute; 
-                width: 100%; 
-                bottom: 0; 
-            }
-        </style>
-        
-    </head>
-    
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
-            <!--header-->
-            <%@ include file="include/header.jsp" %>
-            
-            <!--menu-->
-            <%@ include file="include/menu.jsp" %>
-    
-            <!-- Left side column. contains the logo and sidebar -->
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                
-                    <!-- 路径导航 -->
-                    <a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-                    <a href="<%=path%>/templates"><sp:message code="menu.templates"/></a>&nbsp;&nbsp;<small><sp:message code="template.list"/></small>
-                    <!-- 
+<head>
+<!--title-->
+<%@ include file="include/title.jsp"%>
+
+<!-- iCheck -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/iCheck/flat/blue.css">
+<!-- Morris chart -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/morris/morris.css">
+<!-- jvectormap -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<!-- Date Picker -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/datepicker/datepicker3.css">
+<!-- Daterange picker -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap wysihtml5 - text editor -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+<style type="text/css">
+.modal-dialog {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.modal-content {
+	/*overflow-y: scroll; */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.modal-body {
+	overflow-y: scroll;
+	position: absolute;
+	top: 55px;
+	bottom: 65px;
+	width: 100%;
+}
+
+.modal-footer {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+</style>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!--header-->
+		<%@ include file="include/header.jsp"%>
+
+		<!--menu-->
+		<%@ include file="include/menu.jsp"%>
+
+		<!-- Left side column. contains the logo and sidebar -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+
+				<!-- 路径导航 -->
+				<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message
+						code="sys.home" /></a> > <a href="<%=path%>/templates"><sp:message
+						code="menu.templates" /></a>&nbsp;&nbsp;<small><sp:message
+						code="template.list" /></small>
+				<!-- 
                     <ol class="breadcrumb">
                         <%@ include file="include/home.jsp" %>
                         <li class="active">商品管理</li>
                     </ol>
                      -->
-                </section>
-            
-                <!-- Main content -->
-                <section class="content">
-                    <!-- 查询、添加、批量删除、导出、刷新 -->
-                    <div class="row-fluid">
-                    
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
-                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
-                                </button>
-                                <button type="button" class="btn btn-primary btn-sm" id="btn-re">
-                                    <i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
-                                </button>
-                            </div>
-                        </div>
+			</section>
 
-                        <div class="row">
-                            <form id="queryForm" action="<%=path%>/templates" method="post">
-                                <div class="col-xs-2">
-                                    <input type="text" id="keyword" name="name" class="form-control input-sm"
-                                        placeholder="<sp:message code="sys.keyword"/>">
-                                </div>
-                                <button type="button" class="btn btn-primary btn-sm" id="btn-query">
-                                    <i class="fa fa-search"></i> <sp:message code="sys.query"/>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-body">
-                                    <table id="dataTable" class="table table-striped table-bordered table-hover table-condensed" align="center">
-                                        <thead>
-                                            <tr class="info">
-                                                <!-- <td><input type="checkbox" id="checkAll"></td> -->
-                                                <th><sp:message code="sys.no"/></th>
-                                                <th><sp:message code="template.name"/></th>                                         
-                                                <th><sp:message code="sys.create.time"/></th>
-                                                <th><sp:message code="sys.oper"/></th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </section>
+			<!-- Main content -->
+			<section class="content">
+				<!-- 查询、添加、批量删除、导出、刷新 -->
+				<div class="row-fluid">
 
-            </div>
-    
-            <!--footer-->
-            <%@ include file="include/footer.jsp" %>
-            <div class="control-sidebar-bg"></div>
-        </div>
-        
-        <!-- EditCate -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
-                <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="template.info"/>-<sp:message code="sys.edit"/></h4>
-                    </div>
-                    
-                    <div class="modal-body" >
-                        <form class="form-horizontal"  id="editForm" action="<%=path%>/template/update" method="post">
-                            <input type="hidden" class="form-control" name="id">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="template.name"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-                            </div>                  
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.create.time"/></label>
+					<div class="pull-right">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary btn-sm" id="btn-add">
+								<i class="fa fa-plus"></i>
+								<sp:message code="sys.add" />
+							</button>
+							<button type="button" class="btn btn-primary btn-sm" id="btn-re">
+								<i class="fa fa-refresh"></i>
+								<sp:message code="sys.refresh" />
+							</button>
+						</div>
+					</div>
 
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="created" readonly="readonly">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- modal-body END -->
-                    
-                    <div class="modal-footer">
-                        <button id="btn-submit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- AddCate -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
-                <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="template.info"/>-<sp:message code="sys.add"/></h4>
-                    </div>
-                    
-                    <div class="modal-body" >
-                        <form class="form-horizontal"  id="addForm" action="<%=path%>/template/add" method="post">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="template.name"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- modal-body END -->
-                    
-                    <div class="modal-footer">
-                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- page script -->
-        <script>
+					<div class="row">
+						<form id="queryForm" action="<%=path%>/templates" method="post">
+							<div class="col-xs-2">
+								<input type="text" id="keyword" name="name"
+									class="form-control input-sm"
+									placeholder="<sp:message code="sys.keyword"/>">
+							</div>
+							<button type="button" class="btn btn-primary btn-sm"
+								id="btn-query">
+								<i class="fa fa-search"></i>
+								<sp:message code="sys.query" />
+							</button>
+						</form>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-body">
+								<table id="dataTable"
+									class="table table-striped table-bordered table-hover table-condensed"
+									align="center">
+									<thead>
+										<tr class="info">
+											<!-- <td><input type="checkbox" id="checkAll"></td> -->
+											<th><sp:message code="sys.no" /></th>
+											<th><sp:message code="template.name" /></th>
+											<th><sp:message code="sys.create.time" /></th>
+											<th><sp:message code="sys.oper" /></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</section>
+
+		</div>
+
+		<!--footer-->
+		<%@ include file="include/footer.jsp"%>
+		<div class="control-sidebar-bg"></div>
+	</div>
+
+	<!-- EditTemplate -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+								code="sys.close" /></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<sp:message code="template.info" />
+						-
+						<sp:message code="sys.edit" />
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="editForm"
+						action="<%=path%>/template/update" method="post">
+						<input type="hidden" class="form-control" name="id">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="template.name" /></label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.create.time" /></label>
+
+							<div class="col-sm-9">
+								<input type="tel" class="form-control" name="created"
+									readonly="readonly">
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- modal-body END -->
+
+				<div class="modal-footer">
+					<button id="btn-submit" type="submit" class="btn btn-primary">
+						<sp:message code="sys.submit" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- AddTemplate -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+								code="sys.close" /></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<sp:message code="template.info" />
+						-
+						<sp:message code="sys.add" />
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="addForm"
+						action="<%=path%>/template/add" method="post">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="template.name" /></label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="name">
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- modal-body END -->
+
+				<div class="modal-footer">
+					<button id="btn-addsubmit" type="submit" class="btn btn-primary">
+						<sp:message code="sys.submit" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ManagerTemplate -->
+	<div class="modal fade" id="managerModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+								code="sys.close" /></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<sp:message code="template.info" />
+						-
+						<sp:message code="sys.manager" />
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<input type="hidden" class="form-control" name="id">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="nav-tabs-custom">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#tab_1" data-toggle="tab"
+										aria-expanded="true">第一层货架</a></li>
+									<li class=""><a href="#tab_2" data-toggle="tab"
+										aria-expanded="false">第二层货架</a></li>
+									<li class=""><a href="#tab_3" data-toggle="tab"
+										aria-expanded="false">第三层货架</a></li>
+									<li class=""><a href="#tab_4" data-toggle="tab"
+										aria-expanded="false">第四层货架</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_1">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header with-border">
+														<h3 class="box-title">已有商品库</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body">
+														<table class="table table-bordered">
+															<tbody id="firstProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-plus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header">
+														<h3 class="box-title">第一层货架商品</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body no-padding">
+														<table class="table">
+															<tbody id="firstSelectProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-minus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_2">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header with-border">
+														<h3 class="box-title">已有商品库</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body">
+														<table class="table table-bordered">
+															<tbody id="secondProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-plus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header">
+														<h3 class="box-title">第二层货架商品</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body no-padding">
+														<table class="table">
+															<tbody id="secondSelectProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-minus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_3">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header with-border">
+														<h3 class="box-title">已有商品库</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body">
+														<table class="table table-bordered">
+															<tbody id="thirdProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-plus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header">
+														<h3 class="box-title">第三层货架商品</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body no-padding">
+														<table class="table">
+															<tbody id="thirdSelectProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-minus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_4">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header with-border">
+														<h3 class="box-title">已有商品库</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body">
+														<table class="table table-bordered">
+															<tbody id="forthProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-plus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="box">
+													<div class="box-header">
+														<h3 class="box-title">第四层货架商品</h3>
+													</div>
+													<!-- /.box-header -->
+													<div class="box-body no-padding">
+														<table class="table">
+															<tbody id="forthSelectProContainer">
+																<tr>
+																	<th>图片</th>
+																	<th>名称</th>
+																	<th>价格</th>
+																	<th>操作</th>
+																</tr>
+																<tr>
+																	<td><img
+																		src="http://m.yuan.cn/content/images/200.png"
+																		width="50px" height="50px" /></td>
+																	<td>测试商品1</td>
+																	<td><span class="badge bg-red">￥55</span></td>
+																	<td><i class="fa fa-minus"></i></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- modal-body END -->
+			</div>
+		</div>
+	</div>
+	<!-- page script -->
+	<script>
             $(function () {
                 
                 //页面消息处理
@@ -271,6 +592,7 @@
                             defaultContent: " <div class='btn-group'>"+
                                             //"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
                                             "<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
+                                            "<button id='managerRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-gears'></i></button>"+
                                             "<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
                         }
                     ],
@@ -330,6 +652,10 @@
                     $("#addModal").modal("show");
                 });
                 
+                $("#btn-manager").on("click", function () {
+                    $("#managerModal").modal("show");
+                });
+                
                 //批量删除
                 $("#btn-delAll").on("click", function () {
                     tables.draw( false );
@@ -363,6 +689,12 @@
                     $("#editForm input[name=name]").val(data.name);
                     $("#editModal").modal("show");
                     
+                });
+                //管理 Model
+                $('#dataTable tbody').on( 'click', '#managerRow', function () {
+                    var data = tables.api().row($(this).parents('tr')).data();
+                    $("input[name=id]").val(data.id);
+                    $("#managerModal").modal("show");                    
                 });
                 
                 $("#btn-submit").on("click", function(){
@@ -440,38 +772,43 @@
                 });
             });
         </script>
-    
-        <!-- jQuery UI 1.11.4 -->
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
+
+	<!-- jQuery UI 1.11.4 -->
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
             $.widget.bridge('uibutton', $.ui.button);
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
-        <!-- Sparkline -->
-        <script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
-        <!-- jvectormap -->
-        <script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
-        <!-- daterangepicker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-        <script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- datepicker -->
-        <script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
-        <!-- Bootstrap WYSIHTML5 -->
-        <script src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-        <!-- Slimscroll -->
-        <script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-        <!-- FastClick -->
-        <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="<%=path%>/res/dist/js/app.min.js"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="<%=path%>/res/dist/js/demo.js"></script>
-    </body>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
+	<!-- Sparkline -->
+	<script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<!-- jvectormap -->
+	<script
+		src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script
+		src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
+	<!-- daterangepicker -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	<script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- datepicker -->
+	<script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+	<script
+		src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+	<!-- Slimscroll -->
+	<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="<%=path%>/res/dist/js/app.min.js"></script>
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+	<script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="<%=path%>/res/dist/js/demo.js"></script>
+</body>
 </html>

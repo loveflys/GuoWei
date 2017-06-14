@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.guowei.mapper.GwOrderMapper">
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwOrder">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="company_id" jdbcType="BIGINT" property="companyId" />
-    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
-    <result column="amount" jdbcType="BIGINT" property="amount" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guowei.mapper.GwOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="BIGINT" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -40,25 +40,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -69,40 +69,40 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, company_id, company_name, amount, created, uid, uname, status
   </sql>
-  <select id="selectByExample" parameterType="com.guowei.pojo.GwOrderExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from gw_order
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from gw_order
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from gw_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwOrderExample">
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwOrderExample" >
     delete from gw_order
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwOrder">
+  <insert id="insert" parameterType="com.guowei.pojo.GwOrder" >
     insert into gw_order (id, company_id, company_name, 
       amount, created, uid, 
       uname, status)
@@ -110,100 +110,100 @@
       #{amount,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT}, 
       #{uname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwOrder">
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwOrder" >
     insert into gw_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="companyId != null">
+      <if test="companyId != null" >
         company_id,
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         company_name,
       </if>
-      <if test="amount != null">
+      <if test="amount != null" >
         amount,
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         created,
       </if>
-      <if test="uid != null">
+      <if test="uid != null" >
         uid,
       </if>
-      <if test="uname != null">
+      <if test="uname != null" >
         uname,
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="companyId != null">
+      <if test="companyId != null" >
         #{companyId,jdbcType=BIGINT},
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="amount != null">
+      <if test="amount != null" >
         #{amount,jdbcType=BIGINT},
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="uid != null">
+      <if test="uid != null" >
         #{uid,jdbcType=BIGINT},
       </if>
-      <if test="uname != null">
+      <if test="uname != null" >
         #{uname,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwOrderExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.guowei.pojo.GwOrderExample" resultType="java.lang.Integer" >
     select count(*) from gw_order
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update gw_order
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.companyId != null">
+      <if test="record.companyId != null" >
         company_id = #{record.companyId,jdbcType=BIGINT},
       </if>
-      <if test="record.companyName != null">
+      <if test="record.companyName != null" >
         company_name = #{record.companyName,jdbcType=VARCHAR},
       </if>
-      <if test="record.amount != null">
+      <if test="record.amount != null" >
         amount = #{record.amount,jdbcType=BIGINT},
       </if>
-      <if test="record.created != null">
+      <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.uid != null">
+      <if test="record.uid != null" >
         uid = #{record.uid,jdbcType=BIGINT},
       </if>
-      <if test="record.uname != null">
+      <if test="record.uname != null" >
         uname = #{record.uname,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
+      <if test="record.status != null" >
         status = #{record.status,jdbcType=TINYINT},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update gw_order
     set id = #{record.id,jdbcType=BIGINT},
       company_id = #{record.companyId,jdbcType=BIGINT},
@@ -213,292 +213,38 @@
       uid = #{record.uid,jdbcType=BIGINT},
       uname = #{record.uname,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwOrder">
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwOrder" >
     update gw_order
-    <set>
-      <if test="companyId != null">
+    <set >
+      <if test="companyId != null" >
         company_id = #{companyId,jdbcType=BIGINT},
       </if>
-      <if test="companyName != null">
+      <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="amount != null">
+      <if test="amount != null" >
         amount = #{amount,jdbcType=BIGINT},
       </if>
-      <if test="created != null">
+      <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="uid != null">
+      <if test="uid != null" >
         uid = #{uid,jdbcType=BIGINT},
       </if>
-      <if test="uname != null">
+      <if test="uname != null" >
         uname = #{uname,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
+      <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwOrder">
-    update gw_order
-    set company_id = #{companyId,jdbcType=BIGINT},
-      company_name = #{companyName,jdbcType=VARCHAR},
-      amount = #{amount,jdbcType=BIGINT},
-      created = #{created,jdbcType=TIMESTAMP},
-      uid = #{uid,jdbcType=BIGINT},
-      uname = #{uname,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwOrder">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="company_id" jdbcType="BIGINT" property="companyId" />
-    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
-    <result column="amount" jdbcType="BIGINT" property="amount" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, company_id, company_name, amount, created, uid, uname, status
-  </sql>
-  <select id="selectByExample" parameterType="com.guowei.pojo.GwOrderExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from gw_order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from gw_order
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from gw_order
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwOrderExample">
-    delete from gw_order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwOrder">
-    insert into gw_order (id, company_id, company_name, 
-      amount, created, uid, 
-      uname, status)
-    values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{companyName,jdbcType=VARCHAR}, 
-      #{amount,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT}, 
-      #{uname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwOrder">
-    insert into gw_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="companyId != null">
-        company_id,
-      </if>
-      <if test="companyName != null">
-        company_name,
-      </if>
-      <if test="amount != null">
-        amount,
-      </if>
-      <if test="created != null">
-        created,
-      </if>
-      <if test="uid != null">
-        uid,
-      </if>
-      <if test="uname != null">
-        uname,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="companyId != null">
-        #{companyId,jdbcType=BIGINT},
-      </if>
-      <if test="companyName != null">
-        #{companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="amount != null">
-        #{amount,jdbcType=BIGINT},
-      </if>
-      <if test="created != null">
-        #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="uname != null">
-        #{uname,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwOrderExample" resultType="java.lang.Integer">
-    select count(*) from gw_order
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update gw_order
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.companyId != null">
-        company_id = #{record.companyId,jdbcType=BIGINT},
-      </if>
-      <if test="record.companyName != null">
-        company_name = #{record.companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.amount != null">
-        amount = #{record.amount,jdbcType=BIGINT},
-      </if>
-      <if test="record.created != null">
-        created = #{record.created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.uid != null">
-        uid = #{record.uid,jdbcType=BIGINT},
-      </if>
-      <if test="record.uname != null">
-        uname = #{record.uname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=TINYINT},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update gw_order
-    set id = #{record.id,jdbcType=BIGINT},
-      company_id = #{record.companyId,jdbcType=BIGINT},
-      company_name = #{record.companyName,jdbcType=VARCHAR},
-      amount = #{record.amount,jdbcType=BIGINT},
-      created = #{record.created,jdbcType=TIMESTAMP},
-      uid = #{record.uid,jdbcType=BIGINT},
-      uname = #{record.uname,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=TINYINT}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwOrder">
-    update gw_order
-    <set>
-      <if test="companyId != null">
-        company_id = #{companyId,jdbcType=BIGINT},
-      </if>
-      <if test="companyName != null">
-        company_name = #{companyName,jdbcType=VARCHAR},
-      </if>
-      <if test="amount != null">
-        amount = #{amount,jdbcType=BIGINT},
-      </if>
-      <if test="created != null">
-        created = #{created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null">
-        uid = #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="uname != null">
-        uname = #{uname,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwOrder">
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwOrder" >
     update gw_order
     set company_id = #{companyId,jdbcType=BIGINT},
       company_name = #{companyName,jdbcType=VARCHAR},
