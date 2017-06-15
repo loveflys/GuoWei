@@ -290,20 +290,7 @@
 													<div class="box-body">
 														<table class="table table-bordered">
 															<tbody id="firstProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-plus"></i></td>
-																</tr>
+
 															</tbody>
 														</table>
 													</div>
@@ -531,7 +518,38 @@
 		</div>
 	</div>
 	<!-- page script -->
+	<script type="template" id="proList_tpl">
+        <tr>
+          <th>图片</th>
+          <th>名称</th>
+          <th>价格</th>
+          <th>操作</th>
+        </tr>
+        [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+        <tr>
+          <td>
+            <img src="{{item.image}}" width="50px" height="50px" />
+          </td>
+          <td>{{item.title}}</td>
+          <td><span class="badge bg-red">￥{{item.price}}</span></td>
+          <td onclick="changeTemplate({{huojia}}, {{item.id}}, {{isplus}})"><i class="fa {{isplus?'fa-plus':'fa-minus'}}"></i></td>
+        </tr>        
+        [[ } ]]
+    </script>
 	<script>
+    window.param = {
+			  id: '', 
+    		  proList: [],
+			   tempProList: [],
+			   firstProList: [],
+			   secondProList: [],
+			   thirdProList: [],
+			   forthProList: [],
+			   firsttempProList: [],
+               secondtempProList: [],
+               thirdtempProList: [],
+               forthtempProList: [],
+            }
             $(function () {
                 
                 //页面消息处理
@@ -694,6 +712,8 @@
                 $('#dataTable tbody').on( 'click', '#managerRow', function () {
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("input[name=id]").val(data.id);
+                    window.param.id = data.id;
+                    getData();                    
                     $("#managerModal").modal("show");                    
                 });
                 
@@ -771,6 +791,192 @@
                     }
                 });
             });
+    function getData() {
+    	var id = window.param.id;
+    	window.param = {
+                id: id, 
+                proList: [],
+                 tempProList: [],
+                 firstProList: [],
+                 secondProList: [],
+                 thirdProList: [],
+                 forthProList: [],
+                 firsttempProList: [],
+                 secondtempProList: [],
+                 thirdtempProList: [],
+                 forthtempProList: [],
+        }
+    	$.ajax({
+            cache: false,
+            type: "POST",
+            url: "<%=path%>/product/getAllData",
+            data: {},
+            async: false,
+            error: function(request) {
+                toastr.error("Server Connection Error...");
+            },
+            success: function(res) {
+                console.log(JSON.stringify(res.data));
+                window.param.proList = res.data;
+                
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "<%=path%>/template/getProData",
+                    data: {
+                        tid: window.param.id
+                    },
+                    async: false,
+                    error: function(request) {
+                        toastr.error("Server Connection Error...");
+                    },
+                    success: function(resp) {
+                        console.log(JSON.stringify(resp.data));
+                        window.param.tempProList = resp.data;
+                        window.param.proList = _.difference(window.param.proList , window.param.tempProList);
+                        for(var item of window.param.tempProList) {
+                            if (item.storageracks == 1) {
+                                window.param.firsttempProList.push(item);
+                            } else if (item.storageracks == 2) {
+                                window.param.secondtempProList.push(item);
+                            } else if (item.storageracks == 3) {
+                                window.param.thirdtempProList.push(item);
+                            } else {
+                                window.param.forthtempProList.push(item);
+                            }
+                        }
+                        
+                        for(var item of window.param.proList) {
+                            var firsthas = false;
+                            var secondhas = false;
+                            var thirdhas = false;
+                            var forthhas = false;
+                            for (var first of window.param.firsttempProList) {
+                                if (item.id == first.pid) {
+                                    firsthas = true;
+                                }
+                            }
+                            for (var second of window.param.secondtempProList) {
+                                if (item.id == second.pid) {
+                                    secondhas = true;
+                                }
+                            }
+                            for (var third of window.param.thirdtempProList) {
+                                if (item.id == third.pid) {
+                                    thirdhas = true;
+                                }
+                            }
+                            for (var forth of window.param.forthtempProList) {
+                                if (item.id == forth.pid) {
+                                    forthhas = true;
+                                }
+                            }
+                            if (!firsthas){
+                                window.param.firstProList.push(item);
+                            }
+                            if (!secondhas){
+                                window.param.secondProList.push(item);
+                            }
+                            if (!thirdhas){
+                                window.param.thirdProList.push(item);
+                            }
+                            if (!forthhas){
+                                window.param.forthProList.push(item);
+                            }
+                        }
+                        _.templateSettings = {
+                            evaluate    : /\[\[(.+?)\]\]/g,
+                            interpolate : /\{\{(.+?)\}\}/g
+                        };
+                        bindData();
+                    }
+                });
+                
+                
+            }
+        });
+    }
+            function bindData() {
+            	$("#firstProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.firstProList,
+                    "huojia": 1,
+                    "isplus": true
+                }));
+            	$("#secondProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.secondProList,
+                    "huojia": 2,
+                    "isplus": true
+                }));
+            	$("#thirdProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.thirdProList,
+                    "huojia": 3,
+                    "isplus": true
+                }));
+            	$("#forthProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.forthProList,
+                    "huojia": 4,
+                    "isplus": true
+                }));
+            	
+            	$("#firstSelectProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.firsttempProList,
+                    "huojia": 1,
+                    "isplus": false
+                }));
+                $("#secondSelectProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.secondtempProList,
+                    "huojia": "2",
+                    "isplus": false
+                }));
+                $("#thirdSelectProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.thirdtempProList,
+                    "huojia": "3",
+                    "isplus": false
+                }));
+                $("#forthSelectProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.forthtempProList,
+                    "huojia": "4",
+                    "isplus": false
+                }));
+            }
+            function changeTemplate(huojia, id, isplus) {
+            	console.log("胡评价是"+huojia);
+            	if (isplus) {
+            		$.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/template/addProData",
+                        data: {
+                            tid: window.param.id,
+                            huojia: huojia,
+                            pid: id
+                        },
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(resp) {
+                        	getData();
+                        }
+                    });
+            	} else {
+            		$.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/template/deleteProData",
+                        data: {
+                            id: id
+                        },
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(resp) {
+                            getData();
+                        }
+                    });
+            	}
+            }
         </script>
 
 	<!-- jQuery UI 1.11.4 -->
@@ -806,6 +1012,9 @@
 	<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
 	<!-- AdminLTE App -->
 	<script src="<%=path%>/res/dist/js/app.min.js"></script>
+
+	<script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
+
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 	<script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
 	<!-- AdminLTE for demo purposes -->

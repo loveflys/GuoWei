@@ -77,10 +77,6 @@ public class ProductServiceImpl implements ProductService {
 	public DatatablesView<?> getGwProductsByParam(GwProduct product) {
 		// TODO Auto-generated method stub
 		GwProductExample gme = new GwProductExample();
-		Criteria criteria = gme.createCriteria();
-		if (!"".equals(product.getTitle())) {
-			criteria.andTitleLike(product.getTitle());
-		}		
 		List<GwProduct> list = productMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

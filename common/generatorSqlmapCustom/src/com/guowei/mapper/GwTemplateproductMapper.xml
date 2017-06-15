@@ -10,6 +10,7 @@
     <result column="storageracks" property="storageracks" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, pid, tid, stock, sellprice, storageracks, created, updated
+    id, pid, tid, stock, sellprice, storageracks, created, updated, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwTemplateproductExample" >
     select
@@ -105,10 +106,10 @@
   <insert id="insert" parameterType="com.guowei.pojo.GwTemplateproduct" >
     insert into gw_templateproduct (id, pid, tid, stock, 
       sellprice, storageracks, created, 
-      updated)
+      updated, status)
     values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{tid,jdbcType=BIGINT}, #{stock,jdbcType=INTEGER}, 
       #{sellprice,jdbcType=BIGINT}, #{storageracks,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP})
+      #{updated,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwTemplateproduct" >
     insert into gw_templateproduct
@@ -137,6 +138,9 @@
       <if test="updated != null" >
         updated,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -162,6 +166,9 @@
       </if>
       <if test="updated != null" >
         #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="record.updated != null" >
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +222,8 @@
       sellprice = #{record.sellprice,jdbcType=BIGINT},
       storageracks = #{record.storageracks,jdbcType=TINYINT},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +252,9 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -252,7 +266,8 @@
       sellprice = #{sellprice,jdbcType=BIGINT},
       storageracks = #{storageracks,jdbcType=TINYINT},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = #{updated,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

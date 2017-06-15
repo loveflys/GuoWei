@@ -48,9 +48,15 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		// TODO Auto-generated method stub
 		GwTemplateproductExample gme = new GwTemplateproductExample();
 		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(templateproduct.getName())) {
-//			criteria.andNameLike(templateproduct.getName());
-//		}		
+		if (templateproduct.getStatus() != null && templateproduct.getStatus() > 0) {
+			criteria.andStatusEqualTo(templateproduct.getStatus());
+		}	
+		if (templateproduct.getTid() != null && templateproduct.getTid() > 0) {
+			criteria.andTidEqualTo(templateproduct.getTid());
+		}		
+		if (templateproduct.getPid() != null && templateproduct.getPid() > 0) {
+			criteria.andPidEqualTo(templateproduct.getPid());
+		}
 		int pageNum = (start/10)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwTemplateproduct> list = templateproductMapper.selectByExample(gme);
@@ -66,9 +72,15 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		// TODO Auto-generated method stub
 		GwTemplateproductExample gme = new GwTemplateproductExample();
 		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(templateproduct.getName())) {
-//			criteria.andNameLike(templateproduct.getName());
-//		}		
+		if (templateproduct.getStatus() != null && templateproduct.getStatus() > 0) {
+			criteria.andStatusEqualTo(templateproduct.getStatus());
+		}	
+		if (templateproduct.getTid() != null && templateproduct.getTid() > 0) {
+			criteria.andTidEqualTo(templateproduct.getTid());
+		}		
+		if (templateproduct.getPid() != null && templateproduct.getPid() > 0) {
+			criteria.andPidEqualTo(templateproduct.getPid());
+		}
 		List<GwTemplateproduct> list = templateproductMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

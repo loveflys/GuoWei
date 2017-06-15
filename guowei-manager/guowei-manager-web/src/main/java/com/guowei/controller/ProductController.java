@@ -54,6 +54,21 @@ public class ProductController {
 		return data;
 	}
 	
+	/**
+	 * 查询商品记录
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/product/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request, GwProduct product) {
+		DatatablesView dataTable = productService.getGwProductsByParam(product);
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
 	@RequestMapping("/products")
 	public String toList(HttpServletRequest request){   
 		return "product";

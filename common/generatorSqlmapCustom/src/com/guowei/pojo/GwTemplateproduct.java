@@ -19,6 +19,8 @@ public class GwTemplateproduct {
 
     private Date updated;
 
+    private Byte status;
+
     public Long getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class GwTemplateproduct {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }
