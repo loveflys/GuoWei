@@ -305,20 +305,7 @@
 													<div class="box-body no-padding">
 														<table class="table">
 															<tbody id="firstSelectProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-minus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -337,20 +324,7 @@
 													<div class="box-body">
 														<table class="table table-bordered">
 															<tbody id="secondProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-plus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -365,20 +339,7 @@
 													<div class="box-body no-padding">
 														<table class="table">
 															<tbody id="secondSelectProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-minus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -397,20 +358,7 @@
 													<div class="box-body">
 														<table class="table table-bordered">
 															<tbody id="thirdProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-plus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -425,20 +373,7 @@
 													<div class="box-body no-padding">
 														<table class="table">
 															<tbody id="thirdSelectProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-minus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -458,20 +393,7 @@
 													<div class="box-body">
 														<table class="table table-bordered">
 															<tbody id="forthProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-plus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -486,20 +408,7 @@
 													<div class="box-body no-padding">
 														<table class="table">
 															<tbody id="forthSelectProContainer">
-																<tr>
-																	<th>图片</th>
-																	<th>名称</th>
-																	<th>价格</th>
-																	<th>操作</th>
-																</tr>
-																<tr>
-																	<td><img
-																		src="http://m.yuan.cn/content/images/200.png"
-																		width="50px" height="50px" /></td>
-																	<td>测试商品1</td>
-																	<td><span class="badge bg-red">￥55</span></td>
-																	<td><i class="fa fa-minus"></i></td>
-																</tr>
+																
 															</tbody>
 														</table>
 													</div>
@@ -532,7 +441,25 @@
           </td>
           <td>{{item.title}}</td>
           <td><span class="badge bg-red">￥{{item.price}}</span></td>
-          <td onclick="changeTemplate({{huojia}}, {{item.id}}, {{isplus}})"><i class="fa {{isplus?'fa-plus':'fa-minus'}}"></i></td>
+          <td onclick="changeTemplate({{huojia}}, {{item.id}}, true)"><i class="fa fa-plus"></i></td>
+        </tr>        
+        [[ } ]]
+    </script>
+    <script type="template" id="selectproList_tpl">
+        <tr>
+          <th>图片</th>
+          <th>名称</th>
+          <th>价格</th>
+          <th>操作</th>
+        </tr>
+        [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+        <tr>
+          <td>
+            <img src="{{item.proimage}}" width="50px" height="50px" />
+          </td>
+          <td>{{item.proname}}</td>
+          <td><span class="badge bg-red">￥{{item.proprice}}</span></td>
+          <td onclick="changeTemplate({{huojia}}, {{item.id}}, false)"><i class="fa fa-minus"></i></td>
         </tr>        
         [[ } ]]
     </script>
@@ -833,7 +760,19 @@
                     success: function(resp) {
                         console.log(JSON.stringify(resp.data));
                         window.param.tempProList = resp.data;
-                        window.param.proList = _.difference(window.param.proList , window.param.tempProList);
+                        let temparr = [];
+                        for(var item of window.param.proList) {
+                        	var ishas = false;
+                        	for(var temp of window.param.tempProList) {
+                                if (item.id == temp.pid) {
+                                    ishas = true;	
+                                }                                
+                            }
+                        	if (!ishas) {
+                        		   temparr.push(item);	
+                        	}                        	
+                        }
+                        window.param.proList = temparr;
                         for(var item of window.param.tempProList) {
                             if (item.storageracks == 1) {
                                 window.param.firsttempProList.push(item);
@@ -900,43 +839,35 @@
             	$("#firstProContainer").html(_.template($("#proList_tpl").html())({
                     "data": window.param.firstProList,
                     "huojia": 1,
-                    "isplus": true
                 }));
             	$("#secondProContainer").html(_.template($("#proList_tpl").html())({
                     "data": window.param.secondProList,
                     "huojia": 2,
-                    "isplus": true
                 }));
             	$("#thirdProContainer").html(_.template($("#proList_tpl").html())({
                     "data": window.param.thirdProList,
                     "huojia": 3,
-                    "isplus": true
                 }));
             	$("#forthProContainer").html(_.template($("#proList_tpl").html())({
                     "data": window.param.forthProList,
                     "huojia": 4,
-                    "isplus": true
                 }));
             	
-            	$("#firstSelectProContainer").html(_.template($("#proList_tpl").html())({
+            	$("#firstSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.firsttempProList,
                     "huojia": 1,
-                    "isplus": false
                 }));
-                $("#secondSelectProContainer").html(_.template($("#proList_tpl").html())({
+                $("#secondSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.secondtempProList,
                     "huojia": "2",
-                    "isplus": false
                 }));
-                $("#thirdSelectProContainer").html(_.template($("#proList_tpl").html())({
+                $("#thirdSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.thirdtempProList,
                     "huojia": "3",
-                    "isplus": false
                 }));
-                $("#forthSelectProContainer").html(_.template($("#proList_tpl").html())({
+                $("#forthSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.forthtempProList,
                     "huojia": "4",
-                    "isplus": false
                 }));
             }
             function changeTemplate(huojia, id, isplus) {

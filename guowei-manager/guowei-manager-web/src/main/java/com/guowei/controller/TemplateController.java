@@ -75,14 +75,7 @@ public class TemplateController {
 	@ResponseBody
 	public String getProData(HttpServletRequest request) {
 		GwTemplateproduct temp = new GwTemplateproduct();
-		temp.setTid(Long.parseLong(request.getParameter("tid")));
-		if (request.getParameter("status") == null || request.getParameter("status").equals("")) {
-			//默认查询status为1的商品
-			temp.setStatus(Byte.parseByte("1"));
-		} else if (!"0".equals(request.getParameter("status"))) {
-			temp.setStatus(Byte.parseByte(request.getParameter("status")));
-		}
-		
+		temp.setTid(Long.parseLong(request.getParameter("tid")));		
 		DatatablesView dataTable = templateproductService.getGwTemplateproductsByParam(temp);
 		String data = JSON.toJSONString(dataTable);
 		return data;
@@ -130,40 +123,23 @@ public class TemplateController {
 		template.setTid(Long.parseLong(request.getParameter("tid")));
 		template.setPid(Long.parseLong(request.getParameter("pid")));
 		
-		DatatablesView res = templateproductService.getGwTemplateproductsByParam(template);
+		GwProduct pro = productService.getGwProductById(Long.parseLong(request.getParameter("pid")));
 		
-		if (res.getRecordsTotal() > 0) {
-			
-			GwTemplateproduct temppro = (GwTemplateproduct) res.getData().get(0);
-			temppro.setStatus(Byte.parseByte("1"));
-			temppro.setUpdated(Calendar.getInstance().getTime());
-			
-			int result = templateproductService.editGwTemplateproduct(temppro);
-			if (result == 1) {		
-				model.addAttribute("result", result);
-				log.info(Constants.SYS_NAME + "模板商品： 添加成功!");
-			}
-			MessageView msg = new MessageView(result);
-			return JSON.toJSONString(msg);
-			
-		} else {
-		
-			GwProduct pro = productService.getGwProductById(Long.parseLong(request.getParameter("pid")));
-			
-			template.setSellprice(pro.getPrice());
-			template.setStock(10);
-			template.setStorageracks(Byte.parseByte(request.getParameter("huojia")));
-			template.setStatus(Byte.parseByte("1"));
-			template.setCreated(Calendar.getInstance().getTime());
-			template.setUpdated(Calendar.getInstance().getTime());
-			int result = templateproductService.addGwTemplateproduct(template);
-			if (result == 1) {		
-				model.addAttribute("result", result);
-				log.info(Constants.SYS_NAME + "模板商品： 添加成功!");
-			}
-			MessageView msg = new MessageView(result);
-			return JSON.toJSONString(msg);
+		template.setSellprice(pro.getPrice());
+		template.setStock(10);
+		template.setStorageracks(Byte.parseByte(request.getParameter("huojia")));
+		template.setCreated(Calendar.getInstance().getTime());
+		template.setUpdated(Calendar.getInstance().getTime());
+		template.setProname(pro.getTitle());
+		template.setProimage(pro.getImage());
+		template.setProprice(pro.getPrice());
+		int result = templateproductService.addGwTemplateproduct(template);
+		if (result == 1) {		
+			model.addAttribute("result", result);
+			log.info(Constants.SYS_NAME + "模板商品： 添加成功!");
 		}
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**
@@ -175,10 +151,7 @@ public class TemplateController {
 	@RequestMapping(value = "/template/deleteProData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String deleteProData(HttpServletRequest request, ModelMap model) {
-		GwTemplateproduct template = templateproductService.getGwTemplateproductById(Long.parseLong(request.getParameter("id")));
-		template.setStatus(Byte.parseByte("2"));
-		template.setUpdated(Calendar.getInstance().getTime());
-		int result = templateproductService.editGwTemplateproduct(template);
+		int result = templateproductService.removeGwTemplateproduct(Long.parseLong(request.getParameter("id")));
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "模板商品： 删除成功!");

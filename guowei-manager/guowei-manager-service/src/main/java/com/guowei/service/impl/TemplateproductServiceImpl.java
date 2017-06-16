@@ -48,9 +48,6 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		// TODO Auto-generated method stub
 		GwTemplateproductExample gme = new GwTemplateproductExample();
 		Criteria criteria = gme.createCriteria();
-		if (templateproduct.getStatus() != null && templateproduct.getStatus() > 0) {
-			criteria.andStatusEqualTo(templateproduct.getStatus());
-		}	
 		if (templateproduct.getTid() != null && templateproduct.getTid() > 0) {
 			criteria.andTidEqualTo(templateproduct.getTid());
 		}		
@@ -72,9 +69,6 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		// TODO Auto-generated method stub
 		GwTemplateproductExample gme = new GwTemplateproductExample();
 		Criteria criteria = gme.createCriteria();
-		if (templateproduct.getStatus() != null && templateproduct.getStatus() > 0) {
-			criteria.andStatusEqualTo(templateproduct.getStatus());
-		}	
 		if (templateproduct.getTid() != null && templateproduct.getTid() > 0) {
 			criteria.andTidEqualTo(templateproduct.getTid());
 		}		

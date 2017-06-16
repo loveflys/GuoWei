@@ -585,63 +585,203 @@ public class GwTemplateproductExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andPronameIsNull() {
+            addCriterion("proName is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andPronameIsNotNull() {
+            addCriterion("proName is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Byte value) {
-            addCriterion("status =", value, "status");
+        public Criteria andPronameEqualTo(String value) {
+            addCriterion("proName =", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Byte value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andPronameNotEqualTo(String value) {
+            addCriterion("proName <>", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Byte value) {
-            addCriterion("status >", value, "status");
+        public Criteria andPronameGreaterThan(String value) {
+            addCriterion("proName >", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andPronameGreaterThanOrEqualTo(String value) {
+            addCriterion("proName >=", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Byte value) {
-            addCriterion("status <", value, "status");
+        public Criteria andPronameLessThan(String value) {
+            addCriterion("proName <", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Byte value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andPronameLessThanOrEqualTo(String value) {
+            addCriterion("proName <=", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Byte> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andPronameLike(String value) {
+            addCriterion("proName like", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Byte> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andPronameNotLike(String value) {
+            addCriterion("proName not like", value, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Byte value1, Byte value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andPronameIn(List<String> values) {
+            addCriterion("proName in", values, "proname");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andPronameNotIn(List<String> values) {
+            addCriterion("proName not in", values, "proname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPronameBetween(String value1, String value2) {
+            addCriterion("proName between", value1, value2, "proname");
+            return (Criteria) this;
+        }
+
+        public Criteria andPronameNotBetween(String value1, String value2) {
+            addCriterion("proName not between", value1, value2, "proname");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageIsNull() {
+            addCriterion("proImage is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageIsNotNull() {
+            addCriterion("proImage is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageEqualTo(String value) {
+            addCriterion("proImage =", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageNotEqualTo(String value) {
+            addCriterion("proImage <>", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageGreaterThan(String value) {
+            addCriterion("proImage >", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageGreaterThanOrEqualTo(String value) {
+            addCriterion("proImage >=", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageLessThan(String value) {
+            addCriterion("proImage <", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageLessThanOrEqualTo(String value) {
+            addCriterion("proImage <=", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageLike(String value) {
+            addCriterion("proImage like", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageNotLike(String value) {
+            addCriterion("proImage not like", value, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageIn(List<String> values) {
+            addCriterion("proImage in", values, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageNotIn(List<String> values) {
+            addCriterion("proImage not in", values, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageBetween(String value1, String value2) {
+            addCriterion("proImage between", value1, value2, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andProimageNotBetween(String value1, String value2) {
+            addCriterion("proImage not between", value1, value2, "proimage");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceIsNull() {
+            addCriterion("proPrice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceIsNotNull() {
+            addCriterion("proPrice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceEqualTo(Long value) {
+            addCriterion("proPrice =", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceNotEqualTo(Long value) {
+            addCriterion("proPrice <>", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceGreaterThan(Long value) {
+            addCriterion("proPrice >", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceGreaterThanOrEqualTo(Long value) {
+            addCriterion("proPrice >=", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceLessThan(Long value) {
+            addCriterion("proPrice <", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceLessThanOrEqualTo(Long value) {
+            addCriterion("proPrice <=", value, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceIn(List<Long> values) {
+            addCriterion("proPrice in", values, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceNotIn(List<Long> values) {
+            addCriterion("proPrice not in", values, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceBetween(Long value1, Long value2) {
+            addCriterion("proPrice between", value1, value2, "proprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPropriceNotBetween(Long value1, Long value2) {
+            addCriterion("proPrice not between", value1, value2, "proprice");
             return (Criteria) this;
         }
     }

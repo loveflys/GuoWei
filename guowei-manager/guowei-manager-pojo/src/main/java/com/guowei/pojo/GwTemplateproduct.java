@@ -19,7 +19,11 @@ public class GwTemplateproduct {
 
     private Date updated;
 
-    private Byte status;
+    private String proname;
+
+    private String proimage;
+
+    private Long proprice;
 
     public Long getId() {
         return id;
@@ -85,11 +89,27 @@ public class GwTemplateproduct {
         this.updated = updated;
     }
 
-    public Byte getStatus() {
-        return status;
+    public String getProname() {
+        return proname;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setProname(String proname) {
+        this.proname = proname;
+    }
+
+    public String getProimage() {
+        return proimage;
+    }
+
+    public void setProimage(String proimage) {
+        this.proimage = proimage;
+    }
+
+    public Long getProprice() {
+        return proprice;
+    }
+
+    public void setProprice(Long proprice) {
+        this.proprice = proprice;
     }
 }
