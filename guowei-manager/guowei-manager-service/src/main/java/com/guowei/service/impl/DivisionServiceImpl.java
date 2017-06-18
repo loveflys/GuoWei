@@ -52,7 +52,7 @@ public class DivisionServiceImpl implements DivisionService {
 			criteria.andNameLike(division.getName());
 			gme.or(gme.createCriteria().andAllnameLike(division.getName()));
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwDivision> list = divisionMapper.selectByExample(gme);
 		PageInfo<GwDivision> page = new PageInfo<>(list);

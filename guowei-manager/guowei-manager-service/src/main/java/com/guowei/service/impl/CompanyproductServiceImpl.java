@@ -52,7 +52,7 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 //			criteria.andCompanyproductNameLike(companyproduct.getCompanyproductName());
 //			gme.or(gme.createCriteria().andCompanyproductContactphoneLike(companyproduct.getCompanyproductName()));
 //		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
 		PageInfo<GwCompanyproduct> page = new PageInfo<>(list);
@@ -67,10 +67,7 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 		// TODO Auto-generated method stub
 		GwCompanyproductExample gme = new GwCompanyproductExample();
 		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(companyproduct.get)) {
-//			criteria.andCompanyproductNameLike(companyproduct.getCompanyproductName());
-//			gme.or(gme.createCriteria().andCompanyproductContactphoneLike(companyproduct.getCompanyproductName()));
-//		}		
+		criteria.andCompanyIdEqualTo(companyproduct.getCompanyId());
 		List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

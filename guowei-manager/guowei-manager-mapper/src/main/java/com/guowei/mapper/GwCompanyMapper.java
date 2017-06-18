@@ -2,6 +2,8 @@ package com.guowei.mapper;
 
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyExample;
+import com.guowei.pojo.GwCompanyTemp;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,8 +19,12 @@ public interface GwCompanyMapper {
     int insertSelective(GwCompany record);
 
     List<GwCompany> selectByExample(GwCompanyExample example);
+    
+    List<GwCompanyTemp> selectTempByExample(GwCompanyExample example);
 
     GwCompany selectByPrimaryKey(Long id);
+    
+    GwCompanyTemp selectById(Long id);
 
     int updateByExampleSelective(@Param("record") GwCompany record, @Param("example") GwCompanyExample example);
 

@@ -77,7 +77,7 @@ public class ManagerServiceImpl implements ManagerService {
 			criteria.andNameLike(manager.getName());
 			gme.or(gme.createCriteria().andPhoneLike(manager.getName()));
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwManager> list = managerMapper.selectByExample(gme);
 		PageInfo<GwManager> page = new PageInfo<>(list);
@@ -91,11 +91,6 @@ public class ManagerServiceImpl implements ManagerService {
 	public DatatablesView<?> getGwManagersByParam(GwManager manager) {
 		// TODO Auto-generated method stub
 		GwManagerExample gme = new GwManagerExample();
-		Criteria criteria = gme.createCriteria();
-		if (!"".equals(manager.getName())) {
-			criteria.andNameLike(manager.getName());
-			gme.or(gme.createCriteria().andPhoneLike(manager.getName()));
-		}		
 		List<GwManager> list = managerMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

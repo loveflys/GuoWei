@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 			criteria.andNameLike(user.getName());
 			gme.or(gme.createCriteria().andPhoneLike(user.getName()));
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwUser> list = userMapper.selectByExample(gme);
 		PageInfo<GwUser> page = new PageInfo<>(list);

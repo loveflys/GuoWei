@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 		if (!"".equals(product.getTitle())) {
 			criteria.andTitleLike(product.getTitle());
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwProduct> list = productMapper.selectByExample(gme);
 		PageInfo<GwProduct> page = new PageInfo<>(list);

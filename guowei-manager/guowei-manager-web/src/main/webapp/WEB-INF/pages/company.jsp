@@ -1,622 +1,471 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="include/common.jsp"%>
-
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<!--title-->
-       	<%@ include file="include/title.jsp" %>
-		
-		<!-- iCheck -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/iCheck/flat/blue.css">
-		<!-- Morris chart -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/morris/morris.css">
-		<!-- jvectormap -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-		<!-- Date Picker -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/datepicker/datepicker3.css">
-		<!-- Daterange picker -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
-		<!-- bootstrap wysihtml5 - text editor -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
-		<style type="text/css">
-			.modal-dialog { 
-				position: absolute; 
-				top: 0; 
-				bottom: 0; 
-				left: 0; 
-				right: 0; 
-			} 
-			
-			.modal-content { 
-				/*overflow-y: scroll; */ 
-				position: absolute; 
-				top: 0; 
-				bottom: 0; 
-				width: 100%; 
-			} 
-			
-			.modal-body { 
-				overflow-y: scroll; 
-				position: absolute; 
-				top: 55px; 
-				bottom: 65px; 
-				width: 100%; 
-			} 
-			
-			.modal-footer {
-				position: absolute; 
-				width: 100%; 
-				bottom: 0; 
-			}
-		</style>
-		
-	</head>
-	
-	<body class="hold-transition skin-blue sidebar-mini">
-		<div class="wrapper">
-			<!--header-->
-       		<%@ include file="include/header.jsp" %>
-			
-			<!--menu-->
-       		<%@ include file="include/menu.jsp" %>
-	
-			<!-- Left side column. contains the logo and sidebar -->
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
-				<!-- Content Header (Page header) -->
-				<section class="content-header">
-				
-					<!-- 路径导航 -->
-					<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-					<a href="<%=path%>/companys"><sp:message code="menu.companys"/></a>&nbsp;&nbsp;<small><sp:message code="company.list"/></small>
-					<!-- 
-					<ol class="breadcrumb">
-       					<%@ include file="include/home.jsp" %>
-				        <li class="active">商品管理</li>
-				    </ol>
-				     -->
-				</section>
-			
-				<!-- Main content -->
-				<section class="content">
-					<!-- 查询、添加、批量删除、导出、刷新 -->
-					<div class="row-fluid">
-					
-						<div class="pull-right">
-							<div class="btn-group">
-							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
-                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
-                                </button>
-								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
-									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
-								</button>
-							</div>
-						</div>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+<title>${companyName}</title>
+<!-- iCheck -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/wechat/aui.css">
+<!-- Morris chart -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/wechat/search.css">
+<!-- jvectormap -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
+<style type="text/css">
+        .aui-list-view.aui-grid-view .aui-list-view-cell .aui-img-object {
+            padding-bottom: 5px;
+        }
 
-						<div class="row">
-							<form id="queryForm" action="<%=path%>/companys" method="post">
-								<div class="col-xs-2">
-									<input type="text" id="keyword" name="companyName" class="form-control input-sm"
-										placeholder="<sp:message code="sys.keyword"/>">
-								</div>
-								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
-									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
-								</button>
-							</form>
-						</div>
-					</div>
-	                
-					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body">
-									<table id="dataTable" class="table table-striped table-bordered table-hover table-condensed" align="center">
-										<thead>
-											<tr class="info">
-												<!-- <td><input type="checkbox" id="checkAll"></td> -->
-												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="company.mid"/></th>
-												<th><sp:message code="company.templateId"/></th>
-												<th><sp:message code="company.companyName"/></th>
-												<th><sp:message code="company.companyAddr"/></th>
-												<th><sp:message code="company.companyContactname"/></th>
-												<th><sp:message code="company.companyContactposition"/></th>												
-												<th><sp:message code="company.companyContactphone"/></th>
-												<th><sp:message code="company.companyContactwechat"/></th>
-                                                <th><sp:message code="company.companyContactwechatopenid"/></th>
-                                                <th><sp:message code="company.created"/></th>
-                                                <th><sp:message code="company.purchased"/></th>
-                                                <th><sp:message code="company.did"/></th>
-                                                <th><sp:message code="sys.oper"/></th>
-											</tr>
-										</thead>
-									</table>
-								</div>
-								<!-- /.box-body -->
-							</div>
-							<!-- /.box -->
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
-				</section>
+        .aui-list-view.aui-grid-view .aui-list-view-cell {
+            padding: 10px 0 5px 10px;
+        }
 
-			</div>
-	
-			<!--footer-->
-	       	<%@ include file="include/footer.jsp" %>
-			<div class="control-sidebar-bg"></div>
-		</div>
-		
-		<!-- EditCompany -->
-		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" >
-				<div class="modal-content">
-				
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel"><sp:message code="company.info"/>-<sp:message code="sys.edit"/></h4>
-					</div>
-					
-					<div class="modal-body" >
-						<form class="form-horizontal"  id="editForm" action="<%=path%>/company/update" method="post">
-							<input type="hidden" class="form-control" name="id">
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.mid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="mid">
-                                </div>
-                            </div>  
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.templateId"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="templateId">
-                                </div>
-                            </div> 
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyName"/></label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="companyName">
-								</div>
-							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyAddr"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyAddr">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactname"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactname">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactposition"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactposition">
-                                </div>
-                            </div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="companyContactphone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechat"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactwechat">
-                                </div>
-                            </div>
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="companyContactwechatopenid">
-								</div>
-							</div>							
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
+        .aui-list-view.aui-grid-view .aui-list-view-cell a {
+            padding: 10px 0 5px 0 !important;
+        }
 
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="did">
-                                </div>
-                            </div>
-						</form>
-					</div>
-					<!-- modal-body END -->
-					
-					<div class="modal-footer">
-						<button id="btn-submit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	    
-	    
-	    <!-- AddCompany -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
-                <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="company.info"/>-<sp:message code="sys.add"/></h4>
-                    </div>
-                    
-                    <div class="modal-body" >
-                        <form class="form-horizontal"  id="addForm" action="<%=path%>/company/add" method="post">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.mid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="mid">
-                                </div>
-                            </div>  
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.templateId"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="templateId">
-                                </div>
-                            </div>    
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyName"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyName">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyAddr"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyAddr">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactname"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactname">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactposition"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactposition">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="companyContactphone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechat"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactwechat">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactwechatopenid">
-                                </div>
-                            </div>                          
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="did">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- modal-body END -->
-                    
-                    <div class="modal-footer">
-                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-                    </div>
-                </div>
-            </div>
+        .aui-list-view.aui-grid-view .aui-list-view-cell .aui-img-body {
+            font-size: 12px;
+            padding: inherit;
+        }
+        footer .bgm {
+            z-index: 10;
+            position: absolute;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    background-color: #000;
+		    opacity: .4;
+		    -webkit-transition: opacity .35s ease;
+		    transition: opacity .35s ease;
+        }
+        footer .cart-body {
+            z-index: 11;
+            bottom: 60px;
+	        position: fixed;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    background-color: #fff;
+		    -webkit-transition: all .35s ease;
+		    transition: all .35s ease;
+		    -webkit-transform: translate3d(0,100%,0);
+		    transform: translate3d(0,100%,0);
+        }
+        footer .cart-body .title{
+            padding: 0 10px;
+		    border-bottom: 1px solid #ddd;
+		    background-color: #eceff1;
+		    color: #666;
+		    line-height: 30px;
+        }
+        footer .cart-body .title .buycart{
+            padding-left: 5px;
+            border-left: 3px solid #3190e8;
+        }
+        footer .cart-body .title a {
+            float: right;
+		    padding-left: 10px;
+		    background-size: 10px;
+		    color: #666;
+		    text-decoration: none;
+		    font-size: 12px;    
+        }
+        footer .cart-body .title i {
+            width: 48px;
+            height: 48px;
+            fill: #ddd;  
+        }
+        footer .cart-body .container{
+            overflow: auto;
+		    -webkit-overflow-scrolling: touch;
+		    max-height: 8rem;
+        }
+        footer .cart-body .container ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        footer .cart-body .container ul li{
+            border-bottom: 1px solid #eee;
+            display: -webkit-box;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		    padding: 10px 15px 10px 0;
+		    min-height: 50px;
+		    margin-left: 10px;    
+        }
+        footer .cart-body .container ul li .subtitle{
+            -webkit-box-flex: 5.5;
+		    -ms-flex: 5.5;
+		    flex: 5.5;
+		    line-height: normal;   
+        }
+        footer .cart-body .container ul li .subtitle em{
+            display: inline-block;
+		    font-style: normal;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    vertical-align: middle;
+		    max-width: 4.666667rem;
+        }
+        footer .cart-body .container ul li .subtitle p{
+            white-space: nowrap;
+		    line-height: .333333rem;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    color: #999;
+		    font-size: .266667rem;
+        }
+        footer .cart-body .container ul li .price {
+            -webkit-box-flex: 2.5;
+		    -ms-flex: 2.5;
+		    flex: 2.5;
+		    color: #f60;
+		    text-align: right;
+		    white-space: nowrap;
+		    font-weight: 700;    
+        }
+        footer .cart-body .container ul li .price .value {
+             
+        }
+        footer .cart-body .container ul li .price .value:before {
+            content: "\A5";
+		    font-size: .266667rem;
+		    color: currentColor;
+        }
+        footer .cart-body .container ul li .manager {
+            -webkit-box-flex: 3;
+		    -ms-flex: 3;
+		    flex: 3;
+		    display: block;
+		    width: 0;
+		    text-align: right;
+        }
+        footer .cart-body .container ul li .manager .manager-body {
+            display: inline-block;
+		    font-size: .346667rem;
+		    white-space: nowrap;
+        }
+        footer .cart-body .container ul li .manager .manager-body .minus {
+            display: inline-block;
+		    padding: .093333rem;
+		    vertical-align: middle;
+		    text-decoration: none;
+        }
+        footer .cart-body .container ul li .manager .manager-body .minus svg, footer .cart-body li .manager .manager-body .plus svg {
+            width: 60px;
+            height: 60px;
+            vertical-align: middle;
+            fill: #3190e8;
+        }
+        footer .cart-body .container ul li .manager .manager-body .number {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+		    color: #666;
+		    font-size: .373333rem;
+		    min-width: .4rem;
+		    max-width: 2em;
+		    overflow: hidden;    
+        }
+        footer .cart-body .container ul li .manager .manager-body .plus {
+            display: inline-block;
+		    padding: .093333rem;
+		    vertical-align: middle;
+		    text-decoration: none;
+        }
+        .footer {
+            z-index: 11;
+            position: fixed;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    display: -webkit-box;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		    padding-left: 100px;
+		    background-color: #3d3d3f;
+		    height: 60px;
+		    opacity: 0.95;
+        }
+        .footer .cart {
+            position: absolute;
+		    left: 20px;
+		    bottom: 7px;
+		    width: 60px;
+		    height: 60px;
+		    box-sizing: border-box;
+		    border-radius: 100%;
+		    border: 7px solid #444;
+		    box-shadow: 0 -.08rem .053333rem 0 rgba(0,0,0,.1);
+		    will-change: transform;
+        }
+        .footer .cart.goods {
+            background-color: #3190e8;
+        }
+        .footer .cart:before {
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1OCA1OCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxmaWx0ZXIgaWQ9ImEiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiIHg9Ii01MCUiIHk9Ii01MCUiIGZpbHRlclVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCI+PGZlT2Zmc2V0IGluPSJTb3VyY2VBbHBoYSIgcmVzdWx0PSJzaGFkb3dPZmZzZXRPdXRlcjEiLz48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxLjUiIGluPSJzaGFkb3dPZmZzZXRPdXRlcjEiIHJlc3VsdD0ic2hhZG93Qmx1ck91dGVyMSIvPjxmZUNvbG9yTWF0cml4IHZhbHVlcz0iMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMC4wOCAwIiBpbj0ic2hhZG93Qmx1ck91dGVyMSIgcmVzdWx0PSJzaGFkb3dNYXRyaXhPdXRlcjEiLz48ZmVNZXJnZT48ZmVNZXJnZU5vZGUgaW49InNoYWRvd01hdHJpeE91dGVyMSIvPjxmZU1lcmdlTm9kZSBpbj0iU291cmNlR3JhcGhpYyIvPjwvZmVNZXJnZT48L2ZpbHRlcj48cGF0aCBpZD0iYiIgZD0iTTcuNjE0IDQuMDUxYy0xLjA2Ni4wODYtMS40NTItLjM5OC0xLjc1Mi0xLjU4NEM1LjU2MiAxLjI4LjMzIDUuODguMzMgNS44OGwzLjcxIDE5LjQ3NmMwIC4xNDgtMS41NiA3LjUxNS0xLjU2IDcuNTE1LS40ODkgMi4xOS4yOTIgNC4yNyAzLjU2IDQuMzIgMCAwIDM2LjkxNy4wMTcgMzYuOTIuMDQ3IDEuOTc5LS4wMTIgMi45ODEtLjk5NSAzLjAxMy0zLjAzOS4wMy0yLjA0My0xLjA0NS0yLjk3OC0yLjk4Ny0yLjk5M0w4LjgzIDMxLjE5MnMuODYtMy44NjUgMS4wNzctMy44NjVjMCAwLTUuNzg4LjEyMiAzMi4wNjUtMS45NTYuNjA2LS4wMzMgMi4wMTgtLjc2NCAyLjI5OC0xLjg0OCAxLjExMy00LjMxNyA0LjAwOC0xMy4yNiA0LjQ1OC0xNS42NC45MzItNC45MjUgMi4wNjEtOC41NTgtNC4yOC03LjQwNSAwIDAtMzUuNzY4IDMuNDg3LTM2LjgzMyAzLjU3M3oiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBmaWx0ZXI9InVybCgjYSkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMgMikiPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuMDM4IDcuODA4KSI+PG1hc2sgaWQ9ImMiIGZpbGw9IiNmZmYiPjx1c2UgeGxpbms6aHJlZj0iI2IiLz48L21hc2s+PHVzZSBmaWxsPSIjRkZGIiB4bGluazpocmVmPSIjYiIvPjxwYXRoIGZpbGw9IiMyMDczQzEiIGQ9Ik01My45NjIgNy43NzRsLTUuNzAxIDE5LjMwNS00MC43OCAxLjU3NHoiIG9wYWNpdHk9Ii4xIiBtYXNrPSJ1cmwoI2MpIi8+PC9nPjxwYXRoIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJNOS4zNzQgMTguNzIyUzcuODY4IDExLjI4MyA3LjMyMyA4LjcxQzYuNzc4IDYuMTM2IDUuODYgNS4zMyAzLjk3OCA0LjUyIDIuMDk2IDMuNzEzLjM2NyAyLjI4Ni4zNjcgMi4yODYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNTEiIHI9IjQiIGZpbGw9IiNGRkYiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjUxIiByPSI0IiBmaWxsPSIjRkZGIi8+PC9nPjwvc3ZnPg==) 50% no-repeat;
+		    background-size: 30px;
+		    content: "";
+		}
+		.footer .cart:after {
+            position: absolute;
+		    right: 1px;
+		    top: -6px;
+		    background-color: #ff461d;
+		    color: #fff;
+		    border-radius: 8px;
+		    padding: 0px 3px;
+		    content: attr(attr-quantity);
+		    font-size: 12px;
+        }
+        .footer .buy-info {
+            flex: 1;
+		    display: block;
+		    width: 0;
+        }
+        .footer .buy-info .buy-info-price {
+            color: #fff;
+		    font-size: 17px;
+		    line-height: normal;
+		    font-weight: 400;
+		    font-family: 'Helvetica Neue',Tahoma,Arial,PingFangSC-Regular,'Hiragino Sans GB','Microsoft Yahei',sans-serif;
+        }
+        .footer .submitBtn {
+	        height: 100%;
+		    width: 120px;
+		    background-color: #4cd964;
+		    color: #fff;
+		    text-align: center;
+		    text-decoration: none;
+		    font-size: 16px;
+		    font-weight: 700;
+		    line-height: 60px;    
+        }
+        .footer .submitBtn.disabled {
+            background-color: #535356;
+        }
+</style>
+</head>
+<body>
+    <div class="hor-search">
+        <div class="search-leftbar">
+            <ul class="mb50" id="mb50">
+                <li id="firstpro" onclick="change(this)" class="search-leftbar-cur"><a>第一货架</a></li>
+                <li id="secondpro" onclick="change(this)"><a>第二货架</a></li>
+                <li id="thirdpro" onclick="change(this)"><a>第三货架</a></li>
+                <li id="forthpro" onclick="change(this)"><a>第四货架</a></li>
+            </ul>
         </div>
-		<!-- page script -->
-		<script>
-			$(function () {
-				
-				//页面消息处理
-				var result = "${result}";
-		  		var msg= "${msg}";
-		  		if(result == 1){
-		  			alert(msg);
-		  		}
-		  		
-		  		
-				
-				var tables = $("#dataTable").dataTable({
-			    	serverSide: true,//分页，取数据等等的都放到服务端去
-			        processing: false,//载入数据的时候是否显示“载入中”
-			        pageLength: 10,  //首次加载的数据条数
-			        ordering: false,//排序操作在服务端进行，所以可以关了。
-			        pagingType: "full_numbers",
-			        autoWidth: false,
-			        stateSave: true,//保持翻页状态，和tables.fnDraw(false);结合使用
-			        searching: false,
-			        ajax: {   //类似jquery的ajax参数，基本都可以用。
-			        	type: "post",//后台指定了方式，默认get，外加datatable默认构造的参数很长，有可能超过get的最大长度。
-			            url: "<%=path%>/company/getData",
-			            dataSrc: "data",//默认data，也可以写其他的，格式化table的时候取里面的数据
-	                    data: function (d) {//d是原始的发送给服务器的数据，默认很长。
-	                        var param = {}; //因为服务端排序，可以新建一个参数对象
-	                        param.draw = d.draw;
-                            param.start = d.start;
-                            param.length = d.length;
-	                        var formData = $("#queryForm").serializeArray();//把form里面的数据序列化成数组
-	                        formData.forEach(function (e) {
-	                            param[e.name] = e.value;
-	                        });
-                        	return param;//自定义需要传递的参数。
-			       		}
-			    	},
-	                columns: [//对应上面thead里面的序列
-	                    //{"data": null,"width":"10px"},
-	                    {"data": 'id'},
-	                    {"data": 'mid', defaultContent: ""},
-	                    {"data": 'templateId', defaultContent: ""},
-	               		{"data": 'companyName', defaultContent: ""}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
-	                    {"data": 'companyAddr', defaultContent: ""},
-	                    {"data": 'companyContactname', defaultContent: ""},
-  	                    {"data": 'companyContactposition', defaultContent: ""},
-  	                    {"data": 'companyContactphone', defaultContent: ""},
-  	                    {"data": 'companyContactwechat', defaultContent: ""},
-  	                    {"data": 'companyContactwechatopenid', defaultContent: ""},
-  	                    {"data": 'created', 
-  	                    	"render":function(data,type,full,callback) {
-  	                    		return moment(data).format('YYYY-MM-DD') 
-	                    	}
-	               		},
-	               		{"data": 'purchased', 
-                            "render":function(data,type,full,callback) {
-                                return moment(data).format('YYYY-MM-DD') 
-                            }
-                        },
-                        {"data": 'did', defaultContent: ""},
-  	                  	{"data": null,"width":"60px"}
-	                ],
-	                //操作按钮
-	                columnDefs: [
-	                    /*{
-		                    targets: 0,//编辑
-		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
-		                    defaultContent: "<input type='checkbox' name='checkList'>"
-		                },*/
-		                {
-		                    targets: -1,//编辑
-		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
-		                    defaultContent: " <div class='btn-group'>"+
-		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
-		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
-		                }
-	                ],
-	              	//每加载完一行的回调函数
-	                createdRow: function( row, data, index ) {
-	                	console.log("加载完一行")
-	                	//修改单元格样式
-	    　　　　　　　　	//$('td', row).eq(5).css('font-weight',"bold").css("color","red");//获取到具体行具体格的元素
-	                },
-			        initComplete: function (setting, json) {
-	                	//初始化完成之后替换原先的搜索框。
-	                	console.log("初始化完成")
-	                },
-	              	//在每次table被draw完后调用
-	                fnDrawCallback: function(){
-	                	console.log("draw完成")
-                		var api = this.api();
-                		//获取到本页开始的条数
-                	　　	var startIndex= api.context[0]._iDisplayStart;
-                	　　	api.column(0).nodes().each(function(cell, i) {
-                	　　　　	cell.innerHTML = startIndex + i + 1;
-                	　　}); 
-                	},
-	                language: {
-	                	lengthMenu: "",//不显示记录条数选择
-	                  	//lengthMenu: '<select class="form-control input-xsmall">' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="30">30</option>' + '<option value="40">40</option>' + '<option value="50">50</option>' + '</select>条记录',//左上角的分页大小显示。
-	                  	processing: "<sp:message code='sys.load'/>",//处理页面数据的时候的显示
-	                    paginate: {//分页的样式文本内容。
-	                   		previous: "<",
-	                     	next: ">",
-	                     	first: "<<",
-	                     	last: ">>"
-	                    },
-	                    zeroRecords: "<sp:message code='sys.nodata'/>",//table tbody内容为空时，tbody的内容。
-	                    //下面三者构成了总体的左下角的内容。
-	                    //info: "共 _PAGES_ 页，显示第 _START_ 到第 _END_ 条 ",//筛选之后得到 _TOTAL_ 条，初始 _MAX_ 条   左下角的信息显示，大写的词为关键字。
-	                    info: "<sp:message code='sys.pages'/>",
-	                    infoEmpty: "<sp:message code='sys.nodata'/>",//筛选为空时左下角的显示。0条记录
-	                    infoFiltered: "",//筛选之后的左下角筛选提示(另一个是分页信息显示，在上面的info中已经设置，所以可以不显示)，
-	                   	sSearch: "<sp:message code='sys.keyword'/>：",
-	                }
-	            });
-				//用户类型选择触发
-				$("#area").on("change", function () {
-					tables.fnDraw();
-				});
-				
-				//查询按钮
-				$("#btn-query").on("click", function () {
-					tables.fnDraw(false);
-				});
-				
-				//添加
-	            $("#btn-add").on("click", function () {
-	            	var data = tables.api().row($(this).parents('tr')).data();
-	            	$("input[name=mid]").val("");
-	            	$("input[name=templateId]").val("");
-                    $("#addModal input[name=companyName]").val("");
-                    $("input[name=companyAddr]").val("");
-                    $("input[name=companyContactname]").val("");
-                    $("input[name=companyContactposition]").val("");
-                    $("input[name=companyContactphone]").val("");
-                    $("input[name=companyContactwechat]").val("");
-                    $("input[name=companyContactwechatopenid]").val("");
-                    $("input[name=did]").val("");
-                    $("#addModal").modal("show");      
-	            });
-				
-	          	//批量删除
-	            $("#btn-delAll").on("click", function () {
-	            	tables.draw( false );
-	            });
-	          	
-	         	//导出
-	            $("#btn-export").on("click", function () {
-	            	tables.fnDraw();
-	            });
-				
-				//刷新
-	            $("#btn-re").on("click", function () {
-	            	tables.fnDraw(false);
-	            });
-				
-	          	//checkbox全选
-	            $("#checkAll").on("click", function () {
-	                if ($(this).prop("checked") === true) {
-	                    $("input[name='checkList']").prop("checked", $(this).prop("checked"));
-	                    $('#dataTable tbody tr').addClass('selected');
-	                } else {
-	                    $("input[name='checkList']").prop("checked", false);
-	                    $('#dataTable tbody tr').removeClass('selected');
-	                }
-	            });
-	          	
-	          	//修改 Model
-				$('#dataTable tbody').on( 'click', '#editRow', function () {
-					var data = tables.api().row($(this).parents('tr')).data();
-					$("input[name=id]").val(data.id);
-					$("input[name=mid]").val(data.mid);
-					$("input[name=templateId]").val(data.templateId);
-					$("#editModal input[name=companyName]").val(data.companyName);
-					$("input[name=companyAddr]").val(data.companyAddr);
-					$("input[name=companyContactname]").val(data.companyContactname);
-					$("input[name=companyContactposition]").val(data.companyContactposition);
-					$("input[name=companyContactphone]").val(data.companyContactphone);
-					$("input[name=companyContactwechat]").val(data.companyContactwechat);
-					$("input[name=companyContactwechatopenid]").val(data.companyContactwechatopenid);
-                    $("input[name=did]").val(data.did);
-					$("#editModal").modal("show");					
-		        });
-	          	
-				$("#btn-submit").on("click", function(){
-					var url = "<%=path%>/company/update";
-	          		$.ajax({
-		                cache: false,
-		                type: "POST",
-		                url: url,
-		                data:$("#editForm").serialize(),
-		                async: false,
-		                error: function(request) {
-		                	toastr.error("Server Connection Error...");
-		                },
-		                success: function(data) {
-		                	if(data.status == 1){
-		                		$("#editModal").modal("hide");
-		                		toastr.success("<sp:message code='sys.oper.success'/>");
-		                		tables.fnDraw(false);
-		                	}else{
-		                		toastr.error("<sp:message code='sys.oper.fail'/>");
-		                	}
-		                }
-		            });
-	          	});
-				
-				$("#btn-addsubmit").on("click", function(){
-                    var url = "<%=path%>/company/add";
-                    $.ajax({
-                        cache: false,
-                        type: "POST",
-                        url: url,
-                        data:$("#addForm").serialize(),
-                        async: false,
-                        error: function(request) {
-                            toastr.error("Server Connection Error...");
-                        },
-                        success: function(data) {
-                            if(data.status == 1){
-                                $("#addModal").modal("hide");
-                                toastr.success("<sp:message code='sys.oper.success'/>");
-                                tables.fnDraw(false);
-                            }else{
-                                toastr.error("<sp:message code='sys.oper.fail'/>");
-                            }
-                        }
-                    });
-                });
-	          	
-				//删除
-				$('#dataTable tbody').on( 'click', '#delRow', function () {
-					var data = tables.api().row($(this).parents('tr')).data();
-		            if(confirm("是否确认删除这条信息?")){
-		                $.ajax({
-		                    url:'<%=path%>/company/del/'+data.id,
-		                    type:'delete',
-		                    dataType: "json",
-		                    //timeout:"3000",
-		                    cache:"false",
-		                    success:function(data){
-		                        if(data.status == 1){
-		                        	//var $toast = toastr['info']('<sp:message code='sys.oper.success'/>');
-		                        	toastr.success("<sp:message code='sys.oper.success'/>");
-		                        	tables.api().row().remove().draw(false);//删除这行的数据
-		                        	//tables.fnDraw();
-		                            //window.location.reload();//重新刷新页面，还有一种方式：tables.draw(false);(这是不刷新，重新初始化插件，但是做删除时候，老有问题)
-		                        }else{
-		                        	toastr.error("<sp:message code='sys.oper.success'/>");
-		                        }
-		                    },
-		                    error:function(err){
-		                    	toastr.error("Server Connection Error...");
-		                    }
-		                });
-		            }
-		        });
-			});
-		</script>
-	
-		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-		<script>
-	  		$.widget.bridge('uibutton', $.ui.button);
-		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-		<script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
-		<!-- Sparkline -->
-		<script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
-		<!-- jvectormap -->
-		<script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-		<script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-		<!-- jQuery Knob Chart -->
-		<script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
-		<!-- daterangepicker -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-		<script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
-		<!-- datepicker -->
-		<script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
-		<!-- Bootstrap WYSIHTML5 -->
-		<script src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-		<!-- Slimscroll -->
-		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-		<!-- FastClick -->
-		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
-		<!-- AdminLTE App -->
-		<script src="<%=path%>/res/dist/js/app.min.js"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script src="<%=path%>/res/dist/js/demo.js"></script>
-	</body>
+        <div class="search-rightbar" id="proContainer">
+        </div>
+        <footer style="display:none;">
+            <div class="bgm"></div>
+	        <div class="cart-body">
+	           <div class="title">
+                    <span class="buycart">购物车</span>
+                    <a>
+                        <i>11</i>
+                        <span>清空</span>
+                    </a>
+                </div>
+	        
+	           <div class="container">
+                    <ul>
+                        <li>
+                            <div class="subtitle">
+                                <em>A夏威夷风光比萨[芝心][10 寸]</em>
+                                <p></p>
+                            </div>
+                            <div class="price">
+                                <span class="value">76</span>
+                            </div>
+                            <div class="manager">
+                                <div class="manager-body">
+	                                <a class="minus">
+	                                   <svg></svg>
+	                                </a>
+	                                <span class="number">1</span>
+	                                <a class="plus">
+	                                   <svg></svg>
+	                                </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+	        </div>
+	        <div class="footer" >
+			    <span class="cart" attr-quantity="1">
+			    </span>
+			    <div class="buy-info" >
+			      
+			      <p class="buy-info-price">￥111</p>
+			    </div>
+			    <a class="submitBtn">去结算</a>
+			</div>
+		</footer>
+        
+        
+    </div>
+    <script type="text/html" id="pro_tpl">
+        [[ if(data){ ]] 
+            <div class="aui-content list-detail-show" id="first_pro_body">
+            <div class="the-onelm-name">${companyName}</div>
+            <div>
+                <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第一层货架</h4>
+                [[if(data[1]&&data[1].length>0){ ]]
+                    <ul class="aui-list-view aui-grid-view">
+                        [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                                <img class="aui-img-object" src="{{ item.proimage }}"/>
+                                <a class="aui-img-body">{{ item.proname }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                            </li>
+                        [[ } ]]
+                    </ul>
+                [[ } ]] 
+            </div>
+            </div>
+
+            <div class="aui-content list-detail-show" id="second_pro_body" style="display:none;">
+            <div class="the-onelm-name">${companyName}</div>
+            <div>
+                <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第二层货架</h4>
+                [[if(data[2]&&data[2].length>0){ ]]
+                    <ul class="aui-list-view aui-grid-view">
+                        [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                                <img class="aui-img-object" src="{{ item.proimage }}"/>
+                                <a class="aui-img-body">{{ item.proname }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                            </li>
+                        [[ } ]]
+                    </ul>
+                [[ } ]] 
+            </div>
+            </div>
+
+
+            <div class="aui-content list-detail-show" id="third_pro_body" style="display:none;">
+            <div class="the-onelm-name">${companyName}</div>
+            <div>
+                <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第三层货架</h4>
+                [[if(data[3]&&data[3].length>0){ ]]
+                    <ul class="aui-list-view aui-grid-view">
+                        [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                                <img class="aui-img-object" src="{{ item.proimage }}"/>
+                                <a class="aui-img-body">{{ item.proname }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                            </li>
+                        [[ } ]]
+                    </ul>
+                [[ } ]] 
+            </div>
+            </div>
+
+
+            <div class="aui-content list-detail-show" id="forth_pro_body" style="display:none;">
+            <div class="the-onelm-name">${companyName}</div>
+            <div>
+                <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第四层货架</h4>
+                [[if(data[4]&&data[4].length>0){ ]]
+                    <ul class="aui-list-view aui-grid-view">
+                        [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                                <img class="aui-img-object" src="{{ item.proimage }}"/>
+                                <a class="aui-img-body">{{ item.proname }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                            </li>
+                        [[ } ]]
+                    </ul>
+                [[ } ]] 
+            </div>
+            </div>
+        [[ } ]]
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+    <script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
+    <script>
+    
+        $(function() {
+        	_.templateSettings = {
+                evaluate    : /\[\[(.+?)\]\]/g,
+                interpolate : /\{\{(.+?)\}\}/g
+            };       
+        	FastClick.attach(document.body);
+        	getData();
+        })
+        function getData() {
+        	console.log('查询id==>'+${id});
+        	$.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/company/getProData",
+                data: {
+                	id: ${id}
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(res) {
+                	var list = _.groupBy(res.data, 'storageracks');
+                    bindData(list);
+                }
+            });
+        }
+        function bindData(data) {
+            if (data == null) {
+                return;
+            }
+            var tpl = $("#pro_tpl").html();
+            var _tpl = _.template(tpl);
+            $("#proContainer").html("");
+            $("#proContainer").append(_tpl({
+                "data": data
+            }));
+        }
+        function change(obj) {
+        	var index = $(obj).attr('id');
+        	$(obj).addClass('search-leftbar-cur');
+        	$(obj).siblings().removeClass('search-leftbar-cur');
+        	switch(index) {
+        	   case 'firstpro':
+        		   $("#first_pro_body").show();
+        		   $("#first_pro_body").siblings().hide();
+        		   break;
+        	   case 'secondpro':
+                   $("#second_pro_body").show();
+                   $("#second_pro_body").siblings().hide();
+                   break;
+        	   case 'thirdpro':
+                   $("#third_pro_body").show();
+                   $("#third_pro_body").siblings().hide();
+                   break;
+        	   case 'forthpro':
+                   $("#forth_pro_body").show();
+                   $("#forth_pro_body").siblings().hide();
+                   break;       
+        	}
+        }
+    </script>
+</body>
 </html>

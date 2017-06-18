@@ -49,7 +49,7 @@ public class TemplateController {
 	private TemplateproductService templateproductService;
 	
 	/**
-	 * 查询模板记录
+	 * 分页查询模板记录
 	 * @param request
 	 * @param query
 	 * @param model
@@ -60,6 +60,21 @@ public class TemplateController {
 	public String getData(HttpServletRequest request, GwTemplate template) {
 		DatatablesView dataTable = templateService.getGwTemplatesByPagedParam(template,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	/**
+	 * 查询全部模板记录
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/template/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request, GwTemplate template) {
+		DatatablesView dataTable = templateService.getGwTemplatesByParam(template);
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}

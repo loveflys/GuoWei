@@ -16,6 +16,24 @@
     <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
     <result column="did" property="did" jdbcType="BIGINT" />
   </resultMap>
+  <resultMap id="MultiResultMap" type="com.guowei.pojo.GwCompanyTemp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="template_id" property="templateId" jdbcType="BIGINT" />
+    <result column="template_name" property="tname" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_addr" property="companyAddr" jdbcType="VARCHAR" />
+    <result column="company_contactname" property="companyContactname" jdbcType="VARCHAR" />
+    <result column="company_contactposition" property="companyContactposition" jdbcType="VARCHAR" />
+    <result column="company_contactphone" property="companyContactphone" jdbcType="VARCHAR" />
+    <result column="company_contactwechat" property="companyContactwechat" jdbcType="VARCHAR" />
+    <result column="company_contactwechatopenid" property="companyContactwechatopenid" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
+    <result column="did" property="did" jdbcType="BIGINT" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -79,6 +97,30 @@
     company_contactphone, company_contactwechat, company_contactwechatopenid, created, 
     purchased, did
   </sql>
+  <sql id="Multi_Column_List" >
+    c.id,<!-- 主键 -->
+    c.mid,
+    c.template_id,
+    c.company_addr,
+    c.company_contactname,
+    c.company_contactphone,
+    c.company_contactposition,
+    c.company_contactwechat,
+    c.company_contactwechatopenid,
+    c.company_name,
+    c.created,
+    c.did,
+    c.purchased, 
+    t.name AS "template_name",
+    m.name AS "mname",
+    d.name AS "dname"
+  </sql>
+   <select id="selectById" resultMap="MultiResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Multi_Column_List" />
+    from gw_company c, gw_template t, gw_manager m, gw_division d 
+    where c.template_id=t.id and c.did = d.id and c.mid = m.id and c.id=#{id}
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCompanyExample" >
     select
     <if test="distinct" >
@@ -88,6 +130,20 @@
     from gw_company
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectTempByExample" resultMap="MultiResultMap" parameterType="com.guowei.pojo.GwCompanyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Multi_Column_List" />
+    from gw_company c, gw_template t, gw_manager m, gw_division d 
+    <if test="_parameter != null" >
+      where c.template_id=t.id and c.did = d.id and c.mid = m.id
     </if>
     <if test="orderByClause != null" >
       order by ${orderByClause}

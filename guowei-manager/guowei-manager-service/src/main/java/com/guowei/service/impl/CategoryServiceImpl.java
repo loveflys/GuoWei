@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if (!"".equals(category.getName())) {
 			criteria.andNameLike(category.getName());
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwCategory> list = categoryMapper.selectByExample(gme);
 		PageInfo<GwCategory> page = new PageInfo<>(list);

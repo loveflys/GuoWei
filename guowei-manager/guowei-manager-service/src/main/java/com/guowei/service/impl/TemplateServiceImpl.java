@@ -65,7 +65,7 @@ public class TemplateServiceImpl implements TemplateService {
 		if (!"".equals(template.getName())) {
 			criteria.andNameLike(template.getName());
 		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwTemplate> list = templateMapper.selectByExample(gme);
 		PageInfo<GwTemplate> page = new PageInfo<>(list);
@@ -81,9 +81,9 @@ public class TemplateServiceImpl implements TemplateService {
 		// TODO Auto-generated method stub
 		GwTemplateExample gme = new GwTemplateExample();
 		Criteria criteria = gme.createCriteria();
-		if (!"".equals(template.getName())) {
-			criteria.andNameLike(template.getName());
-		}		
+//		if (!"".equals(template.getName())) {
+//			criteria.andNameLike(template.getName());
+//		}		
 		List<GwTemplate> list = templateMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

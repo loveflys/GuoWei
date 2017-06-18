@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 //		if (!"".equals(order.getTitle())) {
 //			criteria.andTitleLike(order.getTitle());
 //		}		
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwOrder> list = orderMapper.selectByExample(gme);
 		PageInfo<GwOrder> page = new PageInfo<>(list);

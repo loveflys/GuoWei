@@ -73,6 +73,14 @@ public class ManagerController {
 		return data;
 	}
 	
+	@RequestMapping(value="/manager/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request, GwManager manager) {
+		DatatablesView dataTable = managerService.getGwManagersByParam(manager);
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
 	@RequestMapping("/managers")
 	public String toList(HttpServletRequest request){   
 		return "manager";

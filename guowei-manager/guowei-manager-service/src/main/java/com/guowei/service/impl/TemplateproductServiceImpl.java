@@ -54,7 +54,7 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		if (templateproduct.getPid() != null && templateproduct.getPid() > 0) {
 			criteria.andPidEqualTo(templateproduct.getPid());
 		}
-		int pageNum = (start/10)+1;
+		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwTemplateproduct> list = templateproductMapper.selectByExample(gme);
 		PageInfo<GwTemplateproduct> page = new PageInfo<>(list);
