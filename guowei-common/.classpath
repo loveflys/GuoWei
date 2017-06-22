@@ -22,5 +22,14 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/陈安一/.m2/repository/com/thoughtworks/xstream/xstream/1.4.6/xstream-1.4.6.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="com.thoughtworks.xstream"/>
+			<attribute name="maven.artifactId" value="xstream"/>
+			<attribute name="maven.version" value="1.4.6"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

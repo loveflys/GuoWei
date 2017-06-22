@@ -1,5 +1,16 @@
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\CertUtil.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\HttpUtil.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\Constants.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\DatatablesView.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\DatatablesView.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\HttpHelper.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\WeiXinOAuth.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\MD5.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\SimpleListResult.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\AuthToken.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\Secret.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\AccessToken.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\PaySendData.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\Constant.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\MessageView.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\PayUtils.java

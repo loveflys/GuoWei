@@ -43,9 +43,8 @@
         }
         footer .cart-body {
             z-index: 11;
-            bottom: 60px;
+            bottom: 370px;
 	        position: fixed;
-		    bottom: 0;
 		    left: 0;
 		    width: 100%;
 		    background-color: #fff;
@@ -74,14 +73,14 @@
 		    font-size: 12px;    
         }
         footer .cart-body .title i {
-            width: 48px;
-            height: 48px;
+            width: 18px;
+            height: 18px;
             fill: #ddd;  
         }
         footer .cart-body .container{
             overflow: auto;
 		    -webkit-overflow-scrolling: touch;
-		    max-height: 8rem;
+		    height: 280px;
         }
         footer .cart-body .container ul{
             list-style: none;
@@ -95,10 +94,7 @@
 		    display: flex;
 		    -webkit-box-align: center;
 		    -ms-flex-align: center;
-		    align-items: center;
-		    padding: 10px 15px 10px 0;
-		    min-height: 50px;
-		    margin-left: 10px;    
+		    align-items: center;  
         }
         footer .cart-body .container ul li .subtitle{
             -webkit-box-flex: 5.5;
@@ -113,7 +109,7 @@
 		    text-overflow: ellipsis;
 		    white-space: nowrap;
 		    vertical-align: middle;
-		    max-width: 4.666667rem;
+		    max-width: 220px;
         }
         footer .cart-body .container ul li .subtitle p{
             white-space: nowrap;
@@ -159,11 +155,15 @@
 		    vertical-align: middle;
 		    text-decoration: none;
         }
-        footer .cart-body .container ul li .manager .manager-body .minus svg, footer .cart-body li .manager .manager-body .plus svg {
-            width: 60px;
-            height: 60px;
+        footer .cart-body .container ul li .manager .manager-body .minus i, footer .cart-body li .manager .manager-body .plus i {
+            width: 40px;
+            height: 50px;
             vertical-align: middle;
             fill: #3190e8;
+            font-size: 25px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
         }
         footer .cart-body .container ul li .manager .manager-body .number {
             display: inline-block;
@@ -274,55 +274,62 @@
         </div>
         <div class="search-rightbar" id="proContainer">
         </div>
-        <footer style="display:none;">
-            <div class="bgm"></div>
-	        <div class="cart-body">
+        <footer>
+            <div class="bgm" onclick="toggleCart()" style="display:none;"></div>
+	        <div class="cart-body" style="display:none;">
 	           <div class="title">
                     <span class="buycart">购物车</span>
-                    <a>
-                        <i>11</i>
+                    <a href="javascript:clearCart();">
+                        <i class="fa fa-trash-o"></i>
                         <span>清空</span>
                     </a>
                 </div>
 	        
 	           <div class="container">
-                    <ul>
-                        <li>
-                            <div class="subtitle">
-                                <em>A夏威夷风光比萨[芝心][10 寸]</em>
-                                <p></p>
-                            </div>
-                            <div class="price">
-                                <span class="value">76</span>
-                            </div>
-                            <div class="manager">
-                                <div class="manager-body">
-	                                <a class="minus">
-	                                   <svg></svg>
-	                                </a>
-	                                <span class="number">1</span>
-	                                <a class="plus">
-	                                   <svg></svg>
-	                                </a>
-                                </div>
-                            </div>
-                        </li>
+                    <ul id="cartProContainer">
+                        
                     </ul>
                 </div>
 	        </div>
-	        <div class="footer" >
-			    <span class="cart" attr-quantity="1">
+	        <div class="footer">
+			    <span id="cartnum" onclick="toggleCart()" class="cart"> <!-- attr-quantity="1" -->
 			    </span>
-			    <div class="buy-info" >
+			    <div class="buy-info" onclick="toggleCart()">
 			      
-			      <p class="buy-info-price">￥111</p>
+			      <p class="buy-info-price">￥<span id="totalAmount">0</span></p>
 			    </div>
-			    <a class="submitBtn">去结算</a>
+			    <a class="submitBtn disabled">去结算</a>
 			</div>
 		</footer>
         
         
     </div>
+    <script type="text/html" id="cart_tpl">
+        [[ if (data) { ]]
+            [[ for(var i = 0, length = data.length; i< length; i++) { var item = data[i]; ]]
+                    <li id="cartpro_{{item.id}}">
+                        <div class="subtitle">
+                            <em>{{item.proname}}</em>
+                            <p></p>
+                        </div>
+                        <div class="price">
+                            <span class="value">{{item.proprice}}</span>
+                        </div>
+                        <div class="manager">
+                            <div class="manager-body">
+                                <a class="minus" onclick="minusCartPro('{{item.id}}')">
+                                   <i class="fa fa-minus-circle"></i>
+                                </a>
+                                <span class="number">{{item.number}}</span>
+                                <a class="plus" onclick="addtoCart('{{item.id}}')">
+                                   <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+            [[ } ]]
+        [[  } ]]
+    </script>
     <script type="text/html" id="pro_tpl">
         [[ if(data){ ]] 
             <div class="aui-content list-detail-show" id="first_pro_body">
@@ -332,10 +339,10 @@
                 [[if(data[1]&&data[1].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
-                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
                         [[ } ]]
                     </ul>
@@ -350,10 +357,10 @@
                 [[if(data[2]&&data[2].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
-                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
                         [[ } ]]
                     </ul>
@@ -369,10 +376,10 @@
                 [[if(data[3]&&data[3].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
-                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
                         [[ } ]]
                     </ul>
@@ -388,10 +395,10 @@
                 [[if(data[4]&&data[4].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
-                                <a style="color: red;padding: 0 !important;margin: 0;">{{ item.proprice }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
                         [[ } ]]
                     </ul>
@@ -404,7 +411,12 @@
     <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
     <script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
     <script>
-    
+        window.param = {
+        	all: [],
+        	cart: [],
+        	amount: 0,
+        	showCart: false,
+        }
         $(function() {
         	_.templateSettings = {
                 evaluate    : /\[\[(.+?)\]\]/g,
@@ -412,6 +424,7 @@
             };       
         	FastClick.attach(document.body);
         	getData();
+        	console.log('123')
         })
         function getData() {
         	console.log('查询id==>'+${id});
@@ -427,6 +440,12 @@
                     toastr.error("Server Connection Error...");
                 },
                 success: function(res) {
+                	console.log("调用接口成功", "返回的数据是==>"+JSON.stringify(res));
+                	console.log(res.data);
+                	for(var i=0; i< res.data.length; i++) {
+                		console.log(res.data[i].proname);
+                	}
+                	window.param.all = res.data;
                 	var list = _.groupBy(res.data, 'storageracks');
                     bindData(list);
                 }
@@ -465,6 +484,145 @@
                    $("#forth_pro_body").siblings().hide();
                    break;       
         	}
+        }
+        //清空购物车
+        function clearCart() {
+        	window.param.cart = [];
+        	window.param.amount = 0;
+        	$("#cartnum").removeAttr('attr-quantity');
+        	$("#cartnum").removeClass('goods');
+        	$("#totalAmount").text(0);
+        	$("#cartProContainer").html('');
+        	if (!$(".submitBtn").hasClass('disabled')) {
+                $(".submitBtn").addClass('disabled')
+            }
+        	toggleCart();
+        }
+        function addtoCart(id) {
+        	var item = null;
+            
+        	let has = false;
+        	let amount = 0;
+        	
+        	window.param.cart.map((e)=> {
+        		if (e.id == id) {
+        			item = e;
+        			has = true;
+        			e.number++;
+        		}
+        		amount += e.number * e.proprice;
+        	});
+        	if (!has) {
+        		window.param.all.map((e)=> {
+                    if (e.id == id) {
+                        item = e;
+                    }
+                });
+        		item.number = 1;
+        		window.param.cart.push(item);
+        		amount += item.proprice;        		
+        	}
+        	$("#totalAmount").text(amount.toFixed(2));
+        	$("#cartnum").attr('attr-quantity', window.param.cart.length);
+        	var tpl = $("#cart_tpl").html();
+            var _tpl = _.template(tpl);
+            $("#cartProContainer").html(_tpl({
+                "data": window.param.cart
+            }));
+            if (!$("#cartnum").hasClass('goods')) {
+            	$("#cartnum").addClass(' goods')
+            }
+            if ($(".submitBtn").hasClass('disabled')) {
+                $(".submitBtn").removeClass('disabled')
+            }
+        }
+        function minusCartPro(id) {
+            let amount = 0;
+            let temp = [];
+            for(var i=0,length=window.param.cart.length; i< length; i++) {
+            	var e = window.param.cart[i];
+            	if (e.id == id) {
+                    e.number--;
+                    if (e.number == 0) {
+                    	$("#cartpro_"+id).remove();
+                    }
+                }
+                if (e.number > 0) {
+                    temp.push(e);
+                    amount += e.number * e.proprice;
+                }
+            }
+            window.param.cart = temp;
+            if (window.param.cart.length <= 0) {
+            	clearCart();
+            	return;
+            }
+            $("#totalAmount").text(amount.toFixed(2));
+            $("#cartnum").attr('attr-quantity', window.param.cart.length);
+            var tpl = $("#cart_tpl").html();
+            var _tpl = _.template(tpl);
+            $("#cartProContainer").html(_tpl({
+                "data": window.param.cart
+            }));
+        }
+        function toggleCart() {
+        	if (!window.param.showCart && (!window.param.cart || window.param.cart.length <= 0)) {
+        		return;
+        	}
+        	window.param.showCart = !window.param.showCart;
+        	if (window.param.showCart) {
+        		$('.bgm').show();
+        		$('.cart-body').show();
+        	} else {
+        		$('.bgm').hide();
+                $('.cart-body').hide();
+        	}
+        }
+        function getUserInfo() {
+        	$.ajax({
+                cache: false,
+                type: "POST",
+                url: '',//"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+${ACCESS_TOKEN}+"&openid="+${OPENID}+"&lang=zh_CN",
+                data: {
+                    companyId: ${id},
+                    companyName: ${companyName},
+                    details: JSON.stringify(window.param.cart),
+                    uid: '',
+                    uname: ''
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(res) {
+                    window.param.all = res.data;
+                    var list = _.groupBy(res.data, 'storageracks');
+                    bindData(list);
+                }
+            });
+        }
+        function submit () {
+        	$.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/company/getProData",
+                data: {
+                	companyId: ${id},
+                    companyName: ${companyName},
+                    details: JSON.stringify(window.param.cart),
+                    uid: '',
+                    uname: ''
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(res) {
+                    window.param.all = res.data;
+                    var list = _.groupBy(res.data, 'storageracks');
+                    bindData(list);
+                }
+            });
         }
     </script>
 </body>

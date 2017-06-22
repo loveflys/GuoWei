@@ -10,6 +10,30 @@
   <version>0.0.1-SNAPSHOT</version>
   <!-- jar包的依赖 -->
     <dependencies>
+		<!-- jdom -->
+            <dependency>
+                <groupId>jdom</groupId>
+                <artifactId>jdom</artifactId>
+            </dependency>
+    
+            <!-- dom4j -->
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+            </dependency>
+    
+            <!-- SpringMVC返回Json、Json解析/反解析 -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+            </dependency>
+    
+            <!-- XML解析 -->
+            <dependency>
+                <groupId>com.thoughtworks.xstream</groupId>
+                <artifactId>xstream</artifactId>
+            </dependency>
+
         <!-- 时间操作组件 -->
         <dependency>
             <groupId>joda-time</groupId>

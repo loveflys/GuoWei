@@ -23,6 +23,10 @@
         <jsp-api.version>2.0</jsp-api.version>
         <joda-time.version>2.5</joda-time.version>
         <commons-lang3.version>3.3.2</commons-lang3.version>
+        <jdom.version>1.0</jdom.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+        <xstream.version>1.4.6</xstream.version>
         <commons-io.version>1.3.2</commons-io.version>
         <commons-net.version>3.3</commons-net.version>
         <pagehelper.version>3.4.2-fix</pagehelper.version>
@@ -34,6 +38,33 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+	        <!-- jdom -->
+	        <dependency>
+	            <groupId>jdom</groupId>
+	            <artifactId>jdom</artifactId>
+	            <version>${jdom.version}</version>
+	        </dependency>
+	
+	        <!-- dom4j -->
+	        <dependency>
+	            <groupId>dom4j</groupId>
+	            <artifactId>dom4j</artifactId>
+	            <version>${dom4j.version}</version>
+	        </dependency>
+	
+	        <!-- SpringMVC返回Json、Json解析/反解析 -->
+	        <dependency>
+	            <groupId>org.codehaus.jackson</groupId>
+	            <artifactId>jackson-mapper-asl</artifactId>
+	            <version>${jackson-mapper-asl.version}</version>
+	        </dependency>
+	
+	        <!-- XML解析 -->
+	        <dependency>
+	            <groupId>com.thoughtworks.xstream</groupId>
+	            <artifactId>xstream</artifactId>
+	            <version>${xstream.version}</version>
+	        </dependency>
             <!-- 时间操作组件 -->
             <dependency>
                 <groupId>joda-time</groupId>

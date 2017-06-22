@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,8 +65,37 @@ public class OrderController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/order/add")
-	public String add(GwOrder order, ModelMap model) {
+	@RequestMapping(value = "/order/submit", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String add(HttpServletRequest request, ModelMap model) {
+		if (request.getParameter("companyId") == null || "".equals(request.getParameter("companyId"))) {
+			model.addAttribute("result", "公司编号有误，请联系系统管理员解决。");
+			return "";
+		}
+		if (request.getParameter("companyName") == null || "".equals(request.getParameter("companyName"))) {
+			model.addAttribute("result", "公司名称有误，请联系系统管理员解决。");
+			return "";
+		}
+		if (request.getParameter("detail") == null || "".equals(request.getParameter("detail"))) {
+			model.addAttribute("result", "购物车产品有误，请联系系统管理员解决。");
+			return "";
+		}
+		if (request.getParameter("uid") == null || "".equals(request.getParameter("uid"))) {
+			model.addAttribute("result", "用户信息有误，请联系系统管理员解决。");
+			return "";
+		}
+		if (request.getParameter("uname") == null || "".equals(request.getParameter("uname"))) {
+			model.addAttribute("result", "用户信息有误，请联系系统管理员解决。");
+			return "";
+		}
+		GwOrder order = new GwOrder();
+		order.setCompanyId(Long.parseLong(request.getParameter("companyId")));
+		order.setCompanyName(request.getParameter("companyName"));
+		order.setUid(Long.parseLong(request.getParameter("uid")));
+		order.setUname(request.getParameter("uname"));
+		order.setStatus(Byte.parseByte("1"));
+		order.setCreated(Calendar.getInstance().getTime());
+		
 		int result = orderService.addGwOrder(order);
 		if (result == 1) {		
 			model.addAttribute("result", result);
