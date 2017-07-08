@@ -16,7 +16,7 @@ public class PageController {
 	 */
 	@RequestMapping("/")
 	public String showIndex () {		
-		return "login";
+		return "index";
 	}
 	
 	@RequestMapping("/{page}")
