@@ -31,7 +31,7 @@
 }
 
 .logo-icon {
-	background-image: url('assets/images/logo.png');
+	background-image: url('<%=path%>/res/home/assets/images/logo.png');
 	background-size: cover;
 	width: 40px;
 	height: 40px;
