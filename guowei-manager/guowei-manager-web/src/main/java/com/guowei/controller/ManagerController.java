@@ -46,11 +46,12 @@ public class ManagerController {
 	 * @return
 	 */
 	@RequestMapping("/managers/sign")
+	@ResponseBody
 	public ModelAndView sign(HttpServletRequest request, GwManager manager, Model model){   
 		manager = managerService.getGwManagerByNamePassword(manager);
 		if(manager != null){
 			request.getSession().setAttribute(Constants.CURRENT_USER, manager);
-			return new ModelAndView("redirect:/managers");
+			return new ModelAndView("redirect:/managerlist");
 		}else{
 			model.addAttribute("msg", "登陆失败，请重新登陆!");
 			return new ModelAndView("login");

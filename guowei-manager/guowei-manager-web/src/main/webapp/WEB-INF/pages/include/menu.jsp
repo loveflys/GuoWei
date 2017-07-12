@@ -11,7 +11,7 @@
 		<ul class="sidebar-menu">
 			<li class="header"><sp:message code="menu"/></li>
 			<li class="treeview">
-				<a href="<%=path%>/managers"> <i class="fa fa-user"></i><span><sp:message code="menu.manager"/></span></a>
+				<a href="<%=path%>/managerlist"> <i class="fa fa-user"></i><span><sp:message code="menu.manager"/></span></a>
 			</li>
 			<li class="treeview">
                 <a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
