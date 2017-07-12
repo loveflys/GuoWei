@@ -668,7 +668,7 @@
 		        $.ajax({
                     cache: false,
                     type: "POST",
-                    url: "<%=path%>/manager/getAllData",
+                    url: "<%=path%>/managers/getAllData",
                     data: {},
                     async: false,
                     error: function(request) {
@@ -703,7 +703,7 @@
                 $.ajax({
                     cache: false,
                     type: "POST",
-                    url: "<%=path%>/manager/getAllData",
+                    url: "<%=path%>/managers/getAllData",
                     data: {},
                     async: false,
                     error: function(request) {
