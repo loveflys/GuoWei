@@ -15,7 +15,11 @@
                 <groupId>jdom</groupId>
                 <artifactId>jdom</artifactId>
             </dependency>
-    
+    	<!--七牛云存储-->  
+	        <dependency>
+				<groupId>com.qiniu</groupId>
+				<artifactId>qiniu-java-sdk</artifactId>
+			</dependency>
             <!-- dom4j -->
             <dependency>
                 <groupId>dom4j</groupId>
