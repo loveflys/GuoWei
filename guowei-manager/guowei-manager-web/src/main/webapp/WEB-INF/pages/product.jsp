@@ -334,8 +334,64 @@
         </div>   
 		<!-- page script -->
 		<script>
+		    window.param = {
+		    	qiniuToken: '',
+		    	qiniuUrl: '',
+		    }
+		    function getToken () {
+		    	var url = "<%=path%>/file/getToken";
+                $.ajax({
+                    cache: false,
+                    type: "get",
+                    url: url,
+                    data: {},
+                    async: false,
+                    error: function(request) {
+                        alert("Server Connection Error...");
+                    },
+                    success: function(ret) {
+                    	if (ret.ok) {
+                            window.param.qiniuToken = ret.token;
+                            window.param.qiniuUrl = ret.url;
+                        } else {
+                            if (ret.msg) {
+                                alert(ret.msg);
+                            } else {
+                            	alert("七牛token获取失败,请稍后再试。");
+                            }
+                        }
+                    }
+                });
+		    }
+		    function upload(imgurl, callback) {
+		    	var url = "http://up-z1.qiniu.com/";
+                $.ajax({
+                    cache: false,
+                    type: "post",
+                    url: url,
+                    data: {
+                    	values : {
+                            token : window.param.qiniuToken
+                        },
+                        files : {
+                            file : imgurl
+                        }
+                    },
+                    async: false,
+                    error: function(request) {
+                        alert("Server Connection Error...");
+                    },
+                    success: function(ret) {
+                    	if (res && res.key) {
+                            var urls = window.param.qiniuUrl + res.key;
+                            console.log("压缩后上传的照片地址为==>" + urls);
+                            callback(urls);
+                        }
+                    }
+                });
+		    }
 			$(function () {
-				
+				getToken();
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
