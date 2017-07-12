@@ -26,13 +26,22 @@ public class ManagerServiceImpl implements ManagerService {
 	
 	@Override
 	public GwManager getGwManagerByNamePassword(GwManager manager) {
+		if ("".equals(manager.getName()) || "".equals(manager.getPassword())) {
+			return null;
+		}
 		// TODO Auto-generated method stub
 		GwManagerExample gme = new GwManagerExample();
+		Criteria c = gme.createCriteria();
+		c.andNameEqualTo(manager.getName());
 //		Criteria criteria = gme.createCriteria();
 		List<GwManager> list = managerMapper.selectByExample(gme);
 		if (list != null && list.size() > 0) {
 			GwManager mng = list.get(0);
-			return mng;
+			if (mng.getPassword().equals(manager.getPassword())) {
+				return mng;
+			} else {
+				return null;
+			}
 		}
 		return null;
 	}

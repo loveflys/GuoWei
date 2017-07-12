@@ -29,7 +29,7 @@ public class FileController {
 	private String SECRET_KEY= "o-Br46JzSVfuglvY6nMhW-3WDllXPWpgnyBKhGLW";
 	private String BUCKET= "guoweiimage";
 	private String URL= "http://osz2k3fxc.bkt.clouddn.com/";
-	@RequestMapping(value="/upload", method=RequestMethod.POST)
+	@RequestMapping(value="/file/upload", method=RequestMethod.POST)
 	 public @ResponseBody
 	 String handleFileUpload(
 	         @RequestParam("file") MultipartFile file){
@@ -57,7 +57,8 @@ public class FileController {
 	     return result;
 	 }
 	
-	@RequestMapping("/getToken")
+	@RequestMapping("/file/getToken")
+	@ResponseBody
 	public QiniuTokenEntity getToken() {
 		QiniuTokenEntity result = new QiniuTokenEntity();
 	  //密钥配置

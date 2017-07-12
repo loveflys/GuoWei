@@ -33,10 +33,10 @@
 						<!-- Menu Footer-->
 						<li class="user-footer">
 							<div class="pull-left">
-								<a href="<%=path%>/manager/show" class="btn btn-default btn-flat"><sp:message code="manager.info"/></a>
+								<a href="<%=path%>/managers/show" class="btn btn-default btn-flat"><sp:message code="manager.info"/></a>
 							</div>
 							<div class="pull-right">
-								<a href="<%=path%>/manager/out" class="btn btn-default btn-flat"><sp:message code="sys.out"/></a>
+								<a href="<%=path%>/managers/out" class="btn btn-default btn-flat"><sp:message code="sys.out"/></a>
 							</div>
 						</li>
 						

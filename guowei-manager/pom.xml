@@ -32,9 +32,9 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<port>8000</port>
-					<path>/cay</path>
-					<url>http://127.0.0.1:8000/manager/html</url>
+					<port>80</port>
+					<path>/</path>
+					<url>http://127.0.0.1/manager/html</url>
 					<username>chenanyi</username>
 					<password>nishengri</password>
 				</configuration>
