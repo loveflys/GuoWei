@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
+		<link rel="stylesheet" href="<%=path%>/res/fileupload.css">
 		<style type="text/css">
 			.modal-dialog { 
 				position: absolute; 
@@ -275,7 +275,9 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.image"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="image">
+                                    <input type="hidden" class="form-control" name="image">
+                                    <div class="upload-img-btn">+</div>
+                                    <input type="file" id="add-file" onchange="upload()" class="form-control hidden-file-input">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -363,32 +365,35 @@
                     }
                 });
 		    }
-		    function upload(imgurl, callback) {
-		    	var url = "http://up-z1.qiniu.com/";
-                $.ajax({
-                    cache: false,
-                    type: "post",
-                    url: url,
-                    data: {
-                    	values : {
-                            token : window.param.qiniuToken
-                        },
-                        files : {
-                            file : imgurl
-                        }
-                    },
-                    async: false,
-                    error: function(request) {
-                        alert("Server Connection Error...");
-                    },
-                    success: function(ret) {
-                    	if (res && res.key) {
-                            var urls = window.param.qiniuUrl + res.key;
-                            console.log("压缩后上传的照片地址为==>" + urls);
-                            callback(urls);
-                        }
-                    }
-                });
+		    function upload(type) {
+		    	var files = document.getElementById("add-file").files[0];
+		    	if (files === null || files === undefined) {
+		    		toastr.error('请先选择文件。');
+		            return;
+		          }
+		          if (files.size/(1024*1024) > 2) {
+		        	toastr.error('文件' + files.name + ' 太大，不能超过 2M。');
+		            return;
+		          }
+
+		          let oData = new FormData();
+		          oData.append("file", files);
+		          oData.append("token", window.param.qiniuToken);
+		          var oReq = new XMLHttpRequest();
+		          oReq.open( "POST", "http://up-z1.qiniu.com/" , true );
+		          oReq.onload = function(oEvent) {
+		            let res = JSON.parse(oReq.response);
+		            if (oReq.status === 200 && res.key) {
+		              let url = window.param.qiniuUrl + res.key;
+		              console.log(url);
+		            } else {
+		            	  toastr.error('上传失败。');
+		            }
+		          };
+		          oReq.onerror = function(err) {
+		        	  toastr.error('上传错误。');
+		          };
+		          oReq.send(oData);
 		    }
 			$(function () {
 				getToken();
