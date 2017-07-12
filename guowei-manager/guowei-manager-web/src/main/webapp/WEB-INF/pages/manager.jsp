@@ -159,7 +159,7 @@
 					</div>
 					
 					<div class="modal-body" >
-						<form class="form-horizontal"  id="editForm" action="<%=path%>/manager/update" method="post">
+						<form class="form-horizontal"  id="editForm" action="<%=path%>/managers/update" method="post">
 							<input type="hidden" class="form-control" name="id">
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
@@ -230,7 +230,7 @@
                     </div>
                     
                     <div class="modal-body" >
-                        <form class="form-horizontal"  id="addForm" action="<%=path%>/manager/add" method="post">
+                        <form class="form-horizontal"  id="addForm" action="<%=path%>/managers/add" method="post">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
                                 <div class="col-sm-9">
@@ -311,7 +311,7 @@
 			        searching: false,
 			        ajax: {   //类似jquery的ajax参数，基本都可以用。
 			        	type: "post",//后台指定了方式，默认get，外加datatable默认构造的参数很长，有可能超过get的最大长度。
-			            url: "<%=path%>/manager/getData",
+			            url: "<%=path%>/managers/getData",
 			            dataSrc: "data",//默认data，也可以写其他的，格式化table的时候取里面的数据
 	                    data: function (d) {//d是原始的发送给服务器的数据，默认很长。
 	                        var param = {}; //因为服务端排序，可以新建一个参数对象
@@ -461,7 +461,7 @@
 		        });
 	          	
 				$("#btn-submit").on("click", function(){
-					var url = "<%=path%>/manager/update";
+					var url = "<%=path%>/managers/update";
 	          		$.ajax({
 		                cache: false,
 		                type: "POST",
@@ -484,7 +484,7 @@
 	          	});
 				
 				$("#btn-addsubmit").on("click", function(){
-                    var url = "<%=path%>/manager/add";
+                    var url = "<%=path%>/managers/add";
                     $.ajax({
                         cache: false,
                         type: "POST",
@@ -511,7 +511,7 @@
 					var data = tables.api().row($(this).parents('tr')).data();
 		            if(confirm("是否确认删除这条信息?")){
 		                $.ajax({
-		                    url:'<%=path%>/manager/del/'+data.id,
+		                    url:'<%=path%>/managers/del/'+data.id,
 		                    type:'delete',
 		                    dataType: "json",
 		                    //timeout:"3000",

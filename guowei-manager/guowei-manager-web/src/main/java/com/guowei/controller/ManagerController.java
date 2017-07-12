@@ -45,7 +45,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/manager/sign")
+	@RequestMapping("/managers/sign")
 	public ModelAndView sign(HttpServletRequest request, GwManager manager, Model model){   
 		manager = managerService.getGwManagerByNamePassword(manager);
 		if(manager != null){
@@ -64,7 +64,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/manager/getData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/managers/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwManager manager) {
 		DatatablesView dataTable = managerService.getGwManagersByPagedParam(manager,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
@@ -73,7 +73,7 @@ public class ManagerController {
 		return data;
 	}
 	
-	@RequestMapping(value="/manager/getAllData", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value="/managers/getAllData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getAllData(HttpServletRequest request, GwManager manager) {
 		DatatablesView dataTable = managerService.getGwManagersByParam(manager);
@@ -81,7 +81,7 @@ public class ManagerController {
 		return data;
 	}
 	
-	@RequestMapping("/managers")
+	@RequestMapping("/managerlist")
 	public String toList(HttpServletRequest request){   
 		return "manager";
 	}
@@ -91,7 +91,7 @@ public class ManagerController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/manager/out")
+	@RequestMapping("/managers/out")
 	public String out(HttpServletRequest request){   
 		request.getSession().setAttribute("manager", null);
 		return "login";
@@ -102,7 +102,7 @@ public class ManagerController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("/manager/resetPassword/service")
+	@RequestMapping("/managers/resetPassword/service")
 	public String forgetPassword(HttpServletRequest request){   
 		request.getSession().setAttribute("manager", null);
 		return "login";
@@ -114,7 +114,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/manager/reusername", produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/managers/reusername", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String reUsername(String username) {
 		GwManager manager = managerService.getGwManagerByName(username);
@@ -131,7 +131,7 @@ public class ManagerController {
 	 * 用户注册
 	 * @return
 	 */
-	@RequestMapping("/manager/reg")
+	@RequestMapping("/managers/reg")
 	public String register(){ 
 		return "register";
 	}
@@ -142,7 +142,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/manager/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/managers/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
 		GwManager manager = new GwManager();
@@ -183,7 +183,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/manager/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/managers/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
 		GwManager manager = managerService.getGwManagerById(Long.parseLong(request.getParameter("id")));
@@ -219,7 +219,7 @@ public class ManagerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/manager/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/managers/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
 		int status = managerService.removeGwManager(id);
