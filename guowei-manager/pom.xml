@@ -33,8 +33,8 @@
 				<version>2.2</version>
 				<configuration>
 					<port>80</port>
-					<path>/</path>
-					<url>http://127.0.0.1/manager/text</url>
+					<path>/cay</path>
+					<url>http://127.0.0.1:8080/manager/html</url>
 					<username>chenanyi</username>
 					<password>nishengri</password>
 				</configuration>
