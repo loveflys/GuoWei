@@ -32,7 +32,7 @@
 			<div class="login-box-body">
 				  <p class="login-box-msg"><sp:message code="manager.login"/></p> 
 	
-				<form id="sign" action="<%=path%>/manager/sign" method="post">
+				<form id="sign" action="<%=path%>/managers/sign" method="post">
 					<div class="form-group has-feedback">
 						<input type="text" class="form-control" name="name" placeholder="<sp:message code="manager.name"/>">
 					</div>
@@ -56,7 +56,7 @@
 				</form>
 				<div class="row">
 					<div class="col-xs-12">
-						<a href="<%=path%>/manager/reg" class="btn btn-default btn-block"> <sp:message code="manager.reg"/> </a>
+						<a href="<%=path%>/managers/reg" class="btn btn-default btn-block"> <sp:message code="manager.reg"/> </a>
 					</div>
 				</div>
 	
