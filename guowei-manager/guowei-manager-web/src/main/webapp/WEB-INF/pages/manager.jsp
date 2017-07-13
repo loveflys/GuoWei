@@ -3,294 +3,367 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<!--title-->
-       	<%@ include file="include/title.jsp" %>
-		
-		<!-- iCheck -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/iCheck/flat/blue.css">
-		<!-- Morris chart -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/morris/morris.css">
-		<!-- jvectormap -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-		<!-- Date Picker -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/datepicker/datepicker3.css">
-		<!-- Daterange picker -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
-		<!-- bootstrap wysihtml5 - text editor -->
-		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
-		<style type="text/css">
-			.modal-dialog { 
-				position: absolute; 
-				top: 0; 
-				bottom: 0; 
-				left: 0; 
-				right: 0; 
-			} 
-			
-			.modal-content { 
-				/*overflow-y: scroll; */ 
-				position: absolute; 
-				top: 0; 
-				bottom: 0; 
-				width: 100%; 
-			} 
-			
-			.modal-body { 
-				overflow-y: scroll; 
-				position: absolute; 
-				top: 55px; 
-				bottom: 65px; 
-				width: 100%; 
-			} 
-			
-			.modal-footer {
-				position: absolute; 
-				width: 100%; 
-				bottom: 0; 
-			}
-		</style>
-		
-	</head>
-	
-	<body class="hold-transition skin-blue sidebar-mini">
-		<div class="wrapper">
-			<!--header-->
-       		<%@ include file="include/header.jsp" %>
-			
-			<!--menu-->
-       		<%@ include file="include/menu.jsp" %>
-	
-			<!-- Left side column. contains the logo and sidebar -->
-			<!-- Content Wrapper. Contains page content -->
-			<div class="content-wrapper">
-				<!-- Content Header (Page header) -->
-				<section class="content-header">
-				
-					<!-- 路径导航 -->
-					<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message code="sys.home"/></a> > 
-					<a href="<%=path%>/managers"><sp:message code="menu.manager"/></a>&nbsp;&nbsp;<small><sp:message code="manager.list"/></small>
-					<!-- 
+<head>
+<!--title-->
+<%@ include file="include/title.jsp"%>
+
+<!-- iCheck -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/iCheck/flat/blue.css">
+<!-- Morris chart -->
+<link rel="stylesheet" href="<%=path%>/res/plugins/morris/morris.css">
+<!-- jvectormap -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+<!-- Date Picker -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/datepicker/datepicker3.css">
+<!-- Daterange picker -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap wysihtml5 - text editor -->
+<link rel="stylesheet"
+	href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+<style type="text/css">
+.modal-dialog {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.modal-content {
+	/*overflow-y: scroll; */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.modal-body {
+	overflow-y: scroll;
+	position: absolute;
+	top: 55px;
+	bottom: 65px;
+	width: 100%;
+}
+
+.modal-footer {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+</style>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!--header-->
+		<%@ include file="include/header.jsp"%>
+
+		<!--menu-->
+		<%@ include file="include/menu.jsp"%>
+
+		<!-- Left side column. contains the logo and sidebar -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+
+				<!-- 路径导航 -->
+				<a href="<%=path%>/"><i class="fa fa-home"></i> <sp:message
+						code="sys.home" /></a> > <a href="<%=path%>/managers"><sp:message
+						code="menu.manager" /></a>&nbsp;&nbsp;<small><sp:message
+						code="manager.list" /></small>
+				<!-- 
 					<ol class="breadcrumb">
        					<%@ include file="include/home.jsp" %>
 				        <li class="active">商品管理</li>
 				    </ol>
 				     -->
-				</section>
-			
-				<!-- Main content -->
-				<section class="content">
-					<!-- 查询、添加、批量删除、导出、刷新 -->
-					<div class="row-fluid">
-					
-						<div class="pull-right">
-							<div class="btn-group">
-							    <button type="button" class="btn btn-primary btn-sm"  id="btn-add">
-                                    <i class="fa fa-plus"></i> <sp:message code="sys.add"/>
-                                </button>
-								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
-									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
-								</button>
-							</div>
-						</div>
+			</section>
 
-						<div class="row">
-							<form id="queryForm" action="<%=path%>/managers" method="post">
-								<div class="col-xs-2">
-									<input type="text" id="keyword" name="name" class="form-control input-sm"
-										placeholder="<sp:message code="sys.keyword"/>">
-								</div>
-								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
-									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
-								</button>
-							</form>
+			<!-- Main content -->
+			<section class="content">
+				<!-- 查询、添加、批量删除、导出、刷新 -->
+				<div class="row-fluid">
+
+					<div class="pull-right">
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary btn-sm" id="btn-add">
+								<i class="fa fa-plus"></i>
+								<sp:message code="sys.add" />
+							</button>
+							<button type="button" class="btn btn-primary btn-sm" id="btn-re">
+								<i class="fa fa-refresh"></i>
+								<sp:message code="sys.refresh" />
+							</button>
 						</div>
 					</div>
-	                
+
 					<div class="row">
-						<div class="col-xs-12">
-							<div class="box">
-								<div class="box-body">
-									<table id="dataTable" class="table table-striped table-bordered table-hover table-condensed" align="center">
-										<thead>
-											<tr class="info">
-												<!-- <td><input type="checkbox" id="checkAll"></td> -->
-												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="manager.name"/></th>
-												<th><sp:message code="com.con.tel"/></th>
-												<th><sp:message code="manager.level"/></th>
-												<th><sp:message code="manager.password"/></th>												
-												<th><sp:message code="sys.create.time"/></th>
-												<th><sp:message code="sys.wechatAccount"/></th>
-                                                <th><sp:message code="sys.wechatOpenId"/></th>
-                                                <th><sp:message code="sys.area"/></th>
-                                                <th><sp:message code="sys.oper"/></th>
-											</tr>
-										</thead>
-									</table>
-								</div>
-								<!-- /.box-body -->
+						<form id="queryForm" action="<%=path%>/managers" method="post">
+							<div class="col-xs-2">
+								<input type="text" id="keyword" name="name"
+									class="form-control input-sm"
+									placeholder="<sp:message code="sys.keyword"/>">
 							</div>
-							<!-- /.box -->
-						</div>
-						<!-- /.col -->
-					</div>
-					<!-- /.row -->
-				</section>
-
-			</div>
-	
-			<!--footer-->
-	       	<%@ include file="include/footer.jsp" %>
-			<div class="control-sidebar-bg"></div>
-		</div>
-		
-		<!-- EditManager -->
-		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" >
-				<div class="modal-content">
-				
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel"><sp:message code="manager.info"/>-<sp:message code="sys.edit"/></h4>
-					</div>
-					
-					<div class="modal-body" >
-						<form class="form-horizontal"  id="editForm" action="<%=path%>/managers/update" method="post">
-							<input type="hidden" class="form-control" name="id">
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="name">
-								</div>
-							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="phone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="level">
-                                </div>
-                            </div>
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
-								<div class="col-sm-9">
-									<input type="password" class="form-control" name="password">
-								</div>
-							</div>							
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="wechatAccount">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="wechatOpenId">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="area">
-                                </div>
-                            </div>
+							<button type="button" class="btn btn-primary btn-sm"
+								id="btn-query">
+								<i class="fa fa-search"></i>
+								<sp:message code="sys.query" />
+							</button>
 						</form>
 					</div>
-					<!-- modal-body END -->
-					
-					<div class="modal-footer">
-						<button id="btn-submit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-body">
+								<table id="dataTable"
+									class="table table-striped table-bordered table-hover table-condensed"
+									align="center">
+									<thead>
+										<tr class="info">
+											<!-- <td><input type="checkbox" id="checkAll"></td> -->
+											<th><sp:message code="sys.no" /></th>
+											<th><sp:message code="manager.name" /></th>
+											<th><sp:message code="com.con.tel" /></th>
+											<th><sp:message code="manager.level" /></th>
+											<th><sp:message code="manager.password" /></th>
+											<th><sp:message code="sys.create.time" /></th>
+											<th><sp:message code="sys.wechatAccount" /></th>
+											<th><sp:message code="sys.wechatOpenId" /></th>
+											<th><sp:message code="sys.area" /></th>
+											<th><sp:message code="sys.oper" /></th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<!-- /.box-body -->
+						</div>
+						<!-- /.box -->
 					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</section>
+
+		</div>
+
+		<!--footer-->
+		<%@ include file="include/footer.jsp"%>
+		<div class="control-sidebar-bg"></div>
+	</div>
+
+	<!-- EditManager -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+								code="sys.close" /></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<sp:message code="manager.info" />
+						-
+						<sp:message code="sys.edit" />
+					</h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" id="editForm"
+						action="<%=path%>/managers/update" method="post">
+						<input type="hidden" class="form-control" name="id">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.name" /></label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="com.con.tel" /></label>
+							<div class="col-sm-9">
+								<input type="tel" class="form-control" name="phone">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.level" /></label>
+							<div class="col-sm-9">
+								<select class="form-control" name="level"
+									id="editlevel_container"
+									onchange="changeLevel(this.options[this.options.selectedIndex].value)">
+
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.password" /></label>
+							<div class="col-sm-9">
+								<input type="password" class="form-control" name="password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.wechatAccount" /></label>
+
+							<div class="col-sm-9">
+								<input type="tel" class="form-control" name="wechatAccount">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.wechatOpenId" /></label>
+
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="wechatOpenId">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.area" /></label>
+
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="area">
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- modal-body END -->
+
+				<div class="modal-footer">
+					<button id="btn-submit" type="submit" class="btn btn-primary">
+						<sp:message code="sys.submit" />
+					</button>
 				</div>
 			</div>
 		</div>
-		
-		<!-- AddManager -->
-        <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
-                <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="manager.info"/>-<sp:message code="sys.add"/></h4>
-                    </div>
-                    
-                    <div class="modal-body" >
-                        <form class="form-horizontal"  id="addForm" action="<%=path%>/managers/add" method="post">
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.name"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="phone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="level">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>                          
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
+	</div>
 
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="wechatAccount">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
+	<!-- AddManager -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
 
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="wechatOpenId">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+								code="sys.close" /></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						<sp:message code="manager.info" />
+						-
+						<sp:message code="sys.add" />
+					</h4>
+				</div>
 
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="area">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- modal-body END -->
-                    
-                    <div class="modal-footer">
-                        <button id="btn-addsubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-	
-		<!-- page script -->
-		<script>
+				<div class="modal-body">
+					<form class="form-horizontal" id="addForm"
+						action="<%=path%>/managers/add" method="post">
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.name" /></label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="com.con.tel" /></label>
+							<div class="col-sm-9">
+								<input type="tel" class="form-control" name="phone">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.level" /></label>
+							<div class="col-sm-9">
+								<select class="form-control" name="level"
+									id="addlevel_container"
+									onchange="changeLevel(this.options[this.options.selectedIndex].value)">
+
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="manager.password" /></label>
+							<div class="col-sm-9">
+								<input type="password" class="form-control" name="password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.wechatAccount" /></label>
+
+							<div class="col-sm-9">
+								<input type="tel" class="form-control" name="wechatAccount">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.wechatOpenId" /></label>
+
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="wechatOpenId">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputName" class="col-sm-3 control-label"><sp:message
+									code="sys.area" /></label>
+
+							<div class="col-sm-9">
+								<input type="text" class="form-control" name="area">
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- modal-body END -->
+
+				<div class="modal-footer">
+					<button id="btn-addsubmit" type="submit" class="btn btn-primary">
+						<sp:message code="sys.submit" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="template" id="level_tpl">
+            [[ if (1 == level) { ]]
+                    <option value="1" selected="selected">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+            [[ } else if (2 == level) { ]]
+                    <option value="1">1</option>
+                    <option value="2" selected="selected">2</option>
+                    <option value="3">3</option>
+            [[ } else { ]]
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected="selected">3</option>
+            [[ } ]]
+        </script>
+	<!-- page script -->
+	<script>
+		   window.param = {
+				   level: 1
+		   }
 			$(function () {
-				
+				_.templateSettings = {
+	                    evaluate    : /\[\[(.+?)\]\]/g,
+	                    interpolate : /\{\{(.+?)\}\}/g
+	                };
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -410,7 +483,7 @@
 				//添加
 	            $("#btn-add").on("click", function () {
 	            	$("#addForm input[name=name]").val("");
-                    $("input[name=level]").val("");
+                    getAddData();
                     $("input[name=password]").val("");
                     $("input[name=phone]").val("");
                     $("input[name=wechatAccount]").val("");
@@ -449,8 +522,9 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
+					window.param.level = data.level;
+                    getEditData();
 					$("#editForm input[name=name]").val(data.name);
-					$("input[name=level]").val(data.level);
 					$("input[name=password]").val(data.password);
 					$("input[name=phone]").val(data.phone);
 					$("input[name=wechatAccount]").val(data.wechatAccount);
@@ -533,40 +607,62 @@
 		                });
 		            }
 		        });
+				function getAddData() {
+                    $("#addlevel_container").html(_.template($("#level_tpl").html())({
+                        "level": window.param.level
+                    }));
+                }
+                function getEditData() {
+                    $("#editlevel_container").html(_.template($("#level_tpl").html())({
+                        "level": window.param.level
+                    }));
+                }
+                
 			});
+		   function changeLevel(id) {
+               $("#addlevel_container").val(id);
+               $("#editlevel_container").val(id);
+               window.param.level = id;
+           }
 		</script>
-	
-		<!-- jQuery UI 1.11.4 -->
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-		<script>
+
+	<!-- jQuery UI 1.11.4 -->
+	<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
 	  		$.widget.bridge('uibutton', $.ui.button);
 		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-		<script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
-		<!-- Sparkline -->
-		<script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
-		<!-- jvectormap -->
-		<script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-		<script src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-		<!-- jQuery Knob Chart -->
-		<script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
-		<!-- daterangepicker -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-		<script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
-		<!-- datepicker -->
-		<script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
-		<!-- Bootstrap WYSIHTML5 -->
-		<script src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-		<!-- Slimscroll -->
-		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-		<!-- FastClick -->
-		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
-		<!-- AdminLTE App -->
-		<script src="<%=path%>/res/dist/js/app.min.js"></script>
-		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-		<script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script src="<%=path%>/res/dist/js/demo.js"></script>
-	</body>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
+	<!-- Sparkline -->
+	<script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
+	<!-- jvectormap -->
+	<script
+		src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script
+		src="<%=path%>/res/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
+	<!-- daterangepicker -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+	<script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- datepicker -->
+	<script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+	<script
+		src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+	<!-- Slimscroll -->
+	<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+	<script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="<%=path%>/res/dist/js/app.min.js"></script>
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+	<script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="<%=path%>/res/dist/js/demo.js"></script>
+</body>
 </html>

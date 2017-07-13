@@ -75,4 +75,15 @@ public class CategoryServiceImpl implements CategoryService {
 		result.setRecordsTotal(list.size());
 		return result;
 	}
+	
+	@Override
+	public DatatablesView<?> getGwCategorys(GwCategory category) {
+		// TODO Auto-generated method stub
+		GwCategoryExample gme = new GwCategoryExample();
+		List<GwCategory> list = categoryMapper.selectByExample(gme);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal(list.size());
+		return result;
+	}
 }

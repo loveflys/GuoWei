@@ -11,3 +11,7 @@
     height: 50px;
     opacity: 0;
 }
+.add-file-pre-div img, .update-file-pre-div img{
+	width: 48px;
+	height: 48px;
+}

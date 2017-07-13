@@ -22,6 +22,7 @@ import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwCategory;
+import com.guowei.pojo.GwManager;
 import com.guowei.service.CategoryService;
 
 /**
@@ -50,6 +51,14 @@ public class CategoryController {
 	public String getData(HttpServletRequest request, GwCategory category) {
 		DatatablesView dataTable = categoryService.getGwCategorysByPagedParam(category,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	@RequestMapping(value="/category/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request, GwCategory category) {
+		DatatablesView dataTable = categoryService.getGwCategorys(category);
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}

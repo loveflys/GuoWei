@@ -174,7 +174,12 @@
 							<div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.image"/></label>
                                 <div class="col-sm-9">
-                                    <input type="file" class="form-control" name="image">
+                                    <input type="hidden" class="form-control" name="image">
+                                    <div class="upload-img-btn update-file-btn">+</div>
+                                    <input type="file" id="update-file" onchange="upload(2)" class="form-control hidden-file-input">
+                                    <div class="upload-img-btn update-file-pre-div" style="display:none">
+                                        <img id="update-file-pre" src="" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -230,16 +235,19 @@
 							
 							<div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.cid"/></label>
-
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="cid" readonly="readonly">
+                                <select class="form-control" name="cid" id="editcid_container"  onchange="changeCid(this.options[this.options.selectedIndex].value)">
+    
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.status"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="status" readonly="readonly">
+                                <select class="form-control" name="status" id="editstatus_container"  onchange="changeStatus(this.options[this.options.selectedIndex].value)">
+    
+                                </select>
                                 </div>
                             </div>
 						</form>
@@ -276,8 +284,11 @@
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.image"/></label>
                                 <div class="col-sm-9">
                                     <input type="hidden" class="form-control" name="image">
-                                    <div class="upload-img-btn">+</div>
-                                    <input type="file" id="add-file" onchange="upload()" class="form-control hidden-file-input">
+                                    <div class="upload-img-btn add-file-btn">+</div>
+                                    <input type="file" id="add-file" onchange="upload(1)" class="form-control hidden-file-input">
+                                    <div class="upload-img-btn add-file-pre-div" style="display:none">
+                                        <img id="add-file-pre" src="" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -314,14 +325,18 @@
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.cid"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="cid">
+                                <select class="form-control" name="cid" id="addcid_container"  onchange="changeCid(this.options[this.options.selectedIndex].value)">
+    
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.status"/></label>
 
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="status">
+                                <select class="form-control" name="status" id="addstatus_container"  onchange="changeStatus(this.options[this.options.selectedIndex].value)">
+    
+                                </select>
                                 </div>
                             </div>
                         </form>
@@ -335,10 +350,37 @@
             </div>
         </div>   
 		<!-- page script -->
+		<script type="template" id="cid_tpl">
+            [[ for(var i=0; i< data.length; i++){ var item=data[i] ]]
+                [[ if (item.id == cid) { ]]
+                    <option value="{{item.id}}" selected="selected">{{item.name}}</option>
+                [[ } else { ]]
+                    <option value="{{item.id}}">{{item.name}}</option>
+                [[ } ]]
+            [[ } ]]
+        </script>
+        <script type="template" id="status_tpl">
+            [[ if (1 == status) { ]]
+                    <option value="1" selected="selected">上架</option>
+                    <option value="2">下架</option>
+                    <option value="3">删除</option>
+            [[ } else if (2 == status) { ]]
+                    <option value="1">上架</option>
+                    <option value="2" selected="selected">下架</option>
+                    <option value="3">删除</option>
+            [[ } else { ]]
+                    <option value="1">上架</option>
+                    <option value="2">下架</option>
+                    <option value="3" selected="selected">删除</option>
+            [[ } ]]
+        </script>
 		<script>
 		    window.param = {
 		    	qiniuToken: '',
 		    	qiniuUrl: '',
+		    	id: '',
+		    	status: '',
+		    	cid: ''
 		    }
 		    function getToken () {
 		    	var url = "<%=path%>/file/getToken";
@@ -366,7 +408,12 @@
                 });
 		    }
 		    function upload(type) {
-		    	var files = document.getElementById("add-file").files[0];
+		    	var files = null;
+		    	if (type == 1) {
+		    	    files = document.getElementById("add-file").files[0];
+		    	} else {
+		    		files = document.getElementById("update-file").files[0];
+		    	}
 		    	if (files === null || files === undefined) {
 		    		toastr.error('请先选择文件。');
 		            return;
@@ -385,9 +432,19 @@
 		            let res = JSON.parse(oReq.response);
 		            if (oReq.status === 200 && res.key) {
 		              let url = window.param.qiniuUrl + res.key;
-		              console.log(url);
+		              if (type == 1) {
+			              $(".add-file-btn").hide();
+			              $(".add-file-pre-div").show();
+			              $("#add-file-pre").attr('src', url);
+			              $("#addModal input[name=image]").val(url);
+		              } else {
+		            	  $(".update-file-btn").hide();
+                          $(".update-file-pre-div").show();
+                          $("#update-file-pre").attr('src', url);
+                          $("#editModal input[name=image]").val(url);
+		              }
 		            } else {
-		            	  toastr.error('上传失败。');
+		              toastr.error('上传失败。');
 		            }
 		          };
 		          oReq.onerror = function(err) {
@@ -396,6 +453,10 @@
 		          oReq.send(oData);
 		    }
 			$(function () {
+				_.templateSettings = {
+	                evaluate    : /\[\[(.+?)\]\]/g,
+	                interpolate : /\{\{(.+?)\}\}/g
+	            };
 				getToken();
 				//页面消息处理
 				var result = "${result}";
@@ -528,6 +589,7 @@
 				//添加
 	            $("#btn-add").on("click", function () {
 	            	var data = tables.api().row($(this).parents('tr')).data();
+	            	getAddData();
                     $("#addModal input[name=title]").val("");
                     $("input[name=price]").val("");
                     $("input[name=discountprice]").val("");
@@ -569,8 +631,18 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
+					
+					window.param.id = data.id;
+                    window.param.cid = data.cid;
+                    window.param.status = data.status;
+                    getEditData();
+					
 					$("#editModal input[name=title]").val(data.title);
 					$("input[name=price]").val(data.price);
+					$(".update-file-btn").hide();
+                    $(".update-file-pre-div").show();
+                    $("#update-file-pre").attr('src', data.image);
+                    $("#editModal input[name=image]").val(data.image);
 					$("input[name=discountprice]").val(data.discountprice);
 					$("input[name=buyingprice]").val(data.buyingprice);
 					$("input[name=stock]").val(data.stock);
@@ -585,8 +657,6 @@
                         $("input[name=updated]").val(moment(new Date(data.updated)).format('YYYY-MM-DD'));
                     }
 					$("input[name=allcount]").val(data.allcount);
-                    $("input[name=cid]").val(data.cid);
-                    $("input[name=status]").val(data.status);
 					$("#editModal").modal("show");
 					
 		        });
@@ -664,6 +734,60 @@
 		                });
 		            }
 		        });
+				function getAddData() {
+	                $.ajax({
+	                    cache: false,
+	                    type: "POST",
+	                    url: "<%=path%>/category/getAllData",
+	                    data: {},
+	                    async: false,
+	                    error: function(request) {
+	                        toastr.error("Server Connection Error...");
+	                    },
+	                    success: function(res) {
+	                        $("#addModal input[name=cid]").val(res.data[0].id);
+	                        $("#addcid_container").html(_.template($("#cid_tpl").html())({
+	                            "data": res.data,
+	                            "cid": window.param.cid
+	                        }));
+	                    }
+	                });
+	                $("#addModal input[name=status]").val(1);
+                    $("#addstatus_container").html(_.template($("#status_tpl").html())({
+                        "status": 1
+                    }));
+	            }
+	            function getEditData() {
+	                $.ajax({
+	                    cache: false,
+	                    type: "POST",
+	                    url: "<%=path%>/category/getAllData",
+	                    data: {},
+	                    async: false,
+	                    error: function(request) {
+	                        toastr.error("Server Connection Error...");
+	                    },
+	                    success: function(res) {
+	                        $("#editcid_container").html(_.template($("#cid_tpl").html())({
+	                            "data": res.data,
+	                            "cid": window.param.cid
+	                        }));
+	                    }
+	                });
+	                $("#editstatus_container").html(_.template($("#status_tpl").html())({
+                        "status": window.param.status
+                    }));
+	            }
+	                function changeCid(id) {
+	                    $("#addModal input[name=cid]").val(id);
+	                    $("#editModal input[name=cid]").val(id);
+	                    window.param.cid = id;
+	                }
+	                function changeStatus(id) {
+	                    $("#addModal input[name=status]").val(id);
+	                    $("#editModal input[name=status]").val(id);
+	                    window.param.status = id;
+	                }
 			});
 		</script>
 	
@@ -693,6 +817,7 @@
 		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
 		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+		<script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path%>/res/dist/js/app.min.js"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->

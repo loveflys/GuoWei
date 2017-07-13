@@ -8,6 +8,8 @@ public interface CategoryService {
 	
 	DatatablesView<?> getGwCategorysByParam(GwCategory category);
 	
+	DatatablesView<?> getGwCategorys(GwCategory category);
+	
 	DatatablesView<?> getGwCategorysByPagedParam(GwCategory category, Integer start, Integer pageSize);
 
 	int addGwCategory(GwCategory category);
