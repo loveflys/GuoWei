@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="oid" property="oid" jdbcType="BIGINT" />
     <result column="cpid" property="cpid" jdbcType="BIGINT" />
-    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="pname" property="pname" jdbcType="VARCHAR" />
     <result column="pimg" property="pimg" jdbcType="VARCHAR" />
     <result column="number" property="number" jdbcType="INTEGER" />
@@ -112,7 +112,7 @@
       pname, pimg, number, 
       company_name, company_id, created, 
       uid, user_name)
-    values (#{id,jdbcType=BIGINT}, #{oid,jdbcType=BIGINT}, #{cpid,jdbcType=BIGINT}, #{price,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{oid,jdbcType=BIGINT}, #{cpid,jdbcType=BIGINT}, #{price,jdbcType=DECIMAL}, 
       #{pname,jdbcType=VARCHAR}, #{pimg,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
       #{companyName,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, 
       #{uid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR})
@@ -168,7 +168,7 @@
         #{cpid,jdbcType=BIGINT},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="pname != null" >
         #{pname,jdbcType=VARCHAR},
@@ -215,7 +215,7 @@
         cpid = #{record.cpid,jdbcType=BIGINT},
       </if>
       <if test="record.price != null" >
-        price = #{record.price,jdbcType=BIGINT},
+        price = #{record.price,jdbcType=DECIMAL},
       </if>
       <if test="record.pname != null" >
         pname = #{record.pname,jdbcType=VARCHAR},
@@ -251,7 +251,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       oid = #{record.oid,jdbcType=BIGINT},
       cpid = #{record.cpid,jdbcType=BIGINT},
-      price = #{record.price,jdbcType=BIGINT},
+      price = #{record.price,jdbcType=DECIMAL},
       pname = #{record.pname,jdbcType=VARCHAR},
       pimg = #{record.pimg,jdbcType=VARCHAR},
       number = #{record.number,jdbcType=INTEGER},
@@ -274,7 +274,7 @@
         cpid = #{cpid,jdbcType=BIGINT},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=BIGINT},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="pname != null" >
         pname = #{pname,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
     update gw_orderdetail
     set oid = #{oid,jdbcType=BIGINT},
       cpid = #{cpid,jdbcType=BIGINT},
-      price = #{price,jdbcType=BIGINT},
+      price = #{price,jdbcType=DECIMAL},
       pname = #{pname,jdbcType=VARCHAR},
       pimg = #{pimg,jdbcType=VARCHAR},
       number = #{number,jdbcType=INTEGER},

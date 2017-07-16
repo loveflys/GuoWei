@@ -1,5 +1,6 @@
 package com.guowei.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class GwOrder {
@@ -9,7 +10,7 @@ public class GwOrder {
 
     private String companyName;
 
-    private Long amount;
+    private BigDecimal amount;
 
     private Date created;
 
@@ -43,11 +44,11 @@ public class GwOrder {
         this.companyName = companyName;
     }
 
-    public Long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -74,17 +75,11 @@ public class GwOrder {
     public void setUname(String uname) {
         this.uname = uname;
     }
-    /**
-     * 1:待支付 2：支付成功 3支付失败
-     * @param status
-     */
+
     public Byte getStatus() {
         return status;
     }
-    /**
-     * 1:待支付 2：支付成功 3支付失败
-     * @param status
-     */
+
     public void setStatus(Byte status) {
         this.status = status;
     }

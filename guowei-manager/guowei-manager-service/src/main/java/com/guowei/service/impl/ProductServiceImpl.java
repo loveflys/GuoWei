@@ -1,5 +1,6 @@
 package com.guowei.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
+import com.guowei.mapper.GwCategoryMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwProductMapper;
 import com.guowei.mapper.GwTemplateproductMapper;
+import com.guowei.pojo.GwCategory;
 import com.guowei.pojo.GwCompanyproductExample;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwProductExample;
@@ -34,10 +37,13 @@ public class ProductServiceImpl implements ProductService {
 	private GwTemplateproductMapper templateproductMapper;
 	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
+	@Autowired
+	private GwCategoryMapper cateMapper;
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public GwProduct getGwProductById(long parseLong) {
 		GwProduct res = productMapper.selectByPrimaryKey(parseLong);
+		GwCategory cate = cateMapper.selectByPrimaryKey(res.getCid());
+		res.setCname(cate.getName());
 		return res;
 	}
 	@Override
@@ -53,14 +59,16 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public int addGwProduct(GwProduct product) {
+		GwCategory cate = cateMapper.selectByPrimaryKey(product.getCid());
+		product.setCname(cate.getName());
 		int res = productMapper.insert(product);
 		return res;
 	}
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public int editGwProduct(GwProduct product) {
+		GwCategory cate = cateMapper.selectByPrimaryKey(product.getCid());
+		product.setCname(cate.getName());
 		int res = productMapper.updateByPrimaryKey(product);
 		return res;
 	}
@@ -79,7 +87,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize) {
 		// TODO Auto-generated method stub
 		GwProductExample gme = new GwProductExample();
@@ -90,6 +97,10 @@ public class ProductServiceImpl implements ProductService {
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwProduct> list = productMapper.selectByExample(gme);
+		for (GwProduct gwProduct : list) {
+			GwCategory cate = cateMapper.selectByPrimaryKey(gwProduct.getCid());
+			gwProduct.setCname(cate.getName());
+		}
 		PageInfo<GwProduct> page = new PageInfo<>(list);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);
@@ -98,11 +109,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwProductsByParam(GwProduct product) {
 		// TODO Auto-generated method stub
 		GwProductExample gme = new GwProductExample();
 		List<GwProduct> list = productMapper.selectByExample(gme);
+		for (GwProduct gwProduct : list) {
+			GwCategory cate = cateMapper.selectByPrimaryKey(gwProduct.getCid());
+			gwProduct.setCname(cate.getName());
+		}
 		DatatablesView result = new DatatablesView();
 		result.setData(list);
 		result.setRecordsTotal(list.size());

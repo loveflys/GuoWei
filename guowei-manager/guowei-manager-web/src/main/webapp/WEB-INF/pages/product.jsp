@@ -123,9 +123,9 @@
 												<th><sp:message code="product.discountprice"/></th>
 												<th><sp:message code="product.buyingprice"/></th>
 												<th><sp:message code="product.stock"/></th>
+												<th><sp:message code="product.distribute"/></th>
 												<th><sp:message code="product.created"/></th>
 												<th><sp:message code="product.updated"/></th>
-												<th><sp:message code="product.allcount"/></th>
 												<th><sp:message code="product.allsellcount"/></th>
 												<th><sp:message code="product.cid"/></th>
 												<th><sp:message code="product.status"/></th>
@@ -205,7 +205,13 @@
                                 <div class="col-sm-9">
                                     <input type="number" class="form-control" name="stock" readonly="readonly">
                                 </div>
-                            </div>         
+                            </div>   
+                            <div class="form-group">
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.distribute"/></label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="distribute" readonly="readonly">
+                                </div>
+                            </div>           
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.created"/></label>
 
@@ -219,13 +225,7 @@
                                 <div class="col-sm-9">
                                     <input type="date" class="form-control" name="updated" readonly="readonly">
                                 </div>
-                            </div> 
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.allcount"/></label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="allcount" readonly="readonly">
-                                </div>
-                            </div>          
+                            </div>         
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.allsellcount"/></label>
                                 <div class="col-sm-9">
@@ -314,13 +314,13 @@
                                 <div class="col-sm-9">
                                     <input type="number" class="form-control" name="stock">
                                 </div>
-                            </div>         
+                            </div>    
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.allcount"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.distribute"/></label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="allcount">
+                                    <input type="number" class="form-control" name="distribute" value="0"  readonly="readonly">
                                 </div>
-                            </div>          
+                            </div>       
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.cid"/></label>
 
@@ -504,7 +504,8 @@
 	                    {"data": 'price', defaultContent: ""},
   	                    {"data": 'discountprice', defaultContent: ""},
   	                    {"data": 'buyingprice', defaultContent: ""},
-	  	                {"data": 'stock', defaultContent: ""},	  	                
+	  	                {"data": 'stock', defaultContent: ""},	  	
+	  	                {"data": 'distribute', defaultContent: ""},    
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
@@ -515,10 +516,21 @@
                                 return moment(data).format('YYYY-MM-DD') 
                             }
                         },
-	               		{"data": 'allcount', defaultContent: ""},
                         {"data": 'allsellcount', defaultContent: ""},
-	               		{"data": 'cid', defaultContent: ""},
-                        {"data": 'status', defaultContent: ""},
+	               		{"data": 'cname', defaultContent: ""},
+	               		{"data": 'status', 
+                            "render": function(data,type,full,callback) {
+                            	var res = '';
+                            	if (data == 1) {
+                            		res = '上架';
+                            	} else if (data == 2) {
+                                    res = '下架';
+                                } if (data == 3) {
+                                    res = '删除';
+                                }
+                                return res; 
+                            }
+                        },
   	                  	{"data": null,"width":"60px"}
 	                ],
 	                //操作按钮
@@ -595,7 +607,8 @@
                     $("input[name=discountprice]").val("");
                     $("input[name=buyingprice]").val("");
                     $("input[name=stock]").val("");
-                    $("input[name=allcount]").val("");
+                    $("input[name=distribute]").val("0");
+                    $("input[name=allsellcount]").val("");
                     $("input[name=cid]").val("");
                     $("input[name=status]").val("");
                     $("#addModal").modal("show");
@@ -646,6 +659,7 @@
 					$("input[name=discountprice]").val(data.discountprice);
 					$("input[name=buyingprice]").val(data.buyingprice);
 					$("input[name=stock]").val(data.stock);
+					$("input[name=distribute]").val(data.distribute);
 					if (!data.created || data.created.length <= 0) {
 						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
@@ -656,7 +670,7 @@
                     } else {
                         $("input[name=updated]").val(moment(new Date(data.updated)).format('YYYY-MM-DD'));
                     }
-					$("input[name=allcount]").val(data.allcount);
+					$("input[name=allsellcount]").val(data.allsellcount);
 					$("#editModal").modal("show");
 					
 		        });

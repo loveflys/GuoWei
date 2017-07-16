@@ -5,14 +5,16 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="BIGINT" />
-    <result column="discountprice" property="discountprice" jdbcType="BIGINT" />
-    <result column="buyingprice" property="buyingprice" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="discountprice" property="discountprice" jdbcType="DECIMAL" />
+    <result column="buyingprice" property="buyingprice" jdbcType="DECIMAL" />
     <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="distribute" property="distribute" jdbcType="INTEGER" />
+    <result column="allsellcount" property="allsellcount" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="allsellcount" property="allsellcount" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -74,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, image, price, discountprice, buyingprice, stock, created, updated, allsellcount, 
-    cid, status
+    id, title, image, price, discountprice, buyingprice, stock, distribute, allsellcount, 
+    created, updated, cid, cname, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwProductExample" >
     select
@@ -110,14 +112,14 @@
   <insert id="insert" parameterType="com.guowei.pojo.GwProduct" >
     insert into gw_product (id, title, image, 
       price, discountprice, buyingprice, 
-      stock, created, updated, 
-      allsellcount, cid, status
-      )
+      stock, distribute, allsellcount, 
+      created, updated, cid, 
+      cname, status)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
-      #{price,jdbcType=BIGINT}, #{discountprice,jdbcType=BIGINT}, #{buyingprice,jdbcType=BIGINT}, 
-      #{stock,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{allsellcount,jdbcType=INTEGER}, #{cid,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}
-      )
+      #{price,jdbcType=DECIMAL}, #{discountprice,jdbcType=DECIMAL}, #{buyingprice,jdbcType=DECIMAL}, 
+      #{stock,jdbcType=INTEGER}, #{distribute,jdbcType=INTEGER}, #{allsellcount,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{cid,jdbcType=BIGINT}, 
+      #{cname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwProduct" >
     insert into gw_product
@@ -143,17 +145,23 @@
       <if test="stock != null" >
         stock,
       </if>
+      <if test="distribute != null" >
+        distribute,
+      </if>
+      <if test="allsellcount != null" >
+        allsellcount,
+      </if>
       <if test="created != null" >
         created,
       </if>
       <if test="updated != null" >
         updated,
       </if>
-      <if test="allsellcount != null" >
-        allsellcount,
-      </if>
       <if test="cid != null" >
         cid,
+      </if>
+      <if test="cname != null" >
+        cname,
       </if>
       <if test="status != null" >
         status,
@@ -170,16 +178,22 @@
         #{image,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="discountprice != null" >
-        #{discountprice,jdbcType=BIGINT},
+        #{discountprice,jdbcType=DECIMAL},
       </if>
       <if test="buyingprice != null" >
-        #{buyingprice,jdbcType=BIGINT},
+        #{buyingprice,jdbcType=DECIMAL},
       </if>
       <if test="stock != null" >
         #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="distribute != null" >
+        #{distribute,jdbcType=INTEGER},
+      </if>
+      <if test="allsellcount != null" >
+        #{allsellcount,jdbcType=INTEGER},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -187,11 +201,11 @@
       <if test="updated != null" >
         #{updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="allsellcount != null" >
-        #{allsellcount,jdbcType=INTEGER},
-      </if>
       <if test="cid != null" >
         #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=TINYINT},
@@ -217,16 +231,22 @@
         image = #{record.image,jdbcType=VARCHAR},
       </if>
       <if test="record.price != null" >
-        price = #{record.price,jdbcType=BIGINT},
+        price = #{record.price,jdbcType=DECIMAL},
       </if>
       <if test="record.discountprice != null" >
-        discountprice = #{record.discountprice,jdbcType=BIGINT},
+        discountprice = #{record.discountprice,jdbcType=DECIMAL},
       </if>
       <if test="record.buyingprice != null" >
-        buyingprice = #{record.buyingprice,jdbcType=BIGINT},
+        buyingprice = #{record.buyingprice,jdbcType=DECIMAL},
       </if>
       <if test="record.stock != null" >
         stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.distribute != null" >
+        distribute = #{record.distribute,jdbcType=INTEGER},
+      </if>
+      <if test="record.allsellcount != null" >
+        allsellcount = #{record.allsellcount,jdbcType=INTEGER},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
@@ -234,11 +254,11 @@
       <if test="record.updated != null" >
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.allsellcount != null" >
-        allsellcount = #{record.allsellcount,jdbcType=INTEGER},
-      </if>
       <if test="record.cid != null" >
         cid = #{record.cid,jdbcType=BIGINT},
+      </if>
+      <if test="record.cname != null" >
+        cname = #{record.cname,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=TINYINT},
@@ -253,14 +273,16 @@
     set id = #{record.id,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=BIGINT},
-      discountprice = #{record.discountprice,jdbcType=BIGINT},
-      buyingprice = #{record.buyingprice,jdbcType=BIGINT},
+      price = #{record.price,jdbcType=DECIMAL},
+      discountprice = #{record.discountprice,jdbcType=DECIMAL},
+      buyingprice = #{record.buyingprice,jdbcType=DECIMAL},
       stock = #{record.stock,jdbcType=INTEGER},
+      distribute = #{record.distribute,jdbcType=INTEGER},
+      allsellcount = #{record.allsellcount,jdbcType=INTEGER},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
-      allsellcount = #{record.allsellcount,jdbcType=INTEGER},
       cid = #{record.cid,jdbcType=BIGINT},
+      cname = #{record.cname,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -276,16 +298,22 @@
         image = #{image,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=BIGINT},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="discountprice != null" >
-        discountprice = #{discountprice,jdbcType=BIGINT},
+        discountprice = #{discountprice,jdbcType=DECIMAL},
       </if>
       <if test="buyingprice != null" >
-        buyingprice = #{buyingprice,jdbcType=BIGINT},
+        buyingprice = #{buyingprice,jdbcType=DECIMAL},
       </if>
       <if test="stock != null" >
         stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="distribute != null" >
+        distribute = #{distribute,jdbcType=INTEGER},
+      </if>
+      <if test="allsellcount != null" >
+        allsellcount = #{allsellcount,jdbcType=INTEGER},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
@@ -293,11 +321,11 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="allsellcount != null" >
-        allsellcount = #{allsellcount,jdbcType=INTEGER},
-      </if>
       <if test="cid != null" >
         cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
@@ -309,14 +337,16 @@
     update gw_product
     set title = #{title,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
-      price = #{price,jdbcType=BIGINT},
-      discountprice = #{discountprice,jdbcType=BIGINT},
-      buyingprice = #{buyingprice,jdbcType=BIGINT},
+      price = #{price,jdbcType=DECIMAL},
+      discountprice = #{discountprice,jdbcType=DECIMAL},
+      buyingprice = #{buyingprice,jdbcType=DECIMAL},
       stock = #{stock,jdbcType=INTEGER},
+      distribute = #{distribute,jdbcType=INTEGER},
+      allsellcount = #{allsellcount,jdbcType=INTEGER},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
-      allsellcount = #{allsellcount,jdbcType=INTEGER},
       cid = #{cid,jdbcType=BIGINT},
+      cname = #{cname,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

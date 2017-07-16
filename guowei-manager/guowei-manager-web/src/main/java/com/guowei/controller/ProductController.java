@@ -1,5 +1,6 @@
 package com.guowei.controller;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 
 import javax.annotation.Resource;
@@ -91,16 +92,19 @@ public class ProductController {
 			product.setImage(request.getParameter("image"));
 		}
 		if (!"".equals(request.getParameter("price"))) {
-			product.setPrice(Long.parseLong(request.getParameter("price")));
+			product.setPrice(new BigDecimal(request.getParameter("price")));
 		}
 		if (!"".equals(request.getParameter("discountprice"))) {
-			product.setDiscountprice(Long.parseLong(request.getParameter("discountprice")));
+			product.setDiscountprice(new BigDecimal(request.getParameter("discountprice")));
 		}
 		if (!"".equals(request.getParameter("buyingprice"))) {
-			product.setBuyingprice(Long.parseLong(request.getParameter("buyingprice")));
+			product.setBuyingprice(new BigDecimal(request.getParameter("buyingprice")));
 		}
 		if (!"".equals(request.getParameter("stock"))) {
 			product.setStock(Integer.parseInt(request.getParameter("stock")));
+		}
+		if (!"".equals(request.getParameter("distribute"))) {
+			product.setDistribute(Integer.parseInt(request.getParameter("distribute")));
 		}
 		product.setCreated(Calendar.getInstance().getTime());
 		product.setUpdated(Calendar.getInstance().getTime());
@@ -141,16 +145,19 @@ public class ProductController {
 			product.setImage(request.getParameter("image"));
 		}
 		if (!"".equals(request.getParameter("price"))) {
-			product.setPrice(Long.parseLong(request.getParameter("price")));
+			product.setPrice(new BigDecimal(request.getParameter("price")));
 		}
 		if (!"".equals(request.getParameter("discountprice"))) {
-			product.setDiscountprice(Long.parseLong(request.getParameter("discountprice")));
+			product.setDiscountprice(new BigDecimal(request.getParameter("discountprice")));
 		}
 		if (!"".equals(request.getParameter("buyingprice"))) {
-			product.setBuyingprice(Long.parseLong(request.getParameter("buyingprice")));
+			product.setBuyingprice(new BigDecimal(request.getParameter("buyingprice")));
 		}
 		if (!"".equals(request.getParameter("stock"))) {
 			product.setStock(Integer.parseInt(request.getParameter("stock")));
+		}
+		if (!"".equals(request.getParameter("distribute"))) {
+			product.setDistribute(Integer.parseInt(request.getParameter("distribute")));
 		}
 		product.setUpdated(Calendar.getInstance().getTime());
 		if (!"".equals(request.getParameter("allsellcount"))) {

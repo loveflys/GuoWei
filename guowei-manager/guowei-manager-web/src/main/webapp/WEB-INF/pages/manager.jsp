@@ -136,7 +136,6 @@
 											<th><sp:message code="manager.password" /></th>
 											<th><sp:message code="sys.create.time" /></th>
 											<th><sp:message code="sys.wechatAccount" /></th>
-											<th><sp:message code="sys.wechatOpenId" /></th>
 											<th><sp:message code="sys.area" /></th>
 											<th><sp:message code="sys.oper" /></th>
 										</tr>
@@ -223,14 +222,6 @@
 						</div>
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
-									code="sys.wechatOpenId" /></label>
-
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="wechatOpenId">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="sys.area" /></label>
 
 							<div class="col-sm-9">
@@ -309,14 +300,6 @@
 
 							<div class="col-sm-9">
 								<input type="tel" class="form-control" name="wechatAccount">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputName" class="col-sm-3 control-label"><sp:message
-									code="sys.wechatOpenId" /></label>
-
-							<div class="col-sm-9">
-								<input type="text" class="form-control" name="wechatOpenId">
 							</div>
 						</div>
 						<div class="form-group">
@@ -411,7 +394,6 @@
 	                    	}
 	               		},
 	               		{"data": 'wechatAccount', defaultContent: ""},
-                        {"data": 'wechatOpenid', defaultContent: ""},
                         {"data": 'area', defaultContent: ""},
   	                  	{"data": null,"width":"60px"}
 	                ],
@@ -487,7 +469,6 @@
                     $("input[name=password]").val("");
                     $("input[name=phone]").val("");
                     $("input[name=wechatAccount]").val("");
-                    $("input[name=wechatOpenid]").val("");
                     $("input[name=area]").val("");
                     $("#addModal").modal("show");
 	            });
@@ -528,7 +509,6 @@
 					$("input[name=password]").val(data.password);
 					$("input[name=phone]").val(data.phone);
 					$("input[name=wechatAccount]").val(data.wechatAccount);
-                    $("input[name=wechatOpenid]").val(data.wechatOpenid);
                     $("input[name=area]").val(data.area);
 					$("#editModal").modal("show");
 					

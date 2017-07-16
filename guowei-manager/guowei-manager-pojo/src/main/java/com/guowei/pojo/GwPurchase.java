@@ -1,5 +1,6 @@
 package com.guowei.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class GwPurchase {
@@ -9,7 +10,7 @@ public class GwPurchase {
 
     private Integer number;
 
-    private Long price;
+    private BigDecimal price;
 
     private Date created;
 
@@ -39,11 +40,11 @@ public class GwPurchase {
         this.number = number;
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

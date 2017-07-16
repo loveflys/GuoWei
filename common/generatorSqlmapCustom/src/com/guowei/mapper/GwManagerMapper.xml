@@ -9,7 +9,6 @@
     <result column="level" property="level" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="wechat_account" property="wechatAccount" jdbcType="VARCHAR" />
-    <result column="wechat_openid" property="wechatOpenid" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -71,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, phone, password, level, created, wechat_account, wechat_openid, area
+    id, name, phone, password, level, created, wechat_account, area
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwManagerExample" >
     select
@@ -106,12 +105,10 @@
   <insert id="insert" parameterType="com.guowei.pojo.GwManager" >
     insert into gw_manager (id, name, phone, 
       password, level, created, 
-      wechat_account, wechat_openid, area
-      )
+      wechat_account, area)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{wechatAccount,jdbcType=VARCHAR}, #{wechatOpenid,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT}
-      )
+      #{wechatAccount,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwManager" >
     insert into gw_manager
@@ -136,9 +133,6 @@
       </if>
       <if test="wechatAccount != null" >
         wechat_account,
-      </if>
-      <if test="wechatOpenid != null" >
-        wechat_openid,
       </if>
       <if test="area != null" >
         area,
@@ -165,9 +159,6 @@
       </if>
       <if test="wechatAccount != null" >
         #{wechatAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="wechatOpenid != null" >
-        #{wechatOpenid,jdbcType=VARCHAR},
       </if>
       <if test="area != null" >
         #{area,jdbcType=BIGINT},
@@ -204,9 +195,6 @@
       <if test="record.wechatAccount != null" >
         wechat_account = #{record.wechatAccount,jdbcType=VARCHAR},
       </if>
-      <if test="record.wechatOpenid != null" >
-        wechat_openid = #{record.wechatOpenid,jdbcType=VARCHAR},
-      </if>
       <if test="record.area != null" >
         area = #{record.area,jdbcType=BIGINT},
       </if>
@@ -224,7 +212,6 @@
       level = #{record.level,jdbcType=TINYINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       wechat_account = #{record.wechatAccount,jdbcType=VARCHAR},
-      wechat_openid = #{record.wechatOpenid,jdbcType=VARCHAR},
       area = #{record.area,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -251,9 +238,6 @@
       <if test="wechatAccount != null" >
         wechat_account = #{wechatAccount,jdbcType=VARCHAR},
       </if>
-      <if test="wechatOpenid != null" >
-        wechat_openid = #{wechatOpenid,jdbcType=VARCHAR},
-      </if>
       <if test="area != null" >
         area = #{area,jdbcType=BIGINT},
       </if>
@@ -268,7 +252,6 @@
       level = #{level,jdbcType=TINYINT},
       created = #{created,jdbcType=TIMESTAMP},
       wechat_account = #{wechatAccount,jdbcType=VARCHAR},
-      wechat_openid = #{wechatOpenid,jdbcType=VARCHAR},
       area = #{area,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

@@ -19,7 +19,7 @@ public interface GwCompanyMapper {
     int insertSelective(GwCompany record);
 
     List<GwCompany> selectByExample(GwCompanyExample example);
-    
+
     List<GwCompanyTemp> selectTempByExample(GwCompanyExample example);
 
     GwCompany selectByPrimaryKey(Long id);

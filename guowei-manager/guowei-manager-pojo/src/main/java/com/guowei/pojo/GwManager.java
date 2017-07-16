@@ -17,8 +17,6 @@ public class GwManager {
 
     private String wechatAccount;
 
-    private String wechatOpenid;
-
     private Long area;
 
     public Long getId() {
@@ -75,14 +73,6 @@ public class GwManager {
 
     public void setWechatAccount(String wechatAccount) {
         this.wechatAccount = wechatAccount;
-    }
-
-    public String getWechatOpenid() {
-        return wechatOpenid;
-    }
-
-    public void setWechatOpenid(String wechatOpenid) {
-        this.wechatOpenid = wechatOpenid;
     }
 
     public Long getArea() {

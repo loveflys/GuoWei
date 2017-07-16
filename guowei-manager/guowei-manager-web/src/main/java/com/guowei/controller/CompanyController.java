@@ -153,9 +153,6 @@ public class CompanyController {
 		if (!"".equals(request.getParameter("companyContactwechat"))) {
 			company.setCompanyContactwechat(request.getParameter("companyContactwechat"));
 		}
-		if (!"".equals(request.getParameter("companyContactwechatopenid"))) {
-			company.setCompanyContactwechatopenid(request.getParameter("companyContactwechatopenid"));
-		}
 		if (!"".equals(request.getParameter("did"))) {
 			company.setDid(Long.parseLong(request.getParameter("did")));
 		}

@@ -11,7 +11,6 @@
     <result column="company_contactposition" property="companyContactposition" jdbcType="VARCHAR" />
     <result column="company_contactphone" property="companyContactphone" jdbcType="VARCHAR" />
     <result column="company_contactwechat" property="companyContactwechat" jdbcType="VARCHAR" />
-    <result column="company_contactwechatopenid" property="companyContactwechatopenid" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
     <result column="did" property="did" jdbcType="BIGINT" />
@@ -28,7 +27,6 @@
     <result column="company_contactposition" property="companyContactposition" jdbcType="VARCHAR" />
     <result column="company_contactphone" property="companyContactphone" jdbcType="VARCHAR" />
     <result column="company_contactwechat" property="companyContactwechat" jdbcType="VARCHAR" />
-    <result column="company_contactwechatopenid" property="companyContactwechatopenid" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
     <result column="did" property="did" jdbcType="BIGINT" />
@@ -94,7 +92,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, mid, template_id, company_name, company_addr, company_contactname, company_contactposition, 
-    company_contactphone, company_contactwechat, company_contactwechatopenid, created, 
+    company_contactphone, company_contactwechat, created, 
     purchased, did
   </sql>
   <sql id="Multi_Column_List" >
@@ -106,7 +104,6 @@
     c.company_contactphone,
     c.company_contactposition,
     c.company_contactwechat,
-    c.company_contactwechatopenid,
     c.company_name,
     c.created,
     c.did,
@@ -115,7 +112,7 @@
     m.name AS "mname",
     d.name AS "dname"
   </sql>
-   <select id="selectById" resultMap="MultiResultMap" parameterType="java.lang.Long" >
+  <select id="selectById" resultMap="MultiResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Multi_Column_List" />
     from gw_company c, gw_template t, gw_manager m, gw_division d 
@@ -172,7 +169,7 @@
     insert into gw_company (id, mid, template_id, 
       company_name, company_addr, company_contactname, 
       company_contactposition, company_contactphone, 
-      company_contactwechat, company_contactwechatopenid, 
+      company_contactwechat, 
       created, purchased, did
       )
     values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, 
@@ -211,9 +208,6 @@
       </if>
       <if test="companyContactwechat != null" >
         company_contactwechat,
-      </if>
-      <if test="companyContactwechatopenid != null" >
-        company_contactwechatopenid,
       </if>
       <if test="created != null" >
         created,
@@ -303,9 +297,6 @@
       <if test="record.companyContactwechat != null" >
         company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
       </if>
-      <if test="record.companyContactwechatopenid != null" >
-        company_contactwechatopenid = #{record.companyContactwechatopenid,jdbcType=VARCHAR},
-      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -331,7 +322,6 @@
       company_contactposition = #{record.companyContactposition,jdbcType=VARCHAR},
       company_contactphone = #{record.companyContactphone,jdbcType=VARCHAR},
       company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
-      company_contactwechatopenid = #{record.companyContactwechatopenid,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       purchased = #{record.purchased,jdbcType=TIMESTAMP},
       did = #{record.did,jdbcType=BIGINT}
@@ -366,9 +356,6 @@
       <if test="companyContactwechat != null" >
         company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
       </if>
-      <if test="companyContactwechatopenid != null" >
-        company_contactwechatopenid = #{companyContactwechatopenid,jdbcType=VARCHAR},
-      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -391,7 +378,6 @@
       company_contactposition = #{companyContactposition,jdbcType=VARCHAR},
       company_contactphone = #{companyContactphone,jdbcType=VARCHAR},
       company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
-      company_contactwechatopenid = #{companyContactwechatopenid,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       purchased = #{purchased,jdbcType=TIMESTAMP},
       did = #{did,jdbcType=BIGINT}

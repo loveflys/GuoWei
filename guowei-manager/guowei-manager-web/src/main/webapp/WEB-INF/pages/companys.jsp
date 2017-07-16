@@ -110,7 +110,6 @@
 												<th><sp:message code="company.companyContactposition"/></th>												
 												<th><sp:message code="company.companyContactphone"/></th>
 												<th><sp:message code="company.companyContactwechat"/></th>
-                                                <th><sp:message code="company.companyContactwechatopenid"/></th>
                                                 <th><sp:message code="company.created"/></th>
                                                 <th><sp:message code="company.purchased"/></th>
                                                 <th><sp:message code="company.did"/></th>
@@ -204,13 +203,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="companyContactwechat">
                                 </div>
-                            </div>
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="companyContactwechatopenid">
-								</div>
-							</div>							
+                            </div>					
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
 
@@ -298,13 +291,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="companyContactwechat">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.companyContactwechatopenid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="companyContactwechatopenid">
-                                </div>
-                            </div>                          
+                            </div>             
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
 
@@ -431,7 +418,6 @@
   	                    {"data": 'companyContactposition', defaultContent: ""},
   	                    {"data": 'companyContactphone', defaultContent: ""},
   	                    {"data": 'companyContactwechat', defaultContent: ""},
-  	                    {"data": 'companyContactwechatopenid', defaultContent: ""},
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
@@ -521,7 +507,6 @@
                     $("input[name=companyContactposition]").val("");
                     $("input[name=companyContactphone]").val("");
                     $("input[name=companyContactwechat]").val("");
-                    $("input[name=companyContactwechatopenid]").val("");
                     $("input[name=did]").val("");
                     $("#addModal").modal("show");      
 	            });
@@ -568,7 +553,6 @@
 					$("input[name=companyContactposition]").val(data.companyContactposition);
 					$("input[name=companyContactphone]").val(data.companyContactphone);
 					$("input[name=companyContactwechat]").val(data.companyContactwechat);
-					$("input[name=companyContactwechatopenid]").val(data.companyContactwechatopenid);
                     $("input[name=did]").val(data.did);
 					$("#editModal").modal("show");					
 		        });

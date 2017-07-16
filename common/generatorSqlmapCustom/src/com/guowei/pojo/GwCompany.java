@@ -21,8 +21,6 @@ public class GwCompany {
 
     private String companyContactwechat;
 
-    private String companyContactwechatopenid;
-
     private Date created;
 
     private Date purchased;
@@ -99,14 +97,6 @@ public class GwCompany {
 
     public void setCompanyContactwechat(String companyContactwechat) {
         this.companyContactwechat = companyContactwechat;
-    }
-
-    public String getCompanyContactwechatopenid() {
-        return companyContactwechatopenid;
-    }
-
-    public void setCompanyContactwechatopenid(String companyContactwechatopenid) {
-        this.companyContactwechatopenid = companyContactwechatopenid;
     }
 
     public Date getCreated() {

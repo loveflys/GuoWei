@@ -98,6 +98,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwCategory" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+       SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_category (id, name, created
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}

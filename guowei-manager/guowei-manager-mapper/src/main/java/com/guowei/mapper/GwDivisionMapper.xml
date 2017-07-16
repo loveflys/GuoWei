@@ -101,6 +101,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwDivision" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+       SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_division (id, pid, name, 
       allname, created, updated
       )

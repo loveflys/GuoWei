@@ -104,6 +104,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwUser" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+       SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_user (id, wechat_account, wechat_openid, 
       name, avatar, phone, 
       totalconsume, created, updated

@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="number" property="number" jdbcType="INTEGER" />
-    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="mid" property="mid" jdbcType="BIGINT" />
   </resultMap>
@@ -101,11 +101,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwPurchase" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+      SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_purchase (id, pid, number, 
       price, created, mid
       )
     values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, 
-      #{price,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, #{mid,jdbcType=BIGINT}
+      #{price,jdbcType=DECIMAL}, #{created,jdbcType=TIMESTAMP}, #{mid,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwPurchase" >
@@ -141,7 +144,7 @@
         #{number,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        #{price,jdbcType=BIGINT},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -170,7 +173,7 @@
         number = #{record.number,jdbcType=INTEGER},
       </if>
       <if test="record.price != null" >
-        price = #{record.price,jdbcType=BIGINT},
+        price = #{record.price,jdbcType=DECIMAL},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
@@ -188,7 +191,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       pid = #{record.pid,jdbcType=BIGINT},
       number = #{record.number,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=BIGINT},
+      price = #{record.price,jdbcType=DECIMAL},
       created = #{record.created,jdbcType=TIMESTAMP},
       mid = #{record.mid,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -205,7 +208,7 @@
         number = #{number,jdbcType=INTEGER},
       </if>
       <if test="price != null" >
-        price = #{price,jdbcType=BIGINT},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
@@ -220,7 +223,7 @@
     update gw_purchase
     set pid = #{pid,jdbcType=BIGINT},
       number = #{number,jdbcType=INTEGER},
-      price = #{price,jdbcType=BIGINT},
+      price = #{price,jdbcType=DECIMAL},
       created = #{created,jdbcType=TIMESTAMP},
       mid = #{mid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

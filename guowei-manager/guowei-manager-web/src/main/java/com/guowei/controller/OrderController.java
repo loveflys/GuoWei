@@ -111,7 +111,7 @@ public class OrderController {
 		GwOrder order = new GwOrder();
 		List<GwOrderdetail> orderdetails = new ArrayList<GwOrderdetail>();
 		
-		long amount = 0;
+		BigDecimal amount = new BigDecimal("0");
 		for (int i = 0, length = proList.size(); i < length; i++) {
 			JSONObject temp = proList.getJSONObject(i);
 			GwOrderdetail orderdetail = new GwOrderdetail();
@@ -127,8 +127,8 @@ public class OrderController {
 			orderdetail.setNumber(number);
 			orderdetail.setPimg(temp.getString("proimage"));
 			orderdetail.setPname(temp.getString("proname"));
-			orderdetail.setPrice(temp.getLong("proprice"));
-			amount += temp.getLong("proprice")*temp.getInteger("number");
+			orderdetail.setPrice(temp.getBigDecimal("proprice"));
+			amount = amount.add(temp.getBigDecimal("proprice").multiply(new BigDecimal(temp.getBigInteger("number"))));
 			orderdetail.setUid(uid);
 			orderdetail.setUserName(uname);
 			orderdetails.add(orderdetail);

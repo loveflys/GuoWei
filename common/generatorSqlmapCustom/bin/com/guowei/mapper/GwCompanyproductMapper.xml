@@ -6,13 +6,14 @@
     <result column="company_id" property="companyId" jdbcType="BIGINT" />
     <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="warnstock" property="warnstock" jdbcType="INTEGER" />
     <result column="sellcount" property="sellcount" jdbcType="INTEGER" />
-    <result column="sellprice" property="sellprice" jdbcType="BIGINT" />
+    <result column="sellprice" property="sellprice" jdbcType="DECIMAL" />
     <result column="storageracks" property="storageracks" jdbcType="TINYINT" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="proName" property="proname" jdbcType="VARCHAR" />
     <result column="proImage" property="proimage" jdbcType="VARCHAR" />
-    <result column="proPrice" property="proprice" jdbcType="BIGINT" />
+    <result column="proPrice" property="proprice" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, company_id, pid, stock, sellcount, sellprice, storageracks, status, proName, 
-    proImage, proPrice
+    id, company_id, pid, stock, warnstock, sellcount, sellprice, storageracks, status, 
+    proName, proImage, proPrice
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCompanyproductExample" >
     select
@@ -108,13 +109,15 @@
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwCompanyproduct" >
     insert into gw_companyproduct (id, company_id, pid, 
-      stock, sellcount, sellprice, 
-      storageracks, status, proName, 
-      proImage, proPrice)
+      stock, warnstock, sellcount, 
+      sellprice, storageracks, status, 
+      proName, proImage, proPrice
+      )
     values (#{id,jdbcType=BIGINT}, #{companyId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, 
-      #{stock,jdbcType=INTEGER}, #{sellcount,jdbcType=INTEGER}, #{sellprice,jdbcType=BIGINT}, 
-      #{storageracks,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{proname,jdbcType=VARCHAR}, 
-      #{proimage,jdbcType=VARCHAR}, #{proprice,jdbcType=BIGINT})
+      #{stock,jdbcType=INTEGER}, #{warnstock,jdbcType=INTEGER}, #{sellcount,jdbcType=INTEGER}, 
+      #{sellprice,jdbcType=DECIMAL}, #{storageracks,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{proname,jdbcType=VARCHAR}, #{proimage,jdbcType=VARCHAR}, #{proprice,jdbcType=DECIMAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompanyproduct" >
     insert into gw_companyproduct
@@ -130,6 +133,9 @@
       </if>
       <if test="stock != null" >
         stock,
+      </if>
+      <if test="warnstock != null" >
+        warnstock,
       </if>
       <if test="sellcount != null" >
         sellcount,
@@ -166,11 +172,14 @@
       <if test="stock != null" >
         #{stock,jdbcType=INTEGER},
       </if>
+      <if test="warnstock != null" >
+        #{warnstock,jdbcType=INTEGER},
+      </if>
       <if test="sellcount != null" >
         #{sellcount,jdbcType=INTEGER},
       </if>
       <if test="sellprice != null" >
-        #{sellprice,jdbcType=BIGINT},
+        #{sellprice,jdbcType=DECIMAL},
       </if>
       <if test="storageracks != null" >
         #{storageracks,jdbcType=TINYINT},
@@ -185,7 +194,7 @@
         #{proimage,jdbcType=VARCHAR},
       </if>
       <if test="proprice != null" >
-        #{proprice,jdbcType=BIGINT},
+        #{proprice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -210,11 +219,14 @@
       <if test="record.stock != null" >
         stock = #{record.stock,jdbcType=INTEGER},
       </if>
+      <if test="record.warnstock != null" >
+        warnstock = #{record.warnstock,jdbcType=INTEGER},
+      </if>
       <if test="record.sellcount != null" >
         sellcount = #{record.sellcount,jdbcType=INTEGER},
       </if>
       <if test="record.sellprice != null" >
-        sellprice = #{record.sellprice,jdbcType=BIGINT},
+        sellprice = #{record.sellprice,jdbcType=DECIMAL},
       </if>
       <if test="record.storageracks != null" >
         storageracks = #{record.storageracks,jdbcType=TINYINT},
@@ -229,7 +241,7 @@
         proImage = #{record.proimage,jdbcType=VARCHAR},
       </if>
       <if test="record.proprice != null" >
-        proPrice = #{record.proprice,jdbcType=BIGINT},
+        proPrice = #{record.proprice,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -242,13 +254,14 @@
       company_id = #{record.companyId,jdbcType=BIGINT},
       pid = #{record.pid,jdbcType=BIGINT},
       stock = #{record.stock,jdbcType=INTEGER},
+      warnstock = #{record.warnstock,jdbcType=INTEGER},
       sellcount = #{record.sellcount,jdbcType=INTEGER},
-      sellprice = #{record.sellprice,jdbcType=BIGINT},
+      sellprice = #{record.sellprice,jdbcType=DECIMAL},
       storageracks = #{record.storageracks,jdbcType=TINYINT},
       status = #{record.status,jdbcType=TINYINT},
       proName = #{record.proname,jdbcType=VARCHAR},
       proImage = #{record.proimage,jdbcType=VARCHAR},
-      proPrice = #{record.proprice,jdbcType=BIGINT}
+      proPrice = #{record.proprice,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -265,11 +278,14 @@
       <if test="stock != null" >
         stock = #{stock,jdbcType=INTEGER},
       </if>
+      <if test="warnstock != null" >
+        warnstock = #{warnstock,jdbcType=INTEGER},
+      </if>
       <if test="sellcount != null" >
         sellcount = #{sellcount,jdbcType=INTEGER},
       </if>
       <if test="sellprice != null" >
-        sellprice = #{sellprice,jdbcType=BIGINT},
+        sellprice = #{sellprice,jdbcType=DECIMAL},
       </if>
       <if test="storageracks != null" >
         storageracks = #{storageracks,jdbcType=TINYINT},
@@ -284,7 +300,7 @@
         proImage = #{proimage,jdbcType=VARCHAR},
       </if>
       <if test="proprice != null" >
-        proPrice = #{proprice,jdbcType=BIGINT},
+        proPrice = #{proprice,jdbcType=DECIMAL},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -294,13 +310,14 @@
     set company_id = #{companyId,jdbcType=BIGINT},
       pid = #{pid,jdbcType=BIGINT},
       stock = #{stock,jdbcType=INTEGER},
+      warnstock = #{warnstock,jdbcType=INTEGER},
       sellcount = #{sellcount,jdbcType=INTEGER},
-      sellprice = #{sellprice,jdbcType=BIGINT},
+      sellprice = #{sellprice,jdbcType=DECIMAL},
       storageracks = #{storageracks,jdbcType=TINYINT},
       status = #{status,jdbcType=TINYINT},
       proName = #{proname,jdbcType=VARCHAR},
       proImage = #{proimage,jdbcType=VARCHAR},
-      proPrice = #{proprice,jdbcType=BIGINT}
+      proPrice = #{proprice,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

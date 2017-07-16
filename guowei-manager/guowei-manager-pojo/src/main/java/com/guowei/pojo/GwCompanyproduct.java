@@ -1,5 +1,7 @@
 package com.guowei.pojo;
 
+import java.math.BigDecimal;
+
 public class GwCompanyproduct {
     private Long id;
 
@@ -9,9 +11,11 @@ public class GwCompanyproduct {
 
     private Integer stock;
 
+    private Integer warnstock;
+
     private Integer sellcount;
 
-    private Long sellprice;
+    private BigDecimal sellprice;
 
     private Byte storageracks;
 
@@ -21,7 +25,7 @@ public class GwCompanyproduct {
 
     private String proimage;
 
-    private Long proprice;
+    private BigDecimal proprice;
 
     public Long getId() {
         return id;
@@ -55,6 +59,14 @@ public class GwCompanyproduct {
         this.stock = stock;
     }
 
+    public Integer getWarnstock() {
+        return warnstock;
+    }
+
+    public void setWarnstock(Integer warnstock) {
+        this.warnstock = warnstock;
+    }
+
     public Integer getSellcount() {
         return sellcount;
     }
@@ -63,11 +75,11 @@ public class GwCompanyproduct {
         this.sellcount = sellcount;
     }
 
-    public Long getSellprice() {
+    public BigDecimal getSellprice() {
         return sellprice;
     }
 
-    public void setSellprice(Long sellprice) {
+    public void setSellprice(BigDecimal sellprice) {
         this.sellprice = sellprice;
     }
 
@@ -103,11 +115,11 @@ public class GwCompanyproduct {
         this.proimage = proimage;
     }
 
-    public Long getProprice() {
+    public BigDecimal getProprice() {
         return proprice;
     }
 
-    public void setProprice(Long proprice) {
+    public void setProprice(BigDecimal proprice) {
         this.proprice = proprice;
     }
 }
