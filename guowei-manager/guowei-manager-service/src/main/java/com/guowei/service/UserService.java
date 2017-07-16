@@ -10,6 +10,8 @@ public interface UserService {
 
 	GwUser getGwUserByName(String username);
 	
+	GwUser getGwUserByOpenId(String openid);
+	
 	DatatablesView<?> getGwUsersByParam(GwUser user);
 	
 	DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize);

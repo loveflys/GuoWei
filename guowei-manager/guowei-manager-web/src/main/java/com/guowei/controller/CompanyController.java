@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
@@ -24,6 +26,7 @@ import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyTemp;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwTemplateproduct;
+import com.guowei.pojo.GwUser;
 import com.guowei.service.CompanyService;
 import com.guowei.service.CompanyproductService;
 
@@ -107,11 +110,12 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/company/{id}")
-	public ModelAndView toDetail(@PathVariable("id") Long id) {
+	public ModelAndView toDetail(HttpServletRequest request, @PathVariable("id") Long id) {
 		GwCompany res = companyService.getGwCompanyById(id);
 		ModelAndView model = new ModelAndView("company");
 		model.addObject("id", id);
 		model.addObject("companyName", res.getCompanyName());
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
 		return model;
 	}
 	

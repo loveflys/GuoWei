@@ -103,6 +103,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwOrder" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+      SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_order (id, company_id, company_name, 
       amount, created, uid, 
       uname, status)

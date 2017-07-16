@@ -1,6 +1,11 @@
 package com.guowei.controller;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwOrder;
+import com.guowei.pojo.GwOrderdetail;
 import com.guowei.service.OrderService;
 
 /**
@@ -68,6 +77,13 @@ public class OrderController {
 	@RequestMapping(value = "/order/submit", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
+		String details = request.getParameter("details");
+		JSONArray proList=JSON.parseArray(details);
+		Long companyId = Long.parseLong(request.getParameter("companyId"));
+		String companyName = request.getParameter("companyName");
+		Long uid = Long.parseLong(request.getParameter("uid"));
+		String uname = request.getParameter("uname");
+		Date now = Calendar.getInstance().getTime();
 		if (request.getParameter("companyId") == null || "".equals(request.getParameter("companyId"))) {
 			model.addAttribute("result", "公司编号有误，请联系系统管理员解决。");
 			return "";
@@ -76,8 +92,12 @@ public class OrderController {
 			model.addAttribute("result", "公司名称有误，请联系系统管理员解决。");
 			return "";
 		}
-		if (request.getParameter("detail") == null || "".equals(request.getParameter("detail"))) {
+		if (request.getParameter("details") == null || "".equals(request.getParameter("details"))) {
 			model.addAttribute("result", "购物车产品有误，请联系系统管理员解决。");
+			return "";
+		}
+		if (proList == null || proList.size() <= 0) {
+			model.addAttribute("result", "请先选择商品");
 			return "";
 		}
 		if (request.getParameter("uid") == null || "".equals(request.getParameter("uid"))) {
@@ -89,14 +109,41 @@ public class OrderController {
 			return "";
 		}
 		GwOrder order = new GwOrder();
-		order.setCompanyId(Long.parseLong(request.getParameter("companyId")));
-		order.setCompanyName(request.getParameter("companyName"));
-		order.setUid(Long.parseLong(request.getParameter("uid")));
-		order.setUname(request.getParameter("uname"));
-		order.setStatus(Byte.parseByte("1"));
-		order.setCreated(Calendar.getInstance().getTime());
+		List<GwOrderdetail> orderdetails = new ArrayList<GwOrderdetail>();
 		
-		int result = orderService.addGwOrder(order);
+		long amount = 0;
+		for (int i = 0, length = proList.size(); i < length; i++) {
+			JSONObject temp = proList.getJSONObject(i);
+			GwOrderdetail orderdetail = new GwOrderdetail();
+			int number = temp.getInteger("number");
+			int stock = temp.getInteger("stock");
+			if (number > stock) {
+				return "库存不足";
+			}
+			orderdetail.setCompanyId(companyId);
+			orderdetail.setCompanyName(companyName);
+			orderdetail.setCpid(temp.getLong("id"));
+			orderdetail.setCreated(now);
+			orderdetail.setNumber(number);
+			orderdetail.setPimg(temp.getString("proimage"));
+			orderdetail.setPname(temp.getString("proname"));
+			orderdetail.setPrice(temp.getLong("proprice"));
+			amount += temp.getLong("proprice")*temp.getInteger("number");
+			orderdetail.setUid(uid);
+			orderdetail.setUserName(uname);
+			orderdetails.add(orderdetail);
+		}
+		
+		
+//		order.set
+		order.setCompanyId(companyId);
+		order.setCompanyName(companyName);
+		order.setUid(uid);
+		order.setUname(uname);
+		order.setStatus(Byte.parseByte("1"));
+		order.setCreated(now);
+		order.setAmount(amount);
+		int result = orderService.createGwOrder(order, orderdetails);
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "订单： 添加成功!");

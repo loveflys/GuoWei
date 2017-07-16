@@ -74,11 +74,17 @@ public class GwOrder {
     public void setUname(String uname) {
         this.uname = uname;
     }
-
+    /**
+     * 1:待支付 2：支付成功 3支付失败
+     * @param status
+     */
     public Byte getStatus() {
         return status;
     }
-
+    /**
+     * 1:待支付 2：支付成功 3支付失败
+     * @param status
+     */
     public void setStatus(Byte status) {
         this.status = status;
     }

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
-<title>${companyName}</title>
+<title>${companyName} - ${currentUser.name}</title>
 <!-- iCheck -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/aui.css">
 <!-- Morris chart -->
@@ -298,7 +298,7 @@
 			      
 			      <p class="buy-info-price">￥<span id="totalAmount">0</span></p>
 			    </div>
-			    <a class="submitBtn disabled">去结算</a>
+			    <a class="submitBtn disabled" onclick="submit()">去结算</a>
 			</div>
 		</footer>
         
@@ -494,7 +494,8 @@
         	$("#totalAmount").text(0);
         	$("#cartProContainer").html('');
         	if (!$(".submitBtn").hasClass('disabled')) {
-                $(".submitBtn").addClass('disabled')
+                $(".submitBtn").addClass('disabled');
+                $(".submitBtn").removeAttr("onclick");
             }
         	toggleCart();
         }
@@ -533,7 +534,8 @@
             	$("#cartnum").addClass(' goods')
             }
             if ($(".submitBtn").hasClass('disabled')) {
-                $(".submitBtn").removeClass('disabled')
+                $(".submitBtn").removeClass('disabled');
+                $(".submitBtn").attr('onclick','submit()');
             }
         }
         function minusCartPro(id) {
@@ -578,40 +580,17 @@
                 $('.cart-body').hide();
         	}
         }
-        function getUserInfo() {
-        	$.ajax({
-                cache: false,
-                type: "POST",
-                url: '',//"https://api.weixin.qq.com/cgi-bin/user/info?access_token="+${ACCESS_TOKEN}+"&openid="+${OPENID}+"&lang=zh_CN",
-                data: {
-                    companyId: ${id},
-                    companyName: ${companyName},
-                    details: JSON.stringify(window.param.cart),
-                    uid: '',
-                    uname: ''
-                },
-                async: false,
-                error: function(request) {
-                    toastr.error("Server Connection Error...");
-                },
-                success: function(res) {
-                    window.param.all = res.data;
-                    var list = _.groupBy(res.data, 'storageracks');
-                    bindData(list);
-                }
-            });
-        }
         function submit () {
         	$.ajax({
                 cache: false,
                 type: "POST",
-                url: "<%=path%>/company/getProData",
+                url: "<%=path%>/order/submit",
                 data: {
-                	companyId: ${id},
-                    companyName: ${companyName},
+                	companyId: '${id}',
+                    companyName: '${companyName}',
                     details: JSON.stringify(window.param.cart),
-                    uid: '',
-                    uname: ''
+                    uid: '${currentUser.id}',
+                    uname: '${currentUser.name}'
                 },
                 async: false,
                 error: function(request) {

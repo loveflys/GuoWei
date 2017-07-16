@@ -4,7 +4,7 @@ public class Secret {
 	/**
 	 * 微信开发平台应用ID
 	 */
-	public static final String APP_ID="wx85e7f3ce4674a676";//"wx8563cf7cd5154a95";
+	public static final String APP_ID="wx8563cf7cd5154a95";//"wx8563cf7cd5154a95";
 	
 	/**
 	 * 应用对应的凭证
@@ -14,7 +14,7 @@ public class Secret {
 	/**
 	 * 应用对应的密钥
 	 */
-	public static final String APP_SECRET="3b8d8ac07437435ec21f8721c251c9a8";//"88bb05c605de839c2fc6f29eed7bcce0";
+	public static final String APP_SECRET="88bb05c605de839c2fc6f29eed7bcce0";//"88bb05c605de839c2fc6f29eed7bcce0";
 	
 	/**
 	 * 微信支付商户号

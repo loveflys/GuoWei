@@ -51,6 +51,19 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+	
+	@Override
+	public GwUser getGwUserByOpenId(String openid) {
+		GwUserExample example = new GwUserExample();
+		Criteria c = example.createCriteria();
+		c.andWechatOpenidEqualTo(openid);
+		List<GwUser> res = userMapper.selectByExample(example);
+		if (res != null && res.size() > 0) {
+			return res.get(0);
+		}
+		return null;
+	}
+	
 	@Override
 	public int addGwUser(GwUser user) {
 		int res = userMapper.insert(user);
