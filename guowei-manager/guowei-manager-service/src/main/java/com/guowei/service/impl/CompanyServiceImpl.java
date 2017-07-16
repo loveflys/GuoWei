@@ -53,6 +53,8 @@ public class CompanyServiceImpl implements CompanyService {
 		GwTemplateproductExample example2 = new GwTemplateproductExample();
 		example2.createCriteria().andTidEqualTo(company.getTemplateId());
 		List<GwTemplateproduct> list = templateproductMapper.selectByExample(example2);
+		int res = companyMapper.insert(company);
+		int addCpResult = 1;
 		for (GwTemplateproduct gwTemplateproduct : list) {
 			// 2、依次添加为公司产品
 			GwCompanyproduct cp = new GwCompanyproduct();
@@ -67,20 +69,24 @@ public class CompanyServiceImpl implements CompanyService {
 			cp.setStock(gwTemplateproduct.getStock());
 			cp.setStorageracks(gwTemplateproduct.getStorageracks());
 			int insertResult = companyproductMapper.insert(cp);
+			if (insertResult != 1) {
+				addCpResult = 0;
+			}
 		}
-		int res = companyMapper.insert(company);
-		return res;
+		return (res == 1 && addCpResult == 1)?1:0;
 	}
 
 	@Override
 	public int editGwCompany(GwCompany company) {
 		GwCompany temp = companyMapper.selectByPrimaryKey(company.getId());
+		int updateCpResult = 1;
+		int deleteResult = 1;
 		if (company.getTemplateId() != null && temp.getTemplateId() != company.getTemplateId()) {
 			// 替换公司模板
 			// 1、删除原公司产品
 			GwCompanyproductExample example1 = new GwCompanyproductExample();
 			example1.createCriteria().andCompanyIdEqualTo(company.getId());
-			int deleteResult = companyproductMapper.deleteByExample(example1);
+			deleteResult = companyproductMapper.deleteByExample(example1);
 			// 2、获取模板商品
 			GwTemplateproductExample example2 = new GwTemplateproductExample();
 			example2.createCriteria().andTidEqualTo(company.getTemplateId());
@@ -99,10 +105,13 @@ public class CompanyServiceImpl implements CompanyService {
 				cp.setStock(gwTemplateproduct.getStock());
 				cp.setStorageracks(gwTemplateproduct.getStorageracks());
 				int insertResult = companyproductMapper.insert(cp);
+				if (insertResult != 1) {
+					updateCpResult = 0;
+				}
 			}
 		}
 		int res = companyMapper.updateByPrimaryKey(company);
-		return res;
+		return (res == 1 && updateCpResult == 1 && deleteResult == 1) ?1:0;
 	}
 
 	@Override
@@ -111,7 +120,7 @@ public class CompanyServiceImpl implements CompanyService {
 		example.createCriteria().andCompanyIdEqualTo(id);
 		int deleteResult = companyproductMapper.deleteByExample(example);
 		int res = companyMapper.deleteByPrimaryKey(id);
-		return res;
+		return (res == 1 && deleteResult == 1)? 1:0;
 	}
 
 	@Override

@@ -166,6 +166,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwCompany" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+      SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_company (id, mid, template_id, 
       company_name, company_addr, company_contactname, 
       company_contactposition, company_contactphone, 

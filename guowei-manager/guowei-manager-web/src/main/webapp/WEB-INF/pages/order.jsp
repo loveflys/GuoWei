@@ -95,7 +95,7 @@
 						<div class="row">
 							<form id="queryForm" action="<%=path%>/orders" method="post">
 								<div class="col-xs-2">
-									<input type="text" id="keyword" name="name" class="form-control input-sm"
+									<input type="text" id="keyword" name="uname" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
 								</div>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
@@ -114,15 +114,12 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="order.name"/></th>
-												<th><sp:message code="com.con.tel"/></th>
-												<th><sp:message code="order.level"/></th>
-												<th><sp:message code="order.password"/></th>												
-												<th><sp:message code="sys.create.time"/></th>
-												<th><sp:message code="sys.wechatAccount"/></th>
-                                                <th><sp:message code="sys.wechatOpenId"/></th>
-                                                <th><sp:message code="sys.area"/></th>
-                                                <th><sp:message code="sys.oper"/></th>
+												<th><sp:message code="order.uname"/></th>
+												<th><sp:message code="order.company"/></th>
+												<th><sp:message code="order.amount"/></th>
+												<th><sp:message code="order.status"/></th>												
+												<th><sp:message code="order.time"/></th>
+												<th><sp:message code="sys.oper"/></th>
 											</tr>
 										</thead>
 									</table>
@@ -156,66 +153,40 @@
 					</div>
 					
 					<div class="modal-body" >
-						<form class="form-horizontal"  id="editForm" action="<%=path%>/order/update" method="post">
+						<form class="form-horizontal"  id="editForm">
 							<input type="hidden" class="form-control" name="id">
 							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.name"/></label>
+								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.uname"/></label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" name="name" readonly="readonly">
+									<input type="text" class="form-control" name="uname" readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.company"/></label>
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="phone">
+                                    <input type="text" class="form-control" name="companyName" readonly="readonly">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.level"/></label>
+                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.amount"/></label>
                                 <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="level" readonly="readonly">
+                                    <input type="number" class="form-control" name="amount" readonly="readonly">
                                 </div>
                             </div>
 							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.password"/></label>
+								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.status"/></label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" name="password" readonly="readonly">
+									<input type="text" class="form-control" name="status" readonly="readonly">
 								</div>
 							</div>							
 							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.create.time"/></label>
+								<label for="inputName" class="col-sm-3 control-label"><sp:message code="order.time"/></label>
 
 								<div class="col-sm-9">
-									<input type="tel" class="form-control" name="created" readonly="readonly">
+									<input type="date" class="form-control" name="created" readonly="readonly">
 								</div>
 							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="wechatAccount" readonly="readonly">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="wechatOpenId" readonly="readonly">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="area" readonly="readonly">
-                                </div>
-                            </div>
 						</form>
-					</div>
-					<!-- modal-body END -->
-					
-					<div class="modal-footer">
-						<button id="btn-submit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
 					</div>
 				</div>
 			</div>
@@ -262,18 +233,15 @@
 	                columns: [//对应上面thead里面的序列
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
-	               		{"data": 'name'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
-	                    {"data": 'phone', defaultContent: ""},
-	                    {"data": 'level', defaultContent: ""},
-  	                    {"data": 'password', defaultContent: ""},
+	               		{"data": 'uname'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
+	                    {"data": 'companyName', defaultContent: ""},
+	                    {"data": 'amount', defaultContent: ""},
+  	                    {"data": 'status', defaultContent: ""},
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
 	                    	}
 	               		},
-	               		{"data": 'wechatAccount', defaultContent: ""},
-                        {"data": 'wechatOpenid', defaultContent: ""},
-                        {"data": 'area', defaultContent: ""},
   	                  	{"data": null,"width":"60px"}
 	                ],
 	                //操作按钮
@@ -376,18 +344,15 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=name]").val(data.name);
-					$("input[name=level]").val(data.level);
-					$("input[name=password]").val(data.password);
-					$("input[name=phone]").val(data.phone);
+					$("input[name=uname]").val(data.uname);
+					$("input[name=companyName]").val(data.companyName);
+					$("input[name=amount]").val(data.amount);
+					$("input[name=status]").val(data.status == 1?'待支付':(data.status == 2?'支付成功':'支付失败'));
 					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
+						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
-						$("input[name=created]").val(data.created);
+						$("input[name=created]").val(moment(data.created).format('YYYY-MM-DD') );
 					}
-					$("input[name=wechatAccount]").val(data.wechatAccount);
-                    $("input[name=wechatOpenid]").val(data.wechatOpenid);
-                    $("input[name=area]").val(data.area);
 					$("#editModal").modal("show");
 					
 		        });
