@@ -112,7 +112,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{wechatAccount,jdbcType=VARCHAR}, #{wechatOpenid,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT}
+      #{wechatAccount,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwManager" >
@@ -164,9 +164,6 @@
       </if>
       <if test="wechatAccount != null" >
         #{wechatAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="wechatOpenid != null" >
-        #{wechatOpenid,jdbcType=VARCHAR},
       </if>
       <if test="area != null" >
         #{area,jdbcType=BIGINT},

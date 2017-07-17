@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +22,7 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.pojo.GwCategory;
 import com.guowei.pojo.GwDivision;
 import com.guowei.service.DivisionService;
 
@@ -54,6 +56,16 @@ public class DivisionController {
 		return data;
 	}
 	
+	@RequestMapping(value="/division/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request,
+			@RequestParam(value="level", required = false, defaultValue = "0") String level
+			) {
+		DatatablesView dataTable = divisionService.getGwDivisions(level);
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
 	@RequestMapping("/divisions")
 	public String toList(HttpServletRequest request){   
 		return "division";
@@ -71,7 +83,6 @@ public class DivisionController {
 		GwDivision division = new GwDivision();
 		division.setPid(Long.parseLong(request.getParameter("pid")));
 		division.setName(request.getParameter("name"));
-		division.setAllname(request.getParameter("allname"));
 		division.setCreated(java.util.Calendar.getInstance().getTime());
 		division.setUpdated(java.util.Calendar.getInstance().getTime());
 		int result = divisionService.addGwDivision(division);
@@ -99,9 +110,6 @@ public class DivisionController {
 		}
 		if (!"".equals(request.getParameter("name"))) {
 			division.setName(request.getParameter("name"));
-		}
-		if (!"".equals(request.getParameter("allname"))) {
-			division.setAllname(request.getParameter("allname"));
 		}
 		division.setUpdated(java.util.Calendar.getInstance().getTime());
 		int status = divisionService.editGwDivision(division);

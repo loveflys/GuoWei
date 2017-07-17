@@ -9,6 +9,8 @@ public class GwDivision {
 
     private String name;
 
+    private Byte level;
+
     private String allname;
 
     private Date created;
@@ -37,6 +39,14 @@ public class GwDivision {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Byte getLevel() {
+        return level;
+    }
+
+    public void setLevel(Byte level) {
+        this.level = level;
     }
 
     public String getAllname() {

@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
+		<link rel="stylesheet" href="<%=path%>/res/address.css">
 		<style type="text/css">
 			.modal-dialog { 
 				position: absolute; 
@@ -117,9 +117,7 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="sys.pno"/></th>
-												<th><sp:message code="division.name"/></th>		
-												<th><sp:message code="division.allname"/></th> 									
+												<th><sp:message code="division.name"/></th>											
 												<th><sp:message code="sys.create.time"/></th>
                                                 <th><sp:message code="sys.oper"/></th>
 											</tr>
@@ -159,8 +157,9 @@
 							<input type="hidden" class="form-control" name="id">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.pid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="pid">
+                                <input type="hidden" class="form-control" name="pid">
+                                <div class="col-sm-9" id="edit-form-address">
+                                    
                                 </div>
                             </div>    
                             <div class="form-group">
@@ -168,13 +167,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="name">
                                 </div>
-                            </div> 
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.allname"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="allname">
-                                </div>
-                            </div>                          
+                            </div>                      
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.created"/></label>
 
@@ -210,8 +203,9 @@
                             <input type="hidden" class="form-control" name="id">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.pid"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="pid">
+                                <input type="hidden" class="form-control" name="pid">
+                                <div class="col-sm-9" id="add-form-address">
+                                    
                                 </div>
                             </div>    
                             <div class="form-group">
@@ -219,13 +213,7 @@
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="name">
                                 </div>
-                            </div> 
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="division.allname"/></label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="allname">
-                                </div>
-                            </div>                          
+                            </div>                  
                         </form>
                     </div>
                     <!-- modal-body END -->
@@ -236,10 +224,53 @@
                 </div>
             </div>
         </div>
+        <script type="template" id="address_tpl">
+            <div class="dropdown">
+               <a role="button" data-toggle="dropdown" class="btn btn-primary selected-area">
+                    {{(selected && selected.length > 0)?selected:'选择地址'}} <span class="caret"></span>
+               </a>
+               <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    [[ for(var i=0, length1 = data.length; i< length1; i++){ var province=data[i] ]]
+                        <li class="dropdown-submenu">
+                             <a tabindex="-1" href="javascript:selectArea('{{province.id}}', '{{province.name}}');;">{{province.name}}</a>
+                             [[ if (province && province.sub && province.sub.length > 0) { ]]                             
+                             <ul class="dropdown-menu">
+                                [[ for(var j=0, length2 = province.sub.length; j< length2; j++){ var city=province.sub[j]; ]]
+                                <li class="dropdown-submenu">
+                                    <a href="javascript:selectArea('{{city.id}}', '{{city.name}}');">{{city.name}}</a>
+                                    [[ if (city && city.sub && city.sub.length > 0) { ]]
+                                    <ul class="dropdown-menu">
+                                        [[ for(var k=0, length3 = city.sub.length; k< length3; k++){ var area=city.sub[k]; ]]
+                                        <li><a href="javascript:selectArea('{{area.id}}', '{{area.name}}');">{{area.name}}</a></li>
+                                        [[ } ]]
+                                    </ul>
+                                    [[ } ]]
+                                </li>
+                                <li class="divider"></li>
+                                [[ } ]]
+                            </ul>
+                            [[ } ]]
+                        </li>
+                    [[ } ]]
+                </ul>
+            </div>
+        </script>
 		<!-- page script -->
 		<script>
-			$(function () {
-				
+		window.param = {
+                area: {
+                    name: '',
+                    id: ''
+                },
+                province: [],
+                addr: []
+          }
+            $(function () {
+                _.templateSettings = {
+                    evaluate    : /\[\[(.+?)\]\]/g,
+                    interpolate : /\{\{(.+?)\}\}/g
+                };
+                getAllAddr();
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -277,9 +308,7 @@
 	                columns: [//对应上面thead里面的序列
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
-	                    {"data": 'pid'},
-	                    {"data": 'name'},
-	               		{"data": 'allname'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	  
+	                    {"data": 'name'},  
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
@@ -358,7 +387,7 @@
                     $("input[name=id]").val("");
                     $("input[name=pid]").val("");
                     $("#addForm input[name=name]").val("");
-                    $("input[name=allname]").val("");
+                    bindAddr();
                     $("#addModal").modal("show");
 	            });
 				
@@ -395,12 +424,12 @@
 					$("input[name=id]").val(data.id);
 					$("input[name=pid]").val(data.pid);
 					$("#editForm input[name=name]").val(data.name);
-					$("input[name=allname]").val(data.allname);
 					if (!data.created || data.created.length <= 0) {
 						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
 						$("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
 					}
+					bindAddr(data.pid);
 					$("#editModal").modal("show");
 					
 		        });
@@ -479,6 +508,77 @@
 		            }
 		        });
 			});
+		function selectArea (id, name) {
+            $("input[name=pid]").val(id);
+            $(".selected-area").html(name + '<span class="caret"></span>');
+        }
+        function getAllAddr () {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/division/getAllData",
+                data: {
+                	level: '3'
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(res) {
+                    window.param.addr = res.data;
+                    window.param.addr.push({
+                    	id: '0',
+                    	name: '全国'
+                    })
+                    var province = [];
+                    province.push({
+                    	id: '0',
+                    	name: '全国',
+                    	sub: []
+                    })
+                    for (var item of res.data) {
+                        if (item.level == 1) {
+                            //省份，判断是否有下级
+                            item.sub = [];
+                            for (var it of res.data) {
+                                if (it.pid == item.id) {
+                                    //市，判断是否有下级
+                                    it.sub = [];
+                                    for (var i of res.data) {
+                                        if (i.pid == it.id) {
+                                            //县/区
+                                            it.sub.push(i);
+                                        }
+                                    }
+                                    item.sub.push(it);
+                                }
+                            }
+                            province[0].sub.push(item);
+                        }
+                    }
+                    window.param.province = province;
+                }
+            });
+        }
+        function bindAddr(id) {
+            if (id || id == 0) {
+                var selected = "";
+                for (var item of window.param.addr) {
+                    if (item.id == id) {
+                        selected = item.name;
+                    }
+                }
+                $("#edit-form-address").html(_.template($("#address_tpl").html())({
+                    "data": window.param.province,
+                    "selected": selected
+                }));
+            } else {
+                $("#add-form-address").html(_.template($("#address_tpl").html())({
+                    "data": window.param.province,
+                    "selected": ""
+                }));
+            }
+        }
 		</script>
 	
 		<!-- jQuery UI 1.11.4 -->
@@ -507,6 +607,7 @@
 		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
 		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+		<script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path%>/res/dist/js/app.min.js"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->

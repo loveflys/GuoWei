@@ -137,11 +137,11 @@ public class TemplateController {
 		GwTemplateproduct template = new GwTemplateproduct();
 		template.setTid(Long.parseLong(request.getParameter("tid")));
 		template.setPid(Long.parseLong(request.getParameter("pid")));
-		
+		template.setWarnstock(Integer.parseInt(request.getParameter("warnstock")));
 		GwProduct pro = productService.getGwProductById(Long.parseLong(request.getParameter("pid")));
 		
 		template.setSellprice(pro.getPrice());
-		template.setStock(10);
+		template.setStock(Integer.parseInt(request.getParameter("stock")));
 		template.setStorageracks(Byte.parseByte(request.getParameter("huojia")));
 		template.setCreated(Calendar.getInstance().getTime());
 		template.setUpdated(Calendar.getInstance().getTime());

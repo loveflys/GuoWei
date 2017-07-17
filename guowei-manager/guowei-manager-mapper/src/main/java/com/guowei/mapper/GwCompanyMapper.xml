@@ -175,8 +175,8 @@
     values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, 
       #{companyName,jdbcType=VARCHAR}, #{companyAddr,jdbcType=VARCHAR}, #{companyContactname,jdbcType=VARCHAR}, 
       #{companyContactposition,jdbcType=VARCHAR}, #{companyContactphone,jdbcType=VARCHAR}, 
-      #{companyContactwechat,jdbcType=VARCHAR}, #{companyContactwechatopenid,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{purchased,jdbcType=TIMESTAMP}, #{did,jdbcType=BIGINT}
+      #{companyContactwechat,jdbcType=VARCHAR},#{created,jdbcType=TIMESTAMP},
+      #{purchased,jdbcType=TIMESTAMP}, #{did,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompany" >
@@ -246,9 +246,6 @@
       </if>
       <if test="companyContactwechat != null" >
         #{companyContactwechat,jdbcType=VARCHAR},
-      </if>
-      <if test="companyContactwechatopenid != null" >
-        #{companyContactwechatopenid,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},

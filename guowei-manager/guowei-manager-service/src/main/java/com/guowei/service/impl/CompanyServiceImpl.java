@@ -67,6 +67,7 @@ public class CompanyServiceImpl implements CompanyService {
 			cp.setSellprice(gwTemplateproduct.getProprice());
 			cp.setStatus(Byte.parseByte("1"));
 			cp.setStock(gwTemplateproduct.getStock());
+			cp.setWarnstock(gwTemplateproduct.getWarnstock());
 			cp.setStorageracks(gwTemplateproduct.getStorageracks());
 			int insertResult = companyproductMapper.insert(cp);
 			if (insertResult != 1) {
@@ -103,6 +104,7 @@ public class CompanyServiceImpl implements CompanyService {
 				cp.setSellprice(gwTemplateproduct.getProprice());
 				cp.setStatus(Byte.parseByte("1"));
 				cp.setStock(gwTemplateproduct.getStock());
+				cp.setWarnstock(gwTemplateproduct.getWarnstock());
 				cp.setStorageracks(gwTemplateproduct.getStorageracks());
 				int insertResult = companyproductMapper.insert(cp);
 				if (insertResult != 1) {

@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="pid" property="pid" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="TINYINT" />
     <result column="allname" property="allname" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, pid, name, allname, created, updated
+    id, pid, name, level, allname, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwDivisionExample" >
     select
@@ -102,14 +103,14 @@
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwDivision" >
     <selectKey keyProperty="id" resultType="Long" order="AFTER">
-       SELECT LAST_INSERT_ID() as id
+      SELECT LAST_INSERT_ID() as id
     </selectKey>
     insert into gw_division (id, pid, name, 
-      allname, created, updated
-      )
+      level, allname, created, 
+      updated)
     values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{allname,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
-      )
+      #{level,jdbcType=TINYINT}, #{allname,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwDivision" >
     insert into gw_division
@@ -122,6 +123,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="level != null" >
+        level,
       </if>
       <if test="allname != null" >
         allname,
@@ -142,6 +146,9 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
       </if>
       <if test="allname != null" >
         #{allname,jdbcType=VARCHAR},
@@ -172,6 +179,9 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=TINYINT},
+      </if>
       <if test="record.allname != null" >
         allname = #{record.allname,jdbcType=VARCHAR},
       </if>
@@ -191,6 +201,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       pid = #{record.pid,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=TINYINT},
       allname = #{record.allname,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
@@ -206,6 +217,9 @@
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=TINYINT},
       </if>
       <if test="allname != null" >
         allname = #{allname,jdbcType=VARCHAR},
@@ -223,6 +237,7 @@
     update gw_division
     set pid = #{pid,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
+      level = #{level,jdbcType=TINYINT},
       allname = #{allname,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}

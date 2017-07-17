@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
+		<link rel="stylesheet" href="<%=path%>/res/address.css">
 		<style type="text/css">
 			.modal-dialog { 
 				position: absolute; 
@@ -206,9 +206,10 @@
                             </div>					
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="did">
+                                
+                                <input type="hidden" class="form-control" name="did">
+                                <div class="col-sm-9" id="edit-form-address">
+                                    
                                 </div>
                             </div>
 						</form>
@@ -294,9 +295,9 @@
                             </div>             
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="company.did"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="did">
+                                <input type="hidden" class="form-control" name="did">
+                                <div class="col-sm-9" id="add-form-address">
+                                    
                                 </div>
                             </div>
                         </form>
@@ -361,18 +362,56 @@
                 [[ } ]]
             [[ } ]]
         </script>
+        <script type="template" id="address_tpl">
+            <div class="dropdown">
+               <a role="button" data-toggle="dropdown" class="btn btn-primary selected-area">
+                    {{(selected && selected.length > 0)?selected:'选择地址'}} <span class="caret"></span>
+               </a>
+               <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    [[ for(var i=0, length1 = data.length; i< length1; i++){ var province=data[i] ]]
+                        <li class="dropdown-submenu">
+                             <a tabindex="-1" href="javascript:selectArea('{{province.id}}', '{{province.name}}');;">{{province.name}}</a>
+                             [[ if (province && province.sub && province.sub.length > 0) { ]]                             
+                             <ul class="dropdown-menu">
+                                [[ for(var j=0, length2 = province.sub.length; j< length2; j++){ var city=province.sub[j]; ]]
+                                <li class="dropdown-submenu">
+                                    <a href="javascript:selectArea('{{city.id}}', '{{city.name}}');">{{city.name}}</a>
+                                    [[ if (city && city.sub && city.sub.length > 0) { ]]
+                                    <ul class="dropdown-menu">
+                                        [[ for(var k=0, length3 = city.sub.length; k< length3; k++){ var area=city.sub[k]; ]]
+                                        <li><a href="javascript:selectArea('{{area.id}}', '{{area.name}}');">{{area.name}}</a></li>
+                                        [[ } ]]
+                                    </ul>
+                                    [[ } ]]
+                                </li>
+                                <li class="divider"></li>
+                                [[ } ]]
+                            </ul>
+                            [[ } ]]
+                        </li>
+                    [[ } ]]
+                </ul>
+            </div>
+        </script>
 		<!-- page script -->
 		<script>
 		window.param = {
 				id: '',
 				templateId: '',
-				mid: ''
-		}
+				mid: '',
+				area: {
+					name: '',
+					id: ''
+				},
+				province: [],
+				addr: []
+		  }
 			$(function () {
 				_.templateSettings = {
                     evaluate    : /\[\[(.+?)\]\]/g,
                     interpolate : /\{\{(.+?)\}\}/g
                 };
+				getAllAddr();
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -508,6 +547,7 @@
                     $("input[name=companyContactphone]").val("");
                     $("input[name=companyContactwechat]").val("");
                     $("input[name=did]").val("");
+                    bindAddr();
                     $("#addModal").modal("show");      
 	            });
 				
@@ -554,6 +594,7 @@
 					$("input[name=companyContactphone]").val(data.companyContactphone);
 					$("input[name=companyContactwechat]").val(data.companyContactwechat);
                     $("input[name=did]").val(data.did);
+                    bindAddr(data.did);
 					$("#editModal").modal("show");					
 		        });
 	          	
@@ -631,6 +672,66 @@
 		            }
 		        });
 			});
+		    function selectArea (id, name) {
+		    	$("input[name=did]").val(id);
+		    	$(".selected-area").html(name + '<span class="caret"></span>');
+		    }
+		    function getAllAddr () {
+		    	$.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "<%=path%>/division/getAllData",
+                    data: {},
+                    async: false,
+                    error: function(request) {
+                        toastr.error("Server Connection Error...");
+                    },
+                    success: function(res) {
+                    	window.param.addr = res.data;
+                    	var province = [];
+                        for (var item of res.data) {
+                        	if (item.level == 1) {
+                        		//省份，判断是否有下级
+                        		item.sub = [];
+                        		for (var it of res.data) {
+                        			if (it.pid == item.id) {
+                        				//市，判断是否有下级
+                        				it.sub = [];
+                        				for (var i of res.data) {
+                        					if (i.pid == it.id) {
+                        						//县/区
+                        						it.sub.push(i);
+                        					}
+                        				}
+                        				item.sub.push(it);
+                        			}
+                        		}
+                        		province.push(item);
+                        	}
+                        }
+                        window.param.province = province;
+                    }
+                });
+		    }
+		    function bindAddr(id) {
+		    	if (id) {
+		    		var selected = "";
+		    		for (var item of window.param.addr) {
+		    			if (item.id == id) {
+		    				selected = item.name;
+		    			}
+		    		}
+		    		$("#edit-form-address").html(_.template($("#address_tpl").html())({
+                        "data": window.param.province,
+                        "selected": selected
+                    }));
+		    	} else {
+			    	$("#add-form-address").html(_.template($("#address_tpl").html())({
+	                    "data": window.param.province,
+	                    "selected": ""
+	                }));
+		    	}
+		    }
 			function getAddData() {
 		        $.ajax({
 		            cache: false,

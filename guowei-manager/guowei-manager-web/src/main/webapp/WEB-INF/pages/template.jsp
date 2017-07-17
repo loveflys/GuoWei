@@ -423,6 +423,36 @@
 					</div>
 				</div>
 				<!-- modal-body END -->
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">设置库存提醒</h4>
+				      </div>
+				      <div class="modal-body">
+				        <p>当前库存: <span id="now_stock"></span></p>
+				        <div class="form-group">                                                        
+                            <label for="inputName" class="col-sm-3 control-label">铺货数量</label>
+                            <div class="col-sm-9">
+                                <input id="stock" type="number" class="form-control">
+                            </div>
+                        </div>
+				        <div class="form-group">				            				            
+                            <label for="inputName" class="col-sm-3 control-label">库存提醒数量</label>
+                            <div class="col-sm-9">
+                                <input id="warnstock" type="number" class="form-control">
+                            </div>
+                        </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="button" class="btn btn-primary" onclick="changeTemplate(true)">上架</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -441,7 +471,7 @@
           </td>
           <td>{{item.title}}</td>
           <td><span class="badge bg-red">￥{{item.price}}</span></td>
-          <td onclick="changeTemplate({{huojia}}, {{item.id}}, true)"><i class="fa fa-plus"></i></td>
+          <td  data-toggle="modal" data-target="#myModal" onclick="changeTemplateWarnStock({{huojia}}, {{item.id}}, {{item.stock}})"><i class="fa fa-plus"></i></td>
         </tr>        
         [[ } ]]
     </script>
@@ -459,7 +489,7 @@
           </td>
           <td>{{item.proname}}</td>
           <td><span class="badge bg-red">￥{{item.proprice}}</span></td>
-          <td onclick="changeTemplate({{huojia}}, {{item.id}}, false)"><i class="fa fa-minus"></i></td>
+          <td onclick="changeTemplate(false, {{item.id}})"><i class="fa fa-minus"></i></td>
         </tr>        
         [[ } ]]
     </script>
@@ -476,6 +506,8 @@
                secondtempProList: [],
                thirdtempProList: [],
                forthtempProList: [],
+               pid: '',
+               huojia: ''
             }
             $(function () {
                 
@@ -870,24 +902,38 @@
                     "huojia": "4",
                 }));
             }
-            function changeTemplate(huojia, id, isplus) {
-            	console.log("胡评价是"+huojia);
+            function changeTemplateWarnStock(huojia, id, stock) {
+            	window.param.pid = id;
+            	window.param.huojia = huojia;
+            	$("#now_stock").html(stock);
+            }
+            function changeTemplate(isplus, id) {
             	if (isplus) {
+            		var stock = Number($("#stock").val());
+            		var warnstock = Number($("#warnstock").val());
+            		if(warnstock >= stock) {
+            			toastr.error("库存提醒必须小于铺货数量");
+            			return;
+            		}
             		$.ajax({
                         cache: false,
                         type: "POST",
                         url: "<%=path%>/template/addProData",
                         data: {
                             tid: window.param.id,
-                            huojia: huojia,
-                            pid: id
+                            huojia: window.param.huojia,
+                            pid: window.param.pid,
+                            stock: $("#stock").val(),
+                            warnstock: $("#warnstock").val()
                         },
                         async: false,
                         error: function(request) {
                             toastr.error("Server Connection Error...");
                         },
                         success: function(resp) {
+                        	toastr.success("<sp:message code='sys.oper.success'/>");
                         	getData();
+                        	$("#myModal").modal('hide');
                         }
                     });
             	} else {
