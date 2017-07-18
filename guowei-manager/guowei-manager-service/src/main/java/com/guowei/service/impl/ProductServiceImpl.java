@@ -1,6 +1,8 @@
 package com.guowei.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.mapper.GwCategoryMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwProductMapper;
+import com.guowei.mapper.GwPurchaseMapper;
 import com.guowei.mapper.GwTemplateproductMapper;
 import com.guowei.pojo.GwCategory;
 import com.guowei.pojo.GwCompanyproductExample;
@@ -22,6 +25,8 @@ import com.guowei.pojo.GwProductExample;
 import com.guowei.pojo.GwTemplateproductExample;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwProductExample.Criteria;
+import com.guowei.pojo.GwPurchase;
+import com.guowei.pojo.GwPurchaseExample;
 import com.guowei.service.ProductService;
 /**
  * 商品管理Service
@@ -39,6 +44,8 @@ public class ProductServiceImpl implements ProductService {
 	private GwCompanyproductMapper companyproductMapper;
 	@Autowired
 	private GwCategoryMapper cateMapper;
+	@Autowired
+	private GwPurchaseMapper purchaseMapper;
 	@Override
 	public GwProduct getGwProductById(long parseLong) {
 		GwProduct res = productMapper.selectByPrimaryKey(parseLong);
@@ -59,11 +66,20 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 	@Override
-	public int addGwProduct(GwProduct product) {
+	public int addGwProduct(GwProduct product, Long mid) {
 		GwCategory cate = cateMapper.selectByPrimaryKey(product.getCid());
 		product.setCname(cate.getName());
+		GwPurchase purchase = new GwPurchase();
+		
+		
 		int res = productMapper.insert(product);
-		return res;
+		purchase.setMid(mid);
+		purchase.setNumber(product.getStock());
+		purchase.setPid(product.getId());
+		purchase.setPrice(product.getBuyingprice());
+		purchase.setCreated(product.getCreated());
+		int addPurchase = purchaseMapper.insert(purchase);
+		return (res == 1 && addPurchase == 1)?1:0;
 	}
 	@Override
 	public int editGwProduct(GwProduct product) {
@@ -77,6 +93,10 @@ public class ProductServiceImpl implements ProductService {
 		GwTemplateproductExample example1 = new GwTemplateproductExample();
 		example1.createCriteria().andPidEqualTo(id);
 		templateproductMapper.deleteByExample(example1);
+		
+		GwPurchaseExample exa = new GwPurchaseExample();
+		exa.createCriteria().andPidEqualTo(id);
+		purchaseMapper.deleteByExample(exa);
 		
 		GwCompanyproductExample example2 = new GwCompanyproductExample();
 		example2.createCriteria().andPidEqualTo(id);
@@ -121,5 +141,27 @@ public class ProductServiceImpl implements ProductService {
 		result.setData(list);
 		result.setRecordsTotal(list.size());
 		return result;
+	}
+	@Override
+	public int addPurchase(String id, String purchaseNum, String purchasePrice, String mid) {
+		int updatePro = 1;
+		int addPurchase = 1;
+		GwProduct pro = productMapper.selectByPrimaryKey(Long.parseLong(id));
+		if (pro != null) {
+			pro.setStock(pro.getStock() + Integer.parseInt(purchaseNum));
+			pro.setBuyingprice(new BigDecimal(purchasePrice));
+			updatePro = productMapper.updateByPrimaryKey(pro);
+			GwPurchase purchase = new GwPurchase();
+			purchase.setMid(Long.parseLong(mid));
+			purchase.setNumber(Integer.parseInt(purchaseNum));
+			purchase.setPrice(new BigDecimal(purchasePrice));
+			purchase.setPid(pro.getId());
+			purchase.setCreated(Calendar.getInstance().getTime());
+			addPurchase = purchaseMapper.insert(purchase);
+		} else {
+			updatePro = 0;
+		}
+		
+		return (updatePro == 1 && addPurchase == 1)?1:0;
 	}
 }

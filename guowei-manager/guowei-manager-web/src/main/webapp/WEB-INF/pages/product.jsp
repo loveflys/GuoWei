@@ -185,19 +185,19 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.price"/></label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="price" readonly="readonly">
+                                    <input type="number" class="form-control" name="price">
                                 </div>
                             </div>
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="product.discountprice"/></label>
 								<div class="col-sm-9">
-									<input type="number" class="form-control" name="discountprice" readonly="readonly">
+									<input type="number" class="form-control" name="discountprice">
 								</div>
 							</div>	
 							<div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.buyingprice"/></label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" name="buyingprice" readonly="readonly">
+                                    <input type="number" class="form-control" name="buyingprice">
                                 </div>
                             </div>          
                             <div class="form-group">
@@ -349,6 +349,36 @@
                 </div>
             </div>
         </div>   
+		<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">商品进货</h4>
+				      </div>
+				      <div class="modal-body">
+				        <p>当前产品: <span id="now_proName"></span></p>
+				        <div class="form-group">                                                        
+                            <label for="inputName" class="col-sm-3 control-label">进货数量</label>
+                            <div class="col-sm-9">
+                                <input id="purchaseNum" type="number" class="form-control">
+                            </div>
+                        </div>
+				        <div class="form-group">				            				            
+                            <label for="inputName" class="col-sm-3 control-label">进货价</label>
+                            <div class="col-sm-9">
+                                <input id="purchasePrice" type="number" class="form-control">
+                            </div>
+                        </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="button" class="btn btn-primary" onclick="purchasePro()">确定</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 		<!-- page script -->
 		<script type="template" id="cid_tpl">
             [[ for(var i=0; i< data.length; i++){ var item=data[i] ]]
@@ -380,7 +410,8 @@
 		    	qiniuUrl: '',
 		    	id: '',
 		    	status: '',
-		    	cid: ''
+		    	cid: '',
+		    	purchaseProId: '',
 		    }
 		    function getToken () {
 		    	var url = "<%=path%>/file/getToken";
@@ -546,7 +577,8 @@
 		                    defaultContent: " <div class='btn-group'>"+
 		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
 		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
+		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"+
+		                    				"<button id='purchaseRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-plus-square'></i></button></div>"
 		                }
 	                ],
 	              	//每加载完一行的回调函数
@@ -639,7 +671,13 @@
 	                    $('#dataTable tbody tr').removeClass('selected');
 	                }
 	            });
-	          	
+	          	$("#dataTable tbody").on('click', '#purchaseRow', function () {
+	          		var data = tables.api().row($(this).parents('tr')).data();
+	          		//赋值到Modal上
+	          		window.param.purchaseProId = data.id;
+	          		$("#now_proName").html(data.title);
+	          		$("#myModal").modal('show');
+	          	})
 	          	//修改 Model
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
@@ -803,6 +841,34 @@
 	                    window.param.status = id;
 	                }
 			});
+			function purchasePro () {
+				$.ajax({
+                    url:'<%=path%>/product/addPurchase/',
+                    type:'POST',
+                    data: {
+                    	id: window.param.purchaseProId,
+                    	purchaseNum: $("#purchaseNum").val(),
+                    	purchasePrice: $("#pruchasePrice").val()
+                    }
+                    dataType: "json",
+                    //timeout:"3000",
+                    cache:"false",
+                    success:function(data){
+                        if(data.status == 1){
+                        	//var $toast = toastr['info']('<sp:message code='sys.oper.success'/>');
+                        	toastr.success("<sp:message code='sys.oper.success'/>");
+                        	tables.api().row().remove().draw(false);//删除这行的数据
+                        	//tables.fnDraw();
+                            //window.location.reload();//重新刷新页面，还有一种方式：tables.draw(false);(这是不刷新，重新初始化插件，但是做删除时候，老有问题)
+                        }else{
+                        	toastr.error("<sp:message code='sys.oper.success'/>");
+                        }
+                    },
+                    error:function(err){
+                    	toastr.error("Server Connection Error...");
+                    }
+                });
+			}
 		</script>
 	
 		<!-- jQuery UI 1.11.4 -->

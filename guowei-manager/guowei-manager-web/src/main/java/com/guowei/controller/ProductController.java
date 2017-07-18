@@ -22,6 +22,7 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.pojo.GwManager;
 import com.guowei.pojo.GwProduct;
 import com.guowei.service.ProductService;
 
@@ -68,6 +69,30 @@ public class ProductController {
 		DatatablesView dataTable = productService.getGwProductsByParam(product);
 		String data = JSON.toJSONString(dataTable);
 		return data;
+	}
+	
+	/**
+	 * 进货
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/product/addPurchase", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String addPurchase(HttpServletRequest request, ModelMap model) {
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		String id = request.getParameter("id");
+		String purchaseNum = request.getParameter("purchaseNum");
+		String purchasePrice = request.getParameter("purchasePrice");
+		int res = productService.addPurchase(id, purchaseNum, purchasePrice, manager.getId().toString());
+		if (res == 1) {		
+			model.addAttribute("result", res);
+			model.addAttribute("msg", "进货单 添加成功!----"+manager.getName());
+			log.info(Constants.SYS_NAME +  "进货单： 添加成功!----"+manager.getName());
+		}
+		MessageView msg = new MessageView(res);
+		return JSON.toJSONString(msg);
 	}
 	
 	@RequestMapping("/products")

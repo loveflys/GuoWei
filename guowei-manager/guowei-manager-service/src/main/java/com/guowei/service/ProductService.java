@@ -17,7 +17,9 @@ public interface ProductService {
 	
 	DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize);
 
-	int addGwProduct(GwProduct product);
+	int addGwProduct(GwProduct product, Long mid);
+	
+	int addPurchase(String id,String purchaseNum,String purchasePrice,String mid);
 
 	int editGwProduct(GwProduct product);
 
