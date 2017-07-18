@@ -109,6 +109,7 @@ public class ProductController {
 	@RequestMapping(value = "/product/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
 		GwProduct product = new GwProduct();
 		if (!"".equals(request.getParameter("title"))) {
 			product.setTitle(request.getParameter("title"));
@@ -142,7 +143,7 @@ public class ProductController {
 		if (!"".equals(request.getParameter("status"))) {
 			product.setStatus(Byte.parseByte(request.getParameter("status")));		
 		}
-		int result = productService.addGwProduct(product);
+		int result = productService.addGwProduct(product, manager.getId());
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			model.addAttribute("msg", product.getTitle() + " 添加成功!");
