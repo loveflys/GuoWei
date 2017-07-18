@@ -405,6 +405,7 @@
             [[ } ]]
         </script>
 		<script>
+		var tables = null;
 		    window.param = {
 		    	qiniuToken: '',
 		    	qiniuUrl: '',
@@ -498,7 +499,7 @@
 		  		
 		  		
 				
-				var tables = $("#dataTable").dataTable({
+				tables = $("#dataTable").dataTable({
 			    	serverSide: true,//分页，取数据等等的都放到服务端去
 			        processing: false,//载入数据的时候是否显示“载入中”
 			        pageLength: 10,  //首次加载的数据条数
@@ -848,18 +849,16 @@
                     data: {
                     	id: window.param.purchaseProId,
                     	purchaseNum: $("#purchaseNum").val(),
-                    	purchasePrice: $("#pruchasePrice").val()
-                    }
-                    dataType: "json",
+                    	purchasePrice: $("#purchasePrice").val()
+                    },
                     //timeout:"3000",
                     cache:"false",
                     success:function(data){
                         if(data.status == 1){
                         	//var $toast = toastr['info']('<sp:message code='sys.oper.success'/>');
                         	toastr.success("<sp:message code='sys.oper.success'/>");
-                        	tables.api().row().remove().draw(false);//删除这行的数据
-                        	//tables.fnDraw();
-                            //window.location.reload();//重新刷新页面，还有一种方式：tables.draw(false);(这是不刷新，重新初始化插件，但是做删除时候，老有问题)
+                        	tables.fnDraw(false);
+                        	$("#myModal").modal('hide');
                         }else{
                         	toastr.error("<sp:message code='sys.oper.success'/>");
                         }
