@@ -12,6 +12,7 @@ import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.mapper.GwCompanyMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
+import com.guowei.mapper.GwProductMapper;
 import com.guowei.mapper.GwTemplateproductMapper;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyExample;
@@ -19,6 +20,7 @@ import com.guowei.pojo.GwCompanyExample.Criteria;
 import com.guowei.pojo.GwCompanyTemp;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwCompanyproductExample;
+import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwTemplateproduct;
 import com.guowei.pojo.GwTemplateproductExample;
 import com.guowei.service.CompanyService;
@@ -35,6 +37,8 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private GwCompanyMapper companyMapper;
 	@Autowired
+	private GwProductMapper productMapper;
+	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
 	@Autowired
 	private GwTemplateproductMapper templateproductMapper;
@@ -47,7 +51,6 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public int addGwCompany(GwCompany company) {
 		// 1、获取模板商品
 		GwTemplateproductExample example2 = new GwTemplateproductExample();
@@ -67,10 +70,19 @@ public class CompanyServiceImpl implements CompanyService {
 			cp.setSellprice(gwTemplateproduct.getProprice());
 			cp.setStatus(Byte.parseByte("1"));
 			cp.setStock(gwTemplateproduct.getStock());
+			
+			GwProduct pro = productMapper.selectByPrimaryKey(gwTemplateproduct.getPid());
+			int updatePro = 0;
+			if (pro != null) {
+				pro.setDistribute(pro.getDistribute() + gwTemplateproduct.getStock());
+				pro.setStock(pro.getStock() - gwTemplateproduct.getStock());
+				updatePro = productMapper.updateByPrimaryKey(pro);
+			}
+			
 			cp.setWarnstock(gwTemplateproduct.getWarnstock());
 			cp.setStorageracks(gwTemplateproduct.getStorageracks());
 			int insertResult = companyproductMapper.insert(cp);
-			if (insertResult != 1) {
+			if (insertResult != 1 || updatePro !=1) {
 				addCpResult = 0;
 			}
 		}
@@ -82,11 +94,31 @@ public class CompanyServiceImpl implements CompanyService {
 		GwCompany temp = companyMapper.selectByPrimaryKey(company.getId());
 		int updateCpResult = 1;
 		int deleteResult = 1;
+		int returnStock = 1;
 		if (company.getTemplateId() != null && temp.getTemplateId() != company.getTemplateId()) {
 			// 替换公司模板
 			// 1、删除原公司产品
 			GwCompanyproductExample example1 = new GwCompanyproductExample();
 			example1.createCriteria().andCompanyIdEqualTo(company.getId());
+			
+			//将原公司产品库存返还至商品总库存
+			List<GwCompanyproduct> oldcps = companyproductMapper.selectByExample(example1);
+			if (oldcps != null && oldcps.size() > 0) {
+				for (GwCompanyproduct gwCompanyproduct : oldcps) {
+					Long pid = gwCompanyproduct.getPid();
+					GwProduct temppro = productMapper.selectByPrimaryKey(pid);
+					//返还库存
+					temppro.setStock(temppro.getStock() + gwCompanyproduct.getStock());
+					//返还已铺货数量
+					temppro.setDistribute(temppro.getDistribute() - gwCompanyproduct.getStock());
+					int tempreturn = productMapper.updateByPrimaryKey(temppro);
+					if (tempreturn != 1) {
+						returnStock = 0;
+					}
+				}
+			}
+			
+			
 			deleteResult = companyproductMapper.deleteByExample(example1);
 			// 2、获取模板商品
 			GwTemplateproductExample example2 = new GwTemplateproductExample();
@@ -104,25 +136,51 @@ public class CompanyServiceImpl implements CompanyService {
 				cp.setSellprice(gwTemplateproduct.getProprice());
 				cp.setStatus(Byte.parseByte("1"));
 				cp.setStock(gwTemplateproduct.getStock());
+				GwProduct pro = productMapper.selectByPrimaryKey(gwTemplateproduct.getPid());
+				int updatePro = 0;
+				if (pro != null) {
+					pro.setDistribute(pro.getDistribute() + gwTemplateproduct.getStock());
+					pro.setStock(pro.getStock() - gwTemplateproduct.getStock());
+					updatePro = productMapper.updateByPrimaryKey(pro);
+				}
+				
 				cp.setWarnstock(gwTemplateproduct.getWarnstock());
 				cp.setStorageracks(gwTemplateproduct.getStorageracks());
 				int insertResult = companyproductMapper.insert(cp);
-				if (insertResult != 1) {
+				if (insertResult != 1 || updatePro != 1) {
 					updateCpResult = 0;
 				}
 			}
 		}
 		int res = companyMapper.updateByPrimaryKey(company);
-		return (res == 1 && updateCpResult == 1 && deleteResult == 1) ?1:0;
+		return (res == 1 && updateCpResult == 1 && deleteResult == 1 && returnStock == 1) ?1:0;
 	}
 
 	@Override
 	public int removeGwCompany(long id) {
 		GwCompanyproductExample example = new GwCompanyproductExample();
 		example.createCriteria().andCompanyIdEqualTo(id);
+		int returnStock = 1;
+		//将原公司产品库存返还至商品总库存
+		List<GwCompanyproduct> oldcps = companyproductMapper.selectByExample(example);
+		if (oldcps != null && oldcps.size() > 0) {
+			for (GwCompanyproduct gwCompanyproduct : oldcps) {
+				Long pid = gwCompanyproduct.getPid();
+				GwProduct temppro = productMapper.selectByPrimaryKey(pid);
+				//返还库存
+				temppro.setStock(temppro.getStock() + gwCompanyproduct.getStock());
+				//返还已铺货数量
+				temppro.setDistribute(temppro.getDistribute() - gwCompanyproduct.getStock());
+				int tempreturn = productMapper.updateByPrimaryKey(temppro);
+				if (tempreturn != 1) {
+					returnStock = 0;
+				}
+			}
+		}
+		
 		int deleteResult = companyproductMapper.deleteByExample(example);
 		int res = companyMapper.deleteByPrimaryKey(id);
-		return (res == 1 && deleteResult == 1)? 1:0;
+		return (res == 1 && deleteResult == 1 && returnStock == 1)? 1:0;
 	}
 
 	@Override

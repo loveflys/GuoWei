@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
+import com.guowei.common.utils.WechatWarn;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwOrderMapper;
 import com.guowei.mapper.GwOrderdetailMapper;
@@ -64,10 +65,15 @@ public class OrderServiceImpl implements OrderService {
 				int sellcount = pro.getSellcount();
 				pro.setSellcount(sellcount + gwOrderdetail.getNumber());
 				int stock = pro.getStock();
+				int warnstock = pro.getWarnstock();
 				if (stock >= gwOrderdetail.getNumber()) {
 					pro.setStock(stock - gwOrderdetail.getNumber());
+				} else {
+					return 0;
 				}
-				
+				if (pro.getStock() <= warnstock) {
+					WechatWarn.Warn(order.getCompanyName(), pro.getProname(), pro.getStock());
+				}
 				Long pid = pro.getPid();				
 				GwProduct product = productMapper.selectByPrimaryKey(pid);
 				
