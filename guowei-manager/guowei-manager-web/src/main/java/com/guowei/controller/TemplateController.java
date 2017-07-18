@@ -21,9 +21,11 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwTemplate;
 import com.guowei.pojo.GwTemplateproduct;
+import com.guowei.service.CompanyService;
 import com.guowei.service.ProductService;
 import com.guowei.service.TemplateService;
 import com.guowei.service.TemplateproductService;
@@ -41,6 +43,9 @@ public class TemplateController {
 	
 	@Resource
 	private TemplateService templateService;
+	
+	@Resource
+	private CompanyService companyService;
 	
 	@Resource
 	private ProductService productService;
@@ -134,11 +139,14 @@ public class TemplateController {
 	@RequestMapping(value = "/template/addProData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String addProData(HttpServletRequest request, ModelMap model) {
+		Long tid = Long.parseLong(request.getParameter("tid"));
+		Long pid = Long.parseLong(request.getParameter("pid"));
 		GwTemplateproduct template = new GwTemplateproduct();
-		template.setTid(Long.parseLong(request.getParameter("tid")));
-		template.setPid(Long.parseLong(request.getParameter("pid")));
+		
+		template.setTid(tid);
+		template.setPid(pid);
 		template.setWarnstock(Integer.parseInt(request.getParameter("warnstock")));
-		GwProduct pro = productService.getGwProductById(Long.parseLong(request.getParameter("pid")));
+		GwProduct pro = productService.getGwProductById(pid);
 		
 		template.setSellprice(pro.getPrice());
 		template.setStock(Integer.parseInt(request.getParameter("stock")));
@@ -158,7 +166,7 @@ public class TemplateController {
 	}
 	
 	/**
-	 * 模板商品添加
+	 * 模板商品删除
 	 * @param template
 	 * @param model
 	 * @return
@@ -166,12 +174,13 @@ public class TemplateController {
 	@RequestMapping(value = "/template/deleteProData", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String deleteProData(HttpServletRequest request, ModelMap model) {
-		int result = templateproductService.removeGwTemplateproduct(Long.parseLong(request.getParameter("id")));
-		if (result == 1) {		
-			model.addAttribute("result", result);
+		Long tpid = Long.parseLong(request.getParameter("id"));
+		int status = templateproductService.removeGwTemplateproduct(tpid);
+		if (status == 1) {		
+			model.addAttribute("result", status);
 			log.info(Constants.SYS_NAME + "模板商品： 删除成功!");
 		}
-		MessageView msg = new MessageView(result);
+		MessageView msg = new MessageView(status);
 		return JSON.toJSONString(msg);
 	}
 	
@@ -206,8 +215,21 @@ public class TemplateController {
 	@RequestMapping(value = "/template/del/{id}", method = RequestMethod.DELETE, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String delete(@PathVariable("id") long id, Model model) {
-		int status = templateService.removeGwTemplate(id);
-		MessageView msg = new MessageView(status);
+		GwCompany company = new GwCompany();
+		company.setCompanyName("");
+		company.setTemplateId(id);
+		DatatablesView data = companyService.getGwCompanysByParam(company);
+		int status = 0;
+		MessageView msg = null;
+		if (data != null && data.getData() != null && data.getData().size() > 0) {
+			//模板存在公司选用，不允许删除
+			status = 0;
+			msg = new MessageView(status, "模板存在公司选用，不允许删除");
+		} else {
+			status = templateService.removeGwTemplate(id);
+			msg = new MessageView(status);
+		}
+		
 		return JSON.toJSONString(msg);
 	}
 	

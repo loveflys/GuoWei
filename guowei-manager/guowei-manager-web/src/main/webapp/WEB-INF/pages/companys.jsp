@@ -21,6 +21,13 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 		<link rel="stylesheet" href="<%=path%>/res/address.css">
 		<style type="text/css">
+		    th {
+		      text-align: center;
+		    }
+		    td {
+		        vertical-align: middle !important;
+		        text-align: center;
+		    }
 			.modal-dialog { 
 				position: absolute; 
 				top: 0; 
@@ -312,38 +319,148 @@
         </div>
         
         
-        <!-- ManagerCompany -->
-        <div class="modal fade" id="managerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" >
-                <div class="modal-content">
-                
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message code="sys.close" /></span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel"><sp:message code="company.info"/>-<sp:message code="sys.manager"/></h4>
-                    </div>
-                    
-                    <div class="modal-body" >
-                        <form class="form-horizontal"  id="managerForm" action="<%=path%>/company/changeTemplate" method="post">
-                            <input type="hidden" class="form-control" name="id">
-                            <input type="hidden" class="form-control" name="templateId">
-                            <div class="form-group">
-			                  <label>选择模板</label>
-			                  <select class="form-control" name="templateId" id="template_container"  onchange="changeTemplate(this.options[this.options.selectedIndex].value)">
+        <!-- ManagerTemplate -->
+    <div class="modal fade" id="managerModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-			                  </select>
-			                </div>
-                        </form>
-                    </div>
-                    <!-- modal-body END -->
-                    
-                    <div class="modal-footer">
-                        <button id="btn-managersubmit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only"><sp:message
+                                code="sys.close" /></span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <sp:message code="template.info" />
+                        -
+                        <sp:message code="sys.manager" />
+                    </h4>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" name="id">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab_1" data-toggle="tab"
+                                        aria-expanded="true">第一层货架</a></li>
+                                    <li class=""><a href="#tab_2" data-toggle="tab"
+                                        aria-expanded="false">第二层货架</a></li>
+                                    <li class=""><a href="#tab_3" data-toggle="tab"
+                                        aria-expanded="false">第三层货架</a></li>
+                                    <li class=""><a href="#tab_4" data-toggle="tab"
+                                        aria-expanded="false">第四层货架</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">第一层货架商品</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="firstSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_2">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">第二层货架商品</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="secondSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_3">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">第三层货架商品</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="thirdSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_4">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">第四层货架商品</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="forthSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <!-- modal-body END -->
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#myModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">商品补货</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>当前库存: <span id="now_stock"></span></p>
+                        <div class="form-group">                                                        
+                            <label for="inputName" class="col-sm-3 control-label">补货数量</label>
+                            <div class="col-sm-9">
+                                <input id="stock" type="number" class="form-control">
+                            </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="$('#myModal').modal('hide')">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="addCPStock()">确定</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
         <script type="template" id="template_tpl">
             [[ for(var i=0; i< data.length; i++){ var item=data[i] ]]
                 [[ if (item.id == tid) { ]]
@@ -393,18 +510,47 @@
                 </ul>
             </div>
         </script>
+        <script type="template" id="selectproList_tpl">
+            <tr>
+                <th>图片</th>
+                <th>名称</th>
+                <th>价格</th>
+                <th>库存</th>
+                <th>库存提醒</th>
+                <th>补货</th>
+            </tr>
+            [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+                <tr>
+                    <td>
+                        <img src="{{item.proimage}}" width="50px" height="50px" />
+                    </td>
+                    <td>{{item.proname}}</td>
+                    <td><span class="badge bg-red">￥{{item.proprice}}</span></td>
+                    <td>{{item.stock}}</td>
+                    <td>{{item.warnstock}}</td>
+                    <td onclick="showCPStock({{item.companyId}}, {{item.id}}, {{item.pid}}, {{item.stock}})"><i class="fa fa-plus-square"></i></td>
+                </tr>        
+            [[ } ]]
+        </script>
 		<!-- page script -->
 		<script>
 		window.param = {
 				id: '',
 				templateId: '',
+				pid: '',
+				cpid: '',
 				mid: '',
 				area: {
 					name: '',
 					id: ''
 				},
+				allstock: 0,
 				province: [],
-				addr: []
+				addr: [],
+				firstProList: [],
+                secondProList: [],
+                thirdProList: [],
+                forthProList: [],
 		  }
 			$(function () {
 				_.templateSettings = {
@@ -482,6 +628,7 @@
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
 		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
+		                    				"<button id='managerRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-gears'></i></button>"+
 		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
 		                }
 	                ],
@@ -598,6 +745,15 @@
 					$("#editModal").modal("show");					
 		        });
 	          	
+				//管理 Model
+                $('#dataTable tbody').on( 'click', '#managerRow', function () {
+                    var data = tables.api().row($(this).parents('tr')).data();
+                    $("#managerRow input[name=id]").val(data.id);
+                    window.param.id = data.id;
+                    getData();                    
+                    $("#managerModal").modal("show");                    
+                });
+	          	
 				$("#btn-submit").on("click", function(){
 					var url = "<%=path%>/company/update";
 	          		$.ajax({
@@ -672,6 +828,110 @@
 		            }
 		        });
 			});
+		function getData() {
+			window.param.firstProList = [];
+            window.param.secondProList = [];
+            window.param.thirdProList = [];
+            window.param.forthProList = [];
+	        var id = window.param.id;
+	        $.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/company/getProData",
+                data: {
+                    id: window.param.id
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(resp) {
+                    console.log(JSON.stringify(resp.data));
+                    for(var item of resp.data) {
+                        if (item.storageracks == 1) {
+                            window.param.firstProList.push(item);
+                        } else if (item.storageracks == 2) {
+                            window.param.secondProList.push(item);
+                        } else if (item.storageracks == 3) {
+                            window.param.thirdProList.push(item);
+                        } else {
+                            window.param.forthProList.push(item);
+                        }
+                    }
+                    _.templateSettings = {
+                        evaluate    : /\[\[(.+?)\]\]/g,
+                        interpolate : /\{\{(.+?)\}\}/g
+                    };
+                    bindData();
+                }
+            });
+	    }
+	            function bindData() {	                
+	                $("#firstSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+	                    "data": window.param.firstProList,
+	                    "huojia": 1,
+	                }));
+	                $("#secondSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+	                    "data": window.param.secondProList,
+	                    "huojia": "2",
+	                }));
+	                $("#thirdSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+	                    "data": window.param.thirdProList,
+	                    "huojia": "3",
+	                }));
+	                $("#forthSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+	                    "data": window.param.forthProList,
+	                    "huojia": "4",
+	                }));
+	            }
+	            function showCPStock (id, cpid, pid, stock) {
+	            	window.param.id = id;
+	            	window.param.cpid = cpid;
+	            	window.param.pid = pid;
+	            	$.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/product/getDetail",
+                        data: {
+                            id: pid
+                        },
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(resp) {
+                        	window.param.allstock = resp.stock;
+                            $("#now_stock").html(resp.stock);
+                            $('#myModal').modal('show');
+                        }
+                    });
+	            }
+	            function addCPStock () {
+	            	var stock = Number($("#stock").val());
+                    var allstock = Number(window.param.allstock);
+                    if(allstock < stock) {
+                        toastr.error("库存不足，无法进行补货");
+                        return;
+                    }
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/company/changePro",
+                        data: {
+                            id: window.param.cpid,
+                            addstock: $("#stock").val()
+                        },
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(resp) {
+                            toastr.success("<sp:message code='sys.oper.success'/>");
+                            getData();
+                            $("#myModal").modal('hide');
+                        }
+                    });
+	            }
 		    function selectArea (id, name) {
 		    	$("input[name=did]").val(id);
 		    	$(".selected-area").html(name + '<span class="caret"></span>');

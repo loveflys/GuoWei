@@ -71,6 +71,14 @@ public class ProductController {
 		return data;
 	}
 	
+	@RequestMapping(value="/product/getDetail", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getDetail(HttpServletRequest request, Long id) {
+		GwProduct pro = productService.getGwProductById(id);
+		String data = JSON.toJSONString(pro);
+		return data;
+	}
+	
 	/**
 	 * 进货
 	 * @param request

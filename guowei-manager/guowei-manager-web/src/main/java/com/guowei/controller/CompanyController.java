@@ -233,6 +233,23 @@ public class CompanyController {
 		return JSON.toJSONString(msg);
 	}
 	
+	@RequestMapping(value = "/company/changePro", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String changePro(HttpServletRequest request) {
+		//公司产品id
+		Long id = Long.parseLong(request.getParameter("id"));
+		Integer addstock = Integer.parseInt(request.getParameter("addstock"));
+		MessageView msg = null;
+		int res = companyproductService.addCompanyProductStock(id, addstock);
+		if (res == 1) {
+			log.info(Constants.SYS_NAME + "公司：修改成功!");
+			msg = new MessageView(res);
+		} else {
+			msg = new MessageView(res, "系统出错，请稍后再试。");
+		}
+		return JSON.toJSONString(msg);
+	}
+	
 	/**
 	 * 公司删除
 	 * @param id

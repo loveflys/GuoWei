@@ -4,6 +4,7 @@ E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\Constants.
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\DatatablesView.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\DatatablesView.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\HttpHelper.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\WechatWarn.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\BaseEntity.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\WeiXinOAuth.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\MD5.java
@@ -16,5 +17,6 @@ E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\AccessToken
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\PaySendData.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\QiniuTokenEntity.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\Constant.java
+E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\pojo\ProductEntity.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\MessageView.java
 E:\project\GuoWei\guowei-common\src\main\java\com\guowei\common\utils\PayUtils.java

@@ -213,6 +213,9 @@ public class CompanyServiceImpl implements CompanyService {
 			criteria.andCompanyNameLike(company.getCompanyName());
 			gme.or(gme.createCriteria().andCompanyContactphoneLike(company.getCompanyName()));
 		}
+		if (!"".equals(company.getTemplateId())) {
+			criteria.andTemplateIdEqualTo(company.getTemplateId());
+		}
 		List<GwCompany> list = companyMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);
