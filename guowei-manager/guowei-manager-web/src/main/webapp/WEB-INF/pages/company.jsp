@@ -321,7 +321,7 @@
                                    <i class="fa fa-minus-circle"></i>
                                 </a>
                                 <span class="number">{{item.number}}</span>
-                                <a class="plus" onclick="addtoCart('{{item.id}}')">
+                                <a class="plus" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')">
                                    <i class="fa fa-plus-circle"></i>
                                 </a>
                             </div>
@@ -339,11 +339,13 @@
                 [[if(data[1]&&data[1].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
+                            [[if(item.stock>0){ ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
+                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -357,11 +359,13 @@
                 [[if(data[2]&&data[2].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
+                            [[if(item.stock>0){ ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
+                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -376,11 +380,13 @@
                 [[if(data[3]&&data[3].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
+                            [[if(item.stock>0){ ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
+                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -395,11 +401,13 @@
                 [[if(data[4]&&data[4].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}')"> 
+                            [[if(item.stock>0){ ]]
+                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
+                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -513,12 +521,22 @@
         		}
         		amount += e.number * e.proprice;
         	});
+        	if (item && item.number > item.stock) {
+        		console.log(item.number, item.stock)
+        		swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
+        		item.number = item.stock;
+                return false;
+        	}
         	if (!has) {
         		window.param.all.map((e)=> {
                     if (e.id == id) {
                         item = e;
                     }
                 });
+        		if (item.stock <= 0) {
+                    swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
+                    return;
+                }
         		item.number = 1;
         		window.param.cart.push(item);
         		amount += item.proprice;        		
@@ -597,9 +615,12 @@
                     toastr.error("Server Connection Error...");
                 },
                 success: function(res) {
-                    window.param.all = res.data;
-                    var list = _.groupBy(res.data, 'storageracks');
-                    bindData(list);
+                    if (res.status) {
+                    	//调用微信支付
+                    	
+                    } else {
+                    	 swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
+                    }
                 }
             });
         }

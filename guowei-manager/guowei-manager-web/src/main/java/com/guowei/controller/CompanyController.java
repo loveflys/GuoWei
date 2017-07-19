@@ -1,5 +1,6 @@
 package com.guowei.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.common.utils.WechatWarn;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyTemp;
 import com.guowei.pojo.GwCompanyproduct;

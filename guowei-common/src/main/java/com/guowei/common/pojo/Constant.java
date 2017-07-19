@@ -4,12 +4,22 @@ public class Constant {
 	/**
 	 * 公众号AppId
 	 */
-	public static final String APP_ID = "wx2bef02f0ed84edfc";
+	public static final String APP_ID = "wx8563cf7cd5154a95";
+	
+	/**
+	 * 管理员openid
+	 */
+	public static final String MANAGER_OPENID = "opD421XGWhBtUfhi1ej4W5SPPz3M";
+	
+	/**
+	 * 消息模板id
+	 */
+	public static final String MSG_ID = "MfWQ9I1F9bbxDhLiPisglyDPAcdq8pmBLT5yEVxPSkc";
 
 	/**
 	 * 公众号AppSecret
 	 */
-	public static final String APP_SECRET = "b1bf509d51b9c285cb55bc212c7ece97";
+	public static final String APP_SECRET = "88bb05c605de839c2fc6f29eed7bcce0";
 
 	/**
 	 * 微信支付商户号
@@ -50,6 +60,11 @@ public class Constant {
 	 * 微信申请退款url
 	 */
 	public static final String REFUND_URL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+	
+	/**
+	 * 微信发送模板消息url
+	 */
+	public static final String SENDMSG_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send";
 
 	/**
 	 * 微信支付通知url

@@ -436,6 +436,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
+                    </div>
+                </div>
                 <!-- modal-body END -->
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -457,6 +460,26 @@
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" onclick="$('#myModal').modal('hide')">关闭</button>
                         <button type="button" class="btn btn-primary" onclick="addCPStock()">确定</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#showModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"><span id="showModalcompanyName"></span> -- 公司扫码二维码</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">                                                        
+                            <div id="show-qrcode" style="display: flex;align-items: center;justify-content: center;"></div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="$('#showModal').modal('hide')">关闭</button>
                       </div>
                     </div>
                   </div>
@@ -627,9 +650,10 @@
 		                    targets: -1,//编辑
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
-		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='managerRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-gears'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
+		                                    "<button id='showRow' class='btn btn-primary btn-sm' title='查看二维码' type='button'><i class='fa fa-eye'></i></button>"+
+		                    				"<button id='editRow' class='btn btn-primary btn-sm' title='编辑' type='button'><i class='fa fa-edit'></i></button>"+
+		                    				"<button id='managerRow' class='btn btn-primary btn-sm' title='管理公司产品' type='button'><i class='fa fa-gears'></i></button>"+
+		                    				"<button id='delRow' class='btn btn-primary btn-sm' title='删除公司' type='button'><i class='fa fa-trash-o'></i></button></div>"
 		                }
 	                ],
 	              	//每加载完一行的回调函数
@@ -640,7 +664,7 @@
 	                },
 			        initComplete: function (setting, json) {
 	                	//初始化完成之后替换原先的搜索框。
-	                	console.log("初始化完成")
+	                	console.log("初始化完成");
 	                },
 	              	//在每次table被draw完后调用
 	                fnDrawCallback: function(){
@@ -750,8 +774,17 @@
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("#managerRow input[name=id]").val(data.id);
                     window.param.id = data.id;
-                    getData();                    
+                    getData(); 
                     $("#managerModal").modal("show");                    
+                });
+				
+                $('#dataTable tbody').on( 'click', '#showRow', function () {
+                    var data = tables.api().row($(this).parents('tr')).data();
+                    $("#showModalcompanyName").text(data.companyName);
+                    var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8563cf7cd5154a95&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fapi%2Foauth&response_type=code&scope=snsapi_userinfo&state=company%2F"+ data.id +"#wechat_redirect"; //任意内容 ；
+                    $("#show-qrcode").empty();
+                    $("#show-qrcode").qrcode(url);
+                    $('#showModal').modal('show');                
                 });
 	          	
 				$("#btn-submit").on("click", function(){
@@ -1098,6 +1131,7 @@
 		<script src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 		<!-- Slimscroll -->
 		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+		<script src="<%=path%>/res/jquery.qrcode.min.js"></script>
 		<!-- FastClick -->
 		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
 		<!-- AdminLTE App -->

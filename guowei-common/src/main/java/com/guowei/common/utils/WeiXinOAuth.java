@@ -36,6 +36,20 @@ public class WeiXinOAuth
 		JSONObject result = HttpHelper.httpRequest(url);		
 		return result;
 	}
+	
+	public static JSONObject GetWeiXinAccessToken(String appId,String appSecret)
+	{
+		String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appId+"&secret="+appSecret;
+		JSONObject result = HttpHelper.httpRequest(url);		
+		return result;
+	}
+	
+	public static JSONObject SendTemplateMsg(String actoken,String params)
+	{
+		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+actoken;
+		JSONObject result = HttpHelper.httpPost(url, params);		
+		return result;
+	}
 	/// <summary>
 	/// 拉取用户信息
 	/// </summary>

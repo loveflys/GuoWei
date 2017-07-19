@@ -1,4 +1,5 @@
 package com.guowei.service;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +24,7 @@ public interface OrderService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int addGwOrder(GwOrder order);
 	
-	int createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail);
+	int createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) throws UnsupportedEncodingException;
 
 	int editGwOrder(GwOrder order);
 	

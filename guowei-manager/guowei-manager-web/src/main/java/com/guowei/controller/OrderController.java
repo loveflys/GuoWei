@@ -1,5 +1,6 @@
 package com.guowei.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -143,12 +144,18 @@ public class OrderController {
 		order.setStatus(Byte.parseByte("1"));
 		order.setCreated(now);
 		order.setAmount(amount);
-		int result = orderService.createGwOrder(order, orderdetails);
+		int result = 0;
+		try {
+			result = orderService.createGwOrder(order, orderdetails);
+		} catch (UnsupportedEncodingException e) {
+			
+		}
 		if (result == 1) {		
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "订单： 添加成功!");
 		}
-		return "register";
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	/**

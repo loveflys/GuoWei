@@ -1,5 +1,6 @@
 package com.guowei.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 		return res;
 	}
 	@Override
-	public int createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) {
+	public int createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) throws UnsupportedEncodingException {
 		int res1 = orderMapper.insert(order);
 		
 		int addDetail = 1;
