@@ -80,12 +80,6 @@ public class OrderServiceImpl implements OrderService {
 				
 				int allsellcount = product.getAllsellcount();
 				product.setAllsellcount(allsellcount + gwOrderdetail.getNumber());
-				int productstock = product.getStock();
-				if (stock >= gwOrderdetail.getNumber()) {
-					product.setStock(productstock - gwOrderdetail.getNumber());
-				} else {
-					return 0;
-				}
 				int changeStock = 0;
 				int changeCPStock = 0;
 				changeStock = productMapper.updateByPrimaryKey(product);
