@@ -1205,9 +1205,9 @@ input[type="time"] {
 	border-bottom: 0;
 }
 .aui-list-view.aui-grid-view .aui-list-view-cell .aui-img-object {
-	width: 100%;
-	max-width: 100%;
-	height: auto;
+	width: 100px;
+	max-width: 100px;
+	height: 100px;
 }
 .aui-list-view.aui-grid-view .aui-list-view-cell .aui-img-body {
 	font-size: 14px;

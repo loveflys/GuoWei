@@ -168,22 +168,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                            	<table class="table table-striped table-bordered table-hover table-condensed" align="center">
-									<thead>
-										<tr class="info">
-											<!-- <td><input type="checkbox" id="checkAll"></td> -->
-											<th>商品图片></th>
-											<th>商品名称></th>
-											<th>商品价格</th>
-											<th>购买数量</th>
-										</tr>
-									</thead>
-									<tbody id="orderdetail_container">
-										
-									</tbody>
-								</table>
-                            </div>
-                            <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.amount"/></label>
                                 <div class="col-sm-9">
                                     <input type="number" class="form-control" name="amount" readonly="readonly">
@@ -202,6 +186,22 @@
 									<input type="date" class="form-control" name="created" readonly="readonly">
 								</div>
 							</div>
+                            <div class="col-xs-12">
+                            	<table class="table table-striped table-bordered table-hover table-condensed" align="center">
+									<thead>
+										<tr class="info">
+											<!-- <td><input type="checkbox" id="checkAll"></td> -->
+											<th>商品图片</th>
+											<th>商品名称</th>
+											<th>商品价格</th>
+											<th>购买数量</th>
+										</tr>
+									</thead>
+									<tbody id="orderdetail_container">
+										
+									</tbody>
+								</table>
+                            </div>
 						</form>
 					</div>
 				</div>
@@ -215,7 +215,7 @@
           </td>
           <td>{{item.pname}}</td>
           <td><span class="badge bg-red">￥{{item.price}}</span></td>
-          <td>{{item.number}}></td>
+          <td>{{item.number}}</td>
         </tr>        
         [[ } ]]
 		</script>
