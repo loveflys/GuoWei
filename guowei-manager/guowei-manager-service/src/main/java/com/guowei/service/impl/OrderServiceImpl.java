@@ -75,7 +75,6 @@ public class OrderServiceImpl implements OrderService {
 				if (pro.getStock() <= warnstock) {
 					WechatWarn.Warn(order.getCompanyName(), pro.getProname(), pro.getStock());
 				}
-				int changeStock = 0;
 				Long pid = pro.getPid();				
 				GwProduct product = productMapper.selectByPrimaryKey(pid);
 				
@@ -87,9 +86,12 @@ public class OrderServiceImpl implements OrderService {
 				} else {
 					return 0;
 				}
+				int changeStock = 0;
+				int changeCPStock = 0;
 				changeStock = productMapper.updateByPrimaryKey(product);
+				changeCPStock = companyproductMapper.updateByPrimaryKey(pro);
 				int temp = orderdetailMapper.insert(gwOrderdetail);
-				if (temp != 1 || changeStock != 1) {
+				if (temp != 1 || changeStock != 1 || changeCPStock != 1) {
 					addDetail = 0;
 				}			
 			}		
