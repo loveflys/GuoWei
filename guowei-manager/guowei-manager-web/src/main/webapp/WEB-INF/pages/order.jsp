@@ -21,6 +21,13 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 		
 		<style type="text/css">
+			th {
+		      text-align: center;
+		    }
+		    td {
+		        vertical-align: middle !important;
+		        text-align: center;
+		    }
 			.modal-dialog { 
 				position: absolute; 
 				top: 0; 
@@ -267,10 +274,14 @@
 	               		{"data": 'uname'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
 	                    {"data": 'companyName', defaultContent: ""},
 	                    {"data": 'amount', defaultContent: ""},
-  	                    {"data": 'status', defaultContent: ""},
+  	                    {"data": 'status', 
+	                    	"render":function(data,type,full,callback) {
+  	                    		return data == 1?'待支付':(data == 2?'支付成功':'支付失败');
+	                    	}
+  	                    },
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
-  	                    		return moment(data).format('YYYY-MM-DD') 
+  	                    		return moment(data).format('YYYY-MM-DD');
 	                    	}
 	               		},
   	                  	{"data": null,"width":"60px"}
