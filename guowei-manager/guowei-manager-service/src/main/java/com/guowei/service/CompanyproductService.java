@@ -21,5 +21,5 @@ public interface CompanyproductService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int removeGwCompanyproduct(long id);
 	
-	int addCompanyProductStock(long id, int addstock);
+	int addCompanyProductStock(long id, int addstock, Long mid);
 }

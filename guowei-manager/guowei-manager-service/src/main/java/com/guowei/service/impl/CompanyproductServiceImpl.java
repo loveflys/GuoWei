@@ -1,5 +1,6 @@
 package com.guowei.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.mapper.GwCompanyprochangeMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwProductMapper;
+import com.guowei.pojo.GwCompanyprochange;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwCompanyproductExample;
 import com.guowei.pojo.GwCompanyproductExample.Criteria;
@@ -29,6 +32,8 @@ import com.guowei.service.CompanyproductService;
 public class CompanyproductServiceImpl implements CompanyproductService {
 	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
+	@Autowired
+	private GwCompanyprochangeMapper companyproductchangeMapper;
 	@Autowired
 	private GwProductMapper productMapper;
 	@Override
@@ -90,10 +95,11 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 		return result;
 	}
 	@Override
-	public int addCompanyProductStock(long id, int addstock) {
+	public int addCompanyProductStock(long id, int addstock, Long mid) {
 		GwCompanyproduct cp = companyproductMapper.selectByPrimaryKey(id);
 		int res = 0;
 		int update = 1;
+		int insertRecord = 1;
 		if (cp != null) {
 			cp.setStock(cp.getStock() + addstock);
 			res = companyproductMapper.updateByPrimaryKey(cp);	
@@ -101,7 +107,13 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 			pro.setStock(pro.getStock() - addstock);
 			pro.setDistribute(pro.getDistribute() + addstock);
 			update = productMapper.updateByPrimaryKey(pro);
+			GwCompanyprochange changed = new GwCompanyprochange();
+			changed.setCpid(id);
+			changed.setCreated(Calendar.getInstance().getTime());
+			changed.setMid(mid);
+			changed.setNumber(addstock);
+			insertRecord = companyproductchangeMapper.insert(changed);
 		}
-		return (res == 1 && update == 1)?1:0;
+		return (res == 1 && update == 1 && insertRecord == 1)?1:0;
 	}
 }

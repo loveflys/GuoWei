@@ -27,6 +27,7 @@ import com.guowei.common.utils.WechatWarn;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyTemp;
 import com.guowei.pojo.GwCompanyproduct;
+import com.guowei.pojo.GwManager;
 import com.guowei.pojo.GwTemplateproduct;
 import com.guowei.pojo.GwUser;
 import com.guowei.service.CompanyService;
@@ -238,11 +239,12 @@ public class CompanyController {
 	@RequestMapping(value = "/company/changePro", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String changePro(HttpServletRequest request) {
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
 		//公司产品id
 		Long id = Long.parseLong(request.getParameter("id"));
 		Integer addstock = Integer.parseInt(request.getParameter("addstock"));
 		MessageView msg = null;
-		int res = companyproductService.addCompanyProductStock(id, addstock);
+		int res = companyproductService.addCompanyProductStock(id, addstock, manager.getId());
 		if (res == 1) {
 			log.info(Constants.SYS_NAME + "公司：修改成功!");
 			msg = new MessageView(res);
