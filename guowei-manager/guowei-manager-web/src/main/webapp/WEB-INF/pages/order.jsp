@@ -172,25 +172,14 @@
 									<thead>
 										<tr class="info">
 											<!-- <td><input type="checkbox" id="checkAll"></td> -->
-											<th><sp:message code="sys.no"/></th>
-											<th><sp:message code="order.uname"/></th>
-											<th><sp:message code="order.company"/></th>
-											<th><sp:message code="order.amount"/></th>
-											<th><sp:message code="order.status"/></th>												
-											<th><sp:message code="order.time"/></th>
-											<th><sp:message code="sys.oper"/></th>
+											<th>商品图片></th>
+											<th>商品名称></th>
+											<th>商品价格</th>
+											<th>购买数量</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>测试</td>
-											<td>测试</td>
-											<td>测试</td>
-											<td>测试</td>
-											<td>测试</td>
-											<td>测试</td>
-											<td>测试</td>	
-										</tr>
+									<tbody id="orderdetail_container">
+										
 									</tbody>
 								</table>
                             </div>
@@ -218,9 +207,24 @@
 				</div>
 			</div>
 		</div>
-	
+		<script type="template" id="orderDetail_tpl">
+		[[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+        <tr>
+          <td>
+            <img src="{{item.pimg}}" width="50px" height="50px" />
+          </td>
+          <td>{{item.pname}}</td>
+          <td><span class="badge bg-red">￥{{item.price}}</span></td>
+          <td>{{item.number}}></td>
+        </tr>        
+        [[ } ]]
+		</script>
 		<!-- page script -->
 		<script>
+		window.param = {
+				id:'',
+				orderDetail: []
+		}
 			$(function () {
 				
 				//页面消息处理
@@ -371,6 +375,8 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
+					window.param.id = data.id;
+                    getData();
 					$("input[name=uname]").val(data.uname);
 					$("input[name=companyName]").val(data.companyName);
 					$("input[name=amount]").val(data.amount);
@@ -435,6 +441,34 @@
 		            }
 		        });
 			});
+		
+			function getData() {
+				$.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "<%=path%>/template/getProData",
+                    data: {
+                        tid: window.param.id
+                    },
+                    async: false,
+                    error: function(request) {
+                        toastr.error("Server Connection Error...");
+                    },
+                    success: function(res) {
+                        window.param.orderDetail -res.data;
+                        _.templateSettings = {
+                            evaluate    : /\[\[(.+?)\]\]/g,
+                            interpolate : /\{\{(.+?)\}\}/g
+                        };
+                        bindData();
+                    }
+                });     
+			}
+			function bindData() {
+            	$("#orderdetail_container").html(_.template($("#orderDetail_tpl").html())({
+                    "data": window.param.orderDetail
+                }));
+			}
 		</script>
 	
 		<!-- jQuery UI 1.11.4 -->
@@ -463,6 +497,7 @@
 		<script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
 		<script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
+		<script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
 		<!-- AdminLTE App -->
 		<script src="<%=path%>/res/dist/js/app.min.js"></script>
 		<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
