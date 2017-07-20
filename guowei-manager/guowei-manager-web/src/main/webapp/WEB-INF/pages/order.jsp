@@ -168,6 +168,33 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                            	<table class="table table-striped table-bordered table-hover table-condensed" align="center">
+									<thead>
+										<tr class="info">
+											<!-- <td><input type="checkbox" id="checkAll"></td> -->
+											<th><sp:message code="sys.no"/></th>
+											<th><sp:message code="order.uname"/></th>
+											<th><sp:message code="order.company"/></th>
+											<th><sp:message code="order.amount"/></th>
+											<th><sp:message code="order.status"/></th>												
+											<th><sp:message code="order.time"/></th>
+											<th><sp:message code="sys.oper"/></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>测试</td>
+											<td>测试</td>
+											<td>测试</td>
+											<td>测试</td>
+											<td>测试</td>
+											<td>测试</td>
+											<td>测试</td>	
+										</tr>
+									</tbody>
+								</table>
+                            </div>
+                            <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="order.amount"/></label>
                                 <div class="col-sm-9">
                                     <input type="number" class="form-control" name="amount" readonly="readonly">
