@@ -446,16 +446,16 @@
 				$.ajax({
                     cache: false,
                     type: "POST",
-                    url: "<%=path%>/template/getProData",
+                    url: "<%=path%>/order/getdetail",
                     data: {
-                        tid: window.param.id
+                        id: window.param.id
                     },
                     async: false,
                     error: function(request) {
                         toastr.error("Server Connection Error...");
                     },
                     success: function(res) {
-                        window.param.orderDetail -res.data;
+                        window.param.orderDetail = res.data;
                         _.templateSettings = {
                             evaluate    : /\[\[(.+?)\]\]/g,
                             interpolate : /\{\{(.+?)\}\}/g

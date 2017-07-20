@@ -340,7 +340,7 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -360,7 +360,7 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -381,7 +381,7 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -402,7 +402,7 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-4" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -617,7 +617,7 @@
                 success: function(res) {
                     if (res.status) {
                     	//调用微信支付
-                    	
+                    	swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
                     } else {
                     	 swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
                     }

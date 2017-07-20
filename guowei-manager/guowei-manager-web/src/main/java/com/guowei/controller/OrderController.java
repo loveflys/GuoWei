@@ -178,6 +178,16 @@ public class OrderController {
 		return JSON.toJSONString(msg);
 	}
 	
+	@RequestMapping(value = "/order/getdetail", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getdetail(HttpServletRequest request) {
+		System.out.println(request.getParameter("id"));
+		Long id = Long.parseLong(request.getParameter("id"));
+		DatatablesView dataTable = orderService.getGwOrderDetailsByParam(id);
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
 	/**
 	 * 订单删除
 	 * @param id

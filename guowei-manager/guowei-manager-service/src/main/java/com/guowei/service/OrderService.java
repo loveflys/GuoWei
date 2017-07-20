@@ -21,6 +21,9 @@ public interface OrderService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize);
 	
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	DatatablesView<?> getGwOrderDetailsByParam(Long id);
+	
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int addGwOrder(GwOrder order);
 	

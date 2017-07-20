@@ -156,4 +156,17 @@ public class OrderServiceImpl implements OrderService {
 		result.setRecordsTotal(list.size());
 		return result;
 	}
+	@Override
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	public DatatablesView<?> getGwOrderDetailsByParam(Long id) {
+		// TODO Auto-generated method stub
+		GwOrderdetailExample gme = new GwOrderdetailExample();
+		com.guowei.pojo.GwOrderdetailExample.Criteria criteria = gme.createCriteria();
+		criteria.andOidEqualTo(id);
+		List<GwOrderdetail> list = orderdetailMapper.selectByExample(gme);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal(list.size());
+		return result;
+	}
 }
