@@ -55,8 +55,7 @@
                 <ul>
                     <a href="index.html"><li>首页</li></a>
                     <a href="#about"><li>关于我们</li></a>
-                    <a href="#expertise"><li>公司诞生</li></a>
-                    <a href="#team"><li>公司团队</li></a>
+                    <a href="#expertise"><li>核心业务</li></a>
                     <a href="#contact"><li>联系我们</li></a>
                 </ul>
             </div>
@@ -89,7 +88,8 @@
                         <div class="intro-box">
                             <div class="intro">
                                 <h1>微妙</h1>
-                                <p>一阵美食风席卷办公室，我们把超市建在了您身边，美味瞬间触手可得！</p>
+                                <!-- <p>一阵美食风席卷办公室，我们把超市建在了您身边，美味瞬间触手可得！</p> -->
+                                <p>互联网+解决方案综合提供商</p>
                                 <a class="btn vira-btn" href="#contact">联系我们</a>
                             </div>
                         </div>
@@ -101,9 +101,12 @@
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2">
                             <h2 class="title">关于我们</h2>
-                            <p>
+                            <!-- <p>
                                 微妙隶属于青岛果位网络科技有限公司, 微妙于2017年7月正式上线，主要用户定位为年轻白领人群，是基于办公室消费场景的垂直电商平台。
 微妙商城是一个新锐的零食电商平台，以城市写字楼聚集区域的白领为主要目标人群，以办公室为主要消费场景，推出“一样一点”的办公室零食文化，倡导办公室零食新主张：精致小包装，吃出多花样。
+                            </p> -->
+                            <p>
+                                 青岛果位网络科技有限公司位于风景秀丽的海滨城市青岛，是一家以IT科技服务为核心的高科技企业，专注于企业网站建设、微信平台开发、APP开发、企业管理软件定制开发、企业/家庭IT外包服务等。
                             </p>
                         </div>
                     </div>
@@ -116,70 +119,23 @@
                             <div></div>
                         </div>
                         <div class="col-sm-5 section">
-                            <h2 class="title">微妙诞生</h2>
+                            <h2 class="title">核心业务</h2>
                             <div id="expert-slider" class="owl-carousel">
                                 <div class="item">
                                     <p>
-                                        早上为了赶时间来不及吃早餐，有些人在路上买些带到公司去吃，而有些人连买早餐的时间也没有，只能饿着肚子上班。
-
-    中午因为太忙或开会而错过了饭点，肚子饿得咕咕叫时，点个外卖还要等…
-
-    下午困了，饿了，提不起神，也想吃点东西...
-
-    晚上加班，饿了想吃点小零食垫下肚子，发现办公室什么吃的都没有，又不想晚上点外卖吃那么多…
+                                    作为一个优秀的科技服务企业，我们以“技术至上  服务一流”为企业核心思想，秉承“您的目标，我们的焦点”的经营理念，经过不断的发展壮大，我们已成为应用广泛、实施服务经验丰富的科技服务商。 
+     公司由多年从事软硬件维护开发的技术人员组建， 公司提倡以人为中心的管理思想，实行人性化的管理方式。让员工喜欢工作、享受工作，最终让客户得到专业用心的服务。
+     以技术创新为向导，不虚假宣传、不过度营销。经过多年的努力，我们的客户覆盖政府机关、事业单位及各种大中型企业。
                                     </p>
                                 </div>
                                 <div class="item">
                                     <p>
-                                        微妙，为上班族解决了这些问题。
-
-员工通过扫描货架上的二维码，选购零食，进行支付，即可拿走零食。让员工在上班时间也能方便地购买零食。
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section id="team" class="team section">
-                <div class="container">
-                    <h2 class="title">我们的团队</h2>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="vira-card">
-                                <div class="vira-card-header">
-                                    <img class="img-responsive" src="<%=path%>/res/home/assets/images/cay.jpg">
-                                </div>
-                                <div class="vira-card-content">
-                                    <h3>陈安一</h3>
-                                    <p>
-                                       大帅比 
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="vira-card">
-                                <div class="vira-card-header">
-                                    <img class="img-responsive" src="<%=path%>/res/home/assets/images/9.jpg">
-                                </div>
-                                <div class="vira-card-content">
-                                    <h3>刘晓明</h3>
-                                    <p>
-                                        第三帅
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="vira-card">
-                                <div class="vira-card-header">
-                                    <img class="img-responsive" src="<%=path%>/res/home/assets/images/10.jpg">
-                                </div>
-                                <div class="vira-card-content">
-                                    <h3>韩杰</h3>
-                                    <p>
-                                        第二帅
+                                    多年互联网行业经验
+    从事互联网行业多年，面对市场我们更加了解客户的需求。
+    扎根青岛 本地企业
+    青岛本地实体公司，服务方面与网络上的公司比较具有巨大的优势。
+    专业团队 优质服务
+    我们的成员都是具有多年工作经验的资深人员，追求品质，力求完美。
                                     </p>
                                 </div>
                             </div>
@@ -247,7 +203,20 @@
                 </div>
             </footer>
         </div>
+        <!-- <p>
+                                        早上为了赶时间来不及吃早餐，有些人在路上买些带到公司去吃，而有些人连买早餐的时间也没有，只能饿着肚子上班。
 
+    中午因为太忙或开会而错过了饭点，肚子饿得咕咕叫时，点个外卖还要等…
+
+    下午困了，饿了，提不起神，也想吃点东西...
+
+    晚上加班，饿了想吃点小零食垫下肚子，发现办公室什么吃的都没有，又不想晚上点外卖吃那么多…
+                                    </p> -->
+                                            <!-- <p>
+                                        微妙，为上班族解决了这些问题。
+
+员工通过扫描货架上的二维码，选购零食，进行支付，即可拿走零食。让员工在上班时间也能方便地购买零食。
+                                    </p> -->
         <script src="<%=path%>/res/home/assets/js/jquery-3.1.1.js"></script>
         <script src="<%=path%>/res/home/assets/js/bootstrap.min.js"></script>
         <script src="<%=path%>/res/home/assets/js/owl.carousel.min.js"></script>
