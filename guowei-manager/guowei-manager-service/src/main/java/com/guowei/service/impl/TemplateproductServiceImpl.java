@@ -69,13 +69,15 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 				int insertCP = companyproductMapper.insert(temp);
 				//为商品扣减库存，增加铺货数
 				GwProduct pro = productMapper.selectByPrimaryKey(pid);
-				int updatePro = 1;
+				int updatePro = 0;
 				if (pro != null) {
-					//扣减库存
-					pro.setStock(pro.getStock() - temp.getStock());
-					//增加铺货
-					pro.setDistribute(pro.getDistribute() + temp.getStock());
-					updatePro = productMapper.updateByPrimaryKey(pro);
+					if (pro.getStock() >= temp.getStock()) {
+						//扣减库存
+						pro.setStock(pro.getStock() - temp.getStock());
+						//增加铺货
+						pro.setDistribute(pro.getDistribute() + temp.getStock());
+						updatePro = productMapper.updateByPrimaryKey(pro);
+					}
 				}
 				if (insertCP != 1 || updatePro != 1) {
 					companyRes = 0;
