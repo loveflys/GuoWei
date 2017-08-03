@@ -13,6 +13,20 @@
 <!-- jvectormap -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
 <style type="text/css">
+        .red-point {
+            width: 20px;
+		    height: 20px;
+		    position: absolute;
+		    right: 10px;
+		    top: 10px;
+		    background-color: red;
+		    border-radius: 50%;
+		    color: white;
+		    font-size: 12px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+        }
         .aui-list-view.aui-grid-view .aui-list-view-cell .aui-img-object {
             padding-bottom: 5px;
         }
@@ -340,7 +354,8 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                                <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -360,7 +375,8 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                                <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -381,7 +397,8 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                                <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -402,7 +419,8 @@
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
                             [[if(item.stock>0){ ]]
-                            <li class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                            <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                                <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
@@ -432,10 +450,8 @@
             };       
         	FastClick.attach(document.body);
         	getData();
-        	console.log('123')
         })
         function getData() {
-        	console.log('查询id==>'+${id});
         	$.ajax({
                 cache: false,
                 type: "POST",
@@ -448,11 +464,6 @@
                     toastr.error("Server Connection Error...");
                 },
                 success: function(res) {
-                	console.log("调用接口成功", "返回的数据是==>"+JSON.stringify(res));
-                	console.log(res.data);
-                	for(var i=0; i< res.data.length; i++) {
-                		console.log(res.data[i].proname);
-                	}
                 	window.param.all = res.data;
                 	var list = _.groupBy(res.data, 'storageracks');
                     bindData(list);
@@ -509,7 +520,7 @@
         }
         function addtoCart(id) {
         	var item = null;
-            
+            let number = 0;
         	let has = false;
         	let amount = 0;
         	
@@ -517,14 +528,16 @@
         		if (e.id == id) {
         			item = e;
         			has = true;
-        			e.number++;
+        			number = e.number = e.number+1;
         		}
         		amount += e.number * e.proprice;
         	});
         	if (item && item.number > item.stock) {
-        		console.log(item.number, item.stock)
         		swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
         		item.number = item.stock;
+        		number = item.stock;
+        		$("#point_"+id).show();
+                $("#point_"+id).html(number);
                 return false;
         	}
         	if (!has) {
@@ -538,9 +551,12 @@
                     return;
                 }
         		item.number = 1;
+        		number = 1;
         		window.param.cart.push(item);
         		amount += item.proprice;        		
         	}
+        	$("#point_"+id).show();
+        	$("#point_"+id).html(number);
         	$("#totalAmount").text(amount.toFixed(2));
         	$("#cartnum").attr('attr-quantity', window.param.cart.length);
         	var tpl = $("#cart_tpl").html();
@@ -562,9 +578,13 @@
             for(var i=0,length=window.param.cart.length; i< length; i++) {
             	var e = window.param.cart[i];
             	if (e.id == id) {
-                    e.number--;
+                    e.number = e.number-1;
                     if (e.number == 0) {
                     	$("#cartpro_"+id).remove();
+                    	$("#point_"+id).hide();
+                    } else {
+                    	$("#point_"+id).show();
+                        $("#point_"+id).html(e.number);
                     }
                 }
                 if (e.number > 0) {

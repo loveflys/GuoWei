@@ -1634,7 +1634,7 @@ a.clearhor{ font-size: 14px; color:#595757; }
 .search-leftbar ul li.search-leftbar-cur{border-right: 1px solid #fff; background: #fff; color: #e33a3d;}
 .search-leftbar ul li.search-leftbar-cur a{color: #e33a3d;}
 
-.search-rightbar{ padding-bottom: 10px; -webkit-flex: 1 !important; -webkit-box-flex: 1; word-wrap: break-word; word-break: break-all;height: 100% !important; width: 80%; background: #fff; position: fixed; right: 0;-webkit-overflow-scrolling: touch;}
+.search-rightbar{ padding-bottom: 60px; -webkit-flex: 1 !important; -webkit-box-flex: 1; word-wrap: break-word; word-break: break-all;height: 100% !important; width: 80%; background: #fff; position: fixed; right: 0;-webkit-overflow-scrolling: touch;}
 .no-pic-show{ width: 100%; overflow: hidden;}
 .no-pic-show a{display: block;border-radius:2px; float: left; color:#999; font-size:12px; text-align: center; border:1px solid #ddd; margin: 10px 0 0 10px; padding:10px 20px;word-break: keep-all; white-space: nowrap; text-overflow: ellipsis;}
 
