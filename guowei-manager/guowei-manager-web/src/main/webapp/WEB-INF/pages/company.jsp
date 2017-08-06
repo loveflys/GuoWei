@@ -353,14 +353,12 @@
                 [[if(data[1]&&data[1].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[1].length;j++){ var item = data[1][j]; ]]
-                            [[if(item.stock>0){ ]]
                             <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
-                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -374,14 +372,12 @@
                 [[if(data[2]&&data[2].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[2].length;j++){ var item = data[2][j]; ]]
-                            [[if(item.stock>0){ ]]
                             <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
-                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -396,14 +392,12 @@
                 [[if(data[3]&&data[3].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[3].length;j++){ var item = data[3][j]; ]]
-                            [[if(item.stock>0){ ]]
                             <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
-                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
@@ -418,14 +412,12 @@
                 [[if(data[4]&&data[4].length>0){ ]]
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[4].length;j++){ var item = data[4][j]; ]]
-                            [[if(item.stock>0){ ]]
                             <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
                                 <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
                                 <img class="aui-img-object" src="{{ item.proimage }}"/>
                                 <a class="aui-img-body">{{ item.proname }}</a>
                                 <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
                             </li>
-                            [[ } ]]
                         [[ } ]]
                     </ul>
                 [[ } ]] 
