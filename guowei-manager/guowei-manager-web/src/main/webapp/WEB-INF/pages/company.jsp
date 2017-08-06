@@ -550,7 +550,13 @@
         	$("#point_"+id).show();
         	$("#point_"+id).html(number);
         	$("#totalAmount").text(amount.toFixed(2));
-        	$("#cartnum").attr('attr-quantity', window.param.cart.length);
+        	var tempNum = 0;
+        	if (window.param.cart && window.param.cart.length > 0) {
+        	    var tempArr = [];
+        	    tempArr = _.pluck(window.param.cart, 'number');
+        	    tempNum = _.reduce(tempArr, function(memo, num){ return memo + num; }, 0);
+        	}
+        	$("#cartnum").attr('attr-quantity', tempNum);
         	var tpl = $("#cart_tpl").html();
             var _tpl = _.template(tpl);
             $("#cartProContainer").html(_tpl({
@@ -590,7 +596,13 @@
             	return;
             }
             $("#totalAmount").text(amount.toFixed(2));
-            $("#cartnum").attr('attr-quantity', window.param.cart.length);
+            var tempNum = 0;
+            if (window.param.cart && window.param.cart.length > 0) {
+                var tempArr = [];
+                tempArr = _.pluck(window.param.cart, 'number');
+                tempNum = _.reduce(tempArr, function(memo, num){ return memo + num; }, 0);
+            }
+            $("#cartnum").attr('attr-quantity', tempNum);
             var tpl = $("#cart_tpl").html();
             var _tpl = _.template(tpl);
             $("#cartProContainer").html(_tpl({
