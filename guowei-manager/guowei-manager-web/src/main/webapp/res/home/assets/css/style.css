@@ -142,7 +142,7 @@ section{
 	content: '';
 	height: 100%;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.1);
 	left: 0;
 	top: 0;
 }
@@ -408,7 +408,7 @@ section{
 	line-height: 200%;
 }
 .expert .bg-img{
-	background-image: url(../images/2.jpg);
+	background-image: url(../images/2.png);
 	background-position-x: 85%;
 	height: 100%;
 }
