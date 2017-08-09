@@ -9,16 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.AuthToken;
 import com.guowei.common.pojo.Constant;
+import com.guowei.common.pojo.Secret;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.PayUtils;
+import com.guowei.common.utils.WeiXinOAuth;
 import com.guowei.service.PayService;
 
 @Controller
-@RequestMapping(value = "/m/weChat")
+@RequestMapping(value = "/wechat")
 public class WeChatOrderController {
 
 	@Autowired
@@ -80,5 +86,33 @@ public class WeChatOrderController {
 		ModelAndView model = new ModelAndView("pay");
 		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
 		return model;
+	}
+	@RequestMapping(value = "/getConfig", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getConfig(HttpServletRequest request) {
+		JSONObject accessTokenResult = WeiXinOAuth.GetWeiXinAccessToken(Secret.APP_ID, Secret.APP_SECRET);
+		String access_token = accessTokenResult.getString("access_token");
+		
+		String timeStamp = PayUtils.getTimeStamp();// 当前时间戳
+		String nonceStr = PayUtils.getRandomStr(20);// 不长于32位的随机字符串
+		
+		String jsticket = PayUtils.getTicket(access_token);
+		
+		String url = request.getParameter("url");
+		
+		String str = "jsapi_ticket=" + jsticket +
+                "&noncestr=" + nonceStr +
+                "&timestamp=" + timeStamp +
+                "&url=" + url;
+		
+		String sign = PayUtils.SHA1(str);
+		
+		JSONObject res = new JSONObject();
+		res.put("appId", Secret.APP_ID);
+		res.put("timeStamp", timeStamp);
+		res.put("nonceStr", nonceStr);
+		res.put("url", url);
+		res.put("sign", sign);
+		return JSON.toJSONString(res);
 	}
 }

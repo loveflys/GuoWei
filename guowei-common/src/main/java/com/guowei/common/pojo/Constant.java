@@ -49,7 +49,7 @@ public class Constant {
 	/**
 	 * 支付地址(包涵回调地址)
 	 */
-	public static final String PAY_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8563cf7cd5154a95&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fm%2FweChat%2FunifiedOrder&response_type=code&scope=snsapi_base#wechat_redirect";
+	public static final String PAY_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8563cf7cd5154a95&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fwechat%2FunifiedOrder&response_type=code&scope=snsapi_base#wechat_redirect";
 
 	/**
 	 * 微信统一下单url
