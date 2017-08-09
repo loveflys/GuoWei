@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
@@ -117,6 +118,7 @@ public class CompanyController {
 		GwCompany res = companyService.getGwCompanyById(id);
 		ModelAndView model = new ModelAndView("company");
 		model.addObject("id", id);
+		model.addObject("payURL", Constant.PAY_URL);
 		model.addObject("companyName", res.getCompanyName());
 		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
 		return model;

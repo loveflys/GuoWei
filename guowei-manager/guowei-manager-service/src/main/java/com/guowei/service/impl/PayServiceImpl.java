@@ -23,6 +23,7 @@ public class PayServiceImpl implements PayService {
 	 * 微信支付统一下单
 	 **/
 	public String unifiedOrder(AuthToken authToken, String remoteAddr) {
+		System.out.println("统一下单");
 		Map<String, String> resultMap = null;
 		// 统一下单返回的预支付id
 		String prepayId = null;
@@ -54,8 +55,9 @@ public class PayServiceImpl implements PayService {
 				response.close();
 			}
 		} catch (Exception e) {
-			System.out.println("微信支付统一下单异常");
+			System.out.println("微信支付统一下单异常"+e.getMessage());
 		}
+		System.out.println(resultMap.toString() + "||" + reqXml);
 		String return_code = resultMap.get("return_code");
 		String result_code = resultMap.get("result_code");
 		if (Constant.RETURN_SUCCESS.equals(return_code) && Constant.RETURN_SUCCESS.equals(result_code)) {

@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.AccessToken;
 import com.guowei.common.pojo.AuthToken;
 import com.guowei.common.pojo.Constant;
@@ -55,6 +58,51 @@ public class PayUtils {
 		}
 		return authToken;
 	}
+	
+	public static String getTicket(String access_token) {
+		String res = "";
+		StringBuilder json = new StringBuilder();
+		try {
+			URL url = new URL("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi");
+			URLConnection uc = url.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) {
+				json.append(inputLine);
+			}
+			in.close();
+			// 将json字符串转成javaBean
+			JSONObject result = JSONObject.parseObject(json.toString());
+		    res = (String) result.get("ticket");
+		} catch (IOException ex) {
+			System.out.println("获取access_token异常");
+		}
+		return res;
+	}
+	
+	public static String SHA1(String str) {
+        try {
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance("SHA-1"); //如果是SHA加密只需要将"SHA-1"改成"SHA"即可
+            digest.update(str.getBytes());
+            byte messageDigest[] = digest.digest();
+            // Create Hex String
+            StringBuffer hexStr = new StringBuffer();
+            // 字节数组转换为 十六进制 数
+            for (int i = 0; i < messageDigest.length; i++) {
+                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
+                if (shaHex.length() < 2) {
+                    hexStr.append(0);
+                }
+                hexStr.append(shaHex);
+            }
+            return hexStr.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 	/**
 	 * 获取微信签名

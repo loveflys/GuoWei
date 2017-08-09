@@ -24,12 +24,12 @@ public class Constant {
 	/**
 	 * 微信支付商户号
 	 */
-	public static final String MCH_ID = "1441608002";
+	public static final String MCH_ID = "1483514332";
 
 	/**
 	 * 微信支付API秘钥
 	 */
-	public static final String KEY = "QBmgXTJP7QDTudt42qN4Jy2zuc2BvfYh";
+	public static final String KEY = "CAY18669704568QingdaoGuoWeiTechC";
 
 	/**
 	 * 微信交易类型:公众号支付
@@ -49,7 +49,7 @@ public class Constant {
 	/**
 	 * 支付地址(包涵回调地址)
 	 */
-	public static final String PAY_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2bef02f0ed84edfc&redirect_uri=http%3a%2f%2fwxpay.pes-soft.com%2fwxpay%2fm%2fweChat%2funifiedOrder&response_type=code&scope=snsapi_base#wechat_redirect";
+	public static final String PAY_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8563cf7cd5154a95&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fm%2FweChat%2FunifiedOrder&response_type=code&scope=snsapi_base#wechat_redirect";
 
 	/**
 	 * 微信统一下单url
@@ -69,12 +69,12 @@ public class Constant {
 	/**
 	 * 微信支付通知url
 	 */
-	public static final String NOTIFY_URL = "http://wxpay.pes-soft.com/wxpay/";
+	public static final String NOTIFY_URL = "http://www.qingdaoguowei.com/wxpay/";
 	
 	/**
 	 * 证书位置
 	 */
-	public static final String CERT_PATH = "H:/Ws/pes-wxpay/src/main/webapp/cert/apiclient_cert.p12";
+	public static final String CERT_PATH = "E:/project/GuoWei/guowei-manager/guowei-manager-web/src/main/webapp/cert/apiclient_cert.p12";
 
 	/**
 	 * 通过code获取授权access_token的URL
@@ -88,6 +88,16 @@ public class Constant {
 		url.append("&code=");
 		url.append(code);
 		url.append("&grant_type=authorization_code");
+		return url.toString();
+	}
+	
+	public static String Authtoken_URL() {
+		StringBuffer url = new StringBuffer();
+		url.append("https://api.weixin.qq.com/cgi-bin/token?appid=");
+		url.append(Constant.APP_ID);
+		url.append("&secret=");
+		url.append(Constant.APP_SECRET);
+		url.append("&grant_type=client_credential");
 		return url.toString();
 	}
 }

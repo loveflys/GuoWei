@@ -632,16 +632,19 @@
                     companyName: '${companyName}',
                     details: JSON.stringify(window.param.cart),
                     uid: '${currentUser.id}',
+                    openid: '${currentUser.wechatOpenid}',
                     uname: '${currentUser.name}'
                 },
                 async: false,
                 error: function(request) {
-                    toastr.error("Server Connection Error...");
+                    toastr.error("Server Connection Error..."+JSON.stringify(request));
                 },
                 success: function(res) {
                     if (res.status) {
                     	//调用微信支付
-                    	swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
+                    	//swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
+                    	window.location.href= res.msg;
+                    	
                     } else {
                     	 swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
                     }
