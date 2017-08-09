@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="x5-orientation" content="portrait">
-    <link rel="stylesheet" href="/wxpay/css/weui.min.css">
+    <link rel="stylesheet" href="<%= path %>/res/home/assets/css/weui.min.css">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <title>微信公众号支付测试</title>
 </head>
@@ -19,7 +19,7 @@
             type: "POST",
             url: "<%=path%>/wechat/getConfig",
             data: {
-            	url: window.param.location
+            	url: window.location.location
             },
             async: false,
             error: function(request) {
