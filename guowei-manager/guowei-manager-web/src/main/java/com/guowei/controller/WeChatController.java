@@ -70,6 +70,9 @@ public class WeChatController {
 			res.put("paySign", PayUtils.getSign(signMap));
 		} else {
 			res.put("status", false);
+			GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
+			order.setStatus(Byte.parseByte("3"));
+			int status = orderService.editGwOrder(order);
 			System.out.println("微信统一下单失败,订单编号:失败原因");
 			// return "redirect:/pay";// 支付下单失败，重定向至订单列表
 		}
@@ -144,7 +147,7 @@ public class WeChatController {
 						log.error("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
 						System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
 						
-						order.setStatus(Byte.parseByte("2"));
+						order.setStatus(Byte.parseByte("3"));
 						int status = orderService.editGwOrder(order);
 						
 						if (status == 1) {
