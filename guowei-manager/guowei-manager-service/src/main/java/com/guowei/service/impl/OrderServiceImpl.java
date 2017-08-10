@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 		return res;
 	}
 	@Override
-	public int createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) throws UnsupportedEncodingException {
+	public long createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) throws UnsupportedEncodingException {
 		int res1 = orderMapper.insert(order);
 		
 		int addDetail = 1;
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
 				}			
 			}		
 		}
-		return (res1==1 && addDetail==1) ? 1:0;
+		return (res1==1 && addDetail==1) ? order.getId():0l;
 	}
 	@Override
 	public int editGwOrder(GwOrder order) {

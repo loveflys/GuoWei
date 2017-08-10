@@ -1,12 +1,14 @@
 package com.guowei.service.impl;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.guowei.common.pojo.AuthToken;
@@ -14,16 +16,20 @@ import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.PaySendData;
 import com.guowei.common.utils.HttpUtil;
 import com.guowei.common.utils.PayUtils;
+import com.guowei.mapper.GwOrderMapper;
+import com.guowei.pojo.GwOrder;
 import com.guowei.service.PayService;
 
 @Service("payService")
 public class PayServiceImpl implements PayService {
-
+	@Autowired
+	private GwOrderMapper orderMapper;
 	/**
 	 * 微信支付统一下单
 	 **/
-	public String unifiedOrder(AuthToken authToken, String remoteAddr) {
+	public String unifiedOrder(AuthToken authToken, String remoteAddr, String orderId) {
 		System.out.println("统一下单");
+		GwOrder order = orderMapper.selectByPrimaryKey(Long.parseLong(orderId));
 		Map<String, String> resultMap = null;
 		// 统一下单返回的预支付id
 		String prepayId = null;
@@ -34,10 +40,10 @@ public class PayServiceImpl implements PayService {
 		paySendData.setNotify_url(Constant.NOTIFY_URL);
 		paySendData.setTrade_type(Constant.TRADE_TYPE_JSAPI);
 		paySendData.setDevice_info(Constant.WEB);
-		paySendData.setBody("派思变形金刚");
+		paySendData.setBody("微妙货架商品");
 		paySendData.setNonce_str(PayUtils.getRandomStr(32));
-		paySendData.setOut_trade_no(PayUtils.getRandomStr(8));
-		paySendData.setTotal_fee(1);
+		paySendData.setOut_trade_no(orderId);
+		paySendData.setTotal_fee(order.getAmount().multiply(new BigDecimal("100")).intValue());
 		paySendData.setSpbill_create_ip(remoteAddr);
 		paySendData.setOpenId(authToken.getOpenid());
 		// 将参数拼成map,生产签名

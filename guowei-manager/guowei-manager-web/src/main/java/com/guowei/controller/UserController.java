@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.guowei.common.pojo.DatatablesView;
-import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwUser;

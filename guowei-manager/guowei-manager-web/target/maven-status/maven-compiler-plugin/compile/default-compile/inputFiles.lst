@@ -1,5 +1,5 @@
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\CategoryController.java
-E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\WechatController.java
+E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\WeChatController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\CompanyController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\IndexController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\ManagerController.java
@@ -11,4 +11,3 @@ E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\con
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\OrderController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\PageController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\OauthController.java
-E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\WeChatOrderController.java

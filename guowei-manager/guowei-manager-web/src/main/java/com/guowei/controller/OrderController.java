@@ -146,7 +146,7 @@ public class OrderController {
 		order.setStatus(Byte.parseByte("1"));
 		order.setCreated(now);
 		order.setAmount(amount);
-		int result = 0;
+		long result = 0;
 		try {
 			result = orderService.createGwOrder(order, orderdetails);
 		} catch (UnsupportedEncodingException e) {
@@ -156,7 +156,12 @@ public class OrderController {
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "订单： 添加成功!");			
 		}
-		MessageView msg = new MessageView(result, Constant.PAY_URL);
+		MessageView msg = new MessageView(result == 0? 0: 1, "https://open.weixin.qq.com/connect/oauth2/authorize?"
+				+ "appid=wx8563cf7cd5154a95"
+				+ "&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fwechat%2FunifiedOrder%3ForderId%3D" + result
+				+ "&response_type=code"
+				+ "&scope=snsapi_base"
+				+ "#wechat_redirect");
 		return JSON.toJSONString(msg);
 	}
 	

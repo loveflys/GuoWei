@@ -69,7 +69,7 @@ public class Constant {
 	/**
 	 * 微信支付通知url
 	 */
-	public static final String NOTIFY_URL = "http://www.qingdaoguowei.com/wxpay/";
+	public static final String NOTIFY_URL = "http://www.qingdaoguowei.com/wechat/payresult";
 	
 	/**
 	 * 证书位置
