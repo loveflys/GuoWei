@@ -24,6 +24,7 @@ import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.common.utils.PayUtils;
 import com.guowei.common.utils.WechatWarn;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyTemp;
@@ -115,7 +116,24 @@ public class CompanyController {
 	
 	@RequestMapping("/company/{id}")
 	public ModelAndView toDetail(HttpServletRequest request, @PathVariable("id") Long id) {
+		
+		String token = (String) request.getSession().getAttribute("token");
+		
 		GwCompany res = companyService.getGwCompanyById(id);
+		
+		String timeStamp = PayUtils.getTimeStamp();// 当前时间戳
+		String nonceStr = PayUtils.getRandomStr(20);// 不长于32位的随机字符串
+
+		String jsticket = PayUtils.getTicket(token);
+
+		String url = request.getRequestURL().toString();
+
+		String str = "jsapi_ticket=" + jsticket + "&noncestr=" + nonceStr + "&timestamp=" + timeStamp + "&url="
+				+ url;
+
+		String sign = PayUtils.SHA1(str);
+		
+		
 		ModelAndView model = new ModelAndView("company");
 		model.addObject("id", id);
 		model.addObject("payURL", Constant.PAY_URL);

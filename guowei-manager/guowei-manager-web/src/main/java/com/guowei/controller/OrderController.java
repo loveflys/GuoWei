@@ -156,12 +156,7 @@ public class OrderController {
 			model.addAttribute("result", result);
 			log.info(Constants.SYS_NAME + "订单： 添加成功!");			
 		}
-		MessageView msg = new MessageView(result == 0? 0: 1, "https://open.weixin.qq.com/connect/oauth2/authorize?"
-				+ "appid=wx8563cf7cd5154a95"
-				+ "&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fwechat%2FunifiedOrder%3ForderId%3D" + result
-				+ "&response_type=code"
-				+ "&scope=snsapi_base"
-				+ "#wechat_redirect");
+		MessageView msg = new MessageView(result == 0? 0: 1, String.valueOf(result));
 		return JSON.toJSONString(msg);
 	}
 	

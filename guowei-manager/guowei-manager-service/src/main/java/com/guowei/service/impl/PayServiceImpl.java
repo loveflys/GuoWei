@@ -27,7 +27,7 @@ public class PayServiceImpl implements PayService {
 	/**
 	 * 微信支付统一下单
 	 **/
-	public String unifiedOrder(AuthToken authToken, String remoteAddr, String orderId) {
+	public String unifiedOrder(String openid, String remoteAddr, String orderId) {
 		System.out.println("统一下单");
 		GwOrder order = orderMapper.selectByPrimaryKey(Long.parseLong(orderId));
 		Map<String, String> resultMap = null;
@@ -45,7 +45,7 @@ public class PayServiceImpl implements PayService {
 		paySendData.setOut_trade_no(orderId);
 		paySendData.setTotal_fee(order.getAmount().multiply(new BigDecimal("100")).intValue());
 		paySendData.setSpbill_create_ip(remoteAddr);
-		paySendData.setOpenId(authToken.getOpenid());
+		paySendData.setOpenId(openid);
 		// 将参数拼成map,生产签名
 		paySendData.setSign(PayUtils.getSign(buildParamMap(paySendData)));
 		// 将请求参数对象转换成xml

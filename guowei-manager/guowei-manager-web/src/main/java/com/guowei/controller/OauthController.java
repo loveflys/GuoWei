@@ -63,6 +63,7 @@ public class OauthController {
 			}
 		}
 		request.getSession().setAttribute(Constants.CURRENT_USER, user);
+		request.getSession().setAttribute("token", access_token);
 		return new ModelAndView("redirect:/"+state);
 	}
 }

@@ -10,7 +10,7 @@ public interface PayService {
 	 * @param remoteAddr 请求主机ip
 	 * @return prepayId 预支付id
 	 */
-	String unifiedOrder(AuthToken authToken, String remoteAddr, String orderId);
+	String unifiedOrder(String openid, String remoteAddr, String orderId);
 	
 	/**
 	 * 申请退款接口

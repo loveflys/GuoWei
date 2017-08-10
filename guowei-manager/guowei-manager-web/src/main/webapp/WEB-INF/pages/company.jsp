@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/search.css">
 <!-- jvectormap -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <style type="text/css">
         .red-point {
             width: 20px;
@@ -436,6 +437,31 @@
         	showCart: false,
         }
         $(function() {
+        	$.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/wechat/getConfig",
+                data: {
+                    url: window.location.location
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error...");
+                },
+                success: function(res) {
+                    console.log('配置==>' + JSON.stringify(res));
+                    wx.config({  
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。  
+                        appId: res.appId,     //公众号名称，由商户传入     
+                        timestamp: res.timeStamp,         //时间戳，自1970年以来的秒数     
+                        nonceStr: res.nonceStr, //随机串     
+                        signature: res.sign, // 必填，签名，见附录1  
+                        jsApiList: [  
+                                "chooseWXPay"  
+                        ] // 所有要调用的 API 都要加到这个列表中  
+                    }); 
+                }
+            }); 
         	_.templateSettings = {
                 evaluate    : /\[\[(.+?)\]\]/g,
                 interpolate : /\{\{(.+?)\}\}/g
@@ -643,8 +669,45 @@
                     if (res.status) {
                     	//调用微信支付
                     	//swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
-                    	window.location.href= res.msg;
-                    	
+                    	$.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "<%=path%>/wechat/unifiedOrder",
+                            data: {
+                            	orderId: res.msg
+                            },
+                            async: false,
+                            error: function(request) {
+                                toastr.error("调用微信支付错误，请稍后再试...");
+                            },
+                            success: function(data) {
+                            	if (data.status) {
+                            		wx.chooseWXPay({  
+                                        appId: data.appId,     //公众号名称，由商户传入     
+                                        timestamp: data.timeStamp,         //时间戳，自1970年以来的秒数     
+                                        nonceStr: data.nonceStr, //随机串     
+                                        package: data.prepayId,     
+                                        signType: "MD5",         //微信签名方式：     
+                                        paySign: data.paySign, //微信签名 
+                                        success: function(resp) {  
+                                            // 支付成功后的回调函数  
+                                            if (resp.errMsg == "chooseWXPay:ok") {  
+                                                //支付成功  
+                                                alert('支付成功');  
+                                            } else {  
+                                                alert(resp.errMsg);  
+                                            }  
+                                        },  
+                                        cancel: function(resps) {  
+                                            //支付取消  
+                                            alert('支付取消');  
+                                        }  
+                                    });  
+                            	} else {
+                            		
+                            	}
+                            }
+                        }); 
                     } else {
                     	 swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
                     }
