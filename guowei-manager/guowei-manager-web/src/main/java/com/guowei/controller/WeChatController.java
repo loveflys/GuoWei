@@ -123,7 +123,7 @@ public class WeChatController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "payresult")
+	@RequestMapping(value = "/payresult")
 	public void payresult(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			synchronized (this) {
