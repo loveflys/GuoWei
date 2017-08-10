@@ -132,20 +132,24 @@ public class WeChatController {
 					if (kvm.get("result_code").equals("SUCCESS")) {
 						// TODO(user) 微信服务器通知此回调接口支付成功后，通知给业务系统做处理
 						log.info("out_trade_no: " + kvm.get("out_trade_no") + " pay SUCCESS!");
+						System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " pay SUCCESS!");
 						response.getWriter().write(
 								"<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[ok]]></return_msg></xml>");
 					} else {
 						log.error("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
+						System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
 						response.getWriter().write(
 								"<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[result_code is FAIL]]></return_msg></xml>");
 					}
 				} else {
 					response.getWriter().write(
 							"<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[check signature FAIL]]></return_msg></xml>");
+					System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " check signature FAIL");
 					log.error("out_trade_no: " + kvm.get("out_trade_no") + " check signature FAIL");
 				}
 			}
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
