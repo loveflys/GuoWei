@@ -524,6 +524,9 @@
         }
         //清空购物车
         function clearCart() {
+        	$(".red-point").each(function (index, item) {
+                $(item).hide();
+            })
         	window.param.cart = [];
         	window.param.amount = 0;
         	$("#cartnum").removeAttr('attr-quantity');
