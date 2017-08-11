@@ -213,7 +213,7 @@ public class WeChatController {
 	                String mch_id = (String)packageParams.get("mch_id");  
 	                String openid = (String)packageParams.get("openid");  
 	                String is_subscribe = (String)packageParams.get("is_subscribe");  
-	                Long out_trade_no = (Long)packageParams.get("out_trade_no");  
+	                String out_trade_no = (String)packageParams.get("out_trade_no");  
 	                  
 	                String total_fee = (String)packageParams.get("total_fee");  
 	                  
@@ -226,7 +226,7 @@ public class WeChatController {
 	                //////////执行自己的业务逻辑////////////////  
 	                  
 	                System.out.println("支付成功"); 
-	                GwOrder order = orderService.getGwOrderById(out_trade_no);
+	                GwOrder order = orderService.getGwOrderById(Long.parseLong(out_trade_no));
 	                order.setStatus(Byte.parseByte("2"));
 					int status = orderService.editGwOrder(order);
 					
