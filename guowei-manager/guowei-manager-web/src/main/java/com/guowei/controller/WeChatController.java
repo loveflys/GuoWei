@@ -202,7 +202,7 @@ public class WeChatController {
 	        }  
 	        //判断签名是否正确  
 	        if(SignUtils.checkSign(m, Constant.KEY)) {  
-	        	GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
+	        	
 	            //------------------------------  
 	            //处理业务开始  
 	            //------------------------------  
@@ -213,7 +213,7 @@ public class WeChatController {
 	                String mch_id = (String)packageParams.get("mch_id");  
 	                String openid = (String)packageParams.get("openid");  
 	                String is_subscribe = (String)packageParams.get("is_subscribe");  
-	                String out_trade_no = (String)packageParams.get("out_trade_no");  
+	                Long out_trade_no = (Long)packageParams.get("out_trade_no");  
 	                  
 	                String total_fee = (String)packageParams.get("total_fee");  
 	                  
@@ -226,6 +226,7 @@ public class WeChatController {
 	                //////////执行自己的业务逻辑////////////////  
 	                  
 	                System.out.println("支付成功"); 
+	                GwOrder order = orderService.getGwOrderById(out_trade_no);
 	                order.setStatus(Byte.parseByte("2"));
 					int status = orderService.editGwOrder(order);
 					
@@ -240,14 +241,6 @@ public class WeChatController {
 	                  
 	            } else {  
 	            	System.out.println("支付失败,错误信息：" + packageParams.get("err_code"));  
-	            	order.setStatus(Byte.parseByte("3"));
-					int status = orderService.editGwOrder(order);
-					
-					if (status == 1) {
-						System.out.println("支付失败.修改订单状态成功");
-					} else {
-						System.out.println("支付失败.修改订单状态失败");
-					}
 	                resXml = "<xml>" + "<return_code><![CDATA[FAIL]]></return_code>"  
 	                        + "<return_msg><![CDATA[报文为空]]></return_msg>" + "</xml> ";  
 	            }  
