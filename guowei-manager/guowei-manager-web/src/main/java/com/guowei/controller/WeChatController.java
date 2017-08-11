@@ -185,21 +185,8 @@ public class WeChatController {
 	 */
 	@RequestMapping(value = "/payresult")
 	public void paynotify (HttpServletRequest request, HttpServletResponse response){
-		try {
-			//读取参数  
-	        InputStream inputStream ;  
-	        StringBuffer sb = new StringBuffer();  
-	        inputStream = request.getInputStream();  
-	        String s ;  
-	        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));  
-	        while ((s = in.readLine()) != null){  
-	            sb.append(s);  
-	        }  
-	        in.close();  
-	        inputStream.close();  
-	  
-	        Map<String, String> m = PayUtils.parseRequestXmlToMap(request);
-	          
+		try {  
+	        Map<String, String> m = PayUtils.parseRequestXmlToMap(request);	          
 	        //过滤空 设置 TreeMap  
 	        SortedMap<Object,Object> packageParams = new TreeMap<Object,Object>();        
 	        Iterator it = m.keySet().iterator();  
