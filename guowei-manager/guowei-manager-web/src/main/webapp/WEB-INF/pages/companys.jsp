@@ -782,9 +782,26 @@
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("#showModalcompanyName").text(data.companyName);
                     var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8563cf7cd5154a95&redirect_uri=http%3A%2F%2Fwww.qingdaoguowei.com%2Fapi%2Foauth&response_type=code&scope=snsapi_userinfo&state=company%2F"+ data.id +"#wechat_redirect"; //任意内容 ；
-                    $("#show-qrcode").empty();
-                    $("#show-qrcode").qrcode(url);
-                    $('#showModal').modal('show');                
+                    
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/wechat/getShortUrl",
+                        data: {
+                        	url: url
+                        },
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error..."+JSON.stringify(request));
+                        },
+                        success: function(res) {
+                        	if (res.errcode == 0) {
+	                        	$("#show-qrcode").empty();
+	                            $("#show-qrcode").qrcode(res.short_url);
+	                            $('#showModal').modal('show');
+                        	}
+                        }
+                    });             
                 });
 	          	
 				$("#btn-submit").on("click", function(){

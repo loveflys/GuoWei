@@ -44,6 +44,13 @@ public class WeiXinOAuth
 		return result;
 	}
 	
+	public static JSONObject GetWeiXinShortUrl(String token,String longUrl)
+	{
+		String url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token="+token+"&action=long2short&long_url="+longUrl;
+		JSONObject result = HttpHelper.httpRequest(url);		
+		return result;
+	}
+	
 	public static JSONObject SendTemplateMsg(String actoken,String params)
 	{
 		String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+actoken;

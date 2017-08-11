@@ -119,6 +119,17 @@ public class WeChatController {
 		res.put("sign", sign);
 		return JSON.toJSONString(res);
 	}
+	
+	@RequestMapping(value = "/getShortUrl", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getShortUrl(HttpServletRequest request) {
+		JSONObject accessTokenResult = WeiXinOAuth.GetWeiXinAccessToken(Secret.APP_ID, Secret.APP_SECRET);
+		String access_token = accessTokenResult.getString("access_token");
+		
+		JSONObject res = WeiXinOAuth.GetWeiXinShortUrl(access_token, request.getParameter("url"));
+		System.out.println("生成短链接==>" + JSON.toJSONString(res));
+		return JSON.toJSONString(res);
+	}
 
 	/**
 	 * 微信通知支付结果的回调地址，notify_url
