@@ -276,7 +276,7 @@ public class WeChatController {
 	        	System.out.println("通知签名验证失败");  
 	        }  
 		} catch (Exception e) {
-			System.out.println("微信支付回调失败==>"+e.getMessage());
+			e.printStackTrace();
 		}
 		
 	}
