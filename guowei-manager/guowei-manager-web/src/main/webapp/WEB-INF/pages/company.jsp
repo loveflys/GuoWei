@@ -693,14 +693,15 @@
                                             // 支付成功后的回调函数  
                                             if (resp.errMsg == "chooseWXPay:ok") {  
                                                 //支付成功  
-                                                alert('支付成功');  
+                                            	swal({    title: "提示",    text: "支付成功！",    timer: 2000,    showConfirmButton: false  });
+                                            	clearCart();
                                             } else {  
-                                                alert(resp.errMsg);  
+                                                swal({    title: "提示",    text: resp.errMsg,    timer: 2000,    showConfirmButton: false  });
                                             }  
                                         },  
                                         cancel: function(resps) {  
                                             //支付取消  
-                                            alert('支付取消');  
+                                            swal({    title: "提示",    text: "支付取消",    timer: 2000,    showConfirmButton: false  });
                                         }  
                                     });  
                             	} else {
