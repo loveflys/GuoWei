@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.mapper.GwCompanyMapper;
+import com.guowei.mapper.GwCompanyprochangeMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwProductMapper;
 import com.guowei.mapper.GwTemplateproductMapper;
@@ -18,6 +19,7 @@ import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyExample;
 import com.guowei.pojo.GwCompanyExample.Criteria;
 import com.guowei.pojo.GwCompanyTemp;
+import com.guowei.pojo.GwCompanyprochangeExample;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwCompanyproductExample;
 import com.guowei.pojo.GwProduct;
@@ -40,6 +42,8 @@ public class CompanyServiceImpl implements CompanyService {
 	private GwProductMapper productMapper;
 	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
+	@Autowired
+	private GwCompanyprochangeMapper companyprochangeMapper;
 	@Autowired
 	private GwTemplateproductMapper templateproductMapper;
 
@@ -115,9 +119,11 @@ public class CompanyServiceImpl implements CompanyService {
 					if (tempreturn != 1) {
 						returnStock = 0;
 					}
+					GwCompanyprochangeExample ex = new GwCompanyprochangeExample(); 
+					ex.createCriteria().andCpidEqualTo(gwCompanyproduct.getId());
+					companyprochangeMapper.deleteByExample(ex);
 				}
-			}
-			
+			}			
 			
 			deleteResult = companyproductMapper.deleteByExample(example1);
 			// 2、获取模板商品

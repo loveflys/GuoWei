@@ -67,7 +67,6 @@ public class WeChatController {
 			signMap.put("timeStamp", timeStamp);
 			signMap.put("nonceStr", nonceStr);
 			signMap.put("signType", "MD5");
-			System.out.println(timeStamp);
 			res.put("status", true);
 			res.put("appId", Constant.APP_ID);
 			res.put("timeStamp", timeStamp);
@@ -76,7 +75,7 @@ public class WeChatController {
 			res.put("paySign", PayUtils.getSign(signMap));
 		} else {
 			res.put("status", false);
-			GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
+			GwOrder order = orderService.getGwOrderById(Long.parseLong(orderId));
 			order.setStatus(Byte.parseByte("3"));
 			int status = orderService.editGwOrder(order);
 			System.out.println("微信统一下单失败,订单编号:失败原因");
