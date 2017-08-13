@@ -3,6 +3,8 @@ package com.guowei.service.impl;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,6 +34,7 @@ import com.guowei.service.OrderService;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private GwOrderMapper orderMapper;
 	@Autowired
@@ -91,6 +94,55 @@ public class OrderServiceImpl implements OrderService {
 			}		
 		}
 		return (res1==1 && addDetail==1) ? order.getId():0l;
+	}
+	@Override
+	public int updateGwOrderPayStatus(long id) {
+		//更改订单状态
+		GwOrder order = orderMapper.selectByPrimaryKey(id);
+		order.setStatus(Byte.parseByte("2"));
+		int updateOrder = orderMapper.updateByPrimaryKey(order);
+		
+		//扣减库存
+		GwOrderdetailExample ex = new GwOrderdetailExample();
+		ex.createCriteria().andOidEqualTo(id);
+		int updateDetail = 1;
+		List<GwOrderdetail> details = orderdetailMapper.selectByExample(ex);
+		for (GwOrderdetail gwOrderdetail : details) {
+			//获取公司产品明细
+			Long cpid = gwOrderdetail.getCpid();
+			GwCompanyproduct pro = companyproductMapper.selectByPrimaryKey(cpid);
+			int sellcount = pro.getSellcount();
+			pro.setSellcount(sellcount + gwOrderdetail.getNumber());
+			int stock = pro.getStock();
+			int warnstock = pro.getWarnstock();
+			if (stock >= gwOrderdetail.getNumber()) {
+				pro.setStock(stock - gwOrderdetail.getNumber());
+			} else {
+				return 0;
+			}
+			if (pro.getStock() <= warnstock) {
+				try {
+					WechatWarn.Warn(order.getCompanyName(), pro.getProname(), pro.getStock());
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					log.debug("微信库存不足提醒失败==>"+ e.getMessage());
+					System.out.println("微信库存不足提醒失败==>"+ e.getMessage());
+				}
+			}
+			Long pid = pro.getPid();				
+			GwProduct product = productMapper.selectByPrimaryKey(pid);
+			
+			int allsellcount = product.getAllsellcount();
+			product.setAllsellcount(allsellcount + gwOrderdetail.getNumber());
+			int changeStock = 0;
+			int changeCPStock = 0;
+			changeStock = productMapper.updateByPrimaryKey(product);
+			changeCPStock = companyproductMapper.updateByPrimaryKey(pro);
+			if (changeStock != 1 || changeCPStock != 1) {
+				updateDetail = 0;
+			}			
+		}
+		return (updateOrder == 1 && updateDetail == 1) ? 1:0;
 	}
 	@Override
 	public int editGwOrder(GwOrder order) {
@@ -168,4 +220,5 @@ public class OrderServiceImpl implements OrderService {
 		result.setRecordsTotal(list.size());
 		return result;
 	}
+	
 }

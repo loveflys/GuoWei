@@ -14,11 +14,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.mapper.GwCategoryMapper;
+import com.guowei.mapper.GwCompanyprochangeMapper;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwProductMapper;
 import com.guowei.mapper.GwPurchaseMapper;
 import com.guowei.mapper.GwTemplateproductMapper;
 import com.guowei.pojo.GwCategory;
+import com.guowei.pojo.GwCompanyprochangeExample;
+import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwCompanyproductExample;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwProductExample;
@@ -42,6 +45,8 @@ public class ProductServiceImpl implements ProductService {
 	private GwTemplateproductMapper templateproductMapper;
 	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
+	@Autowired
+	private GwCompanyprochangeMapper companyprochangeMapper;
 	@Autowired
 	private GwCategoryMapper cateMapper;
 	@Autowired
@@ -90,19 +95,35 @@ public class ProductServiceImpl implements ProductService {
 	}
 	@Override
 	public int removeGwProduct(long id) {
+		
+		//删除进货信息
+		GwPurchaseExample exa = new GwPurchaseExample();
+		exa.createCriteria().andPidEqualTo(id);		
+		purchaseMapper.deleteByExample(exa);
+		
+		//删除模板商品
 		GwTemplateproductExample example1 = new GwTemplateproductExample();
 		example1.createCriteria().andPidEqualTo(id);
 		templateproductMapper.deleteByExample(example1);
-		
-		GwPurchaseExample exa = new GwPurchaseExample();
-		exa.createCriteria().andPidEqualTo(id);
-		purchaseMapper.deleteByExample(exa);
-		
+		//查询该商品的 公司产品列表
 		GwCompanyproductExample example2 = new GwCompanyproductExample();
 		example2.createCriteria().andPidEqualTo(id);
-		companyproductMapper.deleteByExample(example2);
-		
+		List<GwCompanyproduct> cp = companyproductMapper.selectByExample(example2);
+		System.out.println("删除产品");
 		int res = productMapper.deleteByPrimaryKey(id);
+		if (cp != null && cp.size() > 0) {
+			System.out.println("开始遍历");
+			for (GwCompanyproduct gwCompanyproduct : cp) {
+				System.out.println("删除公司产品");
+				//删除公司商品
+				companyproductMapper.deleteByPrimaryKey(gwCompanyproduct.getId());
+				System.out.println("删除补货");
+				//删除公司商品补货信息
+				companyprochangeMapper.deleteByPrimaryKey(gwCompanyproduct.getId());				
+			}
+			System.out.println("结束遍历");
+		}
+		
 		return res;
 	}
 

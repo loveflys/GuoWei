@@ -27,6 +27,8 @@ public interface OrderService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int addGwOrder(GwOrder order);
 	
+	int updateGwOrderPayStatus(long id);
+	
 	long createGwOrder(GwOrder order, List<GwOrderdetail> orderdetail) throws UnsupportedEncodingException;
 
 	int editGwOrder(GwOrder order);

@@ -237,10 +237,7 @@ public class WeChatController {
 	                //////////执行自己的业务逻辑////////////////  
 	                  
 	                System.out.println("支付成功"); 
-	                GwOrder order = orderService.getGwOrderById(Long.parseLong(out_trade_no));
-	                order.setStatus(Byte.parseByte("2"));
-					int status = orderService.editGwOrder(order);
-					
+	                int status = orderService.updateGwOrderPayStatus(Long.parseLong(out_trade_no));	                
 					if (status == 1) {
 						System.out.println("支付成功.修改订单状态成功");
 					} else {
