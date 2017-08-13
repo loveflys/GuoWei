@@ -63,34 +63,7 @@ public class OrderServiceImpl implements OrderService {
 		if (res1 == 1) {
 			for (GwOrderdetail gwOrderdetail : orderdetail) {
 				gwOrderdetail.setOid(order.getId());
-				//获取公司产品明细
-				Long cpid = gwOrderdetail.getCpid();
-				GwCompanyproduct pro = companyproductMapper.selectByPrimaryKey(cpid);
-				int sellcount = pro.getSellcount();
-				pro.setSellcount(sellcount + gwOrderdetail.getNumber());
-				int stock = pro.getStock();
-				int warnstock = pro.getWarnstock();
-				if (stock >= gwOrderdetail.getNumber()) {
-					pro.setStock(stock - gwOrderdetail.getNumber());
-				} else {
-					return 0;
-				}
-				if (pro.getStock() <= warnstock) {
-					WechatWarn.Warn(order.getCompanyName(), pro.getProname(), pro.getStock());
-				}
-				Long pid = pro.getPid();				
-				GwProduct product = productMapper.selectByPrimaryKey(pid);
-				
-				int allsellcount = product.getAllsellcount();
-				product.setAllsellcount(allsellcount + gwOrderdetail.getNumber());
-				int changeStock = 0;
-				int changeCPStock = 0;
-				changeStock = productMapper.updateByPrimaryKey(product);
-				changeCPStock = companyproductMapper.updateByPrimaryKey(pro);
-				int temp = orderdetailMapper.insert(gwOrderdetail);
-				if (temp != 1 || changeStock != 1 || changeCPStock != 1) {
-					addDetail = 0;
-				}			
+				addDetail = orderdetailMapper.insert(gwOrderdetail);
 			}		
 		}
 		return (res1==1 && addDetail==1) ? order.getId():0l;
