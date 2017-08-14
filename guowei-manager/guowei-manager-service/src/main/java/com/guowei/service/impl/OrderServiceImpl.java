@@ -151,6 +151,7 @@ public class OrderServiceImpl implements OrderService {
 	public DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize) {
 		// TODO Auto-generated method stub
 		GwOrderExample gme = new GwOrderExample();
+		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 //		if (!"".equals(order.getTitle())) {
 //			criteria.andTitleLike(order.getTitle());

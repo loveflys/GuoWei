@@ -281,7 +281,7 @@
   	                    },
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
-  	                    		return moment(data).format('YYYY-MM-DD');
+  	                    		return moment(data).format('YYYY-MM-DD HH:mm');
 	                    	}
 	               		},
   	                  	{"data": null,"width":"60px"}
