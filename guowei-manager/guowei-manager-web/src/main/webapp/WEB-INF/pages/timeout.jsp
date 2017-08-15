@@ -18,13 +18,13 @@
 			  confirmButtonText: "<sp:message code='sys.sign'/>"
 			},
 			function (){
-				top.window.location.href="<%=request.getContextPath()%>/";
+				top.window.location.href="<%=request.getContextPath()%>/login";
 			}
 		);
 	    window.setTimeout("ok();",3000);
 	
 		function ok(){
-			top.window.location.href="<%=request.getContextPath()%>/";
+			top.window.location.href="<%=request.getContextPath()%>/login";
 	 	}
 	}) 
 		

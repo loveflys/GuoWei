@@ -1,5 +1,6 @@
 package com.guowei.service;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Propagation;
@@ -26,6 +27,9 @@ public interface OrderService {
 	
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int addGwOrder(GwOrder order);
+	
+	@Transactional(propagation=Propagation.NOT_SUPPORTED)
+	BigDecimal getOrdersData(int type);
 	
 	int updateGwOrderPayStatus(long id);
 	

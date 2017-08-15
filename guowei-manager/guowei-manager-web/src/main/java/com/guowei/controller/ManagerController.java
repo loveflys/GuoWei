@@ -51,7 +51,7 @@ public class ManagerController {
 		manager = managerService.getGwManagerByNamePassword(manager);
 		if(manager != null){
 			request.getSession().setAttribute(Constants.CURRENT_USER, manager);
-			return new ModelAndView("redirect:/managerlist");
+			return new ModelAndView("redirect:/managerindex");
 		}else{
 			model.addAttribute("msg", "登陆失败，请重新登陆!");
 			return new ModelAndView("login");

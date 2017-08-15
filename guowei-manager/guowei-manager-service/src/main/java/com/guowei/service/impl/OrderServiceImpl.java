@@ -1,6 +1,7 @@
 package com.guowei.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -193,6 +194,14 @@ public class OrderServiceImpl implements OrderService {
 		result.setData(list);
 		result.setRecordsTotal(list.size());
 		return result;
+	}
+	@Override
+	/**
+	 * type: 1 - 今日数据 2-本周数据 3-本月数据 4-全部数据
+	 */
+	public BigDecimal getOrdersData(int type) {
+		
+		return null;
 	}
 	
 }
