@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
@@ -64,20 +66,26 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 	@Override
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanyproductsByPagedParam(GwCompanyproduct companyproduct, Integer start, Integer pageSize) {
-		// TODO Auto-generated method stub
-		GwCompanyproductExample gme = new GwCompanyproductExample();
-		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(companyproduct.getCompanyproductName())) {
-//			criteria.andCompanyproductNameLike(companyproduct.getCompanyproductName());
-//			gme.or(gme.createCriteria().andCompanyproductContactphoneLike(companyproduct.getCompanyproductName()));
-//		}		
-		int pageNum = (start/pageSize)+1;
-		PageHelper.startPage(pageNum, pageSize);
-		List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
-		PageInfo<GwCompanyproduct> page = new PageInfo<>(list);
 		DatatablesView result = new DatatablesView();
-		result.setData(list);
-		result.setRecordsTotal((int)page.getTotal());
+		System.out.println("查询公司产品开始================");
+		try {
+			GwCompanyproductExample gme = new GwCompanyproductExample();
+			Criteria criteria = gme.createCriteria();
+	//		if (!"".equals(companyproduct.getCompanyproductName())) {
+	//			criteria.andCompanyproductNameLike(companyproduct.getCompanyproductName());
+	//			gme.or(gme.createCriteria().andCompanyproductContactphoneLike(companyproduct.getCompanyproductName()));
+	//		}		
+			int pageNum = (start/pageSize)+1;
+			PageHelper.startPage(pageNum, pageSize);
+			List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
+			System.out.println("查询公司产品结果==>" + JSON.toJSONString(list));
+			PageInfo<GwCompanyproduct> page = new PageInfo<>(list);
+			result.setData(list);
+			result.setRecordsTotal((int)page.getTotal());
+			System.out.println("查询公司产品结束==>" + JSON.toJSONString(result));
+		} catch (Exception e) {
+			System.out.println("查询公司产品异常==>" + e.getMessage());
+		}
 		return result;
 	}
 	

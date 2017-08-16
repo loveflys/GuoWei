@@ -104,6 +104,7 @@ public class CompanyController {
 	public String getProData(HttpServletRequest request) {
 		GwCompanyproduct temp = new GwCompanyproduct();
 		temp.setCompanyId(Long.parseLong(request.getParameter("id")));	
+		System.out.println("查询公司产品==>" + request.getParameter("id"));
 		DatatablesView dataTable = companyproductService.getGwCompanyproductsByParam(temp);
 		String data = JSON.toJSONString(dataTable);
 		return data;
