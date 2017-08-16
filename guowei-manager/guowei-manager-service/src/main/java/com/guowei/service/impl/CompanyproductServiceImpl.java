@@ -3,6 +3,8 @@ package com.guowei.service.impl;
 import java.util.Calendar;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,6 +34,7 @@ import com.guowei.service.CompanyproductService;
 @Service
 @Transactional
 public class CompanyproductServiceImpl implements CompanyproductService {
+	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private GwCompanyproductMapper companyproductMapper;
 	@Autowired
@@ -67,7 +70,7 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanyproductsByPagedParam(GwCompanyproduct companyproduct, Integer start, Integer pageSize) {
 		DatatablesView result = new DatatablesView();
-		System.out.println("查询公司产品开始================");
+		log.error("查询公司产品开始================");
 		try {
 			GwCompanyproductExample gme = new GwCompanyproductExample();
 			Criteria criteria = gme.createCriteria();
@@ -78,13 +81,13 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 			int pageNum = (start/pageSize)+1;
 			PageHelper.startPage(pageNum, pageSize);
 			List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
-			System.out.println("查询公司产品结果==>" + JSON.toJSONString(list));
+			log.debug("查询公司产品结果==>" + JSON.toJSONString(list));
 			PageInfo<GwCompanyproduct> page = new PageInfo<>(list);
 			result.setData(list);
 			result.setRecordsTotal((int)page.getTotal());
-			System.out.println("查询公司产品结束==>" + JSON.toJSONString(result));
+			log.debug("查询公司产品结束==>" + JSON.toJSONString(result));
 		} catch (Exception e) {
-			System.out.println("查询公司产品异常==>" + e.getMessage());
+			log.error("查询公司产品异常==>" + e.getMessage());
 		}
 		return result;
 	}
@@ -92,14 +95,24 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 	@Override
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanyproductsByParam(GwCompanyproduct companyproduct) {
-		// TODO Auto-generated method stub
-		GwCompanyproductExample gme = new GwCompanyproductExample();
-		Criteria criteria = gme.createCriteria();
-		criteria.andCompanyIdEqualTo(companyproduct.getCompanyId());
-		List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
-		result.setData(list);
-		result.setRecordsTotal(list.size());
+		log.debug("================查询公司产品开始================");
+		System.out.println("================查询公司产品开始================");
+		try {
+			GwCompanyproductExample gme = new GwCompanyproductExample();
+			Criteria criteria = gme.createCriteria();
+			criteria.andCompanyIdEqualTo(companyproduct.getCompanyId());
+			List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
+			log.debug("查询公司产品结果==>" + JSON.toJSONString(list));
+			System.out.println("查询公司产品结果==>" + JSON.toJSONString(list));
+			result.setData(list);
+			result.setRecordsTotal(list.size());
+			log.debug("================查询公司产品结束================");
+			System.out.println("================查询公司产品结束================");
+		} catch (Exception e) {
+			log.error("查询公司产品异常==>" + e.getMessage());
+			System.out.println("查询公司产品异常==>" + e.getMessage());
+		}
 		return result;
 	}
 	@Override
