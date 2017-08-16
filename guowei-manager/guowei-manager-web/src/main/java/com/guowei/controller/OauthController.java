@@ -47,10 +47,15 @@ public class OauthController {
 
 		GwUser user = userService.getGwUserByOpenId(openid);
 		if (user == null) {
+			String name = res.getString("nickname");
+			name = name.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "*"); 
+			if (name == null || name.length() <= 0) {
+				name = "奇奇怪怪的名字";
+			}
 			user = new GwUser();
 			user.setAvatar(res.getString("headimgurl"));
 			user.setCreated(Calendar.getInstance().getTime());
-			user.setName(res.getString("nickname"));
+			user.setName(name);
 			user.setPhone("");
 			user.setTotalconsume(0l);
 			user.setUpdated(Calendar.getInstance().getTime());
