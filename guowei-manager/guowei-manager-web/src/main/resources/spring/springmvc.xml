@@ -22,7 +22,10 @@
         <property name="prefix" value="/WEB-INF/pages/" />      
         <property name="suffix" value=".jsp" />      
     </bean>        
-
+    <mvc:interceptors>  
+	    <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->  
+	    <bean class="com.guowei.utils.AllInterceptor"/>  
+	</mvc:interceptors> 
     <!-- 静态资源过滤 -->
     <mvc:resources location="/res/" mapping="/res/**"/> 
     <mvc:resources location="/WEB-INF/pages/error/" mapping="/WEB-INF/pages/error/**"/> 
