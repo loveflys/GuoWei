@@ -483,13 +483,22 @@
                 },
                 success: function(res) {
                 	window.param.all = res.data;
+                	if (!res.data || res.data.length <= 0) {
+                		swal({title: "提示",text: "暂无数据！",timer: 2000,showConfirmButton: false  });
+                		return;
+                	}
                 	var list = _.groupBy(res.data, 'storageracks');
+                	if (!list) {
+                		swal({title: "提示",text: "数据有误，请联系系统管理员解决！",timer: 2000,showConfirmButton: false  });
+                		return;
+                	}
                     bindData(list);
                 }
             });
         }
         function bindData(data) {
             if (data == null) {
+            	swal({title: "提示",text: "无数据",timer: 2000,showConfirmButton: false  });
                 return;
             }
             var tpl = $("#pro_tpl").html();
