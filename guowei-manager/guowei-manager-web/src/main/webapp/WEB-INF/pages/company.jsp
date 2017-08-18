@@ -427,13 +427,14 @@
         [[ } ]]
     </script>
     <script src="<%=path%>/res/home/assets/js/jquery.min.js"></script>
+    <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
     <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
     <script>
         window.param = {
-        	all: [],
-        	cart: [],
-        	amount: 0,
-        	showCart: false,
+            all: [],
+            cart: [],
+            amount: 0,
+            showCart: false,
         }
         $(function() {
         	$.ajax({
@@ -464,39 +465,40 @@
         	_.templateSettings = {
                 evaluate    : /\[\[(.+?)\]\]/g,
                 interpolate : /\{\{(.+?)\}\}/g
-            };       
+            };  
+        	FastClick.attach(document.body);
         	getData();
-        })
+        });
         function getData() {
-        	$.ajax({
+            $.ajax({
                 cache: false,
                 type: "POST",
                 url: "<%=path%>/company/getProData",
                 data: {
-                	id: ${id}
+                    id: ${id}
                 },
                 async: false,
                 error: function(request) {
                     toastr.error("Server Connection Error...");
                 },
                 success: function(res) {
-                	window.param.all = res.data;
-                	if (!res.data || res.data.length <= 0) {
-                		swal({title: "提示",text: "暂无数据！",timer: 2000,showConfirmButton: false  });
-                		return;
-                	}
-                	var list = _.groupBy(res.data, 'storageracks');
-                	if (!list) {
-                		swal({title: "提示",text: "数据有误，请联系系统管理员解决！",timer: 2000,showConfirmButton: false  });
-                		return;
-                	}
+                    window.param.all = res.data;
+                    if (!res.data || res.data.length <= 0) {
+                        swal({title: "提示",text: "暂无数据！",timer: 2000,showConfirmButton: false  });
+                        return;
+                    }
+                    var list = _.groupBy(res.data, 'storageracks');
+                    if (!list) {
+                        swal({title: "提示",text: "数据有误，请联系系统管理员解决！",timer: 2000,showConfirmButton: false  });
+                        return;
+                    }
                     bindData(list);
                 }
             });
         }
         function bindData(data) {
             if (data == null) {
-            	swal({title: "提示",text: "无数据",timer: 2000,showConfirmButton: false  });
+                swal({title: "提示",text: "无数据",timer: 2000,showConfirmButton: false  });
                 return;
             }
             var tpl = $("#pro_tpl").html();
@@ -507,99 +509,184 @@
             }));
         }
         function change(obj) {
-        	var index = $(obj).attr('id');
-        	$(obj).addClass('search-leftbar-cur');
-        	$(obj).siblings().removeClass('search-leftbar-cur');
-        	switch(index) {
-        	   case 'firstpro':
-        		   $("#first_pro_body").show();
-        		   $("#first_pro_body").siblings().hide();
-        		   break;
-        	   case 'secondpro':
+            var index = $(obj).attr('id');
+            $(obj).addClass('search-leftbar-cur');
+            $(obj).siblings().removeClass('search-leftbar-cur');
+            switch(index) {
+               case 'firstpro':
+                   $("#first_pro_body").show();
+                   $("#first_pro_body").siblings().hide();
+                   break;
+               case 'secondpro':
                    $("#second_pro_body").show();
                    $("#second_pro_body").siblings().hide();
                    break;
-        	   case 'thirdpro':
+               case 'thirdpro':
                    $("#third_pro_body").show();
                    $("#third_pro_body").siblings().hide();
                    break;
-        	   case 'forthpro':
+               case 'forthpro':
                    $("#forth_pro_body").show();
                    $("#forth_pro_body").siblings().hide();
                    break;       
-        	}
+            }
         }
         //清空购物车
         function clearCart() {
-        	$(".red-point").each(function (index, item) {
+            $(".red-point").each(function (index, item) {
                 $(item).hide();
             })
-        	window.param.cart = [];
-        	window.param.amount = 0;
-        	$("#cartnum").removeAttr('attr-quantity');
-        	$("#cartnum").removeClass('goods');
-        	$("#totalAmount").text(0);
-        	$("#cartProContainer").html('');
-        	if (!$(".submitBtn").hasClass('disabled')) {
+            window.param.cart = [];
+            window.param.amount = 0;
+            $("#cartnum").removeAttr('attr-quantity');
+            $("#cartnum").removeClass('goods');
+            $("#totalAmount").text(0);
+            $("#cartProContainer").html('');
+            if (!$(".submitBtn").hasClass('disabled')) {
                 $(".submitBtn").addClass('disabled');
                 $(".submitBtn").removeAttr("onclick");
             }
-        	toggleCart();
+            toggleCart();
+        }
+        function toggleCart() {
+            if (!window.param.showCart && (!window.param.cart || window.param.cart.length <= 0)) {
+                return;
+            }
+            window.param.showCart = !window.param.showCart;
+            if (window.param.showCart) {
+                $('.bgm').show();
+                $('.cart-body').show();
+            } else {
+                $('.bgm').hide();
+                $('.cart-body').hide();
+            }
+        }
+        function submit () {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "<%=path%>/order/submit",
+                data: {
+                    companyId: '${id}',
+                    companyName: '${companyName}',
+                    details: JSON.stringify(window.param.cart),
+                    uid: '${currentUser.id}',
+                    openid: '${currentUser.wechatOpenid}',
+                    uname: '${currentUser.name}'
+                },
+                async: false,
+                error: function(request) {
+                    toastr.error("Server Connection Error..."+JSON.stringify(request));
+                },
+                success: function(res) {
+                    if (res.status) {
+                        //调用微信支付
+                        //swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "<%=path%>/wechat/unifiedOrder",
+                            data: {
+                                orderId: res.msg
+                            },
+                            async: false,
+                            error: function(request) {
+                                toastr.error("调用微信支付错误，请稍后再试...");
+                            },
+                            success: function(data) {
+                                if (data.status) {
+                                    wx.chooseWXPay({  
+                                        appId: data.appId,     //公众号名称，由商户传入     
+                                        timestamp: data.timeStamp,         //时间戳，自1970年以来的秒数     
+                                        nonceStr: data.nonceStr, //随机串     
+                                        package: data.prepayId,     
+                                        signType: "MD5",         //微信签名方式：     
+                                        paySign: data.paySign, //微信签名 
+                                        success: function(resp) {  
+                                            // 支付成功后的回调函数  
+                                            if (resp.errMsg == "chooseWXPay:ok") {  
+                                                //支付成功  
+                                                swal({    title: "提示",    text: "支付成功！",    timer: 2000,    showConfirmButton: false  });
+                                                clearCart();
+                                            } else {  
+                                                swal({    title: "提示",    text: resp.errMsg,    timer: 2000,    showConfirmButton: false  });
+                                            }  
+                                        },  
+                                        cancel: function(resps) {  
+                                            //支付取消  
+                                            swal({    title: "提示",    text: "支付取消",    timer: 2000,    showConfirmButton: false  });
+                                        }  
+                                    });  
+                                } else {
+                                    
+                                }
+                            }
+                        }); 
+                    } else {
+                         swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
+                    }
+                }
+            });
         }
         function addtoCart(id) {
         	var item = null;
-            let number = 0;
-        	let has = false;
-        	let amount = 0;
-        	
-        	window.param.cart.map((e)=> {
-        		if (e.id == id) {
-        			item = e;
-        			has = true;
-        			number = e.number = e.number+1;
-        		}
-        		amount += e.number * e.proprice;
-        	});
-        	if (item && item.number > item.stock) {
-        		swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
-        		item.number = item.stock;
-        		number = item.stock;
-        		$("#point_"+id).show();
+            var number = 0;
+            var has = false;
+            var amount = 0;
+            if (window.param && window.param.cart && window.param.cart.length > 0) {
+            	for (var i = 0, length = window.param.cart.length; i < length; i++) {
+            		var e = window.param.cart[i];
+            		if (e.id == id) {
+                        item = e;
+                        has = true;
+                        number = e.number = e.number+1;
+                    }
+                    amount += e.number * e.proprice;
+            	}
+            }
+            if (item && item.number > item.stock) {
+                swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
+                item.number = item.stock;
+                number = item.stock;
+                $("#point_"+id).show();
                 $("#point_"+id).html(number);
                 return false;
-        	}
-        	if (!has) {
-        		window.param.all.map((e)=> {
-                    if (e.id == id) {
-                        item = e;
-                    }
-                });
-        		if (item.stock <= 0) {
+            }
+            if (!has) {
+            	if (window.param.all && window.param.all.length > 0) {
+            		for (var i = 0, length = window.param.all.length; i < length; i++) {
+            			var e = window.param.all[i];
+            			if (e.id == id) {
+                            item = e;
+                        }
+            		}
+            	}
+                if (item.stock <= 0) {
                     swal({    title: "提示",    text: "库存不足！",    timer: 2000,    showConfirmButton: false  });
                     return;
                 }
-        		item.number = 1;
-        		number = 1;
-        		window.param.cart.push(item);
-        		amount += item.proprice;        		
-        	}
-        	$("#point_"+id).show();
-        	$("#point_"+id).html(number);
-        	$("#totalAmount").text(amount.toFixed(2));
-        	var tempNum = 0;
-        	if (window.param.cart && window.param.cart.length > 0) {
-        	    var tempArr = [];
-        	    tempArr = _.pluck(window.param.cart, 'number');
-        	    tempNum = _.reduce(tempArr, function(memo, num){ return memo + num; }, 0);
-        	}
-        	$("#cartnum").attr('attr-quantity', tempNum);
-        	var tpl = $("#cart_tpl").html();
+                item.number = 1;
+                number = 1;
+                window.param.cart.push(item);
+                amount += item.proprice;                
+            }
+            $("#point_"+id).show();
+            $("#point_"+id).html(number);
+            $("#totalAmount").text(amount.toFixed(2));
+            var tempNum = 0;
+            if (window.param.cart && window.param.cart.length > 0) {
+                var tempArr = [];
+                tempArr = _.pluck(window.param.cart, 'number');
+                tempNum = _.reduce(tempArr, function(memo, num){ return memo + num; }, 0);
+            }
+            $("#cartnum").attr('attr-quantity', tempNum);
+            var tpl = $("#cart_tpl").html();
             var _tpl = _.template(tpl);
             $("#cartProContainer").html(_tpl({
                 "data": window.param.cart
             }));
             if (!$("#cartnum").hasClass('goods')) {
-            	$("#cartnum").addClass(' goods')
+                $("#cartnum").addClass(' goods')
             }
             if ($(".submitBtn").hasClass('disabled')) {
                 $(".submitBtn").removeClass('disabled');
@@ -607,17 +694,17 @@
             }
         }
         function minusCartPro(id) {
-            let amount = 0;
-            let temp = [];
+            var amount = 0;
+            var temp = [];
             for(var i=0,length=window.param.cart.length; i< length; i++) {
-            	var e = window.param.cart[i];
-            	if (e.id == id) {
+                var e = window.param.cart[i];
+                if (e.id == id) {
                     e.number = e.number-1;
                     if (e.number == 0) {
-                    	$("#cartpro_"+id).remove();
-                    	$("#point_"+id).hide();
+                        $("#cartpro_"+id).remove();
+                        $("#point_"+id).hide();
                     } else {
-                    	$("#point_"+id).show();
+                        $("#point_"+id).show();
                         $("#point_"+id).html(e.number);
                     }
                 }
@@ -628,8 +715,8 @@
             }
             window.param.cart = temp;
             if (window.param.cart.length <= 0) {
-            	clearCart();
-            	return;
+                clearCart();
+                return;
             }
             $("#totalAmount").text(amount.toFixed(2));
             var tempNum = 0;
@@ -644,86 +731,6 @@
             $("#cartProContainer").html(_tpl({
                 "data": window.param.cart
             }));
-        }
-        function toggleCart() {
-        	if (!window.param.showCart && (!window.param.cart || window.param.cart.length <= 0)) {
-        		return;
-        	}
-        	window.param.showCart = !window.param.showCart;
-        	if (window.param.showCart) {
-        		$('.bgm').show();
-        		$('.cart-body').show();
-        	} else {
-        		$('.bgm').hide();
-                $('.cart-body').hide();
-        	}
-        }
-        function submit () {
-        	$.ajax({
-                cache: false,
-                type: "POST",
-                url: "<%=path%>/order/submit",
-                data: {
-                	companyId: '${id}',
-                    companyName: '${companyName}',
-                    details: JSON.stringify(window.param.cart),
-                    uid: '${currentUser.id}',
-                    openid: '${currentUser.wechatOpenid}',
-                    uname: '${currentUser.name}'
-                },
-                async: false,
-                error: function(request) {
-                    toastr.error("Server Connection Error..."+JSON.stringify(request));
-                },
-                success: function(res) {
-                    if (res.status) {
-                    	//调用微信支付
-                    	//swal({    title: "提示",    text: "订单提交成功，待支付",    timer: 2000,    showConfirmButton: false  });
-                    	$.ajax({
-                            cache: false,
-                            type: "POST",
-                            url: "<%=path%>/wechat/unifiedOrder",
-                            data: {
-                            	orderId: res.msg
-                            },
-                            async: false,
-                            error: function(request) {
-                                toastr.error("调用微信支付错误，请稍后再试...");
-                            },
-                            success: function(data) {
-                            	if (data.status) {
-                            		wx.chooseWXPay({  
-                                        appId: data.appId,     //公众号名称，由商户传入     
-                                        timestamp: data.timeStamp,         //时间戳，自1970年以来的秒数     
-                                        nonceStr: data.nonceStr, //随机串     
-                                        package: data.prepayId,     
-                                        signType: "MD5",         //微信签名方式：     
-                                        paySign: data.paySign, //微信签名 
-                                        success: function(resp) {  
-                                            // 支付成功后的回调函数  
-                                            if (resp.errMsg == "chooseWXPay:ok") {  
-                                                //支付成功  
-                                            	swal({    title: "提示",    text: "支付成功！",    timer: 2000,    showConfirmButton: false  });
-                                            	clearCart();
-                                            } else {  
-                                                swal({    title: "提示",    text: resp.errMsg,    timer: 2000,    showConfirmButton: false  });
-                                            }  
-                                        },  
-                                        cancel: function(resps) {  
-                                            //支付取消  
-                                            swal({    title: "提示",    text: "支付取消",    timer: 2000,    showConfirmButton: false  });
-                                        }  
-                                    });  
-                            	} else {
-                            		
-                            	}
-                            }
-                        }); 
-                    } else {
-                    	 swal({    title: "提示",    text: res.msg,    timer: 2000,    showConfirmButton: false  });
-                    }
-                }
-            });
         }
     </script>
 </body>
