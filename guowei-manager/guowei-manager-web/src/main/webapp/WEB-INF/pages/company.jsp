@@ -426,9 +426,8 @@
             </div>
         [[ } ]]
     </script>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
-    <script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
+    <script src="<%=path%>/res/home/assets/js/jquery.min.js"></script>
+    <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
     <script>
         window.param = {
         	all: [],
@@ -466,7 +465,6 @@
                 evaluate    : /\[\[(.+?)\]\]/g,
                 interpolate : /\{\{(.+?)\}\}/g
             };       
-        	FastClick.attach(document.body);
         	getData();
         })
         function getData() {
