@@ -96,6 +96,7 @@ public class WeChatController {
 	@RequestMapping(value = "/getConfig", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getConfig(HttpServletRequest request) {
+		System.out.println("请求获取微信配置==>" + request.getParameter("url"));
 		JSONObject accessTokenResult = WeiXinOAuth.GetWeiXinAccessToken(Secret.APP_ID, Secret.APP_SECRET);
 		String access_token = accessTokenResult.getString("access_token");
 
