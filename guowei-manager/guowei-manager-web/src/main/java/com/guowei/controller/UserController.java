@@ -1,5 +1,7 @@
 package com.guowei.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,7 +20,12 @@ import com.alibaba.fastjson.JSON;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.pojo.GwApply;
+import com.guowei.pojo.GwCompany;
+import com.guowei.pojo.GwComplain;
+import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwUser;
+import com.guowei.service.CompanyService;
 import com.guowei.service.UserService;
 
 /**
@@ -68,6 +75,122 @@ public class UserController {
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;
+	}
+	
+	/**
+	 * 查询投诉记录
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/user/getComplains", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getComplains(HttpServletRequest request, GwComplain complain) {
+		GwComplain temp = new GwComplain();
+		temp.setContactPhone(request.getParameter("name"));
+		DatatablesView dataTable = userService.getGwComplainsByPagedParam(temp,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	/**
+	 * 查询申请记录
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/user/getApplys", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getApplys(HttpServletRequest request, GwApply apply) {
+		GwApply temp = new GwApply();
+		temp.setContactPhone(request.getParameter("name"));
+		DatatablesView dataTable = userService.getGwApplysByPagedParam(temp,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	@RequestMapping(value="/user/apply/getDetail", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getApplyDetail(HttpServletRequest request, Long id) {
+		GwApply apply = userService.getGwApplyById(id);
+		String data = JSON.toJSONString(apply);
+		return data;
+	}
+	
+	@RequestMapping(value="/user/complain/getDetail", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getComplainDetail(HttpServletRequest request, Long id) {
+		GwComplain complain = userService.getGwComplainById(id);
+		String data = JSON.toJSONString(complain);
+		return data;
+	}
+	
+	/**
+	 * 申请记录添加
+	 * @param company
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/user/apply/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String applyadd(HttpServletRequest request, ModelMap model) {
+		GwApply apply = new GwApply();
+		if (!"".equals(request.getParameter("uid"))) {
+			apply.setUid(Long.parseLong(request.getParameter("uid")));
+		}
+		if (!"".equals(request.getParameter("companyName"))) {
+			apply.setCompanyName(request.getParameter("companyName"));
+		}
+		if (!"".equals(request.getParameter("companyAddr"))) {
+			apply.setCompanyAddr(request.getParameter("companyAddr"));
+		}
+		if (!"".equals(request.getParameter("contactName"))) {
+			apply.setContactName(request.getParameter("contactName"));
+		}
+		if (!"".equals(request.getParameter("contactPhone"))) {
+			apply.setContactPhone(request.getParameter("contactPhone"));
+		}
+		apply.setCreated(Calendar.getInstance().getTime());
+		int result = userService.addGwApply(apply);
+		if (result == 1) {		
+			model.addAttribute("result", result);
+			log.info(Constants.SYS_NAME + "申请记录： 添加成功!");
+		}
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
+	}
+	
+	/**
+	 * 投诉箱添加
+	 * @param company
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/user/complain/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String complainadd(HttpServletRequest request, ModelMap model) {
+		GwComplain complain = new GwComplain();
+		if (!"".equals(request.getParameter("uid"))) {
+			complain.setUid(Long.parseLong(request.getParameter("uid")));
+		}
+		if (!"".equals(request.getParameter("content"))) {
+			complain.setContent(request.getParameter("content"));
+		}
+		if (!"".equals(request.getParameter("contactPhone"))) {
+			complain.setContactPhone(request.getParameter("contactPhone"));
+		}
+		complain.setCreated(Calendar.getInstance().getTime());
+		int result = userService.addGwComplain(complain);
+		if (result == 1) {		
+			model.addAttribute("result", result);
+			log.info(Constants.SYS_NAME + "投诉箱： 添加成功!");
+		}
+		MessageView msg = new MessageView(result);
+		return JSON.toJSONString(msg);
 	}
 	
 	@RequestMapping("/users")

@@ -33,8 +33,6 @@ public class PageController {
 	
 	@RequestMapping("/{page}")
 	public String showpage(@PathVariable String page) {
-		java.util.Date now = new java.util.Date();
-		System.out.println("time==>" + now.getYear() + "-" + now.getMonth() + "-" + now.getDate() +" || 页面请求==>" + page);
 		return page;
 	}
 	

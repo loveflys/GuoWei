@@ -17,6 +17,12 @@
 				<a href="<%=path%>/managerlist"> <i class="fa fa-user"></i><span><sp:message code="menu.manager"/></span></a>
 			</li>
 			<li class="treeview">
+                <a href="<%=path%>/applys"> <i class="fa fa-user"></i><span><sp:message code="apply.list"/></span></a>
+            </li>
+            <li class="treeview">
+                <a href="<%=path%>/complains"> <i class="fa fa-user"></i><span><sp:message code="complain.list"/></span></a>
+            </li>
+			<li class="treeview">
                 <a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
             </li>
             <li class="treeview">

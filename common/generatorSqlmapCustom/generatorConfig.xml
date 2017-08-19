@@ -43,6 +43,8 @@
 		</javaClientGenerator>
 		<!-- 指定数据库表 -->
 		<table schema="" tableName="gw_user"></table>
+		<table schema="" tableName="gw_apply"></table>
+		<table schema="" tableName="gw_complain"></table>
 		<table schema="" tableName="gw_manager"></table>
 		<table schema="" tableName="gw_company"></table>
 		<table schema="" tableName="gw_template"></table>

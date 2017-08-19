@@ -8,7 +8,13 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
+import com.guowei.mapper.GwApplyMapper;
+import com.guowei.mapper.GwComplainMapper;
 import com.guowei.mapper.GwUserMapper;
+import com.guowei.pojo.GwApply;
+import com.guowei.pojo.GwApplyExample;
+import com.guowei.pojo.GwComplain;
+import com.guowei.pojo.GwComplainExample;
 import com.guowei.pojo.GwUser;
 import com.guowei.pojo.GwUserExample;
 import com.guowei.pojo.GwUserExample.Criteria;
@@ -22,6 +28,12 @@ import com.guowei.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private GwUserMapper userMapper;
+	
+	@Autowired
+	private GwApplyMapper applyMapper;
+	
+	@Autowired
+	private GwComplainMapper complainMapper;
 	
 	@Override
 	public GwUser getGwUserByNamePassword(GwUser user) {
@@ -113,5 +125,87 @@ public class UserServiceImpl implements UserService {
 		result.setData(list);
 		result.setRecordsTotal(list.size());
 		return result;
+	}
+	@Override
+	public GwApply getGwApplyById(long parseLong) {
+		GwApply res = applyMapper.selectByPrimaryKey(parseLong);
+		return res;
+	}
+	@Override
+	public DatatablesView<?> getGwApplysByParam(GwApply apply) {
+		GwApplyExample gme = new GwApplyExample();
+		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
+		if (!"".equals(apply.getContactPhone())) {
+			criteria.andContactPhoneLike(apply.getContactPhone());
+			gme.or(gme.createCriteria().andCompanyNameLike(apply.getContactPhone()));
+			gme.or(gme.createCriteria().andContactNameLike(apply.getContactPhone()));
+		}		
+		List<GwApply> list = applyMapper.selectByExample(gme);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal(list.size());
+		return result;
+	}
+	@Override
+	public DatatablesView<?> getGwApplysByPagedParam(GwApply apply, Integer start, Integer pageSize) {
+		GwApplyExample gme = new GwApplyExample();
+		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
+		if (!"".equals(apply.getContactPhone())) {
+			criteria.andContactPhoneLike(apply.getContactPhone());
+			gme.or(gme.createCriteria().andCompanyNameLike(apply.getContactPhone()));
+			gme.or(gme.createCriteria().andContactNameLike(apply.getContactPhone()));
+		}		
+		int pageNum = (start/pageSize)+1;
+		PageHelper.startPage(pageNum, pageSize);
+		List<GwApply> list = applyMapper.selectByExample(gme);
+		PageInfo<GwApply> page = new PageInfo<>(list);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal((int)page.getTotal());
+		return result;
+	}
+	@Override
+	public GwComplain getGwComplainById(long parseLong) {
+		GwComplain res = complainMapper.selectByPrimaryKey(parseLong);
+		return res;
+	}
+	@Override
+	public DatatablesView<?> getGwComplainsByParam(GwComplain complain) {
+		GwComplainExample gme = new GwComplainExample();
+		com.guowei.pojo.GwComplainExample.Criteria criteria = gme.createCriteria();
+		if (!"".equals(complain.getContactPhone())) {
+			criteria.andContactPhoneLike(complain.getContactPhone());
+		}		
+		List<GwComplain> list = complainMapper.selectByExample(gme);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal(list.size());
+		return result;
+	}
+	@Override
+	public DatatablesView<?> getGwComplainsByPagedParam(GwComplain complain, Integer start, Integer pageSize) {
+		GwComplainExample gme = new GwComplainExample();
+		com.guowei.pojo.GwComplainExample.Criteria criteria = gme.createCriteria();
+		if (!"".equals(complain.getContactPhone())) {
+			criteria.andContactPhoneEqualTo(complain.getContactPhone());
+		}		
+		int pageNum = (start/pageSize)+1;
+		PageHelper.startPage(pageNum, pageSize);
+		List<GwComplain> list = complainMapper.selectByExample(gme);
+		PageInfo<GwComplain> page = new PageInfo<>(list);
+		DatatablesView result = new DatatablesView();
+		result.setData(list);
+		result.setRecordsTotal((int)page.getTotal());
+		return result;
+	}
+	@Override
+	public int addGwComplain(GwComplain complain) {
+		int res = complainMapper.insert(complain);
+		return res;
+	}
+	@Override
+	public int addGwApply(GwApply apply) {
+		int res = applyMapper.insert(apply);
+		return res;
 	}
 }
