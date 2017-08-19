@@ -96,6 +96,7 @@ public class UserServiceImpl implements UserService {
 	public DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize) {
 		// TODO Auto-generated method stub
 		GwUserExample gme = new GwUserExample();
+		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(user.getName())) {
 			criteria.andNameLike(user.getName());
@@ -115,6 +116,7 @@ public class UserServiceImpl implements UserService {
 	public DatatablesView<?> getGwUsersByParam(GwUser user) {
 		// TODO Auto-generated method stub
 		GwUserExample gme = new GwUserExample();
+		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(user.getName())) {
 			criteria.andNameLike(user.getName());
@@ -134,6 +136,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public DatatablesView<?> getGwApplysByParam(GwApply apply) {
 		GwApplyExample gme = new GwApplyExample();
+		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(apply.getContactPhone())) {
 			criteria.andContactPhoneLike(apply.getContactPhone());
@@ -149,6 +152,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public DatatablesView<?> getGwApplysByPagedParam(GwApply apply, Integer start, Integer pageSize) {
 		GwApplyExample gme = new GwApplyExample();
+		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(apply.getContactPhone())) {
 			criteria.andContactPhoneLike(apply.getContactPhone());
@@ -172,6 +176,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public DatatablesView<?> getGwComplainsByParam(GwComplain complain) {
 		GwComplainExample gme = new GwComplainExample();
+		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwComplainExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(complain.getContactPhone())) {
 			criteria.andContactPhoneLike(complain.getContactPhone());
@@ -185,6 +190,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public DatatablesView<?> getGwComplainsByPagedParam(GwComplain complain, Integer start, Integer pageSize) {
 		GwComplainExample gme = new GwComplainExample();
+		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwComplainExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(complain.getContactPhone())) {
 			criteria.andContactPhoneEqualTo(complain.getContactPhone());

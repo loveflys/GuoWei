@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
+import com.guowei.common.utils.PayUtils;
 import com.guowei.pojo.GwApply;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwComplain;
@@ -191,6 +193,20 @@ public class UserController {
 		}
 		MessageView msg = new MessageView(result);
 		return JSON.toJSONString(msg);
+	}
+	
+	@RequestMapping("/apply")
+	public ModelAndView toapply(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("apply");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
+	}
+	
+	@RequestMapping("/complain")
+	public ModelAndView tocomplain(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("complain");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
 	}
 	
 	@RequestMapping("/users")
