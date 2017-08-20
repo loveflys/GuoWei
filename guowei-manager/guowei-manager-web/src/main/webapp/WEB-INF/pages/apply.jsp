@@ -92,7 +92,6 @@
     <script src="<%=path%>/res/home/assets/js/jquery-3.1.1.js"></script>
     <script src="<%=path%>/res/home/assets/js/bootstrap.min.js"></script>
     <script src="<%=path%>/res/home/assets/js/owl.carousel.min.js"></script>
-    <script src="https://use.fontawesome.com/55b73bf748.js"></script>
     <script src="<%=path%>/res/home/assets/js/jquery.magnific-popup.js"></script>
     <script src="<%=path%>/res/home/assets/js/script.js"></script>
     <script>

@@ -2,12 +2,6 @@
 
 <aside class="main-sidebar">
 	<section class="sidebar">
-		<!-- Sidebar user panel 菜单用户信息 -->
-
-		<!-- search form -->
-		<!-- /.search form -->
-		
-		<!-- sidebar menu: : style can be found in sidebar.less -->
 		<ul class="sidebar-menu">
 			<li class="header"><sp:message code="menu"/></li>
 			<li class="treeview">
@@ -42,13 +36,7 @@
             </li>
             <li class="treeview">
                 <a href="<%=path%>/divisions"> <i class="fa fa-user"></i><span><sp:message code="menu.divisions"/></span></a>
-            </li>
-			
-                
-                
-                
-                
-               
+            </li>               
 		</ul>
 	</section>
 </aside>

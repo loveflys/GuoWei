@@ -190,11 +190,11 @@
 	            
 	        }
         </script>
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="<%=path%>/res/home/assets/js/jquery-ui.min.js"></script>
         <script>
             $.widget.bridge('uibutton', $.ui.button);
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="<%=path%>/res/home/assets/js/raphael-min.js"></script>
         <script src="<%=path%>/res/plugins/morris/morris.min.js"></script>
         <!-- Sparkline -->
         <script src="<%=path%>/res/plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -204,7 +204,7 @@
         <!-- jQuery Knob Chart -->
         <script src="<%=path%>/res/plugins/knob/jquery.knob.js"></script>
         <!-- daterangepicker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+        <script src="<%=path%>/res/home/assets/js/moment.min.js"></script>
         <script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
         <!-- datepicker -->
         <script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
@@ -214,7 +214,7 @@
         <script src="<%=path%>/res/plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!-- FastClick -->
         <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
-        <script src="http://www.css88.com/doc/underscore/underscore-min.js"></script>
+        <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
         <!-- AdminLTE App -->
         <script src="<%=path%>/res/dist/js/app.min.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
