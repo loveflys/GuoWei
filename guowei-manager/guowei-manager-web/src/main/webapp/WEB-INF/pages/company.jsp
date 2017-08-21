@@ -1,19 +1,20 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="include/common.jsp"%>
+<%@ include file="include/toast.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
 <title>${companyName} - ${currentUser.name}</title>
-<!-- iCheck -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/aui.css">
-<!-- Morris chart -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/search.css">
-<!-- jvectormap -->
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<link rel="stylesheet" href="<%=path%>/res/home/assets/css/swiper-3.4.2.min.css">
 <style type="text/css">
+        .swiper-container {
+            width: 100%;
+            height: 100px;
+        }
         .red-point {
             width: 20px;
 		    height: 20px;
@@ -278,47 +279,60 @@
 </style>
 </head>
 <body>
-    <div class="hor-search">
-        <div class="search-leftbar">
-            <ul class="mb50" id="mb50">
-                <li id="firstpro" onclick="change(this)" class="search-leftbar-cur"><a>第一货架</a></li>
-                <li id="secondpro" onclick="change(this)"><a>第二货架</a></li>
-                <li id="thirdpro" onclick="change(this)"><a>第三货架</a></li>
-                <li id="forthpro" onclick="change(this)"><a>第四货架</a></li>
-            </ul>
-        </div>
-        <div class="search-rightbar" id="proContainer">
-        </div>
-        <footer>
-            <div class="bgm" onclick="toggleCart()" style="display:none;"></div>
-	        <div class="cart-body" style="display:none;">
-	           <div class="title">
-                    <span class="buycart">购物车</span>
-                    <a href="javascript:clearCart();">
-                        <i class="fa fa-trash-o"></i>
-                        <span>清空</span>
-                    </a>
-                </div>
-	        
-	           <div class="container">
-                    <ul id="cartProContainer">
-                        
-                    </ul>
-                </div>
-	        </div>
-	        <div class="footer">
-			    <span id="cartnum" onclick="toggleCart()" class="cart"> <!-- attr-quantity="1" -->
-			    </span>
-			    <div class="buy-info" onclick="toggleCart()">
-			      
-			      <p class="buy-info-price">￥<span id="totalAmount">0</span></p>
-			    </div>
-			    <a class="submitBtn disabled" onclick="submit()">去结算</a>
-			</div>
-		</footer>
-        
-        
+    <div class="company-header">
+        <!-- <div class="swiper-container">
+		    <div class="swiper-wrapper">
+		        <div class="swiper-slide">Slide 1</div>
+		        <div class="swiper-slide">Slide 2</div>
+		        <div class="swiper-slide">Slide 3</div>
+		    </div>
+		    <div class="swiper-pagination"></div>
+		</div> -->
     </div>
+    <div class="company-body">
+        <div class="hor-search">
+	        <div class="search-leftbar">
+	            <ul class="mb50" id="mb50">
+	                <li id="firstpro" onclick="change(this)" class="search-leftbar-cur"><a>第一货架</a></li>
+	                <li id="secondpro" onclick="change(this)"><a>第二货架</a></li>
+	                <li id="thirdpro" onclick="change(this)"><a>第三货架</a></li>
+	                <li id="forthpro" onclick="change(this)"><a>第四货架</a></li>
+	            </ul>
+	        </div>
+	        <div class="search-rightbar" id="proContainer">
+	        </div>
+	        <footer>
+	            <div class="bgm" onclick="toggleCart()" style="display:none;"></div>
+	            <div class="cart-body" style="display:none;">
+	               <div class="title">
+	                    <span class="buycart">购物车</span>
+	                    <a href="javascript:clearCart();">
+	                        <i class="fa fa-trash-o"></i>
+	                        <span>清空</span>
+	                    </a>
+	                </div>
+	            
+	               <div class="container">
+	                    <ul id="cartProContainer">
+	                        
+	                    </ul>
+	                </div>
+	            </div>
+	            <div class="footer">
+	                <span id="cartnum" onclick="toggleCart()" class="cart"> <!-- attr-quantity="1" -->
+	                </span>
+	                <div class="buy-info" onclick="toggleCart()">
+	                  
+	                  <p class="buy-info-price">￥<span id="totalAmount">0</span></p>
+	                </div>
+	                <a class="submitBtn disabled" onclick="submit()">去结算</a>
+	            </div>
+	        </footer>
+	        
+	        
+	    </div>
+    </div>
+    
     <script type="text/html" id="cart_tpl">
         [[ if (data) { ]]
             [[ for(var i = 0, length = data.length; i< length; i++) { var item = data[i]; ]]
@@ -426,9 +440,11 @@
             </div>
         [[ } ]]
     </script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="<%=path%>/res/home/assets/js/jquery.min.js"></script>
     <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
     <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
+    <script src="<%=path%>/res/home/assets/js/swiper-3.4.2.jquery.min.js"></script>
     <script>
         window.param = {
             all: [],
@@ -733,5 +749,12 @@
             }));
         }
     </script>
+    <script>        
+	  //var mySwiper = new Swiper ('.swiper-container', {
+	  //  direction: 'horizontal',
+	  //  loop: true,
+	  //  pagination: '.swiper-pagination',
+	  //})        
+	</script>
 </body>
 </html>
