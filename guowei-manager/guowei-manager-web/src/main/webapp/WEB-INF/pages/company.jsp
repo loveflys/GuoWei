@@ -384,7 +384,7 @@
             <div class="the-onelm-name">
 				<span class="the-onelm-left"></span>
 				<div class="the-onelm-name-cname">${companyName}</div>
-				<span class="the-onelm-right">关注</span>
+				<span class="the-onelm-right" onclick="showQrCode()">关注</span>
 			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第一层货架</h4>
@@ -407,7 +407,7 @@
             <div class="the-onelm-name">
 				<span class="the-onelm-left"></span>
 				<div class="the-onelm-name-cname">${companyName}</div>
-				<span class="the-onelm-right">关注</span>
+				<span class="the-onelm-right" onclick="showQrCode()">关注</span>
 			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第二层货架</h4>
@@ -431,7 +431,7 @@
             <div class="the-onelm-name">
 				<span class="the-onelm-left"></span>
 				<div class="the-onelm-name-cname">${companyName}</div>
-				<span class="the-onelm-right">关注</span>
+				<span class="the-onelm-right" onclick="showQrCode()">关注</span>
 			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第三层货架</h4>
@@ -455,7 +455,7 @@
             <div class="the-onelm-name">
 				<span class="the-onelm-left"></span>
 				<div class="the-onelm-name-cname">${companyName}</div>
-				<span class="the-onelm-right">关注</span>
+				<span class="the-onelm-right" onclick="showQrCode()">关注</span>
 			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第四层货架</h4>
