@@ -339,7 +339,7 @@
                       <div class="modal-body">
                         <div class="form-group">                                                        
                             <div id="show-qrcode" style="display: flex;align-items: center;justify-content: center;">
-                            	<img src="<%=path%>/res/home/assets/images/qrcode.jpg" />
+                            	<img style="width: 100%;" src="<%=path%>/res/home/assets/images/qrcode.jpg" />
                             </div>
                         </div>
                       </div>
