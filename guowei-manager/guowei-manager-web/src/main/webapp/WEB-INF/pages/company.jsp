@@ -329,7 +329,26 @@
 	            </div>
 	        </footer>
 	        
-	        
+	        <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" onclick="$('#showModal').modal('hide')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">长按识别二维码 - 关注公众号</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">                                                        
+                            <div id="show-qrcode" style="display: flex;align-items: center;justify-content: center;">
+                            	<img src="<%=path%>/res/home/assets/images/qrcode.jpg" />
+                            </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="$('#showModal').modal('hide')">关闭</button>
+                      </div>
+                    </div>
+                  </div>
+			</div>
 	    </div>
     </div>
     
@@ -362,7 +381,11 @@
     <script type="text/html" id="pro_tpl">
         [[ if(data){ ]] 
             <div class="aui-content list-detail-show" id="first_pro_body">
-            <div class="the-onelm-name">${companyName}</div>
+            <div class="the-onelm-name">
+				<span class="the-onelm-left"></span>
+				<div class="the-onelm-name-cname">${companyName}</div>
+				<span class="the-onelm-right">关注</span>
+			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第一层货架</h4>
                 [[if(data[1]&&data[1].length>0){ ]]
@@ -381,7 +404,11 @@
             </div>
 
             <div class="aui-content list-detail-show" id="second_pro_body" style="display:none;">
-            <div class="the-onelm-name">${companyName}</div>
+            <div class="the-onelm-name">
+				<span class="the-onelm-left"></span>
+				<div class="the-onelm-name-cname">${companyName}</div>
+				<span class="the-onelm-right">关注</span>
+			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第二层货架</h4>
                 [[if(data[2]&&data[2].length>0){ ]]
@@ -401,7 +428,11 @@
 
 
             <div class="aui-content list-detail-show" id="third_pro_body" style="display:none;">
-            <div class="the-onelm-name">${companyName}</div>
+            <div class="the-onelm-name">
+				<span class="the-onelm-left"></span>
+				<div class="the-onelm-name-cname">${companyName}</div>
+				<span class="the-onelm-right">关注</span>
+			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第三层货架</h4>
                 [[if(data[3]&&data[3].length>0){ ]]
@@ -421,7 +452,11 @@
 
 
             <div class="aui-content list-detail-show" id="forth_pro_body" style="display:none;">
-            <div class="the-onelm-name">${companyName}</div>
+            <div class="the-onelm-name">
+				<span class="the-onelm-left"></span>
+				<div class="the-onelm-name-cname">${companyName}</div>
+				<span class="the-onelm-right">关注</span>
+			</div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>第四层货架</h4>
                 [[if(data[4]&&data[4].length>0){ ]]
@@ -485,6 +520,9 @@
         	FastClick.attach(document.body);
         	getData();
         });
+        function showQrCode() {
+        	$('#showModal').modal('show');
+        }
         function getData() {
             $.ajax({
                 cache: false,
