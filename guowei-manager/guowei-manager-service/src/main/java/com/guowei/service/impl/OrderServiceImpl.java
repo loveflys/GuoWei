@@ -155,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
 		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 //		if (!"".equals(order.getTitle())) {
-//			criteria.andTitleLike(order.getTitle());
+//			criteria.andTitleLike("%"+order.getTitle()+"%");
 //		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -174,7 +174,7 @@ public class OrderServiceImpl implements OrderService {
 		GwOrderExample gme = new GwOrderExample();
 		Criteria criteria = gme.createCriteria();
 //		if (!"".equals(order.getTitle())) {
-//			criteria.andTitleLike(order.getTitle());
+//			criteria.andTitleLike("%"+order.getTitle()+"%");
 //		}		
 		List<GwOrder> list = orderMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();

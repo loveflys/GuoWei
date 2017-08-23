@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService {
 		GwCategoryExample gme = new GwCategoryExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(category.getName())) {
-			criteria.andNameLike(category.getName());
+			criteria.andNameLike("%" + category.getName() + "%");
 		}		
 		List<GwCategory> list = categoryMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();

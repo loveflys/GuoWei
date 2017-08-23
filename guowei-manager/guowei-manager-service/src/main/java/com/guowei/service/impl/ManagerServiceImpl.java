@@ -54,7 +54,7 @@ public class ManagerServiceImpl implements ManagerService {
 	public GwManager getGwManagerByName(String username) {
 		GwManagerExample example = new GwManagerExample();
 		Criteria c = example.createCriteria();
-		c.andNameLike(username);
+		c.andNameLike("%"+username+"%");
 		List<GwManager> res = managerMapper.selectByExample(example);
 		if (res != null && res.size() > 0) {
 			return res.get(0);
@@ -83,8 +83,8 @@ public class ManagerServiceImpl implements ManagerService {
 		GwManagerExample gme = new GwManagerExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(manager.getName())) {
-			criteria.andNameLike(manager.getName());
-			gme.or(gme.createCriteria().andPhoneLike(manager.getName()));
+			criteria.andNameLike("%"+manager.getName()+"%");
+			gme.or(gme.createCriteria().andPhoneLike("%"+manager.getName()+"%"));
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);

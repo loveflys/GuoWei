@@ -63,7 +63,7 @@ public class TemplateServiceImpl implements TemplateService {
 		GwTemplateExample gme = new GwTemplateExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(template.getName())) {
-			criteria.andNameLike(template.getName());
+			criteria.andNameLike("%"+template.getName()+"%");
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -82,7 +82,7 @@ public class TemplateServiceImpl implements TemplateService {
 		GwTemplateExample gme = new GwTemplateExample();
 		Criteria criteria = gme.createCriteria();
 //		if (!"".equals(template.getName())) {
-//			criteria.andNameLike(template.getName());
+//			criteria.andNameLike("%"+template.getName()+"%");
 //		}		
 		List<GwTemplate> list = templateMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();

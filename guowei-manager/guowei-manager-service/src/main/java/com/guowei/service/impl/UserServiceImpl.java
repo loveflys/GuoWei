@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	public GwUser getGwUserByName(String username) {
 		GwUserExample example = new GwUserExample();
 		Criteria c = example.createCriteria();
-		c.andNameLike(username);
+		c.andNameLike("%"+username+"%");
 		List<GwUser> res = userMapper.selectByExample(example);
 		if (res != null && res.size() > 0) {
 			return res.get(0);
@@ -99,8 +99,8 @@ public class UserServiceImpl implements UserService {
 		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(user.getName())) {
-			criteria.andNameLike(user.getName());
-			gme.or(gme.createCriteria().andPhoneLike(user.getName()));
+			criteria.andNameLike("%"+user.getName()+"%");
+			gme.or(gme.createCriteria().andPhoneLike("%"+user.getName()+"%"));
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -119,8 +119,8 @@ public class UserServiceImpl implements UserService {
 		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(user.getName())) {
-			criteria.andNameLike(user.getName());
-			gme.or(gme.createCriteria().andPhoneLike(user.getName()));
+			criteria.andNameLike("%"+user.getName()+"%");
+			gme.or(gme.createCriteria().andPhoneLike("%"+user.getName()+"%"));
 		}		
 		List<GwUser> list = userMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
@@ -139,9 +139,9 @@ public class UserServiceImpl implements UserService {
 		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(apply.getContactPhone())) {
-			criteria.andContactPhoneLike(apply.getContactPhone());
-			gme.or(gme.createCriteria().andCompanyNameLike(apply.getContactPhone()));
-			gme.or(gme.createCriteria().andContactNameLike(apply.getContactPhone()));
+			criteria.andContactPhoneLike("%"+apply.getContactPhone()+"%");
+			gme.or(gme.createCriteria().andCompanyNameLike("%"+apply.getContactPhone()+"%"));
+			gme.or(gme.createCriteria().andContactNameLike("%"+apply.getContactPhone()+"%"));
 		}		
 		List<GwApply> list = applyMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
@@ -155,9 +155,9 @@ public class UserServiceImpl implements UserService {
 		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwApplyExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(apply.getContactPhone())) {
-			criteria.andContactPhoneLike(apply.getContactPhone());
-			gme.or(gme.createCriteria().andCompanyNameLike(apply.getContactPhone()));
-			gme.or(gme.createCriteria().andContactNameLike(apply.getContactPhone()));
+			criteria.andContactPhoneLike("%"+apply.getContactPhone()+"%");
+			gme.or(gme.createCriteria().andCompanyNameLike("%"+apply.getContactPhone()+"%"));
+			gme.or(gme.createCriteria().andContactNameLike("%"+apply.getContactPhone()+"%"));
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
 		gme.setOrderByClause("created DESC");
 		com.guowei.pojo.GwComplainExample.Criteria criteria = gme.createCriteria();
 		if (!"".equals(complain.getContactPhone())) {
-			criteria.andContactPhoneLike(complain.getContactPhone());
+			criteria.andContactPhoneLike("%"+complain.getContactPhone()+"%");
 		}		
 		List<GwComplain> list = complainMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();

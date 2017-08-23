@@ -78,8 +78,8 @@ public class DivisionServiceImpl implements DivisionService {
 		GwDivisionExample gme = new GwDivisionExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(division.getName())) {
-			criteria.andNameLike(division.getName());
-			gme.or(gme.createCriteria().andAllnameLike(division.getName()));
+			criteria.andNameLike("%"+division.getName()+"%");
+			gme.or(gme.createCriteria().andAllnameLike("%"+division.getName()+"%"));
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -97,7 +97,7 @@ public class DivisionServiceImpl implements DivisionService {
 		GwDivisionExample gme = new GwDivisionExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(division.getName())) {
-			criteria.andNameLike(division.getName());
+			criteria.andNameLike("%"+division.getName()+"%");
 		}		
 		List<GwDivision> list = divisionMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();

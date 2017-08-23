@@ -196,8 +196,8 @@ public class CompanyServiceImpl implements CompanyService {
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
-			criteria.andCompanyNameLike(company.getCompanyName());
-			gme.or(gme.createCriteria().andCompanyContactphoneLike(company.getCompanyName()));
+			criteria.andCompanyNameLike("%"+company.getCompanyName()+"%");
+			gme.or(gme.createCriteria().andCompanyContactphoneLike("%"+company.getCompanyName()+"%"));
 		}
 		int pageNum = (start / pageSize) + 1;
 		PageHelper.startPage(pageNum, pageSize);
@@ -216,8 +216,8 @@ public class CompanyServiceImpl implements CompanyService {
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
-			criteria.andCompanyNameLike(company.getCompanyName());
-			gme.or(gme.createCriteria().andCompanyContactphoneLike(company.getCompanyName()));
+			criteria.andCompanyNameLike("%"+company.getCompanyName()+"%");
+			gme.or(gme.createCriteria().andCompanyContactphoneLike("%"+company.getCompanyName()+"%"));
 		}
 		if (!"".equals(company.getTemplateId())) {
 			criteria.andTemplateIdEqualTo(company.getTemplateId());
@@ -241,8 +241,8 @@ public class CompanyServiceImpl implements CompanyService {
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
-			criteria.andCompanyNameLike(company.getCompanyName());
-			gme.or(gme.createCriteria().andCompanyContactphoneLike(company.getCompanyName()));
+			criteria.andCompanyNameLike("%"+company.getCompanyName()+"%");
+			gme.or(gme.createCriteria().andCompanyContactphoneLike("%"+company.getCompanyName()+"%"));
 		}
 		List<GwCompanyTemp> list = companyMapper.selectTempByExample(gme);
 		DatatablesView result = new DatatablesView();
@@ -257,8 +257,8 @@ public class CompanyServiceImpl implements CompanyService {
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
-			criteria.andCompanyNameLike(company.getCompanyName());
-			gme.or(gme.createCriteria().andCompanyContactphoneLike(company.getCompanyName()));
+			criteria.andCompanyNameLike("%"+company.getCompanyName()+"%");
+			gme.or(gme.createCriteria().andCompanyContactphoneLike("%"+company.getCompanyName()+"%"));
 		}
 		int pageNum = (start / pageSize) + 1;
 		PageHelper.startPage(pageNum, pageSize);

@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
 	public GwProduct getGwProductByTitle(String title) {
 		GwProductExample example = new GwProductExample();
 		Criteria c = example.createCriteria();
-		c.andTitleLike(title);
+		c.andTitleLike("%"+title+"%");
 		List<GwProduct> res = productMapper.selectByExample(example);
 		if (res != null && res.size() > 0) {
 			return res.get(0);
@@ -133,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
 		GwProductExample gme = new GwProductExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(product.getTitle())) {
-			criteria.andTitleLike(product.getTitle());
+			criteria.andTitleLike("%" + product.getTitle() + "%");
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);

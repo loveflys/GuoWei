@@ -70,7 +70,6 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanyproductsByPagedParam(GwCompanyproduct companyproduct, Integer start, Integer pageSize) {
 		DatatablesView result = new DatatablesView();
-		log.error("查询公司产品开始================");
 		try {
 			GwCompanyproductExample gme = new GwCompanyproductExample();
 			Criteria criteria = gme.createCriteria();
@@ -81,13 +80,10 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 			int pageNum = (start/pageSize)+1;
 			PageHelper.startPage(pageNum, pageSize);
 			List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
-			log.debug("查询公司产品结果==>" + JSON.toJSONString(list));
 			PageInfo<GwCompanyproduct> page = new PageInfo<>(list);
 			result.setData(list);
 			result.setRecordsTotal((int)page.getTotal());
-			log.debug("查询公司产品结束==>" + JSON.toJSONString(result));
 		} catch (Exception e) {
-			log.error("查询公司产品异常==>" + e.getMessage());
 		}
 		return result;
 	}
@@ -96,19 +92,13 @@ public class CompanyproductServiceImpl implements CompanyproductService {
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanyproductsByParam(GwCompanyproduct companyproduct) {
 		DatatablesView result = new DatatablesView();
-		log.debug("================查询公司产品开始================");
-		System.out.println("================查询公司产品开始================");
 		try {
 			GwCompanyproductExample gme = new GwCompanyproductExample();
 			Criteria criteria = gme.createCriteria();
 			criteria.andCompanyIdEqualTo(companyproduct.getCompanyId());
 			List<GwCompanyproduct> list = companyproductMapper.selectByExample(gme);
-			log.debug("查询公司产品结果==>" + JSON.toJSONString(list));
-			System.out.println("查询公司产品结果==>" + JSON.toJSONString(list));
 			result.setData(list);
 			result.setRecordsTotal(list.size());
-			log.debug("================查询公司产品结束================");
-			System.out.println("================查询公司产品结束================");
 		} catch (Exception e) {
 			log.error("查询公司产品异常==>" + e.getMessage());
 			System.out.println("查询公司产品异常==>" + e.getMessage());
