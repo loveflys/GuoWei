@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
 <title>${companyName} - ${currentUser.name}</title>
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/aui.css">
+<link rel="stylesheet" href="<%=path%>/res/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/search.css">
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
 <link rel="stylesheet" href="<%=path%>/res/home/assets/css/swiper-3.4.2.min.css">
@@ -480,6 +481,7 @@
     <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
     <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
     <script src="<%=path%>/res/home/assets/js/swiper-3.4.2.jquery.min.js"></script>
+    <script src="<%=path%>/res/bootstrap/js/bootstrap.min.js"></script>
     <script>
         window.param = {
             all: [],
