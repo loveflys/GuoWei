@@ -1,5 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="include/toast.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,6 +7,9 @@
 <title>${companyName} - ${currentUser.name}</title>
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/aui.css">
 <link rel="stylesheet" href="<%=path%>/res/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=path%>/res/plugins/fontawesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=path%>/res/toastr/toastr.min.css">
+<link rel="stylesheet" href="<%=path%>/res/sweetalert/sweetalert.css">
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/search.css">
 <link rel="stylesheet" href="<%=path%>/res/plugins/wechat/iconfont.css">
 <link rel="stylesheet" href="<%=path%>/res/home/assets/css/swiper-3.4.2.min.css">
@@ -477,11 +479,13 @@
         [[ } ]]
     </script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-    <script src="<%=path%>/res/home/assets/js/jquery.min.js"></script>
+    <script src="<%=path%>/res/plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="<%=path%>/res/plugins/fastclick/fastclick.js"></script>
     <script src="<%=path%>/res/home/assets/js/underscore.min.js"></script>
     <script src="<%=path%>/res/home/assets/js/swiper-3.4.2.jquery.min.js"></script>
     <script src="<%=path%>/res/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=path%>/res/toastr/toastr.min.js"></script>
+	<script src="<%=path%>/res/sweetalert/sweetalert.min.js"></script>
     <script>
         window.param = {
             all: [],
