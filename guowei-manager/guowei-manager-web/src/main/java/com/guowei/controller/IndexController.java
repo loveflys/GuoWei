@@ -29,9 +29,9 @@ public class IndexController {
 	@ResponseBody
 	public String getIndexData(HttpServletRequest request) {
 		BigDecimal TodayAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(1); //new BigDecimal(127.1);
-		BigDecimal ToweekAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(2);
-		BigDecimal TomonthAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(3);
-		BigDecimal allAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(4);
+		BigDecimal ToweekAmount = orderService.getOrdersData(2) == null ? new BigDecimal("0") : orderService.getOrdersData(2);
+		BigDecimal TomonthAmount = orderService.getOrdersData(3) == null ? new BigDecimal("0") : orderService.getOrdersData(3);
+		BigDecimal allAmount = orderService.getOrdersData(4) == null ? new BigDecimal("0") : orderService.getOrdersData(4);
 		int newUser = 44;
 		long allUser = 88;
 		System.out.println(TodayAmount + "||" + ToweekAmount  + "||" + TomonthAmount  + "||" +  allAmount);
