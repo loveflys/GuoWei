@@ -200,7 +200,8 @@ public class OrderServiceImpl implements OrderService {
 	 * type: 1 - 今日数据 2-本周数据 3-本月数据 4-全部数据
 	 */
 	public BigDecimal getOrdersData(int type) {
-		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		orderMapper.searchOrderAmount(maps);
 		return null;
 	}
 	
