@@ -77,10 +77,10 @@
         sum(amount)  
         from gw_order where status=2  
         <if test="startTime!=null">  
-            and <![CDATA[created>=date_format(#{startTime}, 'yyyy-mm-dd') ]]>  
+            and <![CDATA[created>=date_format(#{startTime}, '%Y-%m-%d') ]]>  
         </if>  
         <if test="endTime!=null">  
-            and <![CDATA[created<=date_format(#{endTime}, 'yyyy-mm-dd') ]]>  
+            and <![CDATA[created<=date_format(#{endTime}, '%Y-%m-%d') ]]>  
         </if>  
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderExample" >
