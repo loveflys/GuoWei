@@ -2,7 +2,10 @@ package com.guowei.mapper;
 
 import com.guowei.pojo.GwOrder;
 import com.guowei.pojo.GwOrderExample;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface GwOrderMapper {
@@ -19,6 +22,8 @@ public interface GwOrderMapper {
     List<GwOrder> selectByExample(GwOrderExample example);
 
     GwOrder selectByPrimaryKey(Long id);
+    
+    BigDecimal searchOrderAmount(Map<String,Object> params);
 
     int updateByExampleSelective(@Param("record") GwOrder record, @Param("example") GwOrderExample example);
 

@@ -2,7 +2,13 @@ package com.guowei.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;  
+import java.util.Calendar;  
+import java.text.ParseException;  
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -199,10 +205,39 @@ public class OrderServiceImpl implements OrderService {
 	/**
 	 * type: 1 - 今日数据 2-本周数据 3-本月数据 4-全部数据
 	 */
-	public BigDecimal getOrdersData(int type) {
-		Map<String, Object> maps = new HashMap<String, Object>();
-		orderMapper.searchOrderAmount(maps);
-		return null;
+	public BigDecimal getOrdersData(int type) {		
+		Date d = new Date();  
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+        String dateNowStr = format.format(d);  
+		
+		Calendar cal = Calendar.getInstance();  
+        cal.set(Calendar.HOUR_OF_DAY, 0);  
+        cal.set(Calendar.SECOND, 0);  
+        cal.set(Calendar.MINUTE, 0);  
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        Calendar week = Calendar.getInstance();
+        week.setTimeInMillis(cal.getTime().getTime() - 3600*24*1000*7);
+        String weeks = format.format(week.getTime());  
+        
+        Calendar month = Calendar.getInstance();
+        month.setTimeInMillis(cal.getTime().getTime() - 3600*24*1000*30);
+        String months = format.format(month.getTime()); 
+        
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (type == 1) {
+			params.put("startTime", dateNowStr);
+			params.put("endTime", dateNowStr);
+		} else if (type == 2) {
+			params.put("startTime", weeks);
+			params.put("endTime", dateNowStr);
+		} else if (type == 3) {
+			params.put("startTime", months);
+			params.put("endTime", dateNowStr);
+		}
+		
+		BigDecimal res = orderMapper.searchOrderAmount(params);
+		return res;
 	}
 	
 }
