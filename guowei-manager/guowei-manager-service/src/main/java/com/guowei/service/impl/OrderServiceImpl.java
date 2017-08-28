@@ -210,18 +210,12 @@ public class OrderServiceImpl implements OrderService {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
         String dateNowStr = format.format(d);  
 		
-		Calendar cal = Calendar.getInstance();  
-        cal.set(Calendar.HOUR_OF_DAY, 0);  
-        cal.set(Calendar.SECOND, 0);  
-        cal.set(Calendar.MINUTE, 0);  
-        cal.set(Calendar.MILLISECOND, 0);
-        
-        Calendar week = Calendar.getInstance();
-        week.setTimeInMillis(cal.getTime().getTime() - 3600*24*1000*7);
-        String weeks = format.format(week.getTime());  
+        Calendar week = Calendar.getInstance(); 
+        week.add(Calendar.WEEK_OF_YEAR, -1);
+        String weeks = format.format(week.getTime());
         
         Calendar month = Calendar.getInstance();
-        month.setTimeInMillis(cal.getTime().getTime() - 3600*24*1000*30);
+        month.add(Calendar.MONTH, -1);
         String months = format.format(month.getTime()); 
         
 		Map<String, Object> params = new HashMap<String, Object>();
