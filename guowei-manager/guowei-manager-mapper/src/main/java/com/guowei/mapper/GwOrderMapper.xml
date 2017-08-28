@@ -74,13 +74,13 @@
   </sql>
   <select id="searchOrderAmount" resultType="DECIMAL" parameterType="map">  
         select  
-        sum(#{amount})  
+        sum(amount)  
         from gw_order where status=2  
         <if test="startTime!=null">  
-            and <![CDATA[created>=to_date(#{startTime}, 'yyyy-mm-dd') ]]>  
+            and <![CDATA[created>=date_format(#{startTime}, 'yyyy-mm-dd') ]]>  
         </if>  
         <if test="endTime!=null">  
-            and <![CDATA[created<=to_date(#{endTime}, 'yyyy-mm-dd') ]]>  
+            and <![CDATA[created<=date_format(#{endTime}, 'yyyy-mm-dd') ]]>  
         </if>  
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderExample" >

@@ -28,13 +28,13 @@ public class IndexController {
 	@RequestMapping(value="/getIndexData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getIndexData(HttpServletRequest request) {
-		BigDecimal TodayAmount = orderService.getOrdersData(1); //new BigDecimal(127.1);
-		BigDecimal ToweekAmount = orderService.getOrdersData(2);
-		BigDecimal TomonthAmount = orderService.getOrdersData(3);
-		BigDecimal allAmount = orderService.getOrdersData(4);
+		BigDecimal TodayAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(1); //new BigDecimal(127.1);
+		BigDecimal ToweekAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(2);
+		BigDecimal TomonthAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(3);
+		BigDecimal allAmount = orderService.getOrdersData(1) == null ? new BigDecimal("0") : orderService.getOrdersData(4);
 		int newUser = 44;
 		long allUser = 88;
-		
+		System.out.println(TodayAmount + "||" + ToweekAmount  + "||" + TomonthAmount  + "||" +  allAmount);
 		JSONObject res = new JSONObject();
 		res.put("TodayAmount", TodayAmount);
 		res.put("ToweekAmount", ToweekAmount);

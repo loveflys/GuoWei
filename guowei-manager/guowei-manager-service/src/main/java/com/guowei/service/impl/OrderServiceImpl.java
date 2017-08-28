@@ -235,7 +235,6 @@ public class OrderServiceImpl implements OrderService {
 			params.put("startTime", months);
 			params.put("endTime", dateNowStr);
 		}
-		
 		BigDecimal res = orderMapper.searchOrderAmount(params);
 		return res;
 	}
