@@ -85,7 +85,7 @@
 							<div class="small-box bg-green">
 								<div class="inner">
 									<h3 id="toweekamount"></h3>
-									<p>本周营业额</p>
+									<p>最近一周营业额</p>
 								</div>
 								<div class="icon">
 									<i class="ion ion-stats-bars"></i>
@@ -98,7 +98,7 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3 id="tomonthamount"></h3>
-                                    <p>本月营业额</p>
+                                    <p>最近一月营业额</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>

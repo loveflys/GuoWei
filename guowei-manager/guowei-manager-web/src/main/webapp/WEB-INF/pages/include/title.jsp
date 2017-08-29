@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 
-<title><sp:message code="sys.name"/></title>
+<title>果位管理系统</title>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
