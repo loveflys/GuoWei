@@ -202,32 +202,13 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 	@Override
-	/**
-	 * type: 1 - 今日数据 2-本周数据 3-本月数据 4-全部数据
-	 */
-	public BigDecimal getOrdersData(int type) {		
-		Date d = new Date();  
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
-        String dateNowStr = format.format(d);  
-		
-        Calendar week = Calendar.getInstance(); 
-        week.add(Calendar.WEEK_OF_YEAR, -1);
-        String weeks = format.format(week.getTime());
-        
-        Calendar month = Calendar.getInstance();
-        month.add(Calendar.MONTH, -1);
-        String months = format.format(month.getTime()); 
-        
+	public BigDecimal getOrdersData(String startTime, String endTime) {		
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (type == 1) {
-			params.put("startTime", dateNowStr);
-			params.put("endTime", dateNowStr);
-		} else if (type == 2) {
-			params.put("startTime", weeks);
-			params.put("endTime", dateNowStr);
-		} else if (type == 3) {
-			params.put("startTime", months);
-			params.put("endTime", dateNowStr);
+		if (startTime != null && !"".equals(startTime)) {
+			params.put("startTime", startTime);
+		}
+		if (endTime != null && !"".equals(endTime)) {
+			params.put("endTime", endTime);
 		}
 		BigDecimal res = orderMapper.searchOrderAmount(params);
 		return res;

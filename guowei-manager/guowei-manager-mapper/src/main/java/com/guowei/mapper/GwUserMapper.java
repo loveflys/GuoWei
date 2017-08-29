@@ -2,7 +2,11 @@ package com.guowei.mapper;
 
 import com.guowei.pojo.GwUser;
 import com.guowei.pojo.GwUserExample;
+
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface GwUserMapper {
@@ -19,6 +23,8 @@ public interface GwUserMapper {
     List<GwUser> selectByExample(GwUserExample example);
 
     GwUser selectByPrimaryKey(Long id);
+    
+    BigDecimal searchUserCount(Map<String,Object> params);
 
     int updateByExampleSelective(@Param("record") GwUser record, @Param("example") GwUserExample example);
 

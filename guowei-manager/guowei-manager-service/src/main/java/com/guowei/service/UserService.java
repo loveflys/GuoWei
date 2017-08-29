@@ -1,4 +1,9 @@
 package com.guowei.service;
+import java.math.BigDecimal;
+
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.pojo.GwApply;
 import com.guowei.pojo.GwComplain;
@@ -31,6 +36,8 @@ public interface UserService {
 	DatatablesView<?> getGwComplainsByPagedParam(GwComplain complain, Integer start, Integer pageSize);
 
 	int addGwUser(GwUser user);
+	
+	BigDecimal getUserCount(String startTime, String endTime);
 	
 	int addGwComplain(GwComplain complain);
 	

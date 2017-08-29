@@ -29,7 +29,7 @@ public interface OrderService {
 	int addGwOrder(GwOrder order);
 	
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
-	BigDecimal getOrdersData(int type);
+	BigDecimal getOrdersData(String startTime, String endTime);
 	
 	int updateGwOrderPayStatus(long id);
 	

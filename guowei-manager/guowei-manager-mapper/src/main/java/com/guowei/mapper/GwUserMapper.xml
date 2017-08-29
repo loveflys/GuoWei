@@ -93,6 +93,17 @@
     from gw_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="searchUserCount" resultType="DECIMAL" parameterType="map">  
+        select  
+        count(*) 
+        from gw_user where id >= 0
+        <if test="startTime!=null">  
+            and <![CDATA[date_format(created, '%Y-%m-%d')>=date_format(#{startTime}, '%Y-%m-%d') ]]>  
+        </if>  
+        <if test="endTime!=null">  
+            and <![CDATA[date_format(created, '%Y-%m-%d')<=date_format(#{endTime}, '%Y-%m-%d') ]]>  
+        </if>  
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from gw_user
     where id = #{id,jdbcType=BIGINT}

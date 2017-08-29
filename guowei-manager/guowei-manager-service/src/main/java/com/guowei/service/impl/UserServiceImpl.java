@@ -1,6 +1,9 @@
 package com.guowei.service.impl;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -212,6 +215,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int addGwApply(GwApply apply) {
 		int res = applyMapper.insert(apply);
+		return res;
+	}
+	@Override
+	public BigDecimal getUserCount(String startTime, String endTime) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (startTime != null && !"".equals(startTime)) {
+			params.put("startTime", startTime);
+		}
+		if (endTime != null && !"".equals(endTime)) {
+			params.put("endTime", endTime);
+		}
+		BigDecimal res = userMapper.searchUserCount(params);
 		return res;
 	}
 }
