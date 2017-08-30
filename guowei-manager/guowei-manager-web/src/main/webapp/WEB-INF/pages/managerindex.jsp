@@ -77,7 +77,7 @@
 								<div class="icon">
 									<i class="ion ion-stats-bars"></i>
 								</div>
-								<a href="#" class="small-box-footer">更多 <i
+								<a href="<%=path%>/orders" class="small-box-footer">更多 <i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
@@ -90,7 +90,7 @@
 								<div class="icon">
 									<i class="ion ion-stats-bars"></i>
 								</div>
-								<a href="#" class="small-box-footer">更多<i
+								<a href="<%=path%>/orders" class="small-box-footer">更多<i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
@@ -103,7 +103,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">更多<i
+                                <a href="<%=path%>/orders" class="small-box-footer">更多<i
                                     class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">更多<i
+                                <a href="<%=path%>/orders" class="small-box-footer">更多<i
                                     class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
 								<div class="icon">
 									<i class="ion ion-person-add"></i>
 								</div>
-								<a href="#" class="small-box-footer">更多<i
+								<a href="<%=path%>/users" class="small-box-footer">更多<i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
@@ -143,7 +143,7 @@
 								<div class="icon">
 									<i class="ion ion-person"></i>
 								</div>
-								<a href="#" class="small-box-footer">更多<i
+								<a href="<%=path%>/users" class="small-box-footer">更多<i
 									class="fa fa-arrow-circle-right"></i></a>
 							</div>
 						</div>

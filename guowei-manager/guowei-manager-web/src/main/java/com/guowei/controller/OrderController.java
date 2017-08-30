@@ -60,7 +60,9 @@ public class OrderController {
 	@RequestMapping(value="/order/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwOrder order) {
-		DatatablesView dataTable = orderService.getGwOrdersByPagedParam(order,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+		String startTime = request.getParameter("startTime");
+		String endTime = request.getParameter("endTime");
+		DatatablesView dataTable = orderService.getGwOrdersByPagedParam(order,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")), startTime, endTime);
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;

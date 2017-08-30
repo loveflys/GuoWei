@@ -20,7 +20,7 @@ public interface OrderService {
 	DatatablesView<?> getGwOrdersByParam(GwOrder order);
 	
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
-	DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize);
+	DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize, String startTime, String endTime);
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	DatatablesView<?> getGwOrderDetailsByParam(Long id);

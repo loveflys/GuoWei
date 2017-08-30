@@ -155,14 +155,36 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
-	public DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize) {
-		// TODO Auto-generated method stub
+	public DatatablesView<?> getGwOrdersByPagedParam(GwOrder order, Integer start, Integer pageSize, String startTime, String endTime) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+	    
 		GwOrderExample gme = new GwOrderExample();
 		gme.setOrderByClause("created DESC");
 		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(order.getTitle())) {
-//			criteria.andTitleLike("%"+order.getTitle()+"%");
-//		}		
+		if (!"".equals(startTime)) {
+			Date date = new Date();
+			try {
+				date = format.parse(startTime);
+				criteria.andCreatedGreaterThanOrEqualTo(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}	
+		if (!"".equals(endTime)) {
+			Date date = new Date();
+			try {
+				date = format.parse(endTime);
+				date.setHours(23);
+				date.setMinutes(59);
+				date.setSeconds(59);
+				criteria.andCreatedLessThanOrEqualTo(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}	
+		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwOrder> list = orderMapper.selectByExample(gme);

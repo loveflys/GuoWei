@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="<%=path%>/res/plugins/daterangepicker/daterangepicker.css">
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-		
+		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
 		<style type="text/css">
 			th {
 		      text-align: center;
@@ -100,15 +100,22 @@
 						</div>
 
 						<div class="row">
-							<form id="queryForm" action="<%=path%>/orders" method="post">
+							<form id="queryForm" action="<%=path%>/orders" style="display: flex;" method="post">
+							    
 								<div class="col-xs-2">
 									<input type="text" id="keyword" name="uname" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
 								</div>
+								<div class="input-daterange input-group" id="datepicker">
+                                    <input type="text" class="input-sm form-control" name="startTime" />
+                                    <span class="input-group-addon">到</span>
+                                    <input type="text" class="input-sm form-control" name="endTime"  data-date-end-date="1d" />
+                                </div> 
 								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
 									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
 								</button>
 							</form>
+							
 						</div>
 					</div>
 	                
@@ -233,7 +240,14 @@
 				orderDetail: []
 		}
 			$(function () {
-				
+				$('#datepicker').datepicker({
+					format: "yyyy-mm-dd",
+					maxViewMode: 0,
+				    clearBtn: true,
+				    language: "zh-CN",
+				    autoclose: true,
+				    todayHighlight: true
+				});
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -501,7 +515,7 @@
 		<script src="<%=path%>/res/home/assets/js/moment.min.js"></script>
 		<script src="<%=path%>/res/plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- datepicker -->
-		<script src="<%=path%>/res/plugins/datepicker/bootstrap-datepicker.js"></script>
+		<script src="<%=path%>/res/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 		<!-- Bootstrap WYSIHTML5 -->
 		<script src="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 		<!-- Slimscroll -->
