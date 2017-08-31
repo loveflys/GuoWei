@@ -1,6 +1,7 @@
 TOMCAT_ADMIN=/usr/local/tomcat8/webapps/
+TOMCAT_BIN=/usr/local/tomcat8/bin
 cd /data/workspace/GuoWei/
-#git checkout . && git pull origin
+git checkout . && git pull origin
 cd /data/workspace/GuoWei/guowei-manager
 mvn install
 cd $TOMCAT_ADMIN
