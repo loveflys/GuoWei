@@ -677,6 +677,7 @@
 	          		//赋值到Modal上
 	          		window.param.purchaseProId = data.id;
 	          		$("#now_proName").html(data.title);
+	          		$("#purchasePrice").val(data.buyingprice)
 	          		$("#myModal").modal('show');
 	          	})
 	          	//修改 Model

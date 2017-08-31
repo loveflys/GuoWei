@@ -149,6 +149,40 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-md-12">
+				          <div class="box box-primary">
+				            <div class="box-header with-border">
+				              <h3 class="box-title">年度营业额</h3>				
+				              <div class="box-tools pull-right">
+				                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+				                </button>
+				                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+				              </div>
+				            </div>
+				            <div class="box-body" style="display: block;">
+				              <div class="chart">
+				                <div id="yearChart" style="width: 100%;height: 500px;"></div>
+				              </div>
+				            </div>
+				          </div>	
+				        </div>	
+					</div>
+					<div class="row">
+					   <div class="col-md-12">
+                            <div class="box box-danger">
+                            <div class="box-header with-border">
+                              <h3 class="box-title">月份营业额</h3>                
+                              <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                              </div>
+                            </div>
+                            <div class="box-body">
+                              <div id="monthChart" style="width: 100%;height: 500px;"></div>
+                            </div>
+                          </div>    
+                        </div>
 					</div>
 				</section>
 			</div>
@@ -183,6 +217,97 @@
                         $("#allamount").html(res.allAmount + '<span>元</span>');
 	                	$("#newuser").html(res.newUser);
 	                    $("#alluser").html(res.allUser);
+	                    
+	                    var yearChart = echarts.init(document.getElementById('yearChart'));
+	                    var monthChart = echarts.init(document.getElementById('monthChart'));
+	                    var yearoption = {
+	                    	    title: {
+	                    	        text: '月营业额'
+	                    	    },
+	                    	    tooltip : {
+	                    	        trigger: 'axis',
+	                    	        axisPointer: {
+	                    	            type: 'cross',
+	                    	            label: {
+	                    	                backgroundColor: '#6a7985'
+	                    	            }
+	                    	        }
+	                    	    },
+	                    	    legend: {
+	                    	        data:['月营业额']
+	                    	    },
+	                    	    toolbox: {
+	                    	        feature: {
+	                    	            saveAsImage: {}
+	                    	        }
+	                    	    },
+	                    	    xAxis : [
+	                    	        {
+	                    	            type : 'category',
+	                    	            boundaryGap : false,
+	                    	            data : res.yeardatatitle
+	                    	        }
+	                    	    ],
+	                    	    yAxis : [
+	                    	        {
+	                    	            type : 'value'
+	                    	        }
+	                    	    ],
+	                    	    series : [
+	                    	        {
+	                    	            name:'月营业额',
+	                    	            type:'line',
+	                    	            stack: '总量',
+	                    	            areaStyle: {normal: {}},
+	                    	            data: res.yeardata
+	                    	        }
+	                    	    ]
+	                    	};
+	                    yearChart.setOption(yearoption);
+	                    var monthoption = {
+                                title: {
+                                    text: '日营业额'
+                                },
+                                tooltip : {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'cross',
+                                        label: {
+                                            backgroundColor: '#6a7985'
+                                        }
+                                    }
+                                },
+                                legend: {
+                                    data:['日营业额']
+                                },
+                                toolbox: {
+                                    feature: {
+                                        saveAsImage: {}
+                                    }
+                                },
+                                xAxis : [
+                                    {
+                                        type : 'category',
+                                        boundaryGap : false,
+                                        data : res.monthdatatitle
+                                    }
+                                ],
+                                yAxis : [
+                                    {
+                                        type : 'value'
+                                    }
+                                ],
+                                series : [
+                                    {
+                                        name:'日营业额',
+                                        type:'line',
+                                        stack: '总量',
+                                        areaStyle: {normal: {}},
+                                        data:res.monthdata
+                                    }
+                                ]
+                            };
+	                    monthChart.setOption(monthoption);
 	                }
 	            });
 	        }
@@ -219,6 +344,7 @@
         <script src="<%=path%>/res/dist/js/app.min.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
+        <script src="<%=path%>/res/plugins/echarts/echarts.simple.min.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<%=path%>/res/dist/js/demo.js"></script>
     </body>
