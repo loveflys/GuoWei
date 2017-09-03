@@ -221,91 +221,70 @@
 	                    var yearChart = echarts.init(document.getElementById('yearChart'));
 	                    var monthChart = echarts.init(document.getElementById('monthChart'));
 	                    var yearoption = {
-	                    	    title: {
-	                    	        text: '月营业额'
-	                    	    },
-	                    	    tooltip : {
-	                    	        trigger: 'axis',
-	                    	        axisPointer: {
-	                    	            type: 'cross',
-	                    	            label: {
-	                    	                backgroundColor: '#6a7985'
-	                    	            }
-	                    	        }
-	                    	    },
-	                    	    legend: {
-	                    	        data:['月营业额']
-	                    	    },
-	                    	    toolbox: {
-	                    	        feature: {
-	                    	            saveAsImage: {}
-	                    	        }
-	                    	    },
-	                    	    xAxis : [
-	                    	        {
-	                    	            type : 'category',
-	                    	            boundaryGap : false,
-	                    	            data : res.yeardatatitle
-	                    	        }
-	                    	    ],
-	                    	    yAxis : [
-	                    	        {
-	                    	            type : 'value'
-	                    	        }
-	                    	    ],
-	                    	    series : [
-	                    	        {
-	                    	            name:'月营业额',
-	                    	            type:'line',
-	                    	            stack: '总量',
-	                    	            areaStyle: {normal: {}},
-	                    	            data: res.yeardata
-	                    	        }
-	                    	    ]
+	                    		visualMap: [{
+                                    show: false,
+                                    type: 'continuous',
+                                    seriesIndex: 0,
+                                    min: 0,
+                                    max: res.yeardata.length - 1
+                                }],
+
+
+                                title: [{
+                                    left: 'center',
+                                    text: '年度营业额'
+                                }],
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                xAxis: [{
+                                    data: res.yeardatatitle
+                                }],
+                                yAxis: [{
+                                    splitLine: {show: false}
+                                }],
+                                grid: [{
+                                    bottom: '60%'
+                                }],
+                                series: [{
+                                    type: 'line',
+                                    showSymbol: false,
+                                    data: res.yeardata
+                                }]
 	                    	};
 	                    yearChart.setOption(yearoption);
 	                    var monthoption = {
-                                title: {
-                                    text: '日营业额'
-                                },
-                                tooltip : {
-                                    trigger: 'axis',
-                                    axisPointer: {
-                                        type: 'cross',
-                                        label: {
-                                            backgroundColor: '#6a7985'
-                                        }
-                                    }
-                                },
-                                legend: {
-                                    data:['日营业额']
-                                },
-                                toolbox: {
-                                    feature: {
-                                        saveAsImage: {}
-                                    }
-                                },
-                                xAxis : [
-                                    {
-                                        type : 'category',
-                                        boundaryGap : false,
-                                        data : res.monthdatatitle
-                                    }
-                                ],
-                                yAxis : [
-                                    {
-                                        type : 'value'
-                                    }
-                                ],
-                                series : [
-                                    {
-                                        name:'日营业额',
-                                        type:'line',
-                                        stack: '总量',
-                                        areaStyle: {normal: {}},
-                                        data:res.monthdata
-                                    }
-                                ]
+	                    		
+	                    		visualMap: [{
+	                    	        show: false,
+	                    	        type: 'continuous',
+	                    	        seriesIndex: 0,
+	                    	        min: 0,
+	                    	        max: res.monthdata.length - 1
+	                    	    }],
+
+
+	                    	    title: [{
+	                    	        left: 'center',
+	                    	        text: '月度营业额'
+	                    	    }],
+	                    	    tooltip: {
+	                    	        trigger: 'axis'
+	                    	    },
+	                    	    xAxis: [{
+	                    	        data: res.monthdatatitle
+	                    	    }],
+	                    	    yAxis: [{
+	                    	        splitLine: {show: false}
+	                    	    }],
+	                    	    grid: [{
+	                    	        bottom: '60%'
+	                    	    }],
+	                    	    series: [{
+	                    	        type: 'line',
+	                    	        showSymbol: false,
+	                    	        data: res.monthdata
+	                    	    }]
                             };
 	                    monthChart.setOption(monthoption);
 	                }
@@ -344,7 +323,7 @@
         <script src="<%=path%>/res/dist/js/app.min.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="<%=path%>/res/dist/js/pages/dashboard.js"></script>
-        <script src="<%=path%>/res/plugins/echarts/echarts.simple.min.js"></script>
+        <script src="<%=path%>/res/plugins/echarts/echarts.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<%=path%>/res/dist/js/demo.js"></script>
     </body>
