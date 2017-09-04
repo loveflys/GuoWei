@@ -264,15 +264,15 @@
             </div>
         </div>
 		<script>
-		window.param = {
+		    window.param = {
 				carousels:[]
-          }
+            }
             $(function () {
                 _.templateSettings = {
                     evaluate    : /\[\[(.+?)\]\]/g,
                     interpolate : /\{\{(.+?)\}\}/g
                 };
-                getAllAddr();
+                getAllCarousel();
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -392,7 +392,6 @@
                     $("input[name=id]").val("");
                     $("input[name=pid]").val("");
                     $("#addForm input[name=name]").val("");
-                    bindAddr();
                     $("#addModal").modal("show");
 	            });
 				
