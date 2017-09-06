@@ -76,8 +76,8 @@ public class CarouselController {
 		carousel.setType(Byte.parseByte((request.getParameter("type"))));
 		carousel.setTitle(request.getParameter("title"));
 		carousel.setPic(request.getParameter("pic"));
-		if (!"".equals(request.getParameter("cid")) && "2".equals(request.getParameter("type"))) {
-			carousel.setCompanyId(Long.parseLong(request.getParameter("cid")));
+		if (!"".equals(request.getParameter("companyId")) && "2".equals(request.getParameter("type"))) {
+			carousel.setCompanyId(Long.parseLong(request.getParameter("companyId")));
 		}
 		carousel.setUid(manager.getId());
 		carousel.setCreated(java.util.Calendar.getInstance().getTime());
