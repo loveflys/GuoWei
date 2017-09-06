@@ -17,6 +17,7 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwCarousel;
+import com.guowei.pojo.GwManager;
 import com.guowei.service.CarouselService;
 
 /**
@@ -70,12 +71,15 @@ public class CarouselController {
 	@RequestMapping(value = "/carousel/add", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
 		GwCarousel carousel = new GwCarousel();
 		carousel.setType(Byte.parseByte((request.getParameter("type"))));
 		carousel.setTitle(request.getParameter("title"));
+		carousel.setPic(request.getParameter("pic"));
 		if (!"".equals(request.getParameter("cid")) && "2".equals(request.getParameter("type"))) {
 			carousel.setCompanyId(Long.parseLong(request.getParameter("cid")));
 		}
+		carousel.setUid(manager.getId());
 		carousel.setCreated(java.util.Calendar.getInstance().getTime());
 		
 		int result = carouselService.addGwCarousel(carousel);

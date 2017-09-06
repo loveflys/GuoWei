@@ -20,6 +20,7 @@
 		<!-- bootstrap wysihtml5 - text editor -->
 		<link rel="stylesheet" href="<%=path%>/res/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 		<link rel="stylesheet" href="<%=path%>/res/address.css">
+		<link rel="stylesheet" href="<%=path%>/res/fileupload.css">
 		<style type="text/css">
 			.modal-dialog { 
 				position: absolute; 
@@ -116,11 +117,12 @@
 										<thead>
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
-												<th><sp:message code="sys.no"/></th>
+												<th><sp:message code="carousel.id"/></th>
 												<th><sp:message code="carousel.title"/></th>
 												<th><sp:message code="carousel.pic"/></th>
 												<th><sp:message code="carousel.type"/></th>
-												<th><sp:message code="carousel.cid"/></th>      											
+												<th><sp:message code="carousel.cid"/></th>   
+												<th><sp:message code="carousel.uid"/></th>     											
 												<th><sp:message code="sys.create.time"/></th>
                                                 <th><sp:message code="sys.oper"/></th>
 											</tr>
@@ -159,13 +161,6 @@
 						<form class="form-horizontal"  id="editForm" action="<%=path%>/carousel/update" method="post">
 							<input type="hidden" class="form-control" name="id">
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.id"/></label>
-                                <input type="hidden" class="form-control" name="id">
-                                <div class="col-sm-9" id="edit-form-address">
-                                    
-                                </div>
-                            </div>    
-                            <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.title"/></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="title">
@@ -174,19 +169,33 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.type"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="type">
+                                    <select class="form-control" name="type"
+                                        id="editType_container"
+                                        onchange="changeType(this.options[this.options.selectedIndex].value)">
+                                        <option value="1" selected="selected">通用轮播图</option>
+                                        <option value="2">公司专属</option>
+                                    </select>
                                 </div>
                             </div>  
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.pic"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="pic">
+                                    <input type="hidden" class="form-control" name="pic">
+                                    <div class="upload-img-btn update-file-btn">+</div>
+                                    <input type="file" id="update-file" onchange="upload(2)" class="form-control hidden-file-input">
+                                    <div class="upload-img-btn update-file-pre-div" style="display:none">
+                                        <img id="update-file-pre" src="" />
+                                    </div>
                                 </div>
                             </div>     
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.cid"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="cid">
+                                    <select class="form-control" name="companyId"
+                                        id="editCid_container"
+                                        onchange="changeCid(this.options[this.options.selectedIndex].value)">
+    
+                                    </select>
                                 </div>
                             </div>                           
                             <div class="form-group">
@@ -223,13 +232,6 @@
                         <form class="form-horizontal"  id="addForm" action="<%=path%>/carousel/add" method="post">
                             <input type="hidden" class="form-control" name="id">
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.id"/></label>
-                                <input type="hidden" class="form-control" name="id">
-                                <div class="col-sm-9" id="add-form-address">
-                                    
-                                </div>
-                            </div>    
-                            <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.title"/></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="title">
@@ -238,20 +240,34 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.type"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="type">
+                                    <select class="form-control" name="type"
+                                        id="addType_container"
+                                        onchange="changeType(this.options[this.options.selectedIndex].value)">
+                                        <option value="1" selected="selected">通用轮播图</option>
+                                        <option value="2">公司专属</option>
+                                    </select>
                                 </div>
                             </div> 
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.pic"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="pic">
+                                    <input type="hidden" class="form-control" name="pic">
+                                    <div class="upload-img-btn add-file-btn">+</div>
+                                    <input type="file" id="add-file" onchange="upload(1)" class="form-control hidden-file-input">
+                                    <div class="upload-img-btn add-file-pre-div" style="display:none">
+                                        <img id="add-file-pre" src="" />
+                                    </div>
                                 </div>
                             </div>      
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="carousel.cid"/></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="cid">
-                                </div>
+	                                <select class="form-control" name="companyId"
+	                                    id="addCid_container"
+	                                    onchange="changeCid(this.options[this.options.selectedIndex].value)">
+	
+	                                </select>
+	                            </div>
                             </div>          
                         </form>
                     </div>
@@ -263,16 +279,100 @@
                 </div>
             </div>
         </div>
+        <script type="template" id="company_tpl">
+            [[ if (data) { ]]
+                [[ for(var i=0, length = data.length; i< length; i++){ var item = data[i] ]]
+                    [[ if (sid && item.id == sid) { ]]
+                        <option value="{{item.id}}" selected="selected">{{item.companyName}}</option>
+                    [[ } else { ]]
+                        <option value="{{item.id}}">{{item.companyName}}</option>
+                    [[ } ]]
+                [[ } ]]
+            [[ } ]]
+        </script>
 		<script>
 		    window.param = {
-				carousels:[]
+		    	companys:[],
+		    	qiniuToken: '',
+                qiniuUrl: '',
+            }
+		    function getToken () {
+                var url = "<%=path%>/file/getToken";
+                $.ajax({
+                    cache: false,
+                    type: "get",
+                    url: url,
+                    data: {},
+                    async: false,
+                    error: function(request) {
+                        alert("Server Connection Error...");
+                    },
+                    success: function(ret) {
+                        if (ret.ok) {
+                            window.param.qiniuToken = ret.token;
+                            window.param.qiniuUrl = ret.url;
+                        } else {
+                            if (ret.msg) {
+                                alert(ret.msg);
+                            } else {
+                                alert("七牛token获取失败,请稍后再试。");
+                            }
+                        }
+                    }
+                });
+            }
+            function upload(type) {
+                var files = null;
+                if (type == 1) {
+                    files = document.getElementById("add-file").files[0];
+                } else {
+                    files = document.getElementById("update-file").files[0];
+                }
+                if (files === null || files === undefined) {
+                    toastr.error('请先选择文件。');
+                    return;
+                  }
+                  if (files.size/(1024*1024) > 2) {
+                    toastr.error('文件' + files.name + ' 太大，不能超过 2M。');
+                    return;
+                  }
+
+                  let oData = new FormData();
+                  oData.append("file", files);
+                  oData.append("token", window.param.qiniuToken);
+                  var oReq = new XMLHttpRequest();
+                  oReq.open( "POST", "http://up-z1.qiniu.com/" , true );
+                  oReq.onload = function(oEvent) {
+                    let res = JSON.parse(oReq.response);
+                    if (oReq.status === 200 && res.key) {
+                      let url = window.param.qiniuUrl + res.key;
+                      if (type == 1) {
+                          $(".add-file-btn").hide();
+                          $(".add-file-pre-div").show();
+                          $("#add-file-pre").attr('src', url);
+                          $("#addModal input[name=pic]").val(url);
+                      } else {
+                          $(".update-file-btn").hide();
+                          $(".update-file-pre-div").show();
+                          $("#update-file-pre").attr('src', url);
+                          $("#editModal input[name=pic]").val(url);
+                      }
+                    } else {
+                      toastr.error('上传失败。');
+                    }
+                  };
+                  oReq.onerror = function(err) {
+                      toastr.error('上传错误。');
+                  };
+                  oReq.send(oData);
             }
             $(function () {
                 _.templateSettings = {
                     evaluate    : /\[\[(.+?)\]\]/g,
                     interpolate : /\{\{(.+?)\}\}/g
                 };
-                getAllCarousel();
+                getToken();
+                getAllCompany();
 				//页面消息处理
 				var result = "${result}";
 		  		var msg= "${msg}";
@@ -311,9 +411,22 @@
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
 	                    {"data": 'title'}, 
-	                    {"data": 'type'},  
-	                    {"data": 'pic'},  
-	                    {"data": 'cid'},  
+	                    {"data": 'pic', 
+                            "render": function (data,type,full,callback) {
+                                return "<img src=\""+data+"\" width=\"50\" height=\"50\"/><label></label>";
+                            }
+                        },
+	                    {"data": 'type', 
+                            "render": function (data,type,full,callback) {
+                                return data==1?'通用轮播图':'公司专属';
+                            }
+                        },  	                    
+	                    {"data": 'companyId', 
+                            "render": function (data,type,full,callback) {
+                                return data?data:'通用';
+                            }
+	                    },
+	                    {"data": 'uid'},
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
@@ -390,8 +503,12 @@
 	            $("#btn-add").on("click", function () {
 	            	url = "<%=path%>/carousel/add";
                     $("input[name=id]").val("");
-                    $("input[name=pid]").val("");
-                    $("#addForm input[name=name]").val("");
+                    $("#addForm input[name=title]").val("");
+                    $("input[name=companyId]").val("");
+                    $("#addCid_container").html(_.template($("#company_tpl").html())({
+                        "data": window.param.companys,
+                        "sid": ""
+                    }));
                     $("#addModal").modal("show");
 	            });
 				
@@ -426,16 +543,22 @@
 				$('#dataTable tbody').on( 'click', '#editRow', function () {
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
-					$("input[name=title]").val(data.title);
+					$("#editForm input[name=title]").val(data.title);
 					$("#editForm input[name=type]").val(data.type);
+					$(".update-file-btn").hide();
+                    $(".update-file-pre-div").show();
+                    $("#update-file-pre").attr('src', data.pic);
 					$("#editForm input[name=pic]").val(data.pic);
-					$("#editForm input[name=cid]").val(data.cid);
+					$("#editCid_container").val(data.companyId);
 					if (!data.created || data.created.length <= 0) {
 						$("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
 					} else {
 						$("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
 					}
-					bindAddr(data.id);
+					$("#editCid_container").html(_.template($("#company_tpl").html())({
+                        "data": window.param.companys,
+                        "sid": data.companyId
+                    }));
 					$("#editModal").modal("show");
 					
 		        });
@@ -514,11 +637,11 @@
 		            }
 		        });
 			});
-        function getAllCarousel () {
+        function getAllCompany () {
             $.ajax({
                 cache: false,
                 type: "POST",
-                url: "<%=path%>/carousel/getAllData",
+                url: "<%=path%>/company/getAllData",
                 data: {
                 	type: '1'
                 },
@@ -527,9 +650,19 @@
                     toastr.error("Server Connection Error...");
                 },
                 success: function(res) {
-                    window.param.carousels = res.data;
+                    window.param.companys = res.data;
                 }
             });
+        }
+        function changeCid(id) {
+            $("#addCid_container").val(id);
+            $("#editCid_container").val(id);
+            window.param.level = id;
+        }
+        function changeType(id) {
+            $("#addType_container").val(id);
+            $("#editType_container").val(id);
+            window.param.level = id;
         }
 		</script>
 	

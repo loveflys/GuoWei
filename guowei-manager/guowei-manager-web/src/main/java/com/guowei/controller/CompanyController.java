@@ -1,11 +1,8 @@
 package com.guowei.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,22 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.common.utils.PayUtils;
-import com.guowei.common.utils.WechatWarn;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwCompanyTemp;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwManager;
-import com.guowei.pojo.GwTemplateproduct;
-import com.guowei.pojo.GwUser;
 import com.guowei.service.CompanyService;
 import com.guowei.service.CompanyproductService;
 
@@ -80,6 +71,23 @@ public class CompanyController {
 	public String getComplateData(HttpServletRequest request, GwCompanyTemp company) {
 		DatatablesView dataTable = companyService.getGwCompanyTempsByPagedParam(company,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 //		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	/**
+	 * 查询公司记录
+	 * @param request
+	 * @param query
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/company/getAllData", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getAllData(HttpServletRequest request, GwCompany company) {
+		company.setCompanyName("");
+		company.setTemplateId(0l);
+		DatatablesView dataTable = companyService.getGwCompanysByParam(company);
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
