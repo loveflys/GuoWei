@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:task="http://www.springframework.org/schema/task" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:mvc="http://www.springframework.org/schema/mvc"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/task  
+        http://www.springframework.org/schema/task/spring-task-3.2.xsd 
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.guowei.controller" />
     <mvc:annotation-driven />
-    
+    <!-- task任务扫描注解 -->
+    <task:annotation-driven />
+    <!-- 扫描任务 -->
+    <context:component-scan base-package="com.guowei.task" />
     <!-- 国际化资源配置 -->
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
         <!-- 国际化信息所在的文件名 -->  
