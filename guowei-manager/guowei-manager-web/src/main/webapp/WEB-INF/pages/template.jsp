@@ -277,6 +277,8 @@
 										aria-expanded="false">第三层货架</a></li>
 									<li class=""><a href="#tab_4" data-toggle="tab"
 										aria-expanded="false">第四层货架</a></li>
+									<li class=""><a href="#tab_5" data-toggle="tab"
+                                        aria-expanded="false">雀巢专柜</a></li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_1">
@@ -417,6 +419,41 @@
 											</div>
 										</div>
 									</div>
+									<div class="tab-pane" id="tab_5">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="box-header with-border">
+                                                        <h3 class="box-title">已有商品库</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        <table class="table table-bordered">
+                                                            <tbody id="fiveProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">雀巢专柜</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="fiveSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
 								</div>
 							</div>
 						</div>
@@ -502,10 +539,12 @@
 			   secondProList: [],
 			   thirdProList: [],
 			   forthProList: [],
+			   fiveProList: [],
 			   firsttempProList: [],
                secondtempProList: [],
                thirdtempProList: [],
                forthtempProList: [],
+               fivetempProList: [],
                pid: '',
                huojia: ''
             }
@@ -760,10 +799,12 @@
                  secondProList: [],
                  thirdProList: [],
                  forthProList: [],
+                 fiveProList: [],
                  firsttempProList: [],
                  secondtempProList: [],
                  thirdtempProList: [],
                  forthtempProList: [],
+                 fivetempProList: [],
         }
     	$.ajax({
             cache: false,
@@ -812,8 +853,10 @@
                                 window.param.secondtempProList.push(item);
                             } else if (item.storageracks == 3) {
                                 window.param.thirdtempProList.push(item);
-                            } else {
+                            } else if (item.storageracks == 4) {
                                 window.param.forthtempProList.push(item);
+                            } else {
+                                window.param.fivetempProList.push(item);
                             }
                         }
                         
@@ -822,6 +865,7 @@
                             var secondhas = false;
                             var thirdhas = false;
                             var forthhas = false;
+                            var fivehas = false;
                             for (var first of window.param.firsttempProList) {
                                 if (item.id == first.pid) {
                                     firsthas = true;
@@ -842,6 +886,11 @@
                                     forthhas = true;
                                 }
                             }
+                            for (var five of window.param.fivetempProList) {
+                                if (item.id == five.pid) {
+                                	fivehas = true;
+                                }
+                            }
                             if (!firsthas){
                                 window.param.firstProList.push(item);
                             }
@@ -853,6 +902,9 @@
                             }
                             if (!forthhas){
                                 window.param.forthProList.push(item);
+                            }
+                            if (!fivehas){
+                                window.param.fiveProList.push(item);
                             }
                         }
                         _.templateSettings = {
@@ -884,6 +936,10 @@
                     "data": window.param.forthProList,
                     "huojia": 4,
                 }));
+            	$("#fiveProContainer").html(_.template($("#proList_tpl").html())({
+                    "data": window.param.fiveProList,
+                    "huojia": 5,
+                }));
             	
             	$("#firstSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.firsttempProList,
@@ -900,6 +956,10 @@
                 $("#forthSelectProContainer").html(_.template($("#selectproList_tpl").html())({
                     "data": window.param.forthtempProList,
                     "huojia": "4",
+                }));
+                $("#fiveSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+                    "data": window.param.fivetempProList,
+                    "huojia": "5",
                 }));
             }
             function changeTemplateWarnStock(huojia, id, stock) {

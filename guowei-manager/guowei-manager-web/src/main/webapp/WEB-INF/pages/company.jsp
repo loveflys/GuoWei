@@ -297,6 +297,7 @@
 	                <li id="secondpro" onclick="change(this)"><a>第二货架</a></li>
 	                <li id="thirdpro" onclick="change(this)"><a>第三货架</a></li>
 	                <li id="forthpro" onclick="change(this)"><a>第四货架</a></li>
+	                <li id="fivepro" onclick="change(this)"><a>雀巢专柜</a></li>
 	            </ul>
 	        </div>
 	        <div class="search-rightbar" id="proContainer">
@@ -473,6 +474,29 @@
                 [[ } ]] 
             </div>
             </div>
+
+            <div class="aui-content list-detail-show" id="five_pro_body" style="display:none;">
+            <div class="the-onelm-name">
+                <span class="the-onelm-left"></span>
+                <div class="the-onelm-name-cname">${companyName}</div>
+                <span class="the-onelm-right" onclick="showQrCode()">关注</span>
+            </div>
+            <div>
+                <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>雀巢专柜</h4>
+                [[if(data[5]&&data[5].length>0){ ]]
+                    <ul class="aui-list-view aui-grid-view">
+                        [[for(var j=0;j< data[5].length;j++){ var item = data[5][j]; ]]
+                            <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
+                                <p id="point_{{item.id}}" class="red-point" style="display:none;"></p>
+                                <img class="aui-img-object" src="{{ item.proimage }}"/>
+                                <a class="aui-img-body">{{ item.proname }}</a>
+                                <a style="color: red;padding: 0 !important;margin: 0;">￥{{ item.proprice }}</a>
+                            </li>
+                        [[ } ]]
+                    </ul>
+                [[ } ]] 
+            </div>
+            </div>
         [[ } ]]
     </script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -583,7 +607,11 @@
                case 'forthpro':
                    $("#forth_pro_body").show();
                    $("#forth_pro_body").siblings().hide();
-                   break;       
+                   break;   
+               case 'fivepro':
+                   $("#five_pro_body").show();
+                   $("#five_pro_body").siblings().hide();
+                   break;     
             }
         }
         //清空购物车
