@@ -351,6 +351,8 @@
                                         aria-expanded="false">第三层货架</a></li>
                                     <li class=""><a href="#tab_4" data-toggle="tab"
                                         aria-expanded="false">第四层货架</a></li>
+                                    <li class=""><a href="#tab_5" data-toggle="tab"
+                                        aria-expanded="false">雀巢专柜</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab_1">
