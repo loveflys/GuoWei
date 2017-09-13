@@ -184,7 +184,7 @@ public class OrderServiceImpl implements OrderService {
 				e.printStackTrace();
 			}	
 		}	
-		
+		criteria.andStatusNotEqualTo(Byte.parseByte("4"));
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);
 		List<GwOrder> list = orderMapper.selectByExample(gme);
@@ -201,6 +201,7 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		GwOrderExample gme = new GwOrderExample();
 		Criteria criteria = gme.createCriteria();
+		criteria.andStatusNotEqualTo(Byte.parseByte("4"));
 //		if (!"".equals(order.getTitle())) {
 //			criteria.andTitleLike("%"+order.getTitle()+"%");
 //		}		

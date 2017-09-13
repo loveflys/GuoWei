@@ -112,15 +112,16 @@ public class CompanyController {
 	public String getProData(HttpServletRequest request) {
 		GwCompanyproduct temp = new GwCompanyproduct();
 		temp.setCompanyId(Long.parseLong(request.getParameter("id")));	
-		System.out.println("查询公司产品==>" + request.getParameter("id"));
 		DatatablesView dataTable = companyproductService.getGwCompanyproductsByParam(temp);
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}
 	
 	@RequestMapping("/companys")
-	public String toList(HttpServletRequest request){   
-		return "companys";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("companys");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
 	}
 	
 	@RequestMapping("/company/{id}")

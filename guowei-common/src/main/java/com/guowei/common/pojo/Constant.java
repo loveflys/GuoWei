@@ -7,9 +7,20 @@ public class Constant {
 	public static final String APP_ID = "wx8563cf7cd5154a95";
 	
 	/**
+	 * 韩杰
 	 * 管理员openid
 	 */
-	public static final String MANAGER_OPENID = "opD421XGWhBtUfhi1ej4W5SPPz3M";
+	public static final String MANAGER_OPENID1 = "opD421daXGUYa240A5HBKpp2llhI";//hj //lxm opD421R9h5O98P2WRW3StZ-MTaf8 //chenanyi "opD421XGWhBtUfhi1ej4W5SPPz3M";
+	
+	/**
+	 * 刘晓明
+	 */
+	public static final String MANAGER_OPENID2 = "opD421R9h5O98P2WRW3StZ-MTaf8";
+	
+	/**
+	 * 我
+	 */
+	public static final String MANAGER_OPENID3 = "opD421XGWhBtUfhi1ej4W5SPPz3M";
 	
 	/**
 	 * 消息模板id

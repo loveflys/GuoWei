@@ -83,8 +83,14 @@ public class ManagerController {
 	}
 	
 	@RequestMapping("/managerlist")
-	public String toList(HttpServletRequest request){   
-		return "manager";
+	public ModelAndView toList(HttpServletRequest request){  
+		ModelAndView model = new ModelAndView("index");
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		model.addObject("currentUser", manager);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return new ModelAndView("manager");
+		}
+		return model;
 	}
 	
 	/**

@@ -18,6 +18,7 @@ import com.guowei.service.UserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.Constant;
+import com.guowei.common.utils.Constants;
 
 @Controller
 @RequestMapping(value = "/")
@@ -28,8 +29,9 @@ public class IndexController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/")
-	public String index(Model model) {
+	public String index(HttpServletRequest request, Model model) {
 		model.addAttribute("payURL", Constant.PAY_URL);
+		model.addAttribute("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
 		return "index";
 	}
 	

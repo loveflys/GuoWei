@@ -64,8 +64,10 @@ public class CategoryController {
 	}
 	
 	@RequestMapping("/categorys")
-	public String toList(HttpServletRequest request){   
-		return "category";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("category");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
 	}
 	
 	/**

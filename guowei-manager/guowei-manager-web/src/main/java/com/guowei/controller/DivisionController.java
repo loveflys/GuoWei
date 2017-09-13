@@ -24,6 +24,7 @@ import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwCategory;
 import com.guowei.pojo.GwDivision;
+import com.guowei.pojo.GwManager;
 import com.guowei.service.DivisionService;
 
 /**
@@ -67,8 +68,14 @@ public class DivisionController {
 	}
 	
 	@RequestMapping("/divisions")
-	public String toList(HttpServletRequest request){   
-		return "division";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("index");
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		model.addObject("currentUser", manager);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return new ModelAndView("division");
+		}
+		return model;
 	}
 	
 	/**

@@ -69,8 +69,10 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/orders")
-	public String toList(HttpServletRequest request){   
-		return "order";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("order");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
 	}
 	
 	/**

@@ -52,11 +52,12 @@ public class WechatWarn {
 		remark.setColor("#000000");    
 		remark.setValue("请尽快补充库存并登陆上线了更新库存数据。");    
 		m.put("remark", remark);  
-		param.setTouser(Constant.MANAGER_OPENID);
+		param.setTouser(Constant.MANAGER_OPENID3);
 		param.setTemplate_id(Constant.MSG_ID);
 		param.setData(m);      
 		String params =JSONObject.toJSONString(param);
 		JSONObject res = WeiXinOAuth.SendTemplateMsg(access_token, params);
+		res = WeiXinOAuth.SendTemplateMsg(access_token, params);
 		return res;
 	}
 }

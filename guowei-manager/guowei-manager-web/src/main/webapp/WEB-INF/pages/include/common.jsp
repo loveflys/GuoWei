@@ -3,6 +3,7 @@
 <%@ taglib prefix="sp" uri="http://www.springframework.org/tags"%>
 <%
 	String path = request.getContextPath();
+
 %>
 
 <!-- Bootstrap 3.3.6 -->

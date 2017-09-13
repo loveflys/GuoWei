@@ -104,8 +104,10 @@ public class ProductController {
 	}
 	
 	@RequestMapping("/products")
-	public String toList(HttpServletRequest request){   
-		return "product";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("product");
+		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		return model;
 	}
 	
 	/**

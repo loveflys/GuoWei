@@ -18,6 +18,7 @@ import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwCarousel;
 import com.guowei.pojo.GwManager;
+import com.guowei.pojo.GwUser;
 import com.guowei.service.CarouselService;
 
 /**
@@ -59,7 +60,11 @@ public class CarouselController {
 	
 	@RequestMapping("/carousels")
 	public String toList(HttpServletRequest request){   
-		return "carousel";
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return "carousel";
+		}
+		return "index";
 	}
 	
 	/**

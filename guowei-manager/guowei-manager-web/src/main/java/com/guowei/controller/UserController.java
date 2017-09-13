@@ -25,6 +25,7 @@ import com.guowei.common.utils.PayUtils;
 import com.guowei.pojo.GwApply;
 import com.guowei.pojo.GwCompany;
 import com.guowei.pojo.GwComplain;
+import com.guowei.pojo.GwManager;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwUser;
 import com.guowei.service.CompanyService;
@@ -197,21 +198,37 @@ public class UserController {
 	
 	@RequestMapping("/apply")
 	public ModelAndView toapply(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("apply");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		ModelAndView model = new ModelAndView("index");
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		model.addObject("currentUser", manager);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return new ModelAndView("apply");
+		}
 		return model;
 	}
 	
 	@RequestMapping("/complain")
 	public ModelAndView tocomplain(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("complain");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		ModelAndView model = new ModelAndView("index");
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		model.addObject("currentUser", manager);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return new ModelAndView("complain");
+		}
 		return model;
+		
+		
 	}
 	
 	@RequestMapping("/users")
-	public String toList(HttpServletRequest request){   
-		return "user";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("index");
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		model.addObject("currentUser", manager);
+		if (manager.getLevel() == Byte.parseByte("3")) {
+			return new ModelAndView("user");
+		}
+		return model;
 	}
 	
 	/**
