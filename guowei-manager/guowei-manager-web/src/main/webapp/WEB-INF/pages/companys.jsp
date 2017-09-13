@@ -431,6 +431,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane" id="tab_5">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">雀巢专柜</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="fiveSelectProContainer">
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -574,6 +594,7 @@
                 secondProList: [],
                 thirdProList: [],
                 forthProList: [],
+                fiveProList: [],
 		  }
 			$(function () {
 				_.templateSettings = {
@@ -904,8 +925,10 @@
                             window.param.secondProList.push(item);
                         } else if (item.storageracks == 3) {
                             window.param.thirdProList.push(item);
-                        } else {
+                        } else if (item.storageracks == 4) {
                             window.param.forthProList.push(item);
+                        } else {
+                            window.param.fiveProList.push(item);
                         }
                     }
                     _.templateSettings = {
@@ -933,6 +956,10 @@
 	                    "data": window.param.forthProList,
 	                    "huojia": "4",
 	                }));
+	                $("#fiveSelectProContainer").html(_.template($("#selectproList_tpl").html())({
+                        "data": window.param.fiveProList,
+                        "huojia": "5",
+                    }));
 	            }
 	            function showCPStock (id, cpid, pid, stock) {
 	            	window.param.id = id;
