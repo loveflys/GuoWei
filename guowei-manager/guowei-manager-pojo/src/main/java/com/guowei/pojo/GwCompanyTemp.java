@@ -11,6 +11,8 @@ public class GwCompanyTemp {
 
     private Long templateId;
     
+    private Long sectemplateId;
+    
     private String tname;
 
     private String companyName;
@@ -57,6 +59,14 @@ public class GwCompanyTemp {
 
     public void setTemplateId(Long templateId) {
         this.templateId = templateId;
+    }
+    
+    public Long getSectemplateId() {
+        return sectemplateId;
+    }
+
+    public void setSectemplateId(Long sectemplateId) {
+        this.sectemplateId = sectemplateId;
     }
 
     public String getCompanyName() {

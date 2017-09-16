@@ -14,6 +14,7 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
     <result column="did" property="did" jdbcType="BIGINT" />
+    <result column="sectemplate_id" property="sectemplateId" jdbcType="BIGINT" />
   </resultMap>
   <resultMap id="MultiResultMap" type="com.guowei.pojo.GwCompanyTemp" >
     <id column="id" property="id" jdbcType="BIGINT" />
@@ -31,6 +32,7 @@
     <result column="purchased" property="purchased" jdbcType="TIMESTAMP" />
     <result column="did" property="did" jdbcType="BIGINT" />
     <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="sectemplate_id" property="sectemplateId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -92,8 +94,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, mid, template_id, company_name, company_addr, company_contactname, company_contactposition, 
-    company_contactphone, company_contactwechat, created, 
-    purchased, did
+    company_contactphone, company_contactwechat, created, purchased, did, sectemplate_id
   </sql>
   <sql id="Multi_Column_List" >
     c.id,<!-- 主键 -->
@@ -108,6 +109,7 @@
     c.created,
     c.did,
     c.purchased, 
+    c.sectemplate_id,
     t.name AS "template_name",
     m.name AS "mname",
     d.name AS "dname"
@@ -163,21 +165,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwCompany" >
-    <selectKey keyProperty="id" resultType="Long" order="AFTER">
-      SELECT LAST_INSERT_ID() as id
-    </selectKey>
     insert into gw_company (id, mid, template_id, 
       company_name, company_addr, company_contactname, 
       company_contactposition, company_contactphone, 
-      company_contactwechat, 
-      created, purchased, did
-      )
+      company_contactwechat, created, purchased, 
+      did, sectemplate_id)
     values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{templateId,jdbcType=BIGINT}, 
       #{companyName,jdbcType=VARCHAR}, #{companyAddr,jdbcType=VARCHAR}, #{companyContactname,jdbcType=VARCHAR}, 
       #{companyContactposition,jdbcType=VARCHAR}, #{companyContactphone,jdbcType=VARCHAR}, 
-      #{companyContactwechat,jdbcType=VARCHAR},#{created,jdbcType=TIMESTAMP},
-      #{purchased,jdbcType=TIMESTAMP}, #{did,jdbcType=BIGINT}
-      )
+      #{companyContactwechat,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{purchased,jdbcType=TIMESTAMP}, 
+      #{did,jdbcType=BIGINT}, #{sectemplateId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwCompany" >
     insert into gw_company
@@ -218,6 +215,9 @@
       <if test="did != null" >
         did,
       </if>
+      <if test="sectemplateId != null" >
+        sectemplate_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -255,6 +255,9 @@
       </if>
       <if test="did != null" >
         #{did,jdbcType=BIGINT},
+      </if>
+      <if test="sectemplateId != null" >
+        #{sectemplateId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -303,6 +306,9 @@
       <if test="record.did != null" >
         did = #{record.did,jdbcType=BIGINT},
       </if>
+      <if test="record.sectemplateId != null" >
+        sectemplate_id = #{record.sectemplateId,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -321,7 +327,8 @@
       company_contactwechat = #{record.companyContactwechat,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       purchased = #{record.purchased,jdbcType=TIMESTAMP},
-      did = #{record.did,jdbcType=BIGINT}
+      did = #{record.did,jdbcType=BIGINT},
+      sectemplate_id = #{record.sectemplateId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -362,6 +369,9 @@
       <if test="did != null" >
         did = #{did,jdbcType=BIGINT},
       </if>
+      <if test="sectemplateId != null" >
+        sectemplate_id = #{sectemplateId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -377,7 +387,8 @@
       company_contactwechat = #{companyContactwechat,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       purchased = #{purchased,jdbcType=TIMESTAMP},
-      did = #{did,jdbcType=BIGINT}
+      did = #{did,jdbcType=BIGINT},
+      sectemplate_id = #{sectemplateId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

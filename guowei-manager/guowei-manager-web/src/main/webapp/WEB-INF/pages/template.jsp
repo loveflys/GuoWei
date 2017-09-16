@@ -175,6 +175,7 @@
 					<form class="form-horizontal" id="editForm"
 						action="<%=path%>/template/update" method="post">
 						<input type="hidden" class="form-control" name="id">
+						<input type="hidden" class="form-control" name="supplierid">
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="template.name" /></label>
@@ -182,6 +183,14 @@
 								<input type="text" class="form-control" name="name">
 							</div>
 						</div>
+						<div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">供货商</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="supplierid" id="editsupplierid_container"  onchange="changesupplierid(this.options[this.options.selectedIndex].value)">
+        
+                                </select>
+                            </div>
+                        </div> 
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="sys.create.time" /></label>
@@ -225,6 +234,7 @@
 				<div class="modal-body">
 					<form class="form-horizontal" id="addForm"
 						action="<%=path%>/template/add" method="post">
+						<input type="hidden" class="form-control" name="supplierid">
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="template.name" /></label>
@@ -232,6 +242,14 @@
 								<input type="text" class="form-control" name="name">
 							</div>
 						</div>
+						<div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label">供货商</label>
+                            <div class="col-sm-9">
+	                            <select class="form-control" name="supplierid" id="addsupplierid_container"  onchange="changesupplierid(this.options[this.options.selectedIndex].value)">
+	    
+	                            </select>
+                            </div>
+                        </div> 
 					</form>
 				</div>
 				<!-- modal-body END -->
@@ -266,196 +284,8 @@
 				<div class="modal-body">
 					<input type="hidden" class="form-control" name="id">
 					<div class="row">
-						<div class="col-md-12">
-							<div class="nav-tabs-custom">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tab_1" data-toggle="tab"
-										aria-expanded="true">第一层货架</a></li>
-									<li class=""><a href="#tab_2" data-toggle="tab"
-										aria-expanded="false">第二层货架</a></li>
-									<li class=""><a href="#tab_3" data-toggle="tab"
-										aria-expanded="false">第三层货架</a></li>
-									<li class=""><a href="#tab_4" data-toggle="tab"
-										aria-expanded="false">第四层货架</a></li>
-									<li class=""><a href="#tab_5" data-toggle="tab"
-                                        aria-expanded="false">雀巢专柜</a></li>
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="tab_1">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header with-border">
-														<h3 class="box-title">已有商品库</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body">
-														<table class="table table-bordered">
-															<tbody id="firstProContainer">
-
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header">
-														<h3 class="box-title">第一层货架商品</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body no-padding">
-														<table class="table">
-															<tbody id="firstSelectProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab_2">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header with-border">
-														<h3 class="box-title">已有商品库</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body">
-														<table class="table table-bordered">
-															<tbody id="secondProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header">
-														<h3 class="box-title">第二层货架商品</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body no-padding">
-														<table class="table">
-															<tbody id="secondSelectProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab_3">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header with-border">
-														<h3 class="box-title">已有商品库</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body">
-														<table class="table table-bordered">
-															<tbody id="thirdProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header">
-														<h3 class="box-title">第三层货架商品</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body no-padding">
-														<table class="table">
-															<tbody id="thirdSelectProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab_4">
-										<div class="row">
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header with-border">
-														<h3 class="box-title">已有商品库</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body">
-														<table class="table table-bordered">
-															<tbody id="forthProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<div class="box">
-													<div class="box-header">
-														<h3 class="box-title">第四层货架商品</h3>
-													</div>
-													<!-- /.box-header -->
-													<div class="box-body no-padding">
-														<table class="table">
-															<tbody id="forthSelectProContainer">
-																
-															</tbody>
-														</table>
-													</div>
-												</div>
-
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab_5">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="box-header with-border">
-                                                        <h3 class="box-title">已有商品库</h3>
-                                                    </div>
-                                                    <!-- /.box-header -->
-                                                    <div class="box-body">
-                                                        <table class="table table-bordered">
-                                                            <tbody id="fiveProContainer">
-                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="box">
-                                                    <div class="box-header">
-                                                        <h3 class="box-title">雀巢专柜</h3>
-                                                    </div>
-                                                    <!-- /.box-header -->
-                                                    <div class="box-body no-padding">
-                                                        <table class="table">
-                                                            <tbody id="fiveSelectProContainer">
-                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-								</div>
-							</div>
+						<div class="col-md-12" id="manager_body">
+							
 						</div>
 					</div>
 				</div>
@@ -494,6 +324,15 @@
 		</div>
 	</div>
 	<!-- page script -->
+	<script type="template" id="supplierid_tpl">
+            [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+                [[ if (item.id == supplierid) { ]]
+                    <option value="{{item.id}}" selected="selected">{{item.supplierName}}</option>
+                [[ } else { ]]
+                    <option value="{{item.id}}">{{item.supplierName}}</option>
+                [[ } ]]
+            [[ } ]]
+    </script>
 	<script type="template" id="proList_tpl">
         <tr>
           <th>图片</th>
@@ -530,26 +369,104 @@
         </tr>        
         [[ } ]]
     </script>
+    <script type="template" id="managerBody_tpl">
+        <div class="nav-tabs-custom">
+        [[ if (storages && storages.length > 0) { ]]
+                                <ul class="nav nav-tabs">
+                                    [[ for(var i=0,length=storages.length; i< length; i++) { var item = storages[i]; ]]
+                                    <li class="{{i==0?'active':''}}"><a href="#tab_{{i+1}}" data-toggle="tab"
+                                        aria-expanded="true">{{item.storageName}}</a></li>
+                                    [[ } ]]
+                                </ul>
+        [[ } ]]
+                                <div class="tab-content">
+                                    [[ for(var i=0,length=storages.length; i< length; i++) { var item = storages[i]; ]]        
+                                    <div class="tab-pane active" id="tab_{{i+1}}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="box-header with-border">
+                                                        <h3 class="box-title">已有商品库</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body">
+                                                        <table class="table table-bordered">
+                                                            <tbody id="{{i+1}}_ProContainer">
+                                                                <tr>
+          <th>图片</th>
+          <th>名称</th>
+          <th>价格</th>
+          <th>操作</th>
+        </tr>
+        [[ for(var index=0; index< window.param.tempList.length; index++){ var it=window.param.tempList[index]; ]]
+        <tr>
+          <td>
+            <img src="{{it.image}}" width="50px" height="50px" />
+          </td>
+          <td>{{it.title}}</td>
+          <td><span class="badge bg-red">￥{{it.price}}</span></td>
+          <td  data-toggle="modal" data-target="#myModal" onclick="changeTemplateWarnStock({{item.id}}, {{it.id}}, {{it.stock}})"><i class="fa fa-plus"></i></td>
+        </tr>        
+        [[ } ]]
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="box">
+                                                    <div class="box-header">
+                                                        <h3 class="box-title">{{item.storageName}}</h3>
+                                                    </div>
+                                                    <!-- /.box-header -->
+                                                    <div class="box-body no-padding">
+                                                        <table class="table">
+                                                            <tbody id="{{i+1}}_SelectProContainer">
+                                                                <tr>
+          <th>图片</th>
+          <th>名称</th>
+          <th>价格</th>
+          <th>操作</th>
+        </tr>
+        [[ for(var indexs=0; indexs < window.param.tempProList.length; indexs++){ var itx=window.param.tempProList[indexs]; ]]
+        [[ if (itx.storageracks == item.id) { ]]
+        <tr>
+          <td>
+            <img src="{{itx.proimage}}" width="50px" height="50px" />
+          </td>
+          <td>{{itx.proname}}</td>
+          <td><span class="badge bg-red">￥{{itx.proprice}}</span></td>
+          <td onclick="changeTemplate(false, {{itx.id}})"><i class="fa fa-minus"></i></td>
+        </tr>     
+        [[ } ]]    
+        [[ } ]]
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    [[ } ]]
+                                </div>
+                            </div>
+    </script>
 	<script>
     window.param = {
 			  id: '', 
     		  proList: [],
+    		  tempList: [],
 			   tempProList: [],
-			   firstProList: [],
-			   secondProList: [],
-			   thirdProList: [],
-			   forthProList: [],
-			   fiveProList: [],
-			   firsttempProList: [],
-               secondtempProList: [],
-               thirdtempProList: [],
-               forthtempProList: [],
-               fivetempProList: [],
+			   storages: [],
                pid: '',
+               sid: '',
                huojia: ''
             }
             $(function () {
-                
+            	_.templateSettings = {
+                        evaluate    : /\[\[(.+?)\]\]/g,
+                        interpolate : /\{\{(.+?)\}\}/g
+                    };
                 //页面消息处理
                 var result = "${result}";
                 var msg= "${msg}";
@@ -665,6 +582,7 @@
                 $("#btn-add").on("click", function () {
                 	var data = tables.api().row($(this).parents('tr')).data();
                     $("#addForm input[name=name]").val("");
+                    getAddSupplierData();
                     $("#addModal").modal("show");
                 });
                 
@@ -702,7 +620,10 @@
                 $('#dataTable tbody').on( 'click', '#editRow', function () {
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("input[name=id]").val(data.id);
+                    window.param.supplierid = data.supplierid;
+                    getEditSupplierData();
                     $("#editForm input[name=name]").val(data.name);
+                    $("#editForm input[name=supplierid]").val(data.supplierid);
                     $("#editModal").modal("show");
                     
                 });
@@ -711,6 +632,7 @@
                     var data = tables.api().row($(this).parents('tr')).data();
                     $("input[name=id]").val(data.id);
                     window.param.id = data.id;
+                    window.param.sid = data.supplierid;
                     getData();                    
                     $("#managerModal").modal("show");                    
                 });
@@ -789,23 +711,51 @@
                     }
                 });
             });
+    function getEditSupplierData () {
+    	$.ajax({
+            cache: false,
+            type: "POST",
+            url: "<%=path%>/supplier/getAllData",
+            data: {},
+            async: false,
+            error: function(request) {
+                toastr.error("Server Connection Error...");
+            },
+            success: function(res) {
+            	$("#editModal input[name=supplierid]").val(window.param.supplierid);
+                $("#editsupplierid_container").html(_.template($("#supplierid_tpl").html())({
+                    "data": res.data,
+                    "supplierid": window.param.supplierid
+                }));
+            }
+        });
+    }
+    function getAddSupplierData () {
+    	$.ajax({
+            cache: false,
+            type: "POST",
+            url: "<%=path%>/supplier/getAllData",
+            data: {},
+            async: false,
+            error: function(request) {
+                toastr.error("Server Connection Error...");
+            },
+            success: function(res) {
+                $("#addModal input[name=supplierid]").val(res.data[0].id);
+                $("#addsupplierid_container").html(_.template($("#supplierid_tpl").html())({
+                    "data": res.data,
+                    "supplierid": window.param.supplierid
+                }));
+            }
+        });
+    }
+    function changesupplierid(id) {
+        $("#addModal input[name=supplierid]").val(id);
+        $("#editModal input[name=supplierid]").val(id);
+        window.param.supplierid = id;
+    }
     function getData() {
     	var id = window.param.id;
-    	window.param = {
-                id: id, 
-                proList: [],
-                 tempProList: [],
-                 firstProList: [],
-                 secondProList: [],
-                 thirdProList: [],
-                 forthProList: [],
-                 fiveProList: [],
-                 firsttempProList: [],
-                 secondtempProList: [],
-                 thirdtempProList: [],
-                 forthtempProList: [],
-                 fivetempProList: [],
-        }
     	$.ajax({
             cache: false,
             type: "POST",
@@ -816,7 +766,6 @@
                 toastr.error("Server Connection Error...");
             },
             success: function(res) {
-                console.log(JSON.stringify(res.data));
                 window.param.proList = res.data;
                 
                 $.ajax({
@@ -831,87 +780,42 @@
                         toastr.error("Server Connection Error...");
                     },
                     success: function(resp) {
-                        console.log(JSON.stringify(resp.data));
                         window.param.tempProList = resp.data;
-                        let temparr = [];
-                        for(var item of window.param.proList) {
-                        	var ishas = false;
-                        	for(var temp of window.param.tempProList) {
-                                if (item.id == temp.pid) {
-                                    ishas = true;	
-                                }                                
+                        $.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "<%=path%>/supplier/getStorageData",
+                            data: {
+                                id: window.param.sid
+                            },
+                            async: false,
+                            error: function(request) {
+                                toastr.error("Server Connection Error...");
+                            },
+                            success: function(resp) {
+                                window.param.storages = resp.data;
+                                
+                                
+                                for(var item of window.param.proList) {
+                                	var has = false;
+                                	for(var it of window.param.tempProList) {
+                                		if (it.id == item.id) {
+                                			has = true;
+                                		}
+                                	}
+                                	if (!has) {
+                                		window.param.tempList.push(item);
+                                	}
+                                }
+                                
+                                _.templateSettings = {
+                                    evaluate    : /\[\[(.+?)\]\]/g,
+                                    interpolate : /\{\{(.+?)\}\}/g
+                                };
+                                bindData();
                             }
-                        	if (!ishas) {
-                        		   temparr.push(item);	
-                        	}                        	
-                        }
-                        window.param.proList = temparr;
-                        for(var item of window.param.tempProList) {
-                            if (item.storageracks == 1) {
-                                window.param.firsttempProList.push(item);
-                            } else if (item.storageracks == 2) {
-                                window.param.secondtempProList.push(item);
-                            } else if (item.storageracks == 3) {
-                                window.param.thirdtempProList.push(item);
-                            } else if (item.storageracks == 4) {
-                                window.param.forthtempProList.push(item);
-                            } else {
-                                window.param.fivetempProList.push(item);
-                            }
-                        }
+                        });
                         
-                        for(var item of window.param.proList) {
-                            var firsthas = false;
-                            var secondhas = false;
-                            var thirdhas = false;
-                            var forthhas = false;
-                            var fivehas = false;
-                            for (var first of window.param.firsttempProList) {
-                                if (item.id == first.pid) {
-                                    firsthas = true;
-                                }
-                            }
-                            for (var second of window.param.secondtempProList) {
-                                if (item.id == second.pid) {
-                                    secondhas = true;
-                                }
-                            }
-                            for (var third of window.param.thirdtempProList) {
-                                if (item.id == third.pid) {
-                                    thirdhas = true;
-                                }
-                            }
-                            for (var forth of window.param.forthtempProList) {
-                                if (item.id == forth.pid) {
-                                    forthhas = true;
-                                }
-                            }
-                            for (var five of window.param.fivetempProList) {
-                                if (item.id == five.pid) {
-                                	fivehas = true;
-                                }
-                            }
-                            if (!firsthas){
-                                window.param.firstProList.push(item);
-                            }
-                            if (!secondhas){
-                                window.param.secondProList.push(item);
-                            }
-                            if (!thirdhas){
-                                window.param.thirdProList.push(item);
-                            }
-                            if (!forthhas){
-                                window.param.forthProList.push(item);
-                            }
-                            if (!fivehas){
-                                window.param.fiveProList.push(item);
-                            }
-                        }
-                        _.templateSettings = {
-                            evaluate    : /\[\[(.+?)\]\]/g,
-                            interpolate : /\{\{(.+?)\}\}/g
-                        };
-                        bindData();
                     }
                 });
                 
@@ -920,46 +824,8 @@
         });
     }
             function bindData() {
-            	$("#firstProContainer").html(_.template($("#proList_tpl").html())({
-                    "data": window.param.firstProList,
-                    "huojia": 1,
-                }));
-            	$("#secondProContainer").html(_.template($("#proList_tpl").html())({
-                    "data": window.param.secondProList,
-                    "huojia": 2,
-                }));
-            	$("#thirdProContainer").html(_.template($("#proList_tpl").html())({
-                    "data": window.param.thirdProList,
-                    "huojia": 3,
-                }));
-            	$("#forthProContainer").html(_.template($("#proList_tpl").html())({
-                    "data": window.param.forthProList,
-                    "huojia": 4,
-                }));
-            	$("#fiveProContainer").html(_.template($("#proList_tpl").html())({
-                    "data": window.param.fiveProList,
-                    "huojia": 5,
-                }));
-            	
-            	$("#firstSelectProContainer").html(_.template($("#selectproList_tpl").html())({
-                    "data": window.param.firsttempProList,
-                    "huojia": 1,
-                }));
-                $("#secondSelectProContainer").html(_.template($("#selectproList_tpl").html())({
-                    "data": window.param.secondtempProList,
-                    "huojia": "2",
-                }));
-                $("#thirdSelectProContainer").html(_.template($("#selectproList_tpl").html())({
-                    "data": window.param.thirdtempProList,
-                    "huojia": "3",
-                }));
-                $("#forthSelectProContainer").html(_.template($("#selectproList_tpl").html())({
-                    "data": window.param.forthtempProList,
-                    "huojia": "4",
-                }));
-                $("#fiveSelectProContainer").html(_.template($("#selectproList_tpl").html())({
-                    "data": window.param.fivetempProList,
-                    "huojia": "5",
+            	$("#manager_body").html(_.template($("#managerBody_tpl").html())({
+                    "storages": window.param.storages
                 }));
             }
             function changeTemplateWarnStock(huojia, id, stock) {
@@ -973,6 +839,16 @@
             		var warnstock = Number($("#warnstock").val());
             		if(warnstock >= stock) {
             			toastr.error("库存提醒必须小于铺货数量");
+            			return;
+            		}
+            		var has = false;
+            		for(var item of window.param.tempProList) {
+            			if (window.param.pid == item.pid) {
+            				toastr.error("该商品已在货架中");
+            				has = true;
+            			}
+            		}
+            		if (has) {
             			return;
             		}
             		$.ajax({

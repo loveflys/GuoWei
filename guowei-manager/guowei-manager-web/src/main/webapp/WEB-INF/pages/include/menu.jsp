@@ -34,6 +34,9 @@
             <li class="treeview">
                 <a href="<%=path%>/companys"> <i class="fa fa-user"></i><span><sp:message code="menu.companys"/></span></a>
             </li>
+            <li class="treeview" style="display: ${currentUser.level == 3?'block':'none'}">
+                <a href="<%=path%>/suppliers"> <i class="fa fa-user"></i><span><sp:message code="menu.suppliers"/></span></a>
+            </li>
             <li class="treeview">
                 <a href="<%=path%>/orders"> <i class="fa fa-user"></i><span><sp:message code="menu.orders"/></span></a>
             </li>

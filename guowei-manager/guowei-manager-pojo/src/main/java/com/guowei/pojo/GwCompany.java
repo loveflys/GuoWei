@@ -27,6 +27,8 @@ public class GwCompany {
 
     private Long did;
 
+    private Long sectemplateId;
+
     public Long getId() {
         return id;
     }
@@ -121,5 +123,13 @@ public class GwCompany {
 
     public void setDid(Long did) {
         this.did = did;
+    }
+
+    public Long getSectemplateId() {
+        return sectemplateId;
+    }
+
+    public void setSectemplateId(Long sectemplateId) {
+        this.sectemplateId = sectemplateId;
     }
 }

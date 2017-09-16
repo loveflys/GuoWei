@@ -81,9 +81,9 @@ public class TemplateServiceImpl implements TemplateService {
 		// TODO Auto-generated method stub
 		GwTemplateExample gme = new GwTemplateExample();
 		Criteria criteria = gme.createCriteria();
-//		if (!"".equals(template.getName())) {
-//			criteria.andNameLike("%"+template.getName()+"%");
-//		}		
+		if (template.getSupplierid() > 0) {
+			criteria.andSupplieridEqualTo(template.getSupplierid());
+		}		
 		List<GwTemplate> list = templateMapper.selectByExample(gme);
 		DatatablesView result = new DatatablesView();
 		result.setData(list);

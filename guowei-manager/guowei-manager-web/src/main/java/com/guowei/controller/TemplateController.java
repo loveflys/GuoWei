@@ -79,6 +79,9 @@ public class TemplateController {
 	@RequestMapping(value="/template/getAllData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getAllData(HttpServletRequest request, GwTemplate template) {
+		if (!"".equals(request.getParameter("supplierid"))) {
+			template.setSupplierid(Long.parseLong(request.getParameter("supplierid")));
+		}
 		DatatablesView dataTable = templateService.getGwTemplatesByParam(template);
 		String data = JSON.toJSONString(dataTable);
 		return data;
@@ -119,6 +122,7 @@ public class TemplateController {
 		if (!"".equals(request.getParameter("name"))) {
 			template.setName(request.getParameter("name"));
 		}
+		template.setSupplierid(Long.parseLong(request.getParameter("supplierid")));
 		template.setCreated(Calendar.getInstance().getTime());
 		template.setUpdated(Calendar.getInstance().getTime());
 		int result = templateService.addGwTemplate(template);
@@ -196,6 +200,9 @@ public class TemplateController {
 		GwTemplate template = templateService.getGwTemplateById(Long.parseLong(request.getParameter("id")));
 		if (!"".equals(request.getParameter("name"))) {
 			template.setName(request.getParameter("name"));
+		}
+		if (!"".equals(request.getParameter("supplierid"))) {
+			template.setSupplierid(Long.parseLong(request.getParameter("supplierid")));
 		}
 		template.setUpdated(Calendar.getInstance().getTime());
 		int status = templateService.editGwTemplate(template);

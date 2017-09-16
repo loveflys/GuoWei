@@ -884,6 +884,66 @@ public class GwCompanyExample {
             addCriterion("did not between", value1, value2, "did");
             return (Criteria) this;
         }
+
+        public Criteria andSectemplateIdIsNull() {
+            addCriterion("sectemplate_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdIsNotNull() {
+            addCriterion("sectemplate_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdEqualTo(Long value) {
+            addCriterion("sectemplate_id =", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdNotEqualTo(Long value) {
+            addCriterion("sectemplate_id <>", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdGreaterThan(Long value) {
+            addCriterion("sectemplate_id >", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("sectemplate_id >=", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdLessThan(Long value) {
+            addCriterion("sectemplate_id <", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdLessThanOrEqualTo(Long value) {
+            addCriterion("sectemplate_id <=", value, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdIn(List<Long> values) {
+            addCriterion("sectemplate_id in", values, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdNotIn(List<Long> values) {
+            addCriterion("sectemplate_id not in", values, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdBetween(Long value1, Long value2) {
+            addCriterion("sectemplate_id between", value1, value2, "sectemplateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSectemplateIdNotBetween(Long value1, Long value2) {
+            addCriterion("sectemplate_id not between", value1, value2, "sectemplateId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
