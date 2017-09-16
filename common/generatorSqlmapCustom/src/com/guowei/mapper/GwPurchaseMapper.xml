@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.guowei.mapper.GwTemplateMapper" >
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwTemplate" >
+<mapper namespace="com.guowei.mapper.GwPurchaseMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwPurchase" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
-    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="supplierid" property="supplierid" jdbcType="BIGINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, created, updated, supplierid
+    id, pid, number, price, created, mid
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwTemplateExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwPurchaseExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from gw_template
+    from gw_purchase
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,85 +87,96 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from gw_template
+    from gw_purchase
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from gw_template
+    delete from gw_purchase
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwTemplateExample" >
-    delete from gw_template
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwPurchaseExample" >
+    delete from gw_purchase
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwTemplate" >
-    insert into gw_template (id, name, created, 
-      updated, supplierid)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{supplierid,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.guowei.pojo.GwPurchase" >
+    insert into gw_purchase (id, pid, number, 
+      price, created, mid
+      )
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, 
+      #{price,jdbcType=DECIMAL}, #{created,jdbcType=TIMESTAMP}, #{mid,jdbcType=BIGINT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwTemplate" >
-    insert into gw_template
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwPurchase" >
+    insert into gw_purchase
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="price != null" >
+        price,
       </if>
       <if test="created != null" >
         created,
       </if>
-      <if test="updated != null" >
-        updated,
-      </if>
-      <if test="supplierid != null" >
-        supplierid,
+      <if test="mid != null" >
+        mid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="supplierid != null" >
-        #{supplierid,jdbcType=BIGINT},
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwTemplateExample" resultType="java.lang.Integer" >
-    select count(*) from gw_template
+  <select id="countByExample" parameterType="com.guowei.pojo.GwPurchaseExample" resultType="java.lang.Integer" >
+    select count(*) from gw_purchase
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update gw_template
+    update gw_purchase
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=BIGINT},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updated != null" >
-        updated = #{record.updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.supplierid != null" >
-        supplierid = #{record.supplierid,jdbcType=BIGINT},
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,40 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update gw_template
+    update gw_purchase
     set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=BIGINT},
+      number = #{record.number,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP},
-      supplierid = #{record.supplierid,jdbcType=BIGINT}
+      mid = #{record.mid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwTemplate" >
-    update gw_template
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwPurchase" >
+    update gw_purchase
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="supplierid != null" >
-        supplierid = #{supplierid,jdbcType=BIGINT},
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwTemplate" >
-    update gw_template
-    set name = #{name,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwPurchase" >
+    update gw_purchase
+    set pid = #{pid,jdbcType=BIGINT},
+      number = #{number,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      supplierid = #{supplierid,jdbcType=BIGINT}
+      mid = #{mid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

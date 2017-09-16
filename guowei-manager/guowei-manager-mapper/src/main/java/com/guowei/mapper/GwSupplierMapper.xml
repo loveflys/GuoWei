@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guowei.mapper.GwSupplierMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwSupplier" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="supplier_addr" property="supplierAddr" jdbcType="VARCHAR" />
+    <result column="supplier_contactname" property="supplierContactname" jdbcType="VARCHAR" />
+    <result column="supplier_contactposition" property="supplierContactposition" jdbcType="VARCHAR" />
+    <result column="supplier_contactphone" property="supplierContactphone" jdbcType="VARCHAR" />
+    <result column="supplier_contactwechat" property="supplierContactwechat" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mid, supplier_name, supplier_addr, supplier_contactname, supplier_contactposition, 
+    supplier_contactphone, supplier_contactwechat, created
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwSupplierExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gw_supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from gw_supplier
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gw_supplier
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwSupplierExample" >
+    delete from gw_supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.guowei.pojo.GwSupplier" >
+    insert into gw_supplier (id, mid, supplier_name, 
+      supplier_addr, supplier_contactname, supplier_contactposition, 
+      supplier_contactphone, supplier_contactwechat, 
+      created)
+    values (#{id,jdbcType=BIGINT}, #{mid,jdbcType=BIGINT}, #{supplierName,jdbcType=VARCHAR}, 
+      #{supplierAddr,jdbcType=VARCHAR}, #{supplierContactname,jdbcType=VARCHAR}, #{supplierContactposition,jdbcType=VARCHAR}, 
+      #{supplierContactphone,jdbcType=VARCHAR}, #{supplierContactwechat,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwSupplier" >
+    insert into gw_supplier
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="supplierAddr != null" >
+        supplier_addr,
+      </if>
+      <if test="supplierContactname != null" >
+        supplier_contactname,
+      </if>
+      <if test="supplierContactposition != null" >
+        supplier_contactposition,
+      </if>
+      <if test="supplierContactphone != null" >
+        supplier_contactphone,
+      </if>
+      <if test="supplierContactwechat != null" >
+        supplier_contactwechat,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierAddr != null" >
+        #{supplierAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactname != null" >
+        #{supplierContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactposition != null" >
+        #{supplierContactposition,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactphone != null" >
+        #{supplierContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactwechat != null" >
+        #{supplierContactwechat,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.guowei.pojo.GwSupplierExample" resultType="java.lang.Integer" >
+    select count(*) from gw_supplier
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gw_supplier
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierName != null" >
+        supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierAddr != null" >
+        supplier_addr = #{record.supplierAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierContactname != null" >
+        supplier_contactname = #{record.supplierContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierContactposition != null" >
+        supplier_contactposition = #{record.supplierContactposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierContactphone != null" >
+        supplier_contactphone = #{record.supplierContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierContactwechat != null" >
+        supplier_contactwechat = #{record.supplierContactwechat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gw_supplier
+    set id = #{record.id,jdbcType=BIGINT},
+      mid = #{record.mid,jdbcType=BIGINT},
+      supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      supplier_addr = #{record.supplierAddr,jdbcType=VARCHAR},
+      supplier_contactname = #{record.supplierContactname,jdbcType=VARCHAR},
+      supplier_contactposition = #{record.supplierContactposition,jdbcType=VARCHAR},
+      supplier_contactphone = #{record.supplierContactphone,jdbcType=VARCHAR},
+      supplier_contactwechat = #{record.supplierContactwechat,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwSupplier" >
+    update gw_supplier
+    <set >
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierAddr != null" >
+        supplier_addr = #{supplierAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactname != null" >
+        supplier_contactname = #{supplierContactname,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactposition != null" >
+        supplier_contactposition = #{supplierContactposition,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactphone != null" >
+        supplier_contactphone = #{supplierContactphone,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierContactwechat != null" >
+        supplier_contactwechat = #{supplierContactwechat,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwSupplier" >
+    update gw_supplier
+    set mid = #{mid,jdbcType=BIGINT},
+      supplier_name = #{supplierName,jdbcType=VARCHAR},
+      supplier_addr = #{supplierAddr,jdbcType=VARCHAR},
+      supplier_contactname = #{supplierContactname,jdbcType=VARCHAR},
+      supplier_contactposition = #{supplierContactposition,jdbcType=VARCHAR},
+      supplier_contactphone = #{supplierContactphone,jdbcType=VARCHAR},
+      supplier_contactwechat = #{supplierContactwechat,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.guowei.mapper.GwTemplateMapper" >
-  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwTemplate" >
+<mapper namespace="com.guowei.mapper.GwCarouselMapper" >
+  <resultMap id="BaseResultMap" type="com.guowei.pojo.GwCarousel" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="BIGINT" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="uid" property="uid" jdbcType="BIGINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
-    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="supplierid" property="supplierid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, created, updated, supplierid
+    id, title, company_id, pic, type, uid, created
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwTemplateExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwCarouselExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from gw_template
+    from gw_carousel
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,85 +88,105 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from gw_template
+    from gw_carousel
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from gw_template
+    delete from gw_carousel
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwTemplateExample" >
-    delete from gw_template
+  <delete id="deleteByExample" parameterType="com.guowei.pojo.GwCarouselExample" >
+    delete from gw_carousel
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.guowei.pojo.GwTemplate" >
-    insert into gw_template (id, name, created, 
-      updated, supplierid)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{supplierid,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.guowei.pojo.GwCarousel" >
+    insert into gw_carousel (id, title, company_id, 
+      pic, type, uid, created
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, 
+      #{pic,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{uid,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.guowei.pojo.GwTemplate" >
-    insert into gw_template
+  <insert id="insertSelective" parameterType="com.guowei.pojo.GwCarousel" >
+    insert into gw_carousel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="uid != null" >
+        uid,
       </if>
       <if test="created != null" >
         created,
-      </if>
-      <if test="updated != null" >
-        updated,
-      </if>
-      <if test="supplierid != null" >
-        supplierid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=BIGINT},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null" >
-        #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="supplierid != null" >
-        #{supplierid,jdbcType=BIGINT},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.guowei.pojo.GwTemplateExample" resultType="java.lang.Integer" >
-    select count(*) from gw_template
+  <select id="countByExample" parameterType="com.guowei.pojo.GwCarouselExample" resultType="java.lang.Integer" >
+    select count(*) from gw_carousel
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update gw_template
+    update gw_carousel
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pic != null" >
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=BIGINT},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updated != null" >
-        updated = #{record.updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.supplierid != null" >
-        supplierid = #{record.supplierid,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,40 +194,50 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update gw_template
+    update gw_carousel
     set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP},
-      supplierid = #{record.supplierid,jdbcType=BIGINT}
+      title = #{record.title,jdbcType=VARCHAR},
+      company_id = #{record.companyId,jdbcType=BIGINT},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=TINYINT},
+      uid = #{record.uid,jdbcType=BIGINT},
+      created = #{record.created,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwTemplate" >
-    update gw_template
+  <update id="updateByPrimaryKeySelective" parameterType="com.guowei.pojo.GwCarousel" >
+    update gw_carousel
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=BIGINT},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
-      <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="supplierid != null" >
-        supplierid = #{supplierid,jdbcType=BIGINT},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwTemplate" >
-    update gw_template
-    set name = #{name,jdbcType=VARCHAR},
-      created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      supplierid = #{supplierid,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="com.guowei.pojo.GwCarousel" >
+    update gw_carousel
+    set title = #{title,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=BIGINT},
+      pic = #{pic,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      uid = #{uid,jdbcType=BIGINT},
+      created = #{created,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

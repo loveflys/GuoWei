@@ -53,6 +53,8 @@
 		<table schema="" tableName="gw_category"></table>
 		<table schema="" tableName="gw_product"></table>
 		<table schema="" tableName="gw_purchase"></table>
+		<table schema="" tableName="gw_supplier"></table>
+		<table schema="" tableName="gw_supplierstorage"></table>
 		<table schema="" tableName="gw_companyproduct"></table>
 		<table schema="" tableName="gw_companyprochange"></table>
 		<table schema="" tableName="gw_order"></table>

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GwTemplateExample {
+public class GwDivisionExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public GwTemplateExample() {
+    public GwDivisionExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,6 +165,66 @@ public class GwTemplateExample {
             return (Criteria) this;
         }
 
+        public Criteria andPidIsNull() {
+            addCriterion("pid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidIsNotNull() {
+            addCriterion("pid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidEqualTo(Long value) {
+            addCriterion("pid =", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotEqualTo(Long value) {
+            addCriterion("pid <>", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidGreaterThan(Long value) {
+            addCriterion("pid >", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidGreaterThanOrEqualTo(Long value) {
+            addCriterion("pid >=", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidLessThan(Long value) {
+            addCriterion("pid <", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidLessThanOrEqualTo(Long value) {
+            addCriterion("pid <=", value, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidIn(List<Long> values) {
+            addCriterion("pid in", values, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotIn(List<Long> values) {
+            addCriterion("pid not in", values, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidBetween(Long value1, Long value2) {
+            addCriterion("pid between", value1, value2, "pid");
+            return (Criteria) this;
+        }
+
+        public Criteria andPidNotBetween(Long value1, Long value2) {
+            addCriterion("pid not between", value1, value2, "pid");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
@@ -232,6 +292,136 @@ public class GwTemplateExample {
 
         public Criteria andNameNotBetween(String value1, String value2) {
             addCriterion("name not between", value1, value2, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNull() {
+            addCriterion("level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIsNotNull() {
+            addCriterion("level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelEqualTo(Byte value) {
+            addCriterion("level =", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotEqualTo(Byte value) {
+            addCriterion("level <>", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThan(Byte value) {
+            addCriterion("level >", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelGreaterThanOrEqualTo(Byte value) {
+            addCriterion("level >=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThan(Byte value) {
+            addCriterion("level <", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelLessThanOrEqualTo(Byte value) {
+            addCriterion("level <=", value, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelIn(List<Byte> values) {
+            addCriterion("level in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotIn(List<Byte> values) {
+            addCriterion("level not in", values, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelBetween(Byte value1, Byte value2) {
+            addCriterion("level between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelNotBetween(Byte value1, Byte value2) {
+            addCriterion("level not between", value1, value2, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameIsNull() {
+            addCriterion("allname is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameIsNotNull() {
+            addCriterion("allname is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameEqualTo(String value) {
+            addCriterion("allname =", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameNotEqualTo(String value) {
+            addCriterion("allname <>", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameGreaterThan(String value) {
+            addCriterion("allname >", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameGreaterThanOrEqualTo(String value) {
+            addCriterion("allname >=", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameLessThan(String value) {
+            addCriterion("allname <", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameLessThanOrEqualTo(String value) {
+            addCriterion("allname <=", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameLike(String value) {
+            addCriterion("allname like", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameNotLike(String value) {
+            addCriterion("allname not like", value, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameIn(List<String> values) {
+            addCriterion("allname in", values, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameNotIn(List<String> values) {
+            addCriterion("allname not in", values, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameBetween(String value1, String value2) {
+            addCriterion("allname between", value1, value2, "allname");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllnameNotBetween(String value1, String value2) {
+            addCriterion("allname not between", value1, value2, "allname");
             return (Criteria) this;
         }
 
@@ -352,66 +542,6 @@ public class GwTemplateExample {
 
         public Criteria andUpdatedNotBetween(Date value1, Date value2) {
             addCriterion("updated not between", value1, value2, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIsNull() {
-            addCriterion("supplierid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIsNotNull() {
-            addCriterion("supplierid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridEqualTo(Long value) {
-            addCriterion("supplierid =", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotEqualTo(Long value) {
-            addCriterion("supplierid <>", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridGreaterThan(Long value) {
-            addCriterion("supplierid >", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridGreaterThanOrEqualTo(Long value) {
-            addCriterion("supplierid >=", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridLessThan(Long value) {
-            addCriterion("supplierid <", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridLessThanOrEqualTo(Long value) {
-            addCriterion("supplierid <=", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIn(List<Long> values) {
-            addCriterion("supplierid in", values, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotIn(List<Long> values) {
-            addCriterion("supplierid not in", values, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridBetween(Long value1, Long value2) {
-            addCriterion("supplierid between", value1, value2, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotBetween(Long value1, Long value2) {
-            addCriterion("supplierid not between", value1, value2, "supplierid");
             return (Criteria) this;
         }
     }

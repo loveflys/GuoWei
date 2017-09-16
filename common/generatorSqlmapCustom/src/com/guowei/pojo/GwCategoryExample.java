@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GwTemplateExample {
+public class GwCategoryExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public GwTemplateExample() {
+    public GwCategoryExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -292,126 +292,6 @@ public class GwTemplateExample {
 
         public Criteria andCreatedNotBetween(Date value1, Date value2) {
             addCriterion("created not between", value1, value2, "created");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedIsNull() {
-            addCriterion("updated is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedIsNotNull() {
-            addCriterion("updated is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedEqualTo(Date value) {
-            addCriterion("updated =", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedNotEqualTo(Date value) {
-            addCriterion("updated <>", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedGreaterThan(Date value) {
-            addCriterion("updated >", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedGreaterThanOrEqualTo(Date value) {
-            addCriterion("updated >=", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedLessThan(Date value) {
-            addCriterion("updated <", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedLessThanOrEqualTo(Date value) {
-            addCriterion("updated <=", value, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedIn(List<Date> values) {
-            addCriterion("updated in", values, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedNotIn(List<Date> values) {
-            addCriterion("updated not in", values, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedBetween(Date value1, Date value2) {
-            addCriterion("updated between", value1, value2, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedNotBetween(Date value1, Date value2) {
-            addCriterion("updated not between", value1, value2, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIsNull() {
-            addCriterion("supplierid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIsNotNull() {
-            addCriterion("supplierid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridEqualTo(Long value) {
-            addCriterion("supplierid =", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotEqualTo(Long value) {
-            addCriterion("supplierid <>", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridGreaterThan(Long value) {
-            addCriterion("supplierid >", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridGreaterThanOrEqualTo(Long value) {
-            addCriterion("supplierid >=", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridLessThan(Long value) {
-            addCriterion("supplierid <", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridLessThanOrEqualTo(Long value) {
-            addCriterion("supplierid <=", value, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridIn(List<Long> values) {
-            addCriterion("supplierid in", values, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotIn(List<Long> values) {
-            addCriterion("supplierid not in", values, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridBetween(Long value1, Long value2) {
-            addCriterion("supplierid between", value1, value2, "supplierid");
-            return (Criteria) this;
-        }
-
-        public Criteria andSupplieridNotBetween(Long value1, Long value2) {
-            addCriterion("supplierid not between", value1, value2, "supplierid");
             return (Criteria) this;
         }
     }

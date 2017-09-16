@@ -1,13 +1,14 @@
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\CategoryController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\task\OrderTask.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\WeChatController.java
-E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\utils\AllInterceptor.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\CompanyController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\IndexController.java
+E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\utils\AuthInterceptor.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\ManagerController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\DivisionController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\TemplateController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\ProductController.java
+E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\utils\AuthPassport.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\FileController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\UserController.java
 E:\project\GuoWei\guowei-manager\guowei-manager-web\src\main\java\com\guowei\controller\OrderController.java

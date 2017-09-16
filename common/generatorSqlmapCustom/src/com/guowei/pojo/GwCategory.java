@@ -2,16 +2,12 @@ package com.guowei.pojo;
 
 import java.util.Date;
 
-public class GwTemplate {
+public class GwCategory {
     private Long id;
 
     private String name;
 
     private Date created;
-
-    private Date updated;
-
-    private Long supplierid;
 
     public Long getId() {
         return id;
@@ -35,21 +31,5 @@ public class GwTemplate {
 
     public void setCreated(Date created) {
         this.created = created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
-    public Long getSupplierid() {
-        return supplierid;
-    }
-
-    public void setSupplierid(Long supplierid) {
-        this.supplierid = supplierid;
     }
 }

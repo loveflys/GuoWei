@@ -2,16 +2,20 @@ package com.guowei.pojo;
 
 import java.util.Date;
 
-public class GwTemplate {
+public class GwDivision {
     private Long id;
 
+    private Long pid;
+
     private String name;
+
+    private Byte level;
+
+    private String allname;
 
     private Date created;
 
     private Date updated;
-
-    private Long supplierid;
 
     public Long getId() {
         return id;
@@ -21,12 +25,36 @@ public class GwTemplate {
         this.id = id;
     }
 
+    public Long getPid() {
+        return pid;
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Byte getLevel() {
+        return level;
+    }
+
+    public void setLevel(Byte level) {
+        this.level = level;
+    }
+
+    public String getAllname() {
+        return allname;
+    }
+
+    public void setAllname(String allname) {
+        this.allname = allname;
     }
 
     public Date getCreated() {
@@ -43,13 +71,5 @@ public class GwTemplate {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public Long getSupplierid() {
-        return supplierid;
-    }
-
-    public void setSupplierid(Long supplierid) {
-        this.supplierid = supplierid;
     }
 }

@@ -474,7 +474,7 @@
                 [[ } ]] 
             </div>
             </div>
-
+            [[if(data[5]&&data[5].length>0){ ]]
             <div class="aui-content list-detail-show" id="five_pro_body" style="display:none;">
             <div class="the-onelm-name">
                 <span class="the-onelm-left"></span>
@@ -483,7 +483,7 @@
             </div>
             <div>
                 <h4 class="aui-txt-font14 aui-text-333"><div class="leimu-left-fg"></div>雀巢专柜</h4>
-                [[if(data[5]&&data[5].length>0){ ]]
+                
                     <ul class="aui-list-view aui-grid-view">
                         [[for(var j=0;j< data[5].length;j++){ var item = data[5][j]; ]]
                             <li id="pro_{{item.id}}" class="aui-list-view-cell aui-img aui-col-xs-6" onclick="addtoCart('{{item.id}}', '{{item.number}}', '{{item.stock}}')"> 
@@ -494,9 +494,10 @@
                             </li>
                         [[ } ]]
                     </ul>
-                [[ } ]] 
+                
             </div>
             </div>
+            [[ } ]] 
         [[ } ]]
     </script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
