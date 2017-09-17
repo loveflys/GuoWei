@@ -57,7 +57,7 @@ public class ProductController {
 		String level = json.getString("level");
 		Long sid = json.getLong("sid");
 		if (level != null && !"".equals(level)) {
-			if ("3".equals(level)) {
+			if (!"3".equals(level)) {
 				product.setSid(sid);
 			}
 		}
