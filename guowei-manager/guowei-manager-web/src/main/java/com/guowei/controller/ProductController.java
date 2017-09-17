@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
@@ -52,12 +53,12 @@ public class ProductController {
 	public String getData(HttpServletRequest request, GwProduct product) {
 		GwManager manager = null;
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
-		if (temp != null) {
-			manager = (GwManager) temp; 
-		}
-		if (manager != null) {
-			if (manager.getLevel() != Byte.parseByte("3")) {
-				product.setSid(manager.getSid());
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		Long sid = json.getLong("sid");
+		if (level != null && !"".equals(level)) {
+			if ("3".equals(level)) {
+				product.setSid(sid);
 			}
 		}
 		
