@@ -168,8 +168,11 @@ public class CompanyController {
 		if (!"".equals(request.getParameter("templateId"))) {
 			company.setTemplateId(Long.parseLong(request.getParameter("templateId")));
 		}
-		if (!"".equals(request.getParameter("sectemplateId"))) {
-			company.setSectemplateId(Long.parseLong(request.getParameter("sectemplateId")));
+		String SectemplateId = request.getParameter("sectemplateId");
+		if ("".equals(SectemplateId)) {
+			company.setSectemplateId(0l);
+		} else {
+			company.setSectemplateId(Long.parseLong(SectemplateId));
 		}
 		if (!"".equals(request.getParameter("companyName"))) {
 			company.setCompanyName(request.getParameter("companyName"));
@@ -219,8 +222,11 @@ public class CompanyController {
 		if (!"".equals(request.getParameter("templateId"))) {
 			company.setTemplateId(Long.parseLong(request.getParameter("templateId")));
 		}
-		if (!"".equals(request.getParameter("sectemplateId"))) {
-			company.setSectemplateId(Long.parseLong(request.getParameter("sectemplateId")));
+		String SectemplateId = request.getParameter("sectemplateId");
+		if ("".equals(SectemplateId)) {
+			company.setSectemplateId(0l);
+		} else {
+			company.setSectemplateId(Long.parseLong(SectemplateId));
 		}
 		if (!"".equals(request.getParameter("companyName"))) {
 			company.setCompanyName(request.getParameter("companyName"));

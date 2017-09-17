@@ -19,6 +19,8 @@ public class GwManager {
 
     private Long area;
 
+    private Long sid;
+
     public Long getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class GwManager {
 
     public void setArea(Long area) {
         this.area = area;
+    }
+
+    public Long getSid() {
+        return sid;
+    }
+
+    public void setSid(Long sid) {
+        this.sid = sid;
     }
 }

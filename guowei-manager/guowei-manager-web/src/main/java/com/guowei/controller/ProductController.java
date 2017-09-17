@@ -50,6 +50,14 @@ public class ProductController {
 	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwProduct product) {
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		
+		if (manager != null) {
+			if (manager.getLevel() != Byte.parseByte("3")) {
+				product.setSid(manager.getSid());
+			}
+		}
+		
 		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
@@ -151,6 +159,9 @@ public class ProductController {
 		if (!"".equals(request.getParameter("cid"))) {
 			product.setCid(Long.parseLong(request.getParameter("cid")));
 		}
+		if (!"".equals(request.getParameter("sid"))) {
+			product.setSid(Long.parseLong(request.getParameter("sid")));
+		}
 		if (!"".equals(request.getParameter("status"))) {
 			product.setStatus(Byte.parseByte(request.getParameter("status")));		
 		}
@@ -173,7 +184,6 @@ public class ProductController {
 	@RequestMapping(value = "/product/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwProduct product = productService.getGwProductById(Long.parseLong(request.getParameter("id")));
 		if (!"".equals(request.getParameter("title"))) {
 			product.setTitle(request.getParameter("title"));
@@ -202,6 +212,9 @@ public class ProductController {
 		}
 		if (!"".equals(request.getParameter("cid"))) {
 			product.setCid(Long.parseLong(request.getParameter("cid")));
+		}
+		if (!"".equals(request.getParameter("sid"))) {
+			product.setSid(Long.parseLong(request.getParameter("sid")));
 		}
 		if (!"".equals(request.getParameter("status"))) {
 			product.setStatus(Byte.parseByte(request.getParameter("status")));		

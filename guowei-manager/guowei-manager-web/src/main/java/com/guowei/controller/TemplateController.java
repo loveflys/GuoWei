@@ -22,6 +22,7 @@ import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
 import com.guowei.pojo.GwCompany;
+import com.guowei.pojo.GwManager;
 import com.guowei.pojo.GwProduct;
 import com.guowei.pojo.GwTemplate;
 import com.guowei.pojo.GwTemplateproduct;
@@ -63,6 +64,15 @@ public class TemplateController {
 	@RequestMapping(value="/template/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwTemplate template) {
+		
+		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
+		
+		if (manager != null) {
+			if (manager.getLevel() != Byte.parseByte("3")) {
+				template.setSupplierid(manager.getSid());
+			}
+		}
+		
 		DatatablesView dataTable = templateService.getGwTemplatesByPagedParam(template,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);

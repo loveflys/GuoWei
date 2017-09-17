@@ -10,6 +10,7 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="wechat_account" property="wechatAccount" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="BIGINT" />
+    <result column="sid" property="sid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, phone, password, level, created, wechat_account, area
+    id, name, phone, password, level, created, wechat_account, area, sid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwManagerExample" >
     select
@@ -103,16 +104,13 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwManager" >
-    <selectKey keyProperty="id" resultType="Long" order="AFTER">
-       SELECT LAST_INSERT_ID() as id
-    </selectKey>
     insert into gw_manager (id, name, phone, 
       password, level, created, 
-      wechat_account, area
+      wechat_account, area, sid
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{level,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{wechatAccount,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT}
+      #{wechatAccount,jdbcType=VARCHAR}, #{area,jdbcType=BIGINT}, #{sid,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwManager" >
@@ -142,6 +140,9 @@
       <if test="area != null" >
         area,
       </if>
+      <if test="sid != null" >
+        sid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -167,6 +168,9 @@
       </if>
       <if test="area != null" >
         #{area,jdbcType=BIGINT},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -203,6 +207,9 @@
       <if test="record.area != null" >
         area = #{record.area,jdbcType=BIGINT},
       </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -217,7 +224,8 @@
       level = #{record.level,jdbcType=TINYINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       wechat_account = #{record.wechatAccount,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=BIGINT}
+      area = #{record.area,jdbcType=BIGINT},
+      sid = #{record.sid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -246,6 +254,9 @@
       <if test="area != null" >
         area = #{area,jdbcType=BIGINT},
       </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -257,7 +268,8 @@
       level = #{level,jdbcType=TINYINT},
       created = #{created,jdbcType=TIMESTAMP},
       wechat_account = #{wechatAccount,jdbcType=VARCHAR},
-      area = #{area,jdbcType=BIGINT}
+      area = #{area,jdbcType=BIGINT},
+      sid = #{sid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

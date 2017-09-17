@@ -165,6 +165,7 @@
 					<div class="modal-body" >
 						<form class="form-horizontal"  id="editForm" action="<%=path%>/product/update" method="post">
 							<input type="hidden" class="form-control" name="id">
+							<input type="hidden" class="form-control" name="sid">
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="product.title"/></label>
 								<div class="col-sm-9">
@@ -250,6 +251,14 @@
                                 </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+	                            <label for="inputName" class="col-sm-3 control-label">供货商</label>
+	                            <div class="col-sm-9">
+	                                <select class="form-control" name="sid" id="editsid_container"  onchange="changesid(this.options[this.options.selectedIndex].value)">
+	        
+	                                </select>
+	                            </div>
+	                        </div> 
 						</form>
 					</div>
 					<!-- modal-body END -->
@@ -274,6 +283,7 @@
                     
                     <div class="modal-body" >
                         <form class="form-horizontal"  id="addForm" action="<%=path%>/product/add" method="post">
+                            <input type="hidden" class="form-control" name="sid">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label"><sp:message code="product.title"/></label>
                                 <div class="col-sm-9">
@@ -339,6 +349,14 @@
                                 </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+	                            <label for="inputName" class="col-sm-3 control-label">供货商</label>
+	                            <div class="col-sm-9">
+	                                <select class="form-control" name="sid" id="addsid_container"  onchange="changesid(this.options[this.options.selectedIndex].value)">
+	        
+	                                </select>
+	                            </div>
+	                        </div> 
                         </form>
                     </div>
                     <!-- modal-body END -->
@@ -380,6 +398,15 @@
 				  </div>
 				</div>
 		<!-- page script -->
+		<script type="template" id="sid_tpl">
+            [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+                [[ if (item.id == sid) { ]]
+                    <option value="{{item.id}}" selected="selected">{{item.supplierName}}</option>
+                [[ } else { ]]
+                    <option value="{{item.id}}">{{item.supplierName}}</option>
+                [[ } ]]
+            [[ } ]]
+        </script>
 		<script type="template" id="cid_tpl">
             [[ for(var i=0; i< data.length; i++){ var item=data[i] ]]
                 [[ if (item.id == cid) { ]]
@@ -412,6 +439,7 @@
 		    	id: '',
 		    	status: '',
 		    	cid: '',
+		    	sid: '',
 		    	purchaseProId: '',
 		    }
 		    function getToken () {
@@ -687,6 +715,7 @@
 					
 					window.param.id = data.id;
                     window.param.cid = data.cid;
+                    window.param.sid = data.sid;
                     window.param.status = data.status;
                     getEditData();
 					
@@ -810,6 +839,24 @@
                     $("#addstatus_container").html(_.template($("#status_tpl").html())({
                         "status": 1
                     }));
+                    
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/supplier/getAllData",
+                        data: {},
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(res) {
+                            $("#addModal input[name=sid]").val(res.data[0].id);
+                            $("#addsid_container").html(_.template($("#sid_tpl").html())({
+                                "data": res.data,
+                                "sid": window.param.sid
+                            }));
+                        }
+                    });
 	            }
 	            function getEditData() {
 	                $.ajax({
@@ -831,18 +878,41 @@
 	                $("#editstatus_container").html(_.template($("#status_tpl").html())({
                         "status": window.param.status
                     }));
+	                
+	                $.ajax({
+	                    cache: false,
+	                    type: "POST",
+	                    url: "<%=path%>/supplier/getAllData",
+	                    data: {},
+	                    async: false,
+	                    error: function(request) {
+	                        toastr.error("Server Connection Error...");
+	                    },
+	                    success: function(res) {
+	                        $("#editModal input[name=sid]").val(window.param.sid);
+	                        $("#editsid_container").html(_.template($("#sid_tpl").html())({
+	                            "data": res.data,
+	                            "sid": window.param.sid
+	                        }));
+	                    }
+	                });
 	            }
-	                function changeCid(id) {
-	                    $("#addModal input[name=cid]").val(id);
-	                    $("#editModal input[name=cid]").val(id);
-	                    window.param.cid = id;
-	                }
-	                function changeStatus(id) {
-	                    $("#addModal input[name=status]").val(id);
-	                    $("#editModal input[name=status]").val(id);
-	                    window.param.status = id;
-	                }
 			});
+			function changeCid(id) {
+                $("#addModal input[name=cid]").val(id);
+                $("#editModal input[name=cid]").val(id);
+                window.param.cid = id;
+            }
+            function changesid(id) {
+                $("#addModal input[name=sid]").val(id);
+                $("#editModal input[name=sid]").val(id);
+                window.param.sid = id;
+            }
+            function changeStatus(id) {
+                $("#addModal input[name=status]").val(id);
+                $("#editModal input[name=status]").val(id);
+                window.param.status = id;
+            }
 			function purchasePro () {
 				$.ajax({
                     url:'<%=path%>/product/addPurchase/',

@@ -159,6 +159,9 @@ public class ManagerController {
 		if (!"".equals(request.getParameter("level"))) {
 			manager.setLevel(Byte.decode((request.getParameter("level"))));
 		}
+		if (!"".equals(request.getParameter("sid"))) {
+			manager.setSid(Long.parseLong((request.getParameter("sid"))));
+		}
 		if (!"".equals(request.getParameter("name"))) {
 			manager.setName(request.getParameter("name"));
 		}
@@ -199,6 +202,9 @@ public class ManagerController {
 		}
 		if (!"".equals(request.getParameter("level"))) {
 			manager.setLevel(Byte.parseByte((request.getParameter("level"))));
+		}
+		if (!"".equals(request.getParameter("sid"))) {
+			manager.setSid(Long.parseLong((request.getParameter("sid"))));
 		}
 		if (!"".equals(request.getParameter("name"))) {
 			manager.setName(request.getParameter("name"));

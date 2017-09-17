@@ -90,6 +90,7 @@ public class ProductServiceImpl implements ProductService {
 	public int editGwProduct(GwProduct product) {
 		GwCategory cate = cateMapper.selectByPrimaryKey(product.getCid());
 		product.setCname(cate.getName());
+		System.out.println(product.getSid());
 		int res = productMapper.updateByPrimaryKey(product);
 		return res;
 	}
@@ -134,6 +135,9 @@ public class ProductServiceImpl implements ProductService {
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(product.getTitle())) {
 			criteria.andTitleLike("%" + product.getTitle() + "%");
+		}	
+		if (product.getSid() != null && product.getSid() > 0) {
+			criteria.andSidEqualTo(product.getSid());
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);

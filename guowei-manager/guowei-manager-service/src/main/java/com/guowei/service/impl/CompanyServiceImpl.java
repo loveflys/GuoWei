@@ -1,5 +1,6 @@
 package com.guowei.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,20 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int addGwCompany(GwCompany company) {
 		// 1、获取模板商品
-		GwTemplateproductExample example2 = new GwTemplateproductExample();
-		example2.createCriteria().andTidEqualTo(company.getTemplateId());
-		List<GwTemplateproduct> list = templateproductMapper.selectByExample(example2);
+		GwTemplateproductExample example1 = new GwTemplateproductExample();
+		example1.createCriteria().andTidEqualTo(company.getTemplateId());
+		List<GwTemplateproduct> list2 = new ArrayList<GwTemplateproduct>();
+		if (company.getSectemplateId() > 0) {
+			GwTemplateproductExample example2 = new GwTemplateproductExample();
+			example2.createCriteria().andTidEqualTo(company.getSectemplateId());
+			list2 = templateproductMapper.selectByExample(example2);
+		}
+		
+		List<GwTemplateproduct> list1 = templateproductMapper.selectByExample(example1);
 		int res = companyMapper.insert(company);
 		int addCpResult = 1;
-		for (GwTemplateproduct gwTemplateproduct : list) {
+		int addSecCpResult = 1;
+		for (GwTemplateproduct gwTemplateproduct : list1) {
 			// 2、依次添加为公司产品
 			GwCompanyproduct cp = new GwCompanyproduct();
 			cp.setCompanyId(company.getId());
@@ -90,16 +99,47 @@ public class CompanyServiceImpl implements CompanyService {
 				addCpResult = 0;
 			}
 		}
-		return (res == 1 && addCpResult == 1)?1:0;
+		
+		for (GwTemplateproduct gwTemplateproduct : list2) {
+			// 2、依次添加为公司产品
+			GwCompanyproduct cp = new GwCompanyproduct();
+			cp.setCompanyId(company.getId());
+			cp.setProname(gwTemplateproduct.getProname());
+			cp.setProimage(gwTemplateproduct.getProimage());
+			cp.setProprice(gwTemplateproduct.getProprice());
+			cp.setPid(gwTemplateproduct.getPid());
+			cp.setSellcount(0);
+			cp.setSellprice(gwTemplateproduct.getProprice());
+			cp.setStatus(Byte.parseByte("1"));
+			cp.setStock(gwTemplateproduct.getStock());
+			
+			GwProduct pro = productMapper.selectByPrimaryKey(gwTemplateproduct.getPid());
+			int updatePro = 0;
+			if (pro != null) {
+				pro.setDistribute(pro.getDistribute() + gwTemplateproduct.getStock());
+				pro.setStock(pro.getStock() - gwTemplateproduct.getStock());
+				updatePro = productMapper.updateByPrimaryKey(pro);
+			}
+			
+			cp.setWarnstock(gwTemplateproduct.getWarnstock());
+			cp.setStorageracks(gwTemplateproduct.getStorageracks());
+			int insertResult = companyproductMapper.insert(cp);
+			if (insertResult != 1 || updatePro !=1) {
+				addSecCpResult = 0;
+			}
+		}
+		return (res == 1 && addCpResult == 1 && addSecCpResult == 1)?1:0;
 	}
 
 	@Override
 	public int editGwCompany(GwCompany company) {
 		GwCompany temp = companyMapper.selectByPrimaryKey(company.getId());
 		int updateCpResult = 1;
+		int updateSecCpResult = 1;
 		int deleteResult = 1;
 		int returnStock = 1;
-		if (company.getTemplateId() != null && temp.getTemplateId() != company.getTemplateId()) {
+		System.out.println(company.getSectemplateId() + "!!!!!!!!");
+		if ((company.getTemplateId() != null && temp.getTemplateId() != company.getTemplateId()) || (company.getSectemplateId() != null && temp.getSectemplateId() != company.getSectemplateId())) {
 			// 替换公司模板
 			// 1、删除原公司产品
 			GwCompanyproductExample example1 = new GwCompanyproductExample();
@@ -129,8 +169,17 @@ public class CompanyServiceImpl implements CompanyService {
 			// 2、获取模板商品
 			GwTemplateproductExample example2 = new GwTemplateproductExample();
 			example2.createCriteria().andTidEqualTo(company.getTemplateId());
-			List<GwTemplateproduct> list = templateproductMapper.selectByExample(example2);
-			for (GwTemplateproduct gwTemplateproduct : list) {
+			
+			List<GwTemplateproduct> list1 = templateproductMapper.selectByExample(example2);
+			
+			List<GwTemplateproduct> list2 = new ArrayList<GwTemplateproduct>();
+			if (company.getSectemplateId() > 0) {
+				GwTemplateproductExample example3 = new GwTemplateproductExample();
+				example3.createCriteria().andTidEqualTo(company.getSectemplateId());
+				list2 = templateproductMapper.selectByExample(example3);
+			}
+			
+			for (GwTemplateproduct gwTemplateproduct : list1) {
 				// 3、依次添加为公司产品
 				GwCompanyproduct cp = new GwCompanyproduct();
 				cp.setCompanyId(company.getId());
@@ -157,9 +206,38 @@ public class CompanyServiceImpl implements CompanyService {
 					updateCpResult = 0;
 				}
 			}
+			
+			for (GwTemplateproduct gwTemplateproduct : list2) {
+				// 3、依次添加为公司产品
+				GwCompanyproduct cp = new GwCompanyproduct();
+				cp.setCompanyId(company.getId());
+				cp.setPid(gwTemplateproduct.getPid());
+				cp.setProname(gwTemplateproduct.getProname());
+				cp.setProimage(gwTemplateproduct.getProimage());
+				cp.setProprice(gwTemplateproduct.getProprice());
+				cp.setSellcount(0);
+				cp.setSellprice(gwTemplateproduct.getProprice());
+				cp.setStatus(Byte.parseByte("1"));
+				cp.setStock(gwTemplateproduct.getStock());
+				GwProduct pro = productMapper.selectByPrimaryKey(gwTemplateproduct.getPid());
+				int updatePro = 0;
+				if (pro != null) {
+					pro.setDistribute(pro.getDistribute() + gwTemplateproduct.getStock());
+					pro.setStock(pro.getStock() - gwTemplateproduct.getStock());
+					updatePro = productMapper.updateByPrimaryKey(pro);
+				}
+				
+				cp.setWarnstock(gwTemplateproduct.getWarnstock());
+				cp.setStorageracks(gwTemplateproduct.getStorageracks());
+				int insertResult = companyproductMapper.insert(cp);
+				if (insertResult != 1 || updatePro != 1) {
+					updateSecCpResult = 0;
+				}
+			}
 		}
+		
 		int res = companyMapper.updateByPrimaryKey(company);
-		return (res == 1 && updateCpResult == 1 && deleteResult == 1 && returnStock == 1) ?1:0;
+		return (res == 1 && updateCpResult == 1 && deleteResult == 1 && returnStock == 1 && updateSecCpResult == 1) ?1:0;
 	}
 
 	@Override

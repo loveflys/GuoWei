@@ -423,9 +423,9 @@
         </script>
         <script type="template" id="sectemplate_tpl">
             [[ if (!stid) { ]]
-                <option value="" selected="selected">无</option>
+                <option value="0" selected="selected">无</option>
             [[ } else { ]]
-                <option value="">无</option>
+                <option value="0">无</option>
             [[ } ]]
             [[ for(var i=0; i< data.length; i++){ var item=data[i] ]]
                 [[ if (item.id == stid) { ]]

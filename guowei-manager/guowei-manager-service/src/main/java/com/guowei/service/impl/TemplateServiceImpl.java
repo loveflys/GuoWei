@@ -64,6 +64,9 @@ public class TemplateServiceImpl implements TemplateService {
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(template.getName())) {
 			criteria.andNameLike("%"+template.getName()+"%");
+		}	
+		if (template.getSupplierid() != null && template.getSupplierid() > 0) {
+			criteria.andSupplieridEqualTo(template.getSupplierid());
 		}		
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);

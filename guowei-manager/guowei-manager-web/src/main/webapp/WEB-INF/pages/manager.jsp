@@ -179,6 +179,7 @@
 					<form class="form-horizontal" id="editForm"
 						action="<%=path%>/managers/update" method="post">
 						<input type="hidden" class="form-control" name="id">
+						<input type="hidden" class="form-control" name="sid">
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="manager.name" /></label>
@@ -204,6 +205,17 @@
 								</select>
 							</div>
 						</div>
+						<div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label"><sp:message
+                                    code="manager.sid" /></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="sid"
+                                    id="editsid_container"
+                                    onchange="changeSid(this.options[this.options.selectedIndex].value)">
+
+                                </select>
+                            </div>
+                        </div>
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="manager.password" /></label>
@@ -262,6 +274,7 @@
 				<div class="modal-body">
 					<form class="form-horizontal" id="addForm"
 						action="<%=path%>/managers/add" method="post">
+						<input type="hidden" class="form-control" name="sid">
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="manager.name" /></label>
@@ -287,6 +300,17 @@
 								</select>
 							</div>
 						</div>
+						<div class="form-group">
+                            <label for="inputName" class="col-sm-3 control-label"><sp:message
+                                    code="manager.sid" /></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="sid"
+                                    id="addsid_container"
+                                    onchange="changeSid(this.options[this.options.selectedIndex].value)">
+
+                                </select>
+                            </div>
+                        </div>
 						<div class="form-group">
 							<label for="inputName" class="col-sm-3 control-label"><sp:message
 									code="manager.password" /></label>
@@ -325,17 +349,17 @@
 	</div>
 	<script type="template" id="level_tpl">
             [[ if (1 == level) { ]]
-                    <option value="1" selected="selected">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option value="1" selected="selected">普通员工</option>
+                    <option value="2">管理员</option>
+                    <option value="3">超级管理员</option>
             [[ } else if (2 == level) { ]]
-                    <option value="1">1</option>
-                    <option value="2" selected="selected">2</option>
-                    <option value="3">3</option>
+                    <option value="1">普通员工</option>
+                    <option value="2" selected="selected">管理员</option>
+                    <option value="3">超级管理员</option>
             [[ } else { ]]
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3" selected="selected">3</option>
+                    <option value="1">普通员工</option>
+                    <option value="2">管理员</option>
+                    <option value="3" selected="selected">超级管理员</option>
             [[ } ]]
         </script>
         <script type="template" id="address_tpl">
@@ -369,6 +393,15 @@
                 </ul>
             </div>
         </script>
+        <script type="template" id="sid_tpl">
+            [[ for(var i=0; i< data.length; i++){ var item=data[i]; ]]
+                [[ if (item.id == sid) { ]]
+                    <option value="{{item.id}}" selected="selected">{{item.supplierName}}</option>
+                [[ } else { ]]
+                    <option value="{{item.id}}">{{item.supplierName}}</option>
+                [[ } ]]
+            [[ } ]]
+        </script>
 	<!-- page script -->
 	<script>
 		   window.param = {
@@ -377,6 +410,7 @@
 	                    name: '',
 	                    id: ''
 	                },
+	                sid: '',
 	                province: [],
 	                addr: []
 		   }
@@ -425,7 +459,11 @@
 	                    {"data": 'id'},
 	               		{"data": 'name'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
 	                    {"data": 'phone', defaultContent: ""},
-	                    {"data": 'level', defaultContent: ""},
+	                    {"data": 'level', 
+	                    	"render":function(data,type,full,callback) {
+                                return data == 1?'普通员工': (data == 2?'管理员' : '超级管理员') 
+                            }
+	                    },	                    
   	                    {"data": 'password', defaultContent: ""},
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
@@ -543,6 +581,7 @@
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
 					window.param.level = data.level;
+					window.param.sid = data.sid;
                     getEditData();
 					$("#editForm input[name=name]").val(data.name);
 					$("input[name=password]").val(data.password);
@@ -632,11 +671,45 @@
                     $("#addlevel_container").html(_.template($("#level_tpl").html())({
                         "level": window.param.level
                     }));
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/supplier/getAllData",
+                        data: {},
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(res) {
+                            $("#addModal input[name=sid]").val(res.data[0].id);
+                            $("#addsid_container").html(_.template($("#sid_tpl").html())({
+                                "data": res.data,
+                                "sid": window.param.sid
+                            }));
+                        }
+                    });
                 }
                 function getEditData() {
                     $("#editlevel_container").html(_.template($("#level_tpl").html())({
                         "level": window.param.level
                     }));
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "<%=path%>/supplier/getAllData",
+                        data: {},
+                        async: false,
+                        error: function(request) {
+                            toastr.error("Server Connection Error...");
+                        },
+                        success: function(res) {
+                            $("#editModal input[name=sid]").val(window.param.sid);
+                            $("#editsid_container").html(_.template($("#sid_tpl").html())({
+                                "data": res.data,
+                                "sid": window.param.sid
+                            }));
+                        }
+                    });
                 }
                 
 			});
@@ -699,6 +772,11 @@
                        "selected": ""
                    }));
                }
+           }
+           function changeSid(id) {
+               $("#addModal input[name=sid]").val(id);
+               $("#editModal input[name=sid]").val(id);
+               window.param.sid = id;
            }
 		   function changeLevel(id) {
                $("#addlevel_container").val(id);
