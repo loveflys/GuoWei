@@ -1090,7 +1090,7 @@
                     type: "POST",
                     url: "<%=path%>/template/getAllData",
                     data: {
-                    	supplierid: 2
+                    	supplierid: 1
                     },
                     async: false,
                     error: function(request) {
@@ -1108,7 +1108,7 @@
                     type: "POST",
                     url: "<%=path%>/template/getAllData",
                     data: {
-                    	supplierid: 3
+                    	supplierid: 2
                     },
                     async: false,
                     error: function(request) {

@@ -50,8 +50,11 @@ public class ProductController {
 	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwProduct product) {
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		
+		GwManager manager = null;
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			manager = (GwManager) temp; 
+		}
 		if (manager != null) {
 			if (manager.getLevel() != Byte.parseByte("3")) {
 				product.setSid(manager.getSid());
