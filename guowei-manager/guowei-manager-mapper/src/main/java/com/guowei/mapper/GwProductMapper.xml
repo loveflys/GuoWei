@@ -111,6 +111,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.guowei.pojo.GwProduct" >
+    <selectKey keyProperty="id" resultType="Long" order="AFTER">
+       SELECT LAST_INSERT_ID() as id
+    </selectKey>
     insert into gw_product (id, title, image, 
       price, discountprice, buyingprice, 
       stock, distribute, allsellcount, 
