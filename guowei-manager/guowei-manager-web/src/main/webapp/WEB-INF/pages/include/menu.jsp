@@ -22,7 +22,7 @@
 			<li class="treeview" style="display: ${currentUser.level == 3?'block':'none'}">
                 <a href="<%=path%>/users"> <i class="fa fa-user"></i><span><sp:message code="menu.users"/></span></a>
             </li>
-            <li class="treeview">
+            <li class="treeview" style="display: ${currentUser.level == 3?'block':'none'}">
                 <a href="<%=path%>/categorys"> <i class="fa fa-user"></i><span><sp:message code="menu.categorys"/></span></a>
             </li>
             <li class="treeview">

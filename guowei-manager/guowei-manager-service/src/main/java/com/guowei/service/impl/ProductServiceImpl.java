@@ -157,6 +157,10 @@ public class ProductServiceImpl implements ProductService {
 	public DatatablesView<?> getGwProductsByParam(GwProduct product) {
 		// TODO Auto-generated method stub
 		GwProductExample gme = new GwProductExample();
+		Criteria criteria = gme.createCriteria();
+		if (product.getSid() != null && product.getSid() > 0) {
+			criteria.andSidEqualTo(product.getSid());
+		}		
 		List<GwProduct> list = productMapper.selectByExample(gme);
 		for (GwProduct gwProduct : list) {
 			GwCategory cate = cateMapper.selectByPrimaryKey(gwProduct.getCid());

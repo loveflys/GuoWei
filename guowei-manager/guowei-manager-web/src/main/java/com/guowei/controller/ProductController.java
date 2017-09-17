@@ -51,7 +51,6 @@ public class ProductController {
 	@RequestMapping(value="/product/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwProduct product) {
-		GwManager manager = null;
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
 		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
 		String level = json.getString("level");
@@ -78,6 +77,17 @@ public class ProductController {
 	@RequestMapping(value="/product/getAllData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getAllData(HttpServletRequest request, GwProduct product) {
+		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		Long sid = json.getLong("sid");
+		if (level != null && !"".equals(level)) {
+			if (!"3".equals(level)) {
+				product.setSid(sid);
+			}
+		}
+		
 		DatatablesView dataTable = productService.getGwProductsByParam(product);
 		String data = JSON.toJSONString(dataTable);
 		return data;

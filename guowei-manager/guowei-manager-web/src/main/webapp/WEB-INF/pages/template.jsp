@@ -474,7 +474,7 @@
                     alert(msg);
                 }
                 
-                
+                var level = ${currentUser.level};
                 
                 var tables = $("#dataTable").dataTable({
                     serverSide: true,//分页，取数据等等的都放到服务端去
@@ -524,9 +524,9 @@
                             data: null,//下面这行，添加了编辑按钮和，删除按钮
                             defaultContent: " <div class='btn-group'>"+
                                             //"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
-                                            "<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
+                                            (level!=1?"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>":"")+
                                             "<button id='managerRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-gears'></i></button>"+
-                                            "<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
+                                            (level!=1?"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>":"")
                         }
                     ],
                     //每加载完一行的回调函数
@@ -767,7 +767,7 @@
             },
             success: function(res) {
                 window.param.proList = res.data;
-                
+                window.param.tempList = [];
                 $.ajax({
                     cache: false,
                     type: "POST",

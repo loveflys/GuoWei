@@ -582,7 +582,7 @@
                     alert(msg);
                 }
                 
-                
+                var level = ${currentUser.level};
                 
                 var tables = $("#dataTable").dataTable({
                     serverSide: true,//分页，取数据等等的都放到服务端去
@@ -645,9 +645,9 @@
                             data: null,//下面这行，添加了编辑按钮和，删除按钮
                             defaultContent: " <div class='btn-group'>"+
                                             "<button id='showRow' class='btn btn-primary btn-sm' title='查看二维码' type='button'><i class='fa fa-eye'></i></button>"+
-                                            "<button id='editRow' class='btn btn-primary btn-sm' title='编辑' type='button'><i class='fa fa-edit'></i></button>"+
+                                            (level != 1?"<button id='editRow' class='btn btn-primary btn-sm' title='编辑' type='button'><i class='fa fa-edit'></i></button>":"")+
                                             "<button id='managerRow' class='btn btn-primary btn-sm' title='管理公司产品' type='button'><i class='fa fa-gears'></i></button>"+
-                                            "<button id='delRow' class='btn btn-primary btn-sm' title='删除公司' type='button'><i class='fa fa-trash-o'></i></button></div>"
+                                            (level==3?"<button id='delRow' class='btn btn-primary btn-sm' title='删除公司' type='button'><i class='fa fa-trash-o'></i></button></div>":"")
                         }
                     ],
                     //每加载完一行的回调函数

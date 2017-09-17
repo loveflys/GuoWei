@@ -184,6 +184,9 @@ public class OrderServiceImpl implements OrderService {
 				e.printStackTrace();
 			}	
 		}	
+		if (order.getCompanyName() != null && !"".equals(order.getCompanyName())) {
+			criteria.andCompanyNameLike("%" + order.getCompanyName() + "%");
+		}
 		criteria.andStatusNotEqualTo(Byte.parseByte("4"));
 		int pageNum = (start/pageSize)+1;
 		PageHelper.startPage(pageNum, pageSize);

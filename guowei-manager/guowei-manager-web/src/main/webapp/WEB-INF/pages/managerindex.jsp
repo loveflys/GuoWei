@@ -66,7 +66,7 @@
                 <a href="<%=path%>/managerindex"><i class="fa fa-home"></i> <sp:message
                         code="sys.home" /></a> >
                 </section>
-				<section class="content">
+				<section id="mainContainer" class="content">
 					<div class="row">
 						<div class="col-lg-3 col-xs-6">
 							<div class="small-box bg-aqua">
@@ -211,82 +211,86 @@
 	                    toastr.error("Server Connection Error...");
 	                },
 	                success: function(res) {
-	                	$("#todayamount").html(res.TodayAmount + '<span>元</span>');
-                        $("#toweekamount").html(res.ToweekAmount + '<span>元</span>');
-                        $("#tomonthamount").html(res.TomonthAmount + '<span>元</span>');
-                        $("#allamount").html(res.allAmount + '<span>元</span>');
-	                	$("#newuser").html(res.newUser);
-	                    $("#alluser").html(res.allUser);
-	                    
-	                    var yearChart = echarts.init(document.getElementById('yearChart'));
-	                    var monthChart = echarts.init(document.getElementById('monthChart'));
-	                    var yearoption = {
-	                    		visualMap: [{
-                                    show: false,
-                                    type: 'continuous',
-                                    seriesIndex: 0,
-                                    min: 0,
-                                    max: res.yeardata.length - 1
-                                }],
-
-
-                                title: [{
-                                    left: 'center',
-                                    text: '年度营业额'
-                                }],
-                                tooltip: {
-                                    trigger: 'axis'
-                                },
-                                xAxis: [{
-                                    data: res.yeardatatitle
-                                }],
-                                yAxis: [{
-                                    splitLine: {show: false}
-                                }],
-                                grid: [{
-                                    bottom: '60%'
-                                }],
-                                series: [{
-                                    type: 'line',
-                                    showSymbol: false,
-                                    data: res.yeardata
-                                }]
-	                    	};
-	                    yearChart.setOption(yearoption);
-	                    var monthoption = {
-	                    		
-	                    		visualMap: [{
-	                    	        show: false,
-	                    	        type: 'continuous',
-	                    	        seriesIndex: 0,
-	                    	        min: 0,
-	                    	        max: res.monthdata.length - 1
-	                    	    }],
-
-
-	                    	    title: [{
-	                    	        left: 'center',
-	                    	        text: '月度营业额'
-	                    	    }],
-	                    	    tooltip: {
-	                    	        trigger: 'axis'
-	                    	    },
-	                    	    xAxis: [{
-	                    	        data: res.monthdatatitle
-	                    	    }],
-	                    	    yAxis: [{
-	                    	        splitLine: {show: false}
-	                    	    }],
-	                    	    grid: [{
-	                    	        bottom: '60%'
-	                    	    }],
-	                    	    series: [{
-	                    	        type: 'line',
-	                    	        showSymbol: false,
-	                    	        data: res.monthdata
-	                    	    }]
-                            };
-	                    monthChart.setOption(monthoption);
+	                	if (res.isok) {
+		                	$("#todayamount").html(res.TodayAmount + '<span>元</span>');
+	                        $("#toweekamount").html(res.ToweekAmount + '<span>元</span>');
+	                        $("#tomonthamount").html(res.TomonthAmount + '<span>元</span>');
+	                        $("#allamount").html(res.allAmount + '<span>元</span>');
+		                	$("#newuser").html(res.newUser);
+		                    $("#alluser").html(res.allUser);
+		                    
+		                    var yearChart = echarts.init(document.getElementById('yearChart'));
+		                    var monthChart = echarts.init(document.getElementById('monthChart'));
+		                    var yearoption = {
+		                    		visualMap: [{
+	                                    show: false,
+	                                    type: 'continuous',
+	                                    seriesIndex: 0,
+	                                    min: 0,
+	                                    max: res.yeardata.length - 1
+	                                }],
+	
+	
+	                                title: [{
+	                                    left: 'center',
+	                                    text: '年度营业额'
+	                                }],
+	                                tooltip: {
+	                                    trigger: 'axis'
+	                                },
+	                                xAxis: [{
+	                                    data: res.yeardatatitle
+	                                }],
+	                                yAxis: [{
+	                                    splitLine: {show: false}
+	                                }],
+	                                grid: [{
+	                                    bottom: '60%'
+	                                }],
+	                                series: [{
+	                                    type: 'line',
+	                                    showSymbol: false,
+	                                    data: res.yeardata
+	                                }]
+		                    	};
+		                    yearChart.setOption(yearoption);
+		                    var monthoption = {
+		                    		
+		                    		visualMap: [{
+		                    	        show: false,
+		                    	        type: 'continuous',
+		                    	        seriesIndex: 0,
+		                    	        min: 0,
+		                    	        max: res.monthdata.length - 1
+		                    	    }],
+	
+	
+		                    	    title: [{
+		                    	        left: 'center',
+		                    	        text: '月度营业额'
+		                    	    }],
+		                    	    tooltip: {
+		                    	        trigger: 'axis'
+		                    	    },
+		                    	    xAxis: [{
+		                    	        data: res.monthdatatitle
+		                    	    }],
+		                    	    yAxis: [{
+		                    	        splitLine: {show: false}
+		                    	    }],
+		                    	    grid: [{
+		                    	        bottom: '60%'
+		                    	    }],
+		                    	    series: [{
+		                    	        type: 'line',
+		                    	        showSymbol: false,
+		                    	        data: res.monthdata
+		                    	    }]
+	                            };
+		                    monthChart.setOption(monthoption);
+	                	} else {
+	                		$("#mainContainer").html("敬请期待");
+	                	}
 	                }
 	            });
 	        }

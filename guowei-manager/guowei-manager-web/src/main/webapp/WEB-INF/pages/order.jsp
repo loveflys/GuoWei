@@ -103,7 +103,7 @@
 							<form id="queryForm" action="<%=path%>/orders" style="display: flex;" method="post">
 							    
 								<div class="col-xs-2">
-									<input type="text" id="keyword" name="uname" class="form-control input-sm"
+									<input type="text" id="keyword" name="companyName" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
 								</div>
 								<div class="input-daterange input-group" id="datepicker">
@@ -255,7 +255,7 @@
 		  			alert(msg);
 		  		}
 		  		
-		  		
+		  		var level = ${currentUser.level};
 				
 				var tables = $("#dataTable").dataTable({
 			    	serverSide: true,//分页，取数据等等的都放到服务端去
@@ -312,8 +312,8 @@
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
 		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
-		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
+		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-eye'></i></button>"+
+		                    				(level==3?"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>":"")
 		                }
 	                ],
 	              	//每加载完一行的回调函数

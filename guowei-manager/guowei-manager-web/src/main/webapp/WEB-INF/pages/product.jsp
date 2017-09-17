@@ -525,7 +525,7 @@
 		  			alert(msg);
 		  		}
 		  		
-		  		
+		  		var level = ${currentUser.level};
 				
 				tables = $("#dataTable").dataTable({
 			    	serverSide: true,//分页，取数据等等的都放到服务端去
@@ -605,8 +605,8 @@
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
 		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
-		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"+
+		                    				(level != 1?"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>":"")+
+		                    				(level != 1?"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>":"")+
 		                    				"<button id='purchaseRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-plus-square'></i></button></div>"
 		                }
 	                ],
