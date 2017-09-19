@@ -662,8 +662,12 @@
 				//添加
 	            $("#btn-add").on("click", function () {
 	            	var data = tables.api().row($(this).parents('tr')).data();
+	            	window.param.sid = '';
+	            	$("input[name=sid]").val("");
 	            	getAddData();
                     $("#addModal input[name=title]").val("");
+                    $("#add-file-pre").attr('src', '');
+		            $("#addModal input[name=image]").val('');
                     $("input[name=price]").val("");
                     $("input[name=discountprice]").val("");
                     $("input[name=buyingprice]").val("");

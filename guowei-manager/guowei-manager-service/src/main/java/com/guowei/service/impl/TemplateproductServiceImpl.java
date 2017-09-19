@@ -48,7 +48,10 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		Long tid = templateproduct.getTid();
 		Long pid = templateproduct.getPid();
 		GwCompanyExample gme = new GwCompanyExample();
-		gme.createCriteria().andTemplateIdEqualTo(tid);
+		Criteria criteria = gme.createCriteria();
+		criteria.andTemplateIdEqualTo(tid);
+		//或sectemplateid == tid
+		gme.
 		List<GwCompany> list = companyMapper.selectByExample(gme);
 		int companyRes = 1;
 		if(list != null && list.size() > 0) {
