@@ -196,29 +196,53 @@ public class UserController {
 		return JSON.toJSONString(msg);
 	}
 	
-	@RequestMapping("/apply")
+	@RequestMapping("/applys")
 	public ModelAndView toapply(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("index");
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		model.addObject("currentUser", manager);
-		if (manager.getLevel() == Byte.parseByte("3")) {
-			return new ModelAndView("apply");
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		if (level != null && !"".equals(level)) {
+			if ("3".equals(level)) {
+				return new ModelAndView("applys");
+			}
+		} else {
+			return new ModelAndView("applys");
 		}
+	
 		return model;
+	}
+	
+	@RequestMapping("/complains")
+	public ModelAndView tocomplain(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("index");
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		if (level != null && !"".equals(level)) {
+			if ("3".equals(level)) {
+				return new ModelAndView("complains");
+			}
+		} else {
+			return new ModelAndView("complains");
+		}
+	
+		return model;
+	}
+	
+	
+	
+	@RequestMapping("/apply")
+	public ModelAndView toapply(HttpServletRequest request) {
+		return new ModelAndView("apply");
 	}
 	
 	@RequestMapping("/complain")
 	public ModelAndView tocomplain(HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("index");
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		model.addObject("currentUser", manager);
-		if (manager.getLevel() == Byte.parseByte("3")) {
-			return new ModelAndView("complain");
-		}
-		return model;
-		
-		
+		return new ModelAndView("complain");
 	}
+	
+	
 	
 	@RequestMapping("/users")
 	public ModelAndView toList(HttpServletRequest request){   
