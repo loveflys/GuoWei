@@ -138,7 +138,6 @@ public class CompanyServiceImpl implements CompanyService {
 		int updateSecCpResult = 1;
 		int deleteResult = 1;
 		int returnStock = 1;
-		System.out.println(company.getSectemplateId() + "!!!!!!!!");
 		if ((company.getTemplateId() != null && temp.getTemplateId() != company.getTemplateId()) || (company.getSectemplateId() != null && temp.getSectemplateId() != company.getSectemplateId())) {
 			// 替换公司模板
 			// 1、删除原公司产品

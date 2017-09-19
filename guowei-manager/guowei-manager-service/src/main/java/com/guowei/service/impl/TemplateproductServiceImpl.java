@@ -48,10 +48,9 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		Long tid = templateproduct.getTid();
 		Long pid = templateproduct.getPid();
 		GwCompanyExample gme = new GwCompanyExample();
-		Criteria criteria = gme.createCriteria();
+		com.guowei.pojo.GwCompanyExample.Criteria criteria = gme.createCriteria();
 		criteria.andTemplateIdEqualTo(tid);
-		//或sectemplateid == tid
-		gme.
+		gme.or(gme.createCriteria().andSectemplateIdEqualTo(tid));
 		List<GwCompany> list = companyMapper.selectByExample(gme);
 		int companyRes = 1;
 		if(list != null && list.size() > 0) {
@@ -102,6 +101,7 @@ public class TemplateproductServiceImpl implements TemplateproductService {
 		Long pid = product.getPid();
 		GwCompanyExample gme = new GwCompanyExample();
 		gme.createCriteria().andTemplateIdEqualTo(tid);
+		gme.or(gme.createCriteria().andSectemplateIdEqualTo(tid));
 		List<GwCompany> list = companyMapper.selectByExample(gme);
 		int companyRes = 1;
 		if(list != null && list.size() > 0) {
