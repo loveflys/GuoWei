@@ -149,7 +149,7 @@
         }
         footer .cart-body .container ul li .price .value:before {
             content: "\A5";
-		    font-size: .266667rem;
+		    font-size: 12px;
 		    color: currentColor;
         }
         footer .cart-body .container ul li .manager {
@@ -186,7 +186,7 @@
             vertical-align: middle;
             text-align: center;
 		    color: #666;
-		    font-size: .373333rem;
+		    font-size: 14px;
 		    min-width: .4rem;
 		    max-width: 2em;
 		    overflow: hidden;    
