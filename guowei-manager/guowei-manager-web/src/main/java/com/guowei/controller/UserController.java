@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
@@ -197,7 +198,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/applys")
-	public ModelAndView toapply(HttpServletRequest request) {
+	public ModelAndView toapplys(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("index");
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
 		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
@@ -214,7 +215,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/complains")
-	public ModelAndView tocomplain(HttpServletRequest request) {
+	public ModelAndView tocomplains(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("index");
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
 		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
