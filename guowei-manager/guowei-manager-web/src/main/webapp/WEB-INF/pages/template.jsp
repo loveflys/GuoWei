@@ -374,14 +374,14 @@
         [[ if (storages && storages.length > 0) { ]]
                                 <ul class="nav nav-tabs">
                                     [[ for(var i=0,length=storages.length; i< length; i++) { var item = storages[i]; ]]
-                                    <li class="{{i==0?'active':''}}"><a href="#tab_{{i+1}}" data-toggle="tab"
+                                    <li class="{{window.param.index?(window.param.index == item.id ? 'active':''):(i==0?'active':'')}}"><a href="#tab_{{i+1}}" onclick="window.param.index = {{item.id}}" data-toggle="tab"
                                         aria-expanded="true">{{item.storageName}}</a></li>
                                     [[ } ]]
                                 </ul>
         [[ } ]]
                                 <div class="tab-content">
                                     [[ for(var i=0,length=storages.length; i< length; i++) { var item = storages[i]; ]]        
-                                    <div class="tab-pane active" id="tab_{{i+1}}">
+                                    <div class="tab-pane {{window.param.index?(window.param.index == item.id ? 'active':''):(i==0?'active':'')}}" id="tab_{{i+1}}">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="box">
@@ -460,7 +460,8 @@
 			   storages: [],
                pid: '',
                sid: '',
-               huojia: ''
+               huojia: '',
+               index: '',
             }
             $(function () {
             	_.templateSettings = {
@@ -795,11 +796,10 @@
                             success: function(resp) {
                                 window.param.storages = resp.data;
                                 
-                                
                                 for(var item of window.param.proList) {
                                 	var has = false;
                                 	for(var it of window.param.tempProList) {
-                                		if (it.id == item.id) {
+                                		if (it.pid == item.id) {
                                 			has = true;
                                 		}
                                 	}

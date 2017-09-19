@@ -665,9 +665,11 @@
 	            	window.param.sid = '';
 	            	$("input[name=sid]").val("");
 	            	getAddData();
-                    $("#addModal input[name=title]").val("");
+                    $("#addModal input[name=title]").val("");                    
+                    $(".add-file-btn").show();
+                    $(".add-file-pre-div").hide();
                     $("#add-file-pre").attr('src', '');
-		            $("#addModal input[name=image]").val('');
+                    $("#addModal input[name=image]").val('');
                     $("input[name=price]").val("");
                     $("input[name=discountprice]").val("");
                     $("input[name=buyingprice]").val("");
