@@ -1,6 +1,7 @@
 package com.guowei.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
+import com.guowei.common.utils.WechatWarn;
 import com.guowei.mapper.GwApplyMapper;
 import com.guowei.mapper.GwComplainMapper;
 import com.guowei.mapper.GwUserMapper;
@@ -210,11 +212,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int addGwComplain(GwComplain complain) {
 		int res = complainMapper.insert(complain);
+		if (res == 1) {
+			GwUser user = userMapper.selectByPrimaryKey(complain.getUid());
+			String date = "";
+			Date time = complain.getCreated();
+			date = time.getYear() + "-" + (time.getMonth()+1) + "-" + time.getDate()
+				+ time.getHours() + ":" + time.getMinutes();
+			WechatWarn.ComplainWarn(complain.getContent(), user.getName() + "(手机号码:" + complain.getContactPhone() + ")", date);
+		}
 		return res;
 	}
 	@Override
 	public int addGwApply(GwApply apply) {
 		int res = applyMapper.insert(apply);
+		if (res == 1) {
+			String date = "";
+			Date time = apply.getCreated();
+			date = time.getYear() + "-" + (time.getMonth()+1) + "-" + time.getDate()
+				+ time.getHours() + ":" + time.getMinutes();
+			WechatWarn.ApplyWarn(apply.getCompanyName(), apply.getContactName() + "(手机号码:" + apply.getContactPhone() + ")", date);
+		}
 		return res;
 	}
 	@Override

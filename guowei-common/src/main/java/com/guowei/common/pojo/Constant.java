@@ -26,6 +26,10 @@ public class Constant {
 	 * 消息模板id
 	 */
 	public static final String MSG_ID = "MfWQ9I1F9bbxDhLiPisglyDPAcdq8pmBLT5yEVxPSkc";
+	/**
+	 * 待审批提醒通知 消息模板id
+	 */
+	public static final String APPLY_MSG_ID = "S3v40XnxYRQB7KWWIBG7ueQuc5uycAMNBy0YW0Arf6g";
 
 	/**
 	 * 公众号AppSecret
