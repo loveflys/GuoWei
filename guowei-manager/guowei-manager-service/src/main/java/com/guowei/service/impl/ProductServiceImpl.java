@@ -90,7 +90,6 @@ public class ProductServiceImpl implements ProductService {
 	public int editGwProduct(GwProduct product) {
 		GwCategory cate = cateMapper.selectByPrimaryKey(product.getCid());
 		product.setCname(cate.getName());
-		System.out.println(product.getSid());
 		int res = productMapper.updateByPrimaryKey(product);
 		return res;
 	}
@@ -110,19 +109,14 @@ public class ProductServiceImpl implements ProductService {
 		GwCompanyproductExample example2 = new GwCompanyproductExample();
 		example2.createCriteria().andPidEqualTo(id);
 		List<GwCompanyproduct> cp = companyproductMapper.selectByExample(example2);
-		System.out.println("删除产品");
 		int res = productMapper.deleteByPrimaryKey(id);
 		if (cp != null && cp.size() > 0) {
-			System.out.println("开始遍历");
 			for (GwCompanyproduct gwCompanyproduct : cp) {
-				System.out.println("删除公司产品");
 				//删除公司商品
 				companyproductMapper.deleteByPrimaryKey(gwCompanyproduct.getId());
-				System.out.println("删除补货");
 				//删除公司商品补货信息
 				companyprochangeMapper.deleteByPrimaryKey(gwCompanyproduct.getId());				
 			}
-			System.out.println("结束遍历");
 		}
 		
 		return res;

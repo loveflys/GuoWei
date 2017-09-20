@@ -100,7 +100,6 @@ public class CategoryController {
 	@RequestMapping(value = "/category/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwCategory category = categoryService.getGwCategoryById(Long.parseLong(request.getParameter("id")));
 		category.setName(request.getParameter("name"));
 		int status = categoryService.editGwCategory(category);

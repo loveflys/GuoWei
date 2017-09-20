@@ -276,7 +276,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanysByPagedParam(GwCompany company, Integer start, Integer pageSize) {
-		// TODO Auto-generated method stub
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
@@ -342,7 +341,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwCompanysByParam(GwCompany company) {
-		// TODO Auto-generated method stub
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
@@ -414,7 +412,6 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public DatatablesView<?> getGwCompanyTempsByParam(GwCompanyTemp company) {
-		// TODO Auto-generated method stub
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
@@ -478,14 +475,12 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public DatatablesView<?> getGwCompanyTempsByPagedParam(GwCompanyTemp company, Integer start, Integer pageSize) {
-		// TODO Auto-generated method stub
 		GwCompanyExample gme = new GwCompanyExample();
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(company.getCompanyName())) {
 			criteria.andCompanyNameLike("%" + company.getCompanyName() + "%");
 			gme.or(gme.createCriteria().andCompanyContactphoneLike("%" + company.getCompanyName() + "%"));
 		}
-		System.out.println(company.getDid());
 		// 根据管理员区划查询公司
 		if (company.getDid() != null && company.getDid() > 0) {
 			GwDivision temp = divisionMapper.selectByPrimaryKey(company.getDid());
@@ -534,7 +529,6 @@ public class CompanyServiceImpl implements CompanyService {
 		}		
 		int pageNum = (start / pageSize) + 1;
 		PageHelper.startPage(pageNum, pageSize);
-		System.out.println(start+"||"+pageSize+"||"+ pageNum);
 		List<GwCompanyTemp> list = companyMapper.selectTempByExample(gme);
 		PageInfo<GwCompanyTemp> page = new PageInfo<>(list);
 		DatatablesView result = new DatatablesView();

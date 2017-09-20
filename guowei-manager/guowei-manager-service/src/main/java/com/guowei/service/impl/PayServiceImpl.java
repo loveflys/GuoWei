@@ -28,7 +28,6 @@ public class PayServiceImpl implements PayService {
 	 * 微信支付统一下单
 	 **/
 	public String unifiedOrder(String openid, String remoteAddr, String orderId) {
-		System.out.println("统一下单");
 		GwOrder order = orderMapper.selectByPrimaryKey(Long.parseLong(orderId));
 		Map<String, String> resultMap = null;
 		// 统一下单返回的预支付id
@@ -63,7 +62,6 @@ public class PayServiceImpl implements PayService {
 		} catch (Exception e) {
 			System.out.println("微信支付统一下单异常"+e.getMessage());
 		}
-		System.out.println(resultMap.toString() + "||" + reqXml);
 		String return_code = resultMap.get("return_code");
 		String result_code = resultMap.get("result_code");
 		if (Constant.RETURN_SUCCESS.equals(return_code) && Constant.RETURN_SUCCESS.equals(result_code)) {
@@ -81,8 +79,6 @@ public class PayServiceImpl implements PayService {
 		paySendData.setAppId(Constant.APP_ID);
 		paySendData.setMch_id(Constant.MCH_ID);
 		paySendData.setNonce_str(PayUtils.getRandomStr(32));
-		// paySendData.setTransaction_id(WeChatUtils.getRandomStr(32));
-		// Out_trade_no与Transaction_id二选一
 		paySendData.setOut_trade_no("jtVFcgbM");
 		paySendData.setOut_refund_no("jtVFcgbM");
 		paySendData.setTotal_fee(1);

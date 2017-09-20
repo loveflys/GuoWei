@@ -146,7 +146,6 @@ public class ProductController {
 	@ResponseBody
 	public String add(HttpServletRequest request, ModelMap model) {
 		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		System.out.println(manager.getId());
 		GwProduct product = new GwProduct();
 		if (!"".equals(request.getParameter("title"))) {
 			product.setTitle(request.getParameter("title"));

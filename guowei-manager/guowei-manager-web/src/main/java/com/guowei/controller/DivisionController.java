@@ -117,7 +117,6 @@ public class DivisionController {
 	@RequestMapping(value = "/division/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwDivision division = divisionService.getGwDivisionById(Long.parseLong(request.getParameter("id")));
 		if (!"".equals(request.getParameter("pid"))) {
 			division.setPid(Long.parseLong(request.getParameter("pid")));

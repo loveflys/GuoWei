@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
@@ -246,11 +247,16 @@ public class PayUtils {
      * @return
      * @throws Exception
      */
-    public static Map<String, String> parseRequestXmlToMap(HttpServletRequest request) throws Exception {
-        // 解析结果存储在HashMap中
-        Map<String, String> resultMap;
-        InputStream inputStream = request.getInputStream();
-        resultMap = parseInputStreamToMap(inputStream);
+    public static Map<String, String> parseRequestXmlToMap(HttpServletRequest request) {
+    	// 解析结果存储在HashMap中
+        Map<String, String> resultMap = null;
+        try {
+            InputStream inputStream = request.getInputStream();
+			resultMap = parseInputStreamToMap(inputStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("parseRequestXmlToMap解析支付回调xml报错IOException==>" + e.getMessage());
+		}
         return resultMap;
     }
 
@@ -262,22 +268,29 @@ public class PayUtils {
      * @throws DocumentException
      * @throws IOException
      */
-    public static Map<String, String> parseInputStreamToMap(InputStream inputStream) throws DocumentException, IOException {
+    public static Map<String, String> parseInputStreamToMap(InputStream inputStream){
         // 解析结果存储在HashMap中
-        Map<String, String> map = new HashMap<String, String>();
-        // 读取输入流
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(inputStream);
-        //得到xml根元素
-        Element root = document.getRootElement();
-        // 得到根元素的所有子节点
-        List<Element> elementList = root.elements();
-        //遍历所有子节点
-        for (Element e : elementList) {
-            map.put(e.getName(), e.getText());
-        }
+        Map<String, String> map = new HashMap<String, String>();        
         //释放资源
-        inputStream.close();
+        try {
+        	// 读取输入流
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(inputStream);
+            //得到xml根元素
+            Element root = document.getRootElement();
+            // 得到根元素的所有子节点
+            List<Element> elementList = root.elements();
+            //遍历所有子节点
+            for (Element e : elementList) {
+                map.put(e.getName(), e.getText());
+            }
+			inputStream.close();
+		} catch (IOException e1) {
+			System.out.println("parseInputStreamToMap解析支付回调xml报错IOException==>" + e1.getMessage());
+		} catch (DocumentException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("parseInputStreamToMap解析支付回调xml报错DocumentException==>" + e1.getMessage());
+		}
         return map;
     }
 
@@ -288,10 +301,15 @@ public class PayUtils {
      * @return
      * @throws Exception
      */
-    public static Map<String, String> parseXmlStringToMap(String str) throws Exception {
-        Map<String, String> resultMap;
-        InputStream inputStream = new ByteArrayInputStream(str.getBytes("UTF-8"));
-        resultMap = parseInputStreamToMap(inputStream);
+    public static Map<String, String> parseXmlStringToMap(String str) {
+        Map<String, String> resultMap = null;
+		try {
+			InputStream inputStream = new ByteArrayInputStream(str.getBytes("UTF-8"));
+			resultMap = parseInputStreamToMap(inputStream);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			System.out.println("parseXmlStringToMap解析支付回调xml报错UnsupportedEncodingException==>" + e.getMessage());
+		}
         return resultMap;
     }
 }

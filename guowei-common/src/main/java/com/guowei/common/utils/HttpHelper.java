@@ -113,14 +113,12 @@ public class HttpHelper {
             inputStream = null;  
             httpUrlConn.disconnect();  
             jsonObject = JSONObject.parseObject(buffer.toString());  
-            //System.out.println("jsonObject="+jsonObject);  
         } catch (ConnectException ce) {  
             ce.printStackTrace();  
             System.out.println("网络链接失败！");  
         }catch (UnknownHostException uhe) {  
             uhe.printStackTrace();  
             System.out.println("微信API无法访问....！");  
-            //httpRequest(requestUrl, requestMethod, outputStr);  
         } catch (Exception e) {  
             e.printStackTrace();  
         }  

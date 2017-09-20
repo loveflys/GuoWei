@@ -43,7 +43,6 @@ public class OauthController {
 		String openid = accessTokenResult.getString("openid");
 		
 		JSONObject res = WeiXinOAuth.GetWeiXinUserInfo(access_token, openid);
-		System.out.println("授权结束==>"+res.toJSONString());
 
 		GwUser user = userService.getGwUserByOpenId(openid);
 		if (user == null) {

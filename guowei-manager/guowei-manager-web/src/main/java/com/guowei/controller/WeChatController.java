@@ -55,7 +55,6 @@ public class WeChatController {
 		String orderId = request.getParameter("orderId");
 		// 调用统一下单service
 		String prepayId = payService.unifiedOrder(user.getWechatOpenid(), request.getRemoteAddr(), orderId);
-		System.out.println("prepayId==>" + prepayId);
 		JSONObject res = new JSONObject();
 		if (!PayUtils.isEmpty(prepayId)) {
 			String timeStamp = PayUtils.getTimeStamp();// 当前时间戳
@@ -96,7 +95,6 @@ public class WeChatController {
 	@RequestMapping(value = "/getConfig", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getConfig(HttpServletRequest request) {
-		System.out.println("请求获取微信配置==>" + request.getParameter("url"));
 		JSONObject accessTokenResult = WeiXinOAuth.GetWeiXinAccessToken(Secret.APP_ID, Secret.APP_SECRET);
 		String access_token = accessTokenResult.getString("access_token");
 
@@ -127,7 +125,6 @@ public class WeChatController {
 		String access_token = accessTokenResult.getString("access_token");
 		
 		JSONObject res = WeiXinOAuth.GetWeiXinShortUrl(access_token, request.getParameter("url"));
-		System.out.println("生成短链接==>" + JSON.toJSONString(res));
 		return JSON.toJSONString(res);
 	}
 
@@ -137,67 +134,12 @@ public class WeChatController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping(value = "/payresult_delete")
-	public void payresult(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			synchronized (this) {
-				Map<String, String> kvm = PayUtils.parseRequestXmlToMap(request);
-				if (SignUtils.checkSign(kvm, Constant.KEY)) {
-					GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
-					if (kvm.get("result_code").equals("SUCCESS")) {
-						// TODO(user) 微信服务器通知此回调接口支付成功后，通知给业务系统做处理
-						log.info("out_trade_no: " + kvm.get("out_trade_no") + " pay SUCCESS!");
-						System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " pay SUCCESS!");						
-						
-						order.setStatus(Byte.parseByte("2"));
-						int status = orderService.editGwOrder(order);
-						
-						if (status == 1) {
-							System.out.println("支付成功.修改订单状态成功");
-						} else {
-							System.out.println("支付成功.修改订单状态失败");
-						}
-						
-						response.getWriter().write(
-								"<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[ok]]></return_msg></xml>");
-					} else {
-						log.error("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
-						System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " result_code is FAIL");
-						
-						order.setStatus(Byte.parseByte("3"));
-						int status = orderService.editGwOrder(order);
-						
-						if (status == 1) {
-							System.out.println("支付失败.修改订单状态成功");
-						} else {
-							System.out.println("支付失败.修改订单状态失败");
-						}
-						
-						response.getWriter().write(
-								"<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[result_code is FAIL]]></return_msg></xml>");
-					}
-				} else {
-					response.getWriter().write(
-							"<xml><return_code><![CDATA[FAIL]]></return_code><return_msg><![CDATA[check signature FAIL]]></return_msg></xml>");
-					System.out.println("out_trade_no: " + kvm.get("out_trade_no") + " check signature FAIL");
-					log.error("out_trade_no: " + kvm.get("out_trade_no") + " check signature FAIL");
-				}
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * 微信通知支付结果的回调地址，notify_url
-	 *
-	 * @param request
-	 * @param response
-	 */
 	@RequestMapping(value = "/payresult")
 	public void paynotify (HttpServletRequest request, HttpServletResponse response){
 		try {  
-	        Map<String, String> m = PayUtils.parseRequestXmlToMap(request);	          
+			System.out.println("支付回调开始");
+	        Map<String, String> m = PayUtils.parseRequestXmlToMap(request);	  
+	        System.out.println("支付回调结束");
 	        //过滤空 设置 TreeMap  
 	        SortedMap<Object,Object> packageParams = new TreeMap<Object,Object>();        
 	        Iterator it = m.keySet().iterator();  
@@ -264,7 +206,7 @@ public class WeChatController {
 	        	System.out.println("通知签名验证失败");  
 	        }  
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("微信通知支付结果的回调报错==>" + e.getMessage());
 		}
 		
 	}

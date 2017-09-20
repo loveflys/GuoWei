@@ -177,7 +177,6 @@ public class OrderController {
 	@RequestMapping(value = "/order/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwOrder order = orderService.getGwOrderById(Long.parseLong(request.getParameter("id")));
 //		order.setPhone(request.getParameter("phone"));
 		int status = orderService.editGwOrder(order);
@@ -191,7 +190,6 @@ public class OrderController {
 	@RequestMapping(value = "/order/getdetail", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getdetail(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		Long id = Long.parseLong(request.getParameter("id"));
 		DatatablesView dataTable = orderService.getGwOrderDetailsByParam(id);
 		String data = JSON.toJSONString(dataTable);

@@ -340,7 +340,6 @@ public class UserController {
 	@RequestMapping(value = "/user/update", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String update(HttpServletRequest request) {
-		System.out.println(request.getParameter("id"));
 		GwUser user = userService.getGwUserById(Long.parseLong(request.getParameter("id")));
 		user.setPhone(request.getParameter("phone"));
 		int status = userService.editGwUser(user);
