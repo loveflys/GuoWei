@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
@@ -59,12 +62,20 @@ public class CarouselController {
 	}
 	
 	@RequestMapping("/carousels")
-	public String toList(HttpServletRequest request){   
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		if (manager.getLevel() == Byte.parseByte("3")) {
-			return "carousel";
-		}
-		return "index";
+	public ModelAndView toList(HttpServletRequest request){   
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);		
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					return new ModelAndView("carousel");
+				}
+			}
+		}		
+		return model;
 	}
 	
 	/**

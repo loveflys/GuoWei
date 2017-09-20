@@ -14,7 +14,7 @@ public class OrderTask {
 	@Autowired
 	private GwOrderMapper orderMapper;
 	
-	@Scheduled(cron = "* * 0/1 * * ? ") // 间隔1小时执行
+	@Scheduled(cron = "0 0 */1 * * ?") // 间隔1小时执行
 	public void taskCycle() {
 		//每小时定时任务=======清理未支付订单，改为已取消状态
 		GwOrderExample ex = new GwOrderExample();

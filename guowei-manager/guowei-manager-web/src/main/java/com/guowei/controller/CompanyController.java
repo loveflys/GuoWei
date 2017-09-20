@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.Constant;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
@@ -53,6 +54,17 @@ public class CompanyController {
 	@RequestMapping(value="/company/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwCompany company) {
+		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		Long area = json.getLong("area");
+		if (level != null && !"".equals(level)) {
+			if (!"3".equals(level)) {
+				company.setDid(area);
+			}
+		}
+		
 		DatatablesView dataTable = companyService.getGwCompanysByPagedParam(company,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
@@ -69,6 +81,17 @@ public class CompanyController {
 	@RequestMapping(value="/company/getComplateData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getComplateData(HttpServletRequest request, GwCompanyTemp company) {
+		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		String level = json.getString("level");
+		Long area = json.getLong("area");
+		if (level != null && !"".equals(level)) {
+			if (!"3".equals(level)) {
+				company.setDid(area);
+			}
+		}
+		
 		DatatablesView dataTable = companyService.getGwCompanyTempsByPagedParam(company,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
 //		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
@@ -118,9 +141,13 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("/companys")
-	public ModelAndView toList(HttpServletRequest request){   
-		ModelAndView model = new ModelAndView("companys");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+	public ModelAndView toList(HttpServletRequest request){
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			model = new ModelAndView("companys");
+		}
+		model.addObject("currentUser", temp);
 		return model;
 	}
 	

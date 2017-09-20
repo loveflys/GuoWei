@@ -127,8 +127,12 @@ public class ProductController {
 	
 	@RequestMapping("/products")
 	public ModelAndView toList(HttpServletRequest request){   
-		ModelAndView model = new ModelAndView("product");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			model = new ModelAndView("product");
+		}
+		model.addObject("currentUser", temp);
 		return model;
 	}
 	

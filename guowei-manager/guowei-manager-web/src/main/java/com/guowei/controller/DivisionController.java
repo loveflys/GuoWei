@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.pojo.SimpleListResult;
 import com.guowei.common.utils.Constants;
@@ -70,10 +71,16 @@ public class DivisionController {
 	@RequestMapping("/divisions")
 	public ModelAndView toList(HttpServletRequest request){   
 		ModelAndView model = new ModelAndView("index");
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		model.addObject("currentUser", manager);
-		if (manager.getLevel() == Byte.parseByte("3")) {
-			return new ModelAndView("division");
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					return new ModelAndView("division");
+				}
+			}
 		}
 		return model;
 	}

@@ -70,8 +70,12 @@ public class OrderController {
 	
 	@RequestMapping("/orders")
 	public ModelAndView toList(HttpServletRequest request){   
-		ModelAndView model = new ModelAndView("order");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			model = new ModelAndView("order");
+		}
+		model.addObject("currentUser", temp);
 		return model;
 	}
 	

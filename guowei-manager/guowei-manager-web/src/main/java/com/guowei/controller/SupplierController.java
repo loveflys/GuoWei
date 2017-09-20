@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.Constants;
 import com.guowei.common.utils.MessageView;
@@ -113,9 +114,19 @@ public class SupplierController {
 	}
 	
 	@RequestMapping("/suppliers")
-	public ModelAndView toList(HttpServletRequest request){   
-		ModelAndView model = new ModelAndView("suppliers");
-		model.addObject("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
+	public ModelAndView toList(HttpServletRequest request){
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					model = new ModelAndView("suppliers");
+				}
+			}
+		}
+		model.addObject("currentUser", temp);
 		return model;
 	}
 	

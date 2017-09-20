@@ -201,16 +201,17 @@ public class UserController {
 	public ModelAndView toapplys(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("index");
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
-		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
-		String level = json.getString("level");
-		if (level != null && !"".equals(level)) {
-			if ("3".equals(level)) {
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					return new ModelAndView("applys");
+				}
+			} else {
 				return new ModelAndView("applys");
 			}
-		} else {
-			return new ModelAndView("applys");
 		}
-	
 		return model;
 	}
 	
@@ -218,16 +219,17 @@ public class UserController {
 	public ModelAndView tocomplains(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView("index");
 		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
-		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
-		String level = json.getString("level");
-		if (level != null && !"".equals(level)) {
-			if ("3".equals(level)) {
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					return new ModelAndView("complains");
+				}
+			} else {
 				return new ModelAndView("complains");
 			}
-		} else {
-			return new ModelAndView("complains");
 		}
-	
 		return model;
 	}
 	
@@ -247,12 +249,18 @@ public class UserController {
 	
 	@RequestMapping("/users")
 	public ModelAndView toList(HttpServletRequest request){   
-		ModelAndView model = new ModelAndView("index");
-		GwManager manager = (GwManager) request.getSession().getAttribute(Constants.CURRENT_USER);
-		model.addObject("currentUser", manager);
-		if (manager.getLevel() == Byte.parseByte("3")) {
-			return new ModelAndView("user");
+		ModelAndView model = new ModelAndView("index");		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if ("3".equals(level)) {
+					model = new ModelAndView("user");
+				}
+			}
 		}
+		model.addObject("currentUser", temp);
 		return model;
 	}
 	
