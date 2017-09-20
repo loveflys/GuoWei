@@ -58,8 +58,7 @@ public class WechatWarn {
 		String params =JSONObject.toJSONString(param);
 		JSONObject res = WeiXinOAuth.SendTemplateMsg(access_token, params);
 		param.setTouser(Constant.MANAGER_OPENID2);
-		res = WeiXinOAuth.SendTemplateMsg(access_token, params);
-		param.setTouser(Constant.MANAGER_OPENID3);
+		params =JSONObject.toJSONString(param);
 		res = WeiXinOAuth.SendTemplateMsg(access_token, params);
 		return res;
 	}
@@ -127,14 +126,16 @@ public class WechatWarn {
 		remark.setColor("#000000");    
 		remark.setValue("请尽快处理。");    
 		m.put("remark", remark);  
-		param.setTouser(Constant.MANAGER_OPENID3);
+		param.setTouser(Constant.MANAGER_OPENID1);
 		param.setTemplate_id(Constant.APPLY_MSG_ID);
-		param.setData(m);      
+		param.setData(m);
 		String params =JSONObject.toJSONString(param);
 		JSONObject res = WeiXinOAuth.SendTemplateMsg(access_token, params);
 		param.setTouser(Constant.MANAGER_OPENID2);
+		params =JSONObject.toJSONString(param);
 		res = WeiXinOAuth.SendTemplateMsg(access_token, params);
-		param.setTouser(Constant.MANAGER_OPENID1);
+		param.setTouser(Constant.MANAGER_OPENID3);
+		params =JSONObject.toJSONString(param);
 		res = WeiXinOAuth.SendTemplateMsg(access_token, params);
 		return res;
 	}

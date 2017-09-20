@@ -1,6 +1,7 @@
 package com.guowei.service.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -214,10 +215,9 @@ public class UserServiceImpl implements UserService {
 		int res = complainMapper.insert(complain);
 		if (res == 1) {
 			GwUser user = userMapper.selectByPrimaryKey(complain.getUid());
-			String date = "";
 			Date time = complain.getCreated();
-			date = time.getYear() + "-" + (time.getMonth()+1) + "-" + time.getDate()
-				+ time.getHours() + ":" + time.getMinutes();
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+			String date=sdf.format(time); 			
 			WechatWarn.ComplainWarn(complain.getContent(), user.getName() + "(手机号码:" + complain.getContactPhone() + ")", date);
 		}
 		return res;
@@ -226,10 +226,9 @@ public class UserServiceImpl implements UserService {
 	public int addGwApply(GwApply apply) {
 		int res = applyMapper.insert(apply);
 		if (res == 1) {
-			String date = "";
 			Date time = apply.getCreated();
-			date = time.getYear() + "-" + (time.getMonth()+1) + "-" + time.getDate()
-				+ time.getHours() + ":" + time.getMinutes();
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+			String date=sdf.format(time); 
 			WechatWarn.ApplyWarn(apply.getCompanyName(), apply.getContactName() + "(手机号码:" + apply.getContactPhone() + ")", date);
 		}
 		return res;
