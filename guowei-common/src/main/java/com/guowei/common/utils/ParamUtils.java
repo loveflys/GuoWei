@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.security.MessageDigest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -37,7 +40,23 @@ public class ParamUtils{
         }  
         return write.toString();  
     }  
-  
+    //判断当前时间是否在该时间区间内
+    public static boolean isLimitTime(Date start, Date end) {
+    	if (start == null || end == null) {
+    		return false;
+    	}
+    	Date now = new Date();
+    	return (start.getTime() < now.getTime() && now.getTime() < end.getTime());
+    }
+    
+    //判断当前时间是否在该时间区间内
+    public static boolean isLimitTime(int start, int end) {
+    	Date now = new Date();
+        int hours = now.getHours();
+        int minutes = now.getMinutes();
+        return ((hours >= start && hours < end) || (hours == end && minutes == 0));
+    }
+    
     /** 
      * 将JSON字符串反序列化为对象 
      *  

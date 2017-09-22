@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.guowei.common.pojo.DatatablesView;
+import com.guowei.common.utils.ParamUtils;
 import com.guowei.common.utils.WechatWarn;
 import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwOrderMapper;
@@ -100,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
 			} else {
 				return 0;
 			}
-			if (pro.getStock() <= warnstock) {
+			if (pro.getStock() <= warnstock && ParamUtils.isLimitTime(9, 20)) {
 				try {
 					WechatWarn.Warn(order.getCompanyName(), pro.getProname(), pro.getStock());
 				} catch (UnsupportedEncodingException e) {
