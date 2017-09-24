@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;  
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.text.ParseException;  
 
 import org.slf4j.Logger;
@@ -264,6 +266,7 @@ public class OrderServiceImpl implements OrderService {
 		for (String title : pids) {
 			//根据公司产品查询订单详情
 			GwOrderdetailExample gme = new GwOrderdetailExample();
+			gme.setOrderByClause("created DESC");
 			com.guowei.pojo.GwOrderdetailExample.Criteria criteria = gme.createCriteria();
 			criteria.andPnameEqualTo(title);
 			criteria.andStatusEqualTo(Byte.parseByte("2"));
@@ -273,6 +276,7 @@ public class OrderServiceImpl implements OrderService {
 			List<GwOrderdetail> temps = orderdetailMapper.selectByExample(gme);
 			res.addAll(temps);
 		}
+		res.sort(new SortByCreated());
 		DatatablesView result = new DatatablesView();
 		result.setData(res);
 		result.setRecordsTotal(res.size());
@@ -291,5 +295,11 @@ public class OrderServiceImpl implements OrderService {
 		BigDecimal res = orderMapper.searchOrderAmount(params);
 		return res;
 	}
-	
+	class SortByCreated implements Comparator {
+	    public int compare(Object o1, Object o2) {
+	     GwOrderdetail s1 = (GwOrderdetail) o1;
+	     GwOrderdetail s2 = (GwOrderdetail) o2;
+	     return s2.getCreated().compareTo(s1.getCreated());
+	    }
+	}
 }
