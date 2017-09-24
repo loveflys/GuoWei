@@ -39,4 +39,6 @@ public interface OrderService {
 	
 	@Transactional(propagation=Propagation.NOT_SUPPORTED)
 	int removeGwOrder(long id);
+
+	DatatablesView<?> getGwOrderDetailsByPid(Long pid, String uname, Long sid);
 }

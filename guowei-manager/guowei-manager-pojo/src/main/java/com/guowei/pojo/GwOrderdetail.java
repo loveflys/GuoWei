@@ -27,6 +27,8 @@ public class GwOrderdetail {
     private Long uid;
 
     private String userName;
+    
+    private Byte status;
 
     public Long getId() {
         return id;
@@ -122,5 +124,13 @@ public class GwOrderdetail {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

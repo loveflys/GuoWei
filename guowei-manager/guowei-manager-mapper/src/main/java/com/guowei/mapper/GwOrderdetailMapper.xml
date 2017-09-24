@@ -14,6 +14,7 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="uid" property="uid" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, oid, cpid, price, pname, pimg, number, company_name, company_id, created, uid, 
-    user_name
+    user_name, status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderdetailExample" >
     select
@@ -114,11 +115,11 @@
     insert into gw_orderdetail (id, oid, cpid, price, 
       pname, pimg, number, 
       company_name, company_id, created, 
-      uid, user_name)
+      uid, user_name, status)
     values (#{id,jdbcType=BIGINT}, #{oid,jdbcType=BIGINT}, #{cpid,jdbcType=BIGINT}, #{price,jdbcType=DECIMAL}, 
       #{pname,jdbcType=VARCHAR}, #{pimg,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, 
       #{companyName,jdbcType=VARCHAR}, #{companyId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, 
-      #{uid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR})
+      #{uid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guowei.pojo.GwOrderdetail" >
     insert into gw_orderdetail
@@ -159,6 +160,9 @@
       <if test="userName != null" >
         user_name,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -196,6 +200,9 @@
       </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -244,6 +251,9 @@
       <if test="record.userName != null" >
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -262,7 +272,8 @@
       company_id = #{record.companyId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       uid = #{record.uid,jdbcType=BIGINT},
-      user_name = #{record.userName,jdbcType=VARCHAR}
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -303,6 +314,9 @@
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -318,7 +332,8 @@
       company_id = #{companyId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       uid = #{uid,jdbcType=BIGINT},
-      user_name = #{userName,jdbcType=VARCHAR}
+      user_name = #{userName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

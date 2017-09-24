@@ -37,8 +37,11 @@
             <li class="treeview" style="display: ${currentUser.level == 3?'block':'none'}">
                 <a href="<%=path%>/suppliers"> <i class="fa fa-user"></i><span><sp:message code="menu.suppliers"/></span></a>
             </li>
-            <li class="treeview">
+            <li class="treeview" style="display: ${currentUser.sid == 1?'block':'none'}">
                 <a href="<%=path%>/orders"> <i class="fa fa-user"></i><span><sp:message code="menu.orders"/></span></a>
+            </li>
+            <li class="treeview" style="display: ${currentUser.sid != 1?'block':'none'}">
+                <a href="<%=path%>/productorders/0"> <i class="fa fa-user"></i><span><sp:message code="menu.orders"/></span></a>
             </li>
             <li class="treeview" style="display: ${currentUser.level == 3?'block':'none'}">
                 <a href="<%=path%>/divisions"> <i class="fa fa-user"></i><span><sp:message code="menu.divisions"/></span></a>

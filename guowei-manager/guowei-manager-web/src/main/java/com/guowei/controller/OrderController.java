@@ -79,6 +79,25 @@ public class OrderController {
 		return model;
 	}
 	
+	@RequestMapping("/productorders/{id}")
+	public ModelAndView toProductorders(HttpServletRequest request, @PathVariable("id") Long id){   
+		ModelAndView model = new ModelAndView("index");
+		
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		if (temp != null) {
+			JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+			String level = json.getString("level");
+			if (level != null && !"".equals(level)) {
+				if (!"1".equals(level)) {
+					model = new ModelAndView("productorder");
+				}
+			}			
+		}
+		model.addObject("currentUser", temp);
+		model.addObject("id", id);
+		return model;
+	}
+	
 	/**
 	 * 订单添加
 	 * @param order
@@ -142,7 +161,9 @@ public class OrderController {
 			amount = amount.add(temp.getBigDecimal("proprice").multiply(new BigDecimal(temp.getBigInteger("number"))));
 			orderdetail.setUid(uid);
 			orderdetail.setUserName(uname);
+			orderdetail.setStatus(Byte.parseByte("1"));
 			orderdetails.add(orderdetail);
+			
 		}
 		
 		
@@ -192,6 +213,21 @@ public class OrderController {
 	public String getdetail(HttpServletRequest request) {
 		Long id = Long.parseLong(request.getParameter("id"));
 		DatatablesView dataTable = orderService.getGwOrderDetailsByParam(id);
+		String data = JSON.toJSONString(dataTable);
+		return data;
+	}
+	
+	@RequestMapping(value = "/order/getdetailbyid", method = RequestMethod.POST, produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String getdetailbyid(HttpServletRequest request) {
+		Object temp = request.getSession().getAttribute(Constants.CURRENT_USER);
+		JSONObject json = JSON.parseObject(JSON.toJSONString(temp));
+		Long sid = json.getLong("sid");
+
+		
+		Long id = Long.parseLong(request.getParameter("id"));
+		String uname = request.getParameter("uname");
+		DatatablesView dataTable = orderService.getGwOrderDetailsByPid(id, uname, sid);
 		String data = JSON.toJSONString(dataTable);
 		return data;
 	}

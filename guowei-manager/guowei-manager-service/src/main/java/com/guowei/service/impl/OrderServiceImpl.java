@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-import java.text.SimpleDateFormat;  
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;  
 import java.text.ParseException;  
 
@@ -28,12 +29,14 @@ import com.guowei.mapper.GwOrderdetailMapper;
 import com.guowei.mapper.GwProductMapper;
 import com.guowei.mapper.GwUserMapper;
 import com.guowei.pojo.GwCompanyproduct;
+import com.guowei.pojo.GwCompanyproductExample;
 import com.guowei.pojo.GwOrder;
 import com.guowei.pojo.GwOrderExample;
 import com.guowei.pojo.GwOrderExample.Criteria;
 import com.guowei.pojo.GwOrderdetail;
 import com.guowei.pojo.GwOrderdetailExample;
 import com.guowei.pojo.GwProduct;
+import com.guowei.pojo.GwProductExample;
 import com.guowei.pojo.GwUser;
 import com.guowei.service.OrderService;
 /**
@@ -126,9 +129,12 @@ public class OrderServiceImpl implements OrderService {
 			product.setAllsellcount(allsellcount + gwOrderdetail.getNumber());
 			int changeStock = 0;
 			int changeCPStock = 0;
+			int updateOrderDetail = 0;
+			gwOrderdetail.setStatus(Byte.parseByte("2"));
+			updateOrderDetail = orderdetailMapper.updateByPrimaryKey(gwOrderdetail);
 			changeStock = productMapper.updateByPrimaryKey(product);
 			changeCPStock = companyproductMapper.updateByPrimaryKey(pro);
-			if (changeStock != 1 || changeCPStock != 1) {
+			if (changeStock != 1 || changeCPStock != 1 || updateOrderDetail != 1) {
 				updateDetail = 0;
 			}			
 		}
@@ -237,6 +243,48 @@ public class OrderServiceImpl implements OrderService {
 		result.setRecordsTotal(list.size());
 		return result;
 	}
+	
+	@Override
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	public DatatablesView<?> getGwOrderDetailsByPid(Long pid, String uname, Long sid) {
+		List<Long> pids = new ArrayList<Long>();
+		List<GwOrderdetail> res = new ArrayList<GwOrderdetail>();
+		
+		if (pid != 0l) {
+			pids.add(pid);
+		} else {
+			GwProductExample ex = new GwProductExample();
+			ex.createCriteria().andSidEqualTo(sid);
+			List<GwProduct> pros = productMapper.selectByExample(ex);
+			for (GwProduct gwProduct : pros) {
+				pids.add(gwProduct.getId());
+			}
+		}
+		for (Long tempPid : pids) {
+			//查询该商品的  公司产品
+			GwCompanyproductExample example = new GwCompanyproductExample();
+			example.createCriteria().andPidEqualTo(tempPid);
+			List<GwCompanyproduct> cplist = companyproductMapper.selectByExample(example);
+			
+			for (GwCompanyproduct gwCompanyproduct : cplist) {
+				//根据公司产品查询订单详情
+				GwOrderdetailExample gme = new GwOrderdetailExample();
+				com.guowei.pojo.GwOrderdetailExample.Criteria criteria = gme.createCriteria();
+				criteria.andCpidEqualTo(gwCompanyproduct.getId());
+				criteria.andStatusEqualTo(Byte.parseByte("2"));
+				if (uname != null && !"".equals(uname)) {
+					criteria.andUserNameLike("%"+uname+"%");
+				}
+				List<GwOrderdetail> temps = orderdetailMapper.selectByExample(gme);
+				res.addAll(temps);
+			}
+		}
+		DatatablesView result = new DatatablesView();
+		result.setData(res);
+		result.setRecordsTotal(res.size());
+		return result;
+	}
+	
 	@Override
 	public BigDecimal getOrdersData(String startTime, String endTime) {		
 		Map<String, Object> params = new HashMap<String, Object>();

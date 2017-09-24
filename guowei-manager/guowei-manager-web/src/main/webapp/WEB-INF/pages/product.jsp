@@ -612,7 +612,7 @@
 		                    targets: -1,//编辑
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
-		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
+		                                    (level != 1?"<button id='showRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-eye'></i></button>":"")+
 		                    				(level != 1?"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>":"")+
 		                    				(level != 1?"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>":"")+
 		                    				"<button id='purchaseRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-plus-square'></i></button></div>"
@@ -714,6 +714,10 @@
 	                    $('#dataTable tbody tr').removeClass('selected');
 	                }
 	            });
+	            $("#dataTable tbody").on('click', '#showRow', function () {
+                    var data = tables.api().row($(this).parents('tr')).data();
+                    location.href = "/productorders/" + data.id;
+                })
 	          	$("#dataTable tbody").on('click', '#purchaseRow', function () {
 	          		var data = tables.api().row($(this).parents('tr')).data();
 	          		//赋值到Modal上

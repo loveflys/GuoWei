@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,13 @@ import com.github.pagehelper.PageHelper;
 import com.guowei.common.pojo.Constant;
 import com.guowei.common.utils.Constants;
 import com.guowei.mapper.GwOrderMapper;
+import com.guowei.mapper.GwOrderdetailMapper;
 import com.guowei.mapper.GwUserMapper;
 import com.guowei.pojo.GwManager;
+import com.guowei.pojo.GwOrder;
+import com.guowei.pojo.GwOrderExample;
+import com.guowei.pojo.GwOrderdetail;
+import com.guowei.pojo.GwOrderdetailExample;
 import com.guowei.pojo.GwUser;
 import com.guowei.pojo.GwUserExample;
 import com.guowei.pojo.GwUserExample.Criteria;
@@ -40,6 +47,8 @@ public class IndexController {
 	private GwUserMapper userMapper;
 	@Resource
 	private GwOrderMapper orderMapper;
+	@Autowired
+	private GwOrderdetailMapper orderdetailMapper;
 	
 	@RequestMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) {
@@ -65,6 +74,31 @@ public class IndexController {
 			}
 		}
 		return res?"更新用户消费金额成功":"更新用户消费金额失败";
+	}
+	
+	@RequestMapping(value = "/updateOrderDetailStatus", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String updateOrderDetailStatus(HttpServletRequest request) {
+		GwOrderExample gme = new GwOrderExample();
+		List<GwOrder> list = orderMapper.selectByExample(gme);
+		boolean res = true;
+		for (GwOrder gwOrder : list) {
+			GwOrderdetailExample g = new GwOrderdetailExample();
+			g.createCriteria().andOidEqualTo(gwOrder.getId());
+			List<GwOrderdetail> temps = orderdetailMapper.selectByExample(g);
+			int updateOrderResult = 1;
+			for (GwOrderdetail gwOrderdetail : temps) {
+				gwOrderdetail.setStatus(gwOrder.getStatus());
+				int tempupdateDetail = orderdetailMapper.updateByPrimaryKey(gwOrderdetail);
+				if (tempupdateDetail != 1) {
+					updateOrderResult = 0;
+				}
+			}
+			if (updateOrderResult != 1) {
+				res = false;
+			} 
+		}
+		return res?"更新订单表成功":"更新订单表失败";
 	}
 	
 	@RequestMapping(value="/getIndexData", produces = "text/json;charset=UTF-8")
