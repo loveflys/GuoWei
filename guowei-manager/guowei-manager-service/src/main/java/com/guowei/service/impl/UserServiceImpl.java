@@ -16,6 +16,7 @@ import com.guowei.common.pojo.DatatablesView;
 import com.guowei.common.utils.WechatWarn;
 import com.guowei.mapper.GwApplyMapper;
 import com.guowei.mapper.GwComplainMapper;
+import com.guowei.mapper.GwOrderMapper;
 import com.guowei.mapper.GwUserMapper;
 import com.guowei.pojo.GwApply;
 import com.guowei.pojo.GwApplyExample;
@@ -34,6 +35,9 @@ import com.guowei.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private GwUserMapper userMapper;
+	
+	@Autowired
+	private GwOrderMapper orderMapper;
 	
 	@Autowired
 	private GwApplyMapper applyMapper;
@@ -99,10 +103,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize) {
+	public DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize, String order, String orderby) {
 		// TODO Auto-generated method stub
 		GwUserExample gme = new GwUserExample();
-		gme.setOrderByClause("created DESC");
+		if (order == null || "".equals(order)) {
+			order = "created";
+		}
+		if (orderby == null || "".equals(orderby)) {
+			orderby = "DESC";
+		}
+		gme.setOrderByClause(order + " " + orderby);
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(user.getName())) {
 			criteria.andNameLike("%"+user.getName()+"%");

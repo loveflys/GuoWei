@@ -21,7 +21,7 @@ public interface UserService {
 	
 	DatatablesView<?> getGwUsersByParam(GwUser user);
 	
-	DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize);
+	DatatablesView<?> getGwUsersByPagedParam(GwUser user, Integer start, Integer pageSize, String order, String orderby);
 	
 	GwApply getGwApplyById(long parseLong);
 	

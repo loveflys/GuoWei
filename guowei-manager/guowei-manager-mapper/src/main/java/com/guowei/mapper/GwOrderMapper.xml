@@ -81,7 +81,13 @@
         </if>  
         <if test="endTime!=null">  
             and <![CDATA[date_format(created, '%Y-%m-%d')<=date_format(#{endTime}, '%Y-%m-%d') ]]>  
+        </if>
+        <if test="uid!=null">  
+            and uid = #{uid}  
         </if>  
+        <if test="companyId!=null">  
+            and company_id = #{companyId}  
+        </if>
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.guowei.pojo.GwOrderExample" >
     select

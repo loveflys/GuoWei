@@ -123,9 +123,16 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize) {
+	public DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize, String order, String orderby) {
 		// TODO Auto-generated method stub
 		GwProductExample gme = new GwProductExample();
+		if (order == null || "".equals(order)) {
+			order = "created";
+		}
+		if (orderby == null || "".equals(orderby)) {
+			orderby = "DESC";
+		}
+		gme.setOrderByClause(order + " " + orderby);
 		Criteria criteria = gme.createCriteria();
 		if (!"".equals(product.getTitle())) {
 			criteria.andTitleLike("%" + product.getTitle() + "%");

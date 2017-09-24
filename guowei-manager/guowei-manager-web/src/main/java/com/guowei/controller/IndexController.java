@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.annotation.Resource;
@@ -17,9 +19,15 @@ import com.guowei.service.OrderService;
 import com.guowei.service.UserService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
 import com.guowei.common.pojo.Constant;
 import com.guowei.common.utils.Constants;
+import com.guowei.mapper.GwOrderMapper;
+import com.guowei.mapper.GwUserMapper;
 import com.guowei.pojo.GwManager;
+import com.guowei.pojo.GwUser;
+import com.guowei.pojo.GwUserExample;
+import com.guowei.pojo.GwUserExample.Criteria;
 
 @Controller
 @RequestMapping(value = "/")
@@ -28,12 +36,35 @@ public class IndexController {
 	private OrderService orderService;
 	@Resource
 	private UserService userService;
+	@Resource
+	private GwUserMapper userMapper;
+	@Resource
+	private GwOrderMapper orderMapper;
 	
 	@RequestMapping(value = "/")
 	public String index(HttpServletRequest request, Model model) {
 		model.addAttribute("payURL", Constant.PAY_URL);
 		model.addAttribute("currentUser", request.getSession().getAttribute(Constants.CURRENT_USER));
 		return "index";
+	}
+	
+	@RequestMapping(value = "/updateUserConsume", produces = "text/json;charset=UTF-8")
+	@ResponseBody
+	public String updateUserConsume(HttpServletRequest request) {
+		GwUserExample gme = new GwUserExample();
+		List<GwUser> list = userMapper.selectByExample(gme);
+		boolean res = true;
+		for (GwUser gwUser : list) {
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("uid", gwUser.getId());
+			BigDecimal amount = orderMapper.searchOrderAmount(params);
+			gwUser.setTotalconsume(amount != null? amount.longValue() : 0l);
+			int updateRes = userMapper.updateByPrimaryKey(gwUser);
+			if (updateRes != 1) {
+				res = false;
+			}
+		}
+		return res?"更新用户消费金额成功":"更新用户消费金额失败";
 	}
 	
 	@RequestMapping(value="/getIndexData", produces = "text/json;charset=UTF-8")

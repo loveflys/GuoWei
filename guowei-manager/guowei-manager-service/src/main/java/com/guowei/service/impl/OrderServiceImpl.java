@@ -26,6 +26,7 @@ import com.guowei.mapper.GwCompanyproductMapper;
 import com.guowei.mapper.GwOrderMapper;
 import com.guowei.mapper.GwOrderdetailMapper;
 import com.guowei.mapper.GwProductMapper;
+import com.guowei.mapper.GwUserMapper;
 import com.guowei.pojo.GwCompanyproduct;
 import com.guowei.pojo.GwOrder;
 import com.guowei.pojo.GwOrderExample;
@@ -33,6 +34,7 @@ import com.guowei.pojo.GwOrderExample.Criteria;
 import com.guowei.pojo.GwOrderdetail;
 import com.guowei.pojo.GwOrderdetailExample;
 import com.guowei.pojo.GwProduct;
+import com.guowei.pojo.GwUser;
 import com.guowei.service.OrderService;
 /**
  * 订单管理Service
@@ -45,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
 	protected Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private GwOrderMapper orderMapper;
+	@Autowired
+	private GwUserMapper userMapper;
 	@Autowired
 	private GwOrderdetailMapper orderdetailMapper;
 	@Autowired
@@ -80,6 +84,11 @@ public class OrderServiceImpl implements OrderService {
 	public int updateGwOrderPayStatus(long id) {
 		//更改订单状态
 		GwOrder order = orderMapper.selectByPrimaryKey(id);
+		
+		Long uid = order.getUid();
+		GwUser user = userMapper.selectByPrimaryKey(uid);
+		user.setTotalconsume(user.getTotalconsume() + order.getAmount().longValue());
+		userMapper.updateByPrimaryKey(user);
 		order.setStatus(Byte.parseByte("2"));
 		int updateOrder = orderMapper.updateByPrimaryKey(order);
 		

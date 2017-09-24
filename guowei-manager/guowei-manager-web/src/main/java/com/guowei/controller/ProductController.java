@@ -61,7 +61,7 @@ public class ProductController {
 			}
 		}
 		
-		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+		DatatablesView dataTable = productService.getGwProductsByPagedParam(product,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")), request.getParameter("order"), request.getParameter("orderby"));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;

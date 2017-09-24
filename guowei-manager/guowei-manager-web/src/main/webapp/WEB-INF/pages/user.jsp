@@ -98,6 +98,14 @@
 									<input type="text" id="keyword" name="name" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
 								</div>
+								<select id="order" name="order">
+                                    <option value="created" selected="selected">时间</option>
+                                    <option value="totalconsume">消费额</option>
+                                </select>
+								<select id="orderby" name="orderby">
+								    <option value="DESC" selected="selected">升序</option>
+								    <option value="ASC">降序</option>
+								</select>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
 									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
 								</button>
@@ -114,14 +122,9 @@
 											<tr class="info">
 												<!-- <td><input type="checkbox" id="checkAll"></td> -->
 												<th><sp:message code="sys.no"/></th>
-												<th><sp:message code="manager.name"/></th>
-												<th><sp:message code="com.con.tel"/></th>
-												<th><sp:message code="manager.level"/></th>
-												<th><sp:message code="manager.password"/></th>												
+												<th><sp:message code="manager.name"/></th>											
 												<th><sp:message code="sys.create.time"/></th>
-												<th><sp:message code="sys.wechatAccount"/></th>
-                                                <th><sp:message code="sys.wechatOpenId"/></th>
-                                                <th><sp:message code="sys.area"/></th>
+                                                <th>总消费金额</th>
                                                 <th><sp:message code="sys.oper"/></th>
 											</tr>
 										</thead>
@@ -163,25 +166,7 @@
 								<div class="col-sm-9">
 									<input type="text" class="form-control" name="name" readonly="readonly">
 								</div>
-							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="com.con.tel"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="phone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.level"/></label>
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="level" readonly="readonly">
-                                </div>
-                            </div>
-							<div class="form-group">
-								<label for="inputName" class="col-sm-3 control-label"><sp:message code="manager.password"/></label>
-								<div class="col-sm-9">
-									<input type="password" class="form-control" name="password" readonly="readonly">
-								</div>
-							</div>							
+							</div>		
 							<div class="form-group">
 								<label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.create.time"/></label>
 
@@ -189,34 +174,16 @@
 									<input type="tel" class="form-control" name="created" readonly="readonly">
 								</div>
 							</div>
-							<div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatAccount"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="tel" class="form-control" name="wechatAccount" readonly="readonly">
-                                </div>
-                            </div>
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.wechatOpenId"/></label>
+                                <label for="inputName" class="col-sm-3 control-label">总消费金额</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="wechatOpenId" readonly="readonly">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label"><sp:message code="sys.area"/></label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="area" readonly="readonly">
+                                    <input type="text" class="form-control" name="totalconsume" readonly="readonly">
                                 </div>
                             </div>
 						</form>
 					</div>
 					<!-- modal-body END -->
-					
-					<div class="modal-footer">
-						<button id="btn-submit" type="submit" class="btn btn-primary"><sp:message code="sys.submit"/></button>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -262,18 +229,13 @@
 	                columns: [//对应上面thead里面的序列
 	                    //{"data": null,"width":"10px"},
 	                    {"data": 'id'},
-	               		{"data": 'name'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	               		
-	                    {"data": 'phone', defaultContent: ""},
-	                    {"data": 'level', defaultContent: ""},
-  	                    {"data": 'password', defaultContent: ""},
+	               		{"data": 'name'}, //mData 表示发请求时候本列的列明，返回的数据中相同下标名字的数据会填充到这一列	    
   	                    {"data": 'created', 
   	                    	"render":function(data,type,full,callback) {
   	                    		return moment(data).format('YYYY-MM-DD') 
 	                    	}
 	               		},
-	               		{"data": 'wechatAccount', defaultContent: ""},
-                        {"data": 'wechatOpenid', defaultContent: ""},
-                        {"data": 'area', defaultContent: ""},
+	               		{"data": 'totalconsume', defaultContent: ""},
   	                  	{"data": null,"width":"60px"}
 	                ],
 	                //操作按钮
@@ -288,8 +250,7 @@
 		                    data: null,//下面这行，添加了编辑按钮和，删除按钮
 		                    defaultContent: " <div class='btn-group'>"+
 		                					//"<button id='infoRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-search'></i> </button>"+
-		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>"+
-		                    				"<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button></div>"
+		                    				"<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-eye'></i></button></div>"
 		                }
 	                ],
 	              	//每加载完一行的回调函数
@@ -377,43 +338,15 @@
 					var data = tables.api().row($(this).parents('tr')).data();
 					$("input[name=id]").val(data.id);
 					$("input[name=name]").val(data.name);
-					$("input[name=level]").val(data.level);
-					$("input[name=password]").val(data.password);
-					$("input[name=phone]").val(data.phone);
 					if (!data.created || data.created.length <= 0) {
-						$("input[name=created]").val(new Date().getTime);
-					} else {
-						$("input[name=created]").val(data.created);
-					}
-					$("input[name=wechatAccount]").val(data.wechatAccount);
-                    $("input[name=wechatOpenid]").val(data.wechatOpenid);
-                    $("input[name=area]").val(data.area);
+                        $("input[name=created]").val(moment(new Date()).format('YYYY-MM-DD'));
+                    } else {
+                        $("input[name=created]").val(moment(new Date(data.created)).format('YYYY-MM-DD'));
+                    }
+                    $("input[name=totalconsume]").val(data.totalconsume);
 					$("#editModal").modal("show");
 					
 		        });
-	          	
-				$("#btn-submit").on("click", function(){
-					var url = "<%=path%>/user/update";
-	          		$.ajax({
-		                cache: false,
-		                type: "POST",
-		                url: url,
-		                data:$("#editForm").serialize(),
-		                async: false,
-		                error: function(request) {
-		                	toastr.error("Server Connection Error...");
-		                },
-		                success: function(data) {
-		                	if(data.status == 1){
-		                		$("#editModal").modal("hide");
-		                		toastr.success("<sp:message code='sys.oper.success'/>");
-		                		tables.fnDraw(false);
-		                	}else{
-		                		toastr.error("<sp:message code='sys.oper.fail'/>");
-		                	}
-		                }
-		            });
-	          	});
 	          	
 				//删除
 				$('#dataTable tbody').on( 'click', '#delRow', function () {

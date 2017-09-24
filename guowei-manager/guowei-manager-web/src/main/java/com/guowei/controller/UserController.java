@@ -75,7 +75,7 @@ public class UserController {
 	@RequestMapping(value="/user/getData", produces = "text/json;charset=UTF-8")
 	@ResponseBody
 	public String getData(HttpServletRequest request, GwUser user) {
-		DatatablesView dataTable = userService.getGwUsersByPagedParam(user,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")));
+		DatatablesView dataTable = userService.getGwUsersByPagedParam(user,Integer.parseInt(request.getParameter("start")),Integer.parseInt(request.getParameter("length")), request.getParameter("order"), request.getParameter("orderby"));
 		dataTable.setDraw(Integer.parseInt(request.getParameter("draw")));
 		String data = JSON.toJSONString(dataTable);
 		return data;

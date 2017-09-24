@@ -101,6 +101,14 @@
 									<input type="text" id="keyword" name="title" class="form-control input-sm"
 										placeholder="<sp:message code="sys.keyword"/>">
 								</div>
+								<select id="order" name="order">
+                                    <option value="created" selected="selected">时间</option>
+                                    <option value="allsellcount">总销量</option>
+                                </select>
+                                <select id="orderby" name="orderby">
+                                    <option value="DESC" selected="selected">升序</option>
+                                    <option value="ASC">降序</option>
+                                </select>
 								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
 									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
 								</button>

@@ -15,7 +15,7 @@ public interface ProductService {
 	
 	DatatablesView<?> getGwProductsByParam(GwProduct product);
 	
-	DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize);
+	DatatablesView<?> getGwProductsByPagedParam(GwProduct product, Integer start, Integer pageSize, String order, String orderby);
 
 	int addGwProduct(GwProduct product, Long mid);
 	
