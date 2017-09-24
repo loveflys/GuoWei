@@ -272,6 +272,7 @@ public class OrderServiceImpl implements OrderService {
 			criteria.andStatusEqualTo(Byte.parseByte("2"));
 			if (uname != null && !"".equals(uname)) {
 				criteria.andUserNameLike("%"+uname+"%");
+				gme.or(gme.createCriteria().andCompanyNameLike("%"+uname+"%"));
 			}
 			List<GwOrderdetail> temps = orderdetailMapper.selectByExample(gme);
 			res.addAll(temps);
