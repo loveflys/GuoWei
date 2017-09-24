@@ -247,37 +247,31 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	public DatatablesView<?> getGwOrderDetailsByPid(Long pid, String uname, Long sid) {
-		List<Long> pids = new ArrayList<Long>();
+		List<String> pids = new ArrayList<String>();
 		List<GwOrderdetail> res = new ArrayList<GwOrderdetail>();
 		
 		if (pid != 0l) {
-			pids.add(pid);
+			GwProduct pro = productMapper.selectByPrimaryKey(pid);
+			pids.add(pro.getTitle());
 		} else {
 			GwProductExample ex = new GwProductExample();
 			ex.createCriteria().andSidEqualTo(sid);
 			List<GwProduct> pros = productMapper.selectByExample(ex);
 			for (GwProduct gwProduct : pros) {
-				pids.add(gwProduct.getId());
+				pids.add(gwProduct.getTitle());
 			}
 		}
-		for (Long tempPid : pids) {
-			//查询该商品的  公司产品
-			GwCompanyproductExample example = new GwCompanyproductExample();
-			example.createCriteria().andPidEqualTo(tempPid);
-			List<GwCompanyproduct> cplist = companyproductMapper.selectByExample(example);
-			
-			for (GwCompanyproduct gwCompanyproduct : cplist) {
-				//根据公司产品查询订单详情
-				GwOrderdetailExample gme = new GwOrderdetailExample();
-				com.guowei.pojo.GwOrderdetailExample.Criteria criteria = gme.createCriteria();
-				criteria.andCpidEqualTo(gwCompanyproduct.getId());
-				criteria.andStatusEqualTo(Byte.parseByte("2"));
-				if (uname != null && !"".equals(uname)) {
-					criteria.andUserNameLike("%"+uname+"%");
-				}
-				List<GwOrderdetail> temps = orderdetailMapper.selectByExample(gme);
-				res.addAll(temps);
+		for (String title : pids) {
+			//根据公司产品查询订单详情
+			GwOrderdetailExample gme = new GwOrderdetailExample();
+			com.guowei.pojo.GwOrderdetailExample.Criteria criteria = gme.createCriteria();
+			criteria.andPnameEqualTo(title);
+			criteria.andStatusEqualTo(Byte.parseByte("2"));
+			if (uname != null && !"".equals(uname)) {
+				criteria.andUserNameLike("%"+uname+"%");
 			}
+			List<GwOrderdetail> temps = orderdetailMapper.selectByExample(gme);
+			res.addAll(temps);
 		}
 		DatatablesView result = new DatatablesView();
 		result.setData(res);
