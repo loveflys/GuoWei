@@ -76,25 +76,12 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row-fluid">
-					
 						<div class="pull-right">
 							<div class="btn-group">
 								<button type="button" class="btn btn-primary btn-sm" id="btn-re">
 									<i class="fa fa-refresh"></i> <sp:message code="sys.refresh"/>
 								</button>
 							</div>
-						</div>
-
-						<div class="row">
-							<form id="queryForm" method="post">
-								<div class="col-xs-2">
-									<input type="text" id="keyword" name="uname" class="form-control input-sm"
-										placeholder="<sp:message code="sys.keyword"/>">
-								</div>
-								<button type="button" class="btn btn-primary btn-sm" id="btn-query">
-									<i class="fa fa-search"></i> <sp:message code="sys.query"/>
-								</button>
-							</form>
 						</div>
 					</div>
 	                
@@ -148,13 +135,13 @@
 				
 				tables = $("#dataTable").dataTable({
 			    	serverSide: false,//分页，取数据等等的都放到服务端去
-			        processing: true,//载入数据的时候是否显示“载入中”
+			        processing: false,//载入数据的时候是否显示“载入中”
 			        pageLength: 10,  //首次加载的数据条数
 			        ordering: false,//排序操作在服务端进行，所以可以关了。
 			        pagingType: "full_numbers",
 			        autoWidth: false,
 			        stateSave: true,//保持翻页状态，和tables.fnDraw(false);结合使用
-			        searching: false,
+			        searching: true,
 			        ajax: {   //类似jquery的ajax参数，基本都可以用。
 			        	type: "post",//后台指定了方式，默认get，外加datatable默认构造的参数很长，有可能超过get的最大长度。
 			            url: "<%=path%>/order/getdetailbyid",
